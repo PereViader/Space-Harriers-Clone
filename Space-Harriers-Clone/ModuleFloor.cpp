@@ -31,7 +31,7 @@ bool ModuleFloor::Init()
 	//vertical lines
 	horizonRenderHeight = HORIZON_MIN_HEIGHT;
 	horizontalSpeed = 0;
-	previousHorizontalAlpha = 0.0f;
+	previousHorizontalMovePercentage = 0.0f;
 
 	SetAlphaLineParametersPercentual(1.0f);
 	iterationOfAlphaLine = 0;
@@ -66,9 +66,10 @@ void ModuleFloor::RenderFloor() {
 	float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight)/(SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
 	float horizonShiftIncrement = 1.0f / horizonDisplayPercentage;
 
-	float horizontalAlpha = previousHorizontalAlpha + horizontalSpeed*horizonShiftIncrement;
+
+	float horizontalAlpha = previousHorizontalMovePercentage*0.33f*horizonShiftIncrement + horizontalSpeed*horizonShiftIncrement;
 	horizontalAlpha = fmod(horizontalAlpha, 0.33f*horizonShiftIncrement);
-	previousHorizontalAlpha = horizontalAlpha;
+	previousHorizontalMovePercentage = horizontalAlpha / (0.33f*horizonShiftIncrement);
 
 	float iterationAlpha = (float)floorTextureRect.x;
 

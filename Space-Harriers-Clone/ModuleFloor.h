@@ -28,7 +28,7 @@ private:
 	int horizonRenderHeight;
 	const float HORIZONTAL_SPEED_MAX = 0.01f;
 	float horizontalSpeed;
-	float previousHorizontalAlpha;
+	float previousHorizontalMovePercentage;
 
 	//horizontal lines
 	float ALPHA_DISTANCE_MAX = 20.0f*SCREEN_SIZE;
