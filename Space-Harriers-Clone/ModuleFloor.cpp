@@ -5,6 +5,7 @@
 #include "SDL\include\SDL.h"
 #include "ModuleInput.h"
 #include "ModulePlayer.h"
+#include <algorithm>
 
 #include <iostream>
 #include <cmath>
@@ -64,12 +65,12 @@ void ModuleFloor::RenderFloor() {
 
 	//Move Floor Horizontally
 	float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight)/(SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
-	float horizonShiftIncrement = 1.0f / horizonDisplayPercentage;
+	float alphaIncrementForCurrentHorizon = 1.0f / horizonDisplayPercentage;
+	float currentMaxHorizontalAlpha = 0.33f*alphaIncrementForCurrentHorizon;
 
-
-	float horizontalAlpha = previousHorizontalMovePercentage*0.33f*horizonShiftIncrement + horizontalSpeed*horizonShiftIncrement;
-	horizontalAlpha = fmod(horizontalAlpha, 0.33f*horizonShiftIncrement);
-	previousHorizontalMovePercentage = horizontalAlpha / (0.33f*horizonShiftIncrement);
+	float horizontalAlpha = previousHorizontalMovePercentage*currentMaxHorizontalAlpha + horizontalSpeed*alphaIncrementForCurrentHorizon;
+	horizontalAlpha = fmod(horizontalAlpha, currentMaxHorizontalAlpha);
+	previousHorizontalMovePercentage = horizontalAlpha / currentMaxHorizontalAlpha;
 
 	float iterationAlpha = (float)floorTextureRect.x;
 
@@ -87,7 +88,8 @@ void ModuleFloor::RenderFloor() {
 		iterationAlpha += horizontalAlpha;
 		floorTextureRect.x = (int)iterationAlpha;
 	}
-	//AlphaVerticalLinesMove();
+	SetAlphaLineParametersPercentual(horizonDisplayPercentage);
+	AlphaVerticalLinesMove();
 }
 
 void ModuleFloor::AlphaVerticalLinesMove()
@@ -107,7 +109,8 @@ void ModuleFloor::AlphaVerticalLinesMove()
 		App->renderer->DrawQuad(quadRect, 0, 0, 0, 50, false);
 
 		offsetDif = sizeOfAlphaLines / 4.0f;
-		sizeOfAlphaLines -= offsetDif;
+		//sizeOfAlphaLines -= offsetDif;
+		sizeOfAlphaLines = max(1.0f, sizeOfAlphaLines - offsetDif);
 		distanceBetweenAlphaLines += (sizeOfAlphaLines * 2.0f);
 	}
 
