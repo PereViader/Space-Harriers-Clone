@@ -31,24 +31,12 @@ private:
 	float previousHorizontalMovePercentage;
 
 	//horizontal lines
-	float ALPHA_DISTANCE_MAX = 20.0f*SCREEN_SIZE;
-	float  ALPHA_DISTANCE_MIN = 6.0f*SCREEN_SIZE;
-	float  ALPHA_SIZE_MAX = 10.3f*SCREEN_SIZE;
-	float  ALPHA_SIZE_MIN = 3.32f*SCREEN_SIZE;
-
-	float startDistanceBetweenAlphaLines;
-	float distanceBetweenAlphaLines;
-
-	float startSizeOfAlphaLines;
-	float sizeOfAlphaLines;
-
-	int iterationOfAlphaLine;
-	int horizonY;
+	float firstSegmentPositionPercentage;
+	const float FIRST_HORIZONTAL_SEGMENT_HEIGHT = 50.0f;
+	const float SEGMENT_REDUCTION = 0.66f;
 
 private:
 	void RenderFloor();
-	void AlphaVerticalLinesMove();
-	void SetAlphaLineParametersPercentual(float percent);
-
-
+	void RenderVerticalLines();
+	void RenderHorizontalLines();
 };

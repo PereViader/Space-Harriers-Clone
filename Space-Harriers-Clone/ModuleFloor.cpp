@@ -33,9 +33,8 @@ bool ModuleFloor::Init()
 	horizonRenderHeight = HORIZON_MIN_HEIGHT;
 	horizontalSpeed = 0;
 	previousHorizontalMovePercentage = 0.0f;
+	firstSegmentPositionPercentage = 0.0f;
 
-	SetAlphaLineParametersPercentual(1.0f);
-	iterationOfAlphaLine = 0;
 	return true;
 }
 
@@ -53,18 +52,24 @@ update_status ModuleFloor::Update()
 }
 
 void ModuleFloor::RenderFloor() {
+	RenderVerticalLines();
+	RenderHorizontalLines();
+}
+
+void ModuleFloor::RenderVerticalLines()
+{
 	//Number of pixels between each line from the texture to be blit to the screen
 	float originalTextureVerticalPixelsPerScreenRow = (float)FLOOR_PIXEL_HEIGHT / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
 
 
 	//Rects for blitting from the texture to the screen
 	const int extraSpaceForCurves = 260;
-	SDL_Rect floorTextureRect = {extraSpaceForCurves,0,FLOOR_PIXEL_WIDTH-extraSpaceForCurves*2,1 };
-	SDL_Rect screenBlitRect = {0,horizonRenderHeight,SCREEN_WIDTH*SCREEN_SIZE,1};
+	SDL_Rect floorTextureRect = { extraSpaceForCurves,0,FLOOR_PIXEL_WIDTH - extraSpaceForCurves * 2,1 };
+	SDL_Rect screenBlitRect = { 0,horizonRenderHeight,SCREEN_WIDTH*SCREEN_SIZE,1 };
 
 
 	//Move Floor Horizontally
-	float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight)/(SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
+	float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
 	float alphaIncrementForCurrentHorizon = 1.0f / horizonDisplayPercentage;
 	float currentMaxHorizontalAlpha = 0.33f*alphaIncrementForCurrentHorizon;
 
@@ -88,36 +93,52 @@ void ModuleFloor::RenderFloor() {
 		iterationAlpha += horizontalAlpha;
 		floorTextureRect.x = (int)iterationAlpha;
 	}
-	SetAlphaLineParametersPercentual(horizonDisplayPercentage);
-	AlphaVerticalLinesMove();
 }
 
-void ModuleFloor::AlphaVerticalLinesMove()
-{
-	distanceBetweenAlphaLines = startDistanceBetweenAlphaLines;
-	sizeOfAlphaLines = startSizeOfAlphaLines;
+/*void ModuleFloor::RenderHorizontalLines()
+{ 
+	//float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
 
-	float coef = iterationOfAlphaLine / distanceBetweenAlphaLines;
-	float offsetDif = 0;
+	float startingRenderingPosition = SCREEN_HEIGHT*SCREEN_SIZE - FIRST_HORIZONTAL_SEGMENT_HEIGHT*(1.0f - firstSegmentPositionPercentage);
+	float firstSegmentHeight = FIRST_HORIZONTAL_SEGMENT_HEIGHT * (1.0f - firstSegmentPositionPercentage) + FIRST_HORIZONTAL_SEGMENT_HEIGHT * (1.0f / SEGMENT_REDUCTION) * (firstSegmentPositionPercentage);
+	
+	float currentSegmentHeight = firstSegmentHeight;
+	float currentRenderingPosition = startingRenderingPosition;
 
-	while (distanceBetweenAlphaLines <= SCREEN_HEIGHT * SCREEN_SIZE - horizonRenderHeight)
-	{
-		int yPos = (int)(SCREEN_HEIGHT * SCREEN_SIZE - (distanceBetweenAlphaLines - coef*sizeOfAlphaLines));
-		int height = (int)(sizeOfAlphaLines + (offsetDif * (coef / 2)));
-		const SDL_Rect quadRect = { 0, yPos, SCREEN_WIDTH * SCREEN_SIZE, height };
-
+	int i = 0;
+	//while (currentRenderingPosition > horizonRenderHeight) {
+	while (i++ < 20){
+		float currentSegmentPrintedHeight = currentSegmentHeight * 0.40f;
+		SDL_Rect quadRect = { 0, (int)currentRenderingPosition, SCREEN_WIDTH*SCREEN_SIZE, (int)currentSegmentPrintedHeight };
 		App->renderer->DrawQuad(quadRect, 0, 0, 0, 50, false);
-
-		offsetDif = sizeOfAlphaLines / 4.0f;
-		//sizeOfAlphaLines -= offsetDif;
-		sizeOfAlphaLines = max(1.0f, sizeOfAlphaLines - offsetDif);
-		distanceBetweenAlphaLines += (sizeOfAlphaLines * 2.0f);
+		
+		currentSegmentHeight = currentSegmentHeight * SEGMENT_REDUCTION;
+		currentRenderingPosition -= currentSegmentHeight;
 	}
 
-	iterationOfAlphaLine = (iterationOfAlphaLine + 2) % (int)(startDistanceBetweenAlphaLines * 2);
-}
+	firstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + 0.05f, 1.0f);
+}*/
 
-void ModuleFloor::SetAlphaLineParametersPercentual(float percent) {
-	startDistanceBetweenAlphaLines = ALPHA_DISTANCE_MIN + (percent*(ALPHA_DISTANCE_MAX - ALPHA_DISTANCE_MIN));
-	startSizeOfAlphaLines = ALPHA_SIZE_MIN + (percent*(ALPHA_SIZE_MAX - ALPHA_SIZE_MIN));
+void ModuleFloor::RenderHorizontalLines()
+{
+	//float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
+
+	float startingRenderingPosition = SCREEN_HEIGHT*SCREEN_SIZE - FIRST_HORIZONTAL_SEGMENT_HEIGHT*(1.0f - firstSegmentPositionPercentage);
+	float firstSegmentHeight = FIRST_HORIZONTAL_SEGMENT_HEIGHT * (1.0f - firstSegmentPositionPercentage) + FIRST_HORIZONTAL_SEGMENT_HEIGHT * (1.0f / SEGMENT_REDUCTION) * (firstSegmentPositionPercentage);
+
+	float currentSegmentHeight = firstSegmentHeight;
+	float currentRenderingPosition = startingRenderingPosition;
+	  
+	int i = 0;
+	//while (currentRenderingPosition > horizonRenderHeight) {
+	while (i++ < 50) {
+		float currentSegmentPrintedHeight = currentSegmentHeight * 0.40f;
+		SDL_Rect quadRect = { 0, (int)currentRenderingPosition, SCREEN_WIDTH*SCREEN_SIZE, (int)currentSegmentPrintedHeight };
+		App->renderer->DrawQuad(quadRect, 0, 0, 0, 50, false);
+
+		currentSegmentHeight = currentSegmentHeight * SEGMENT_REDUCTION;
+		currentRenderingPosition -= currentSegmentHeight;
+	}
+
+	firstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + 0.05f, 1.0f);
 }
