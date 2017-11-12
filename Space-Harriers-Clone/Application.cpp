@@ -27,11 +27,11 @@ Application::Application()
 	modules.push_back(audio = new ModuleAudio());
 
 	// Game Modules
+	modules.push_back(moduleFloor = new ModuleFloor(false));
 	modules.push_back(scene_intro = new ModuleSceneIntro(false));
 	modules.push_back(scene_space = new ModuleSceneSpace(false));
 	modules.push_back(player = new ModulePlayer(false));
 	modules.push_back(gameScene = new ModuleScene(false));
-	modules.push_back(moduleFloor = new ModuleFloor(false));
 
 
 	// Modules to draw on top of game logic

@@ -54,7 +54,6 @@ update_status ModuleSceneSpace::Update()
 	// Move camera forward -----------------------------
 	int scroll_speed = 1;
 
-	App->player->position.x += 1;
 	App->renderer->camera.x -= 3;
 	
 	// Draw everything --------------------------------------

@@ -4,6 +4,7 @@
 #include "ModuleTextures.h"
 #include "SDL\include\SDL.h"
 #include "ModuleInput.h"
+#include "ModulePlayer.h"
 
 #include <iostream>
 #include <cmath>
@@ -24,6 +25,8 @@ ModuleFloor::~ModuleFloor()
 
 bool ModuleFloor::Init()
 {
+	App->player->Enable();
+
 	floor = App->textures->Load("rtype/background.bmp");
 	//vertical lines
 	horizonRenderHeight = HORIZON_MIN_HEIGHT;
