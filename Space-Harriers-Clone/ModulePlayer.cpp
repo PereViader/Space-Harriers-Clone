@@ -8,10 +8,16 @@
 #include "ModuleFadeToBlack.h"
 #include "ModulePlayer.h"
 
+#include <algorithm>
+
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModulePlayer::ModulePlayer(bool active) : Module(active)
 {
+	speed = 0.02f;
+	recoverSpeed = 0.022f;
+	position = { 0.0f, 0.0f };
+
 	// idle animation (just the ship)
 	idle.frames.push_back({66, 1, 32, 14});
 
@@ -58,36 +64,26 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	int speed = 1;
+	fPoint movement = { 0.0f, 0.0f };
 
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= speed;
+		movement.x += -speed;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		position.x += speed;
+		movement.x += speed;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += speed;
-		if(current_animation != &down)
-		{
-			down.Reset();
-			current_animation = &down;
-		}
+		movement.y += speed;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		position.y -= speed;
-		if(current_animation != &up)
-		{
-			up.Reset();
-			current_animation = &up;
-		}
+		movement.y += -speed;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
@@ -95,13 +91,24 @@ update_status ModulePlayer::Update()
 		// TODO 6: Shoot a laser using the particle system
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE
-	   && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE)
-		current_animation = &idle;
+	if (movement.x == 0.0f && movement.y == 0.0f) {
+		movement.x = -position.x*recoverSpeed;
+		movement.y = -position.y*recoverSpeed;
+	}
+
+	// Clamp position values between -1 and 1
+	position.x =  min(1.0f, max(-1.0f, position.x + movement.x));
+	position.y = min(1.0f, max(-1.0f, position.y + movement.y));
+
+	// Project player position to the screen
+	int screenX = SCREEN_WIDTH * SCREEN_SIZE * ((position.x + 1.0f) / 2.0f);
+	int screenY = SCREEN_HEIGHT * SCREEN_SIZE * ((position.y + 1.0f) / 2.0f);
+	
+	SDL_Rect screenPosition = { screenX,screenY,10,10 };
 
 	// Draw everything --------------------------------------
-	if(destroyed == false)
-		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+	if (!destroyed)
+		App->renderer->DrawQuad(screenPosition, 255, 0, 0, 255, false);
 
 	return UPDATE_CONTINUE;
 }

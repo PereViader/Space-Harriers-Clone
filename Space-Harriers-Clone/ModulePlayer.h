@@ -24,8 +24,12 @@ public:
 	Animation idle;
 	Animation up;
 	Animation down;
-	iPoint position;
 	bool destroyed = false;
+
+private:
+	fPoint position;
+	float speed;
+	float recoverSpeed;
 };
 
 #endif
