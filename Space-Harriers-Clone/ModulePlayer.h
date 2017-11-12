@@ -13,10 +13,11 @@ public:
 	ModulePlayer(bool active = true);
 	~ModulePlayer();
 
-	bool Start();
-	update_status Update();
-	bool CleanUp();
+	bool Start() override;
+	update_status Update() override;
+	bool CleanUp() override;
 
+	const fPoint& GetPosition() const;
 public:
 
 	SDL_Texture* graphics = nullptr;

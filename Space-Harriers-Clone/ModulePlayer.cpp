@@ -61,6 +61,11 @@ bool ModulePlayer::CleanUp()
 	return true;
 }
 
+const fPoint & ModulePlayer::GetPosition() const
+{
+	return position;
+}
+
 // Update: draw background
 update_status ModulePlayer::Update()
 {
@@ -91,10 +96,12 @@ update_status ModulePlayer::Update()
 		// TODO 6: Shoot a laser using the particle system
 	}
 
-	if (movement.x == 0.0f && movement.y == 0.0f) {
+	if (movement.x == 0.0f)
 		movement.x = -position.x*recoverSpeed;
+	
+	if(movement.y == 0.0f)
 		movement.y = -position.y*recoverSpeed;
-	}
+
 
 	// Clamp position values between -1 and 1
 	position.x =  min(1.0f, max(-1.0f, position.x + movement.x));

@@ -26,6 +26,7 @@ private:
 
 	//vertical lines
 	int horizonRenderHeight;
+	const float HORIZONTAL_SPEED_MAX = 0.01f;
 	float horizontalSpeed;
 	float previousHorizontalAlpha;
 

@@ -30,7 +30,7 @@ bool ModuleFloor::Init()
 	floor = App->textures->Load("rtype/background.bmp");
 	//vertical lines
 	horizonRenderHeight = HORIZON_MIN_HEIGHT;
-	horizontalSpeed = -0.01f;
+	horizontalSpeed = 0;
 	previousHorizontalAlpha = 0.0f;
 
 	SetAlphaLineParametersPercentual(1.0f);
@@ -42,28 +42,11 @@ update_status ModuleFloor::Update()
 {
 
 	RenderFloor();
-	
-	if (App->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_REPEAT) {
-		horizonRenderHeight++;
-		if (horizonRenderHeight > HORIZON_MIN_HEIGHT) {
-			horizonRenderHeight = HORIZON_MIN_HEIGHT;
-		}
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT) {
-		horizonRenderHeight--;
-		if (horizonRenderHeight < HORIZON_MAX_HEIGHT) {
-			horizonRenderHeight = HORIZON_MAX_HEIGHT;
-		}
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_DOWN) {
-		horizontalSpeed = 0.01f;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_DOWN) {
-		horizontalSpeed = -0.01f;
-	}
-
+	fPoint playerPosition = App->player->GetPosition();
 	
+	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x;
+	horizonRenderHeight = HORIZON_MAX_HEIGHT + (HORIZON_MIN_HEIGHT-HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f);
 
 	return UPDATE_CONTINUE;
 }
@@ -103,7 +86,7 @@ void ModuleFloor::RenderFloor() {
 		iterationAlpha += horizontalAlpha;
 		floorTextureRect.x = (int)iterationAlpha;
 	}
-	AlphaVerticalLinesMove();
+	//AlphaVerticalLinesMove();
 }
 
 void ModuleFloor::AlphaVerticalLinesMove()
@@ -116,8 +99,8 @@ void ModuleFloor::AlphaVerticalLinesMove()
 
 	while (distanceBetweenAlphaLines <= SCREEN_HEIGHT * SCREEN_SIZE - horizonRenderHeight)
 	{
-		int yPos = SCREEN_HEIGHT * SCREEN_SIZE - (distanceBetweenAlphaLines - coef*sizeOfAlphaLines);
-		int height = sizeOfAlphaLines + (offsetDif * (coef / 2));
+		int yPos = (int)(SCREEN_HEIGHT * SCREEN_SIZE - (distanceBetweenAlphaLines - coef*sizeOfAlphaLines));
+		int height = (int)(sizeOfAlphaLines + (offsetDif * (coef / 2)));
 		const SDL_Rect quadRect = { 0, yPos, SCREEN_WIDTH * SCREEN_SIZE, height };
 
 		App->renderer->DrawQuad(quadRect, 0, 0, 0, 50, false);
