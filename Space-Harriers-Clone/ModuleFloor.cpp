@@ -35,6 +35,11 @@ bool ModuleFloor::Init()
 	previousHorizontalMovePercentage = 0.0f;
 	firstSegmentPositionPercentage = 0.0f;
 
+	for (int i = 0; i < 9; i++) {
+		horizontalQuads[i].x = 0;
+		horizontalQuads[i].w = SCREEN_SIZE*SCREEN_WIDTH;
+	}
+
 	return true;
 }
 
@@ -95,34 +100,8 @@ void ModuleFloor::RenderVerticalLines()
 	}
 }
 
-/*void ModuleFloor::RenderHorizontalLines()
-{ 
-	//float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
-
-	float startingRenderingPosition = SCREEN_HEIGHT*SCREEN_SIZE - FIRST_HORIZONTAL_SEGMENT_HEIGHT*(1.0f - firstSegmentPositionPercentage);
-	float firstSegmentHeight = FIRST_HORIZONTAL_SEGMENT_HEIGHT * (1.0f - firstSegmentPositionPercentage) + FIRST_HORIZONTAL_SEGMENT_HEIGHT * (1.0f / SEGMENT_REDUCTION) * (firstSegmentPositionPercentage);
-	
-	float currentSegmentHeight = firstSegmentHeight;
-	float currentRenderingPosition = startingRenderingPosition;
-
-	int i = 0;
-	//while (currentRenderingPosition > horizonRenderHeight) {
-	while (i++ < 20){
-		float currentSegmentPrintedHeight = currentSegmentHeight * 0.40f;
-		SDL_Rect quadRect = { 0, (int)currentRenderingPosition, SCREEN_WIDTH*SCREEN_SIZE, (int)currentSegmentPrintedHeight };
-		App->renderer->DrawQuad(quadRect, 0, 0, 0, 50, false);
-		
-		currentSegmentHeight = currentSegmentHeight * SEGMENT_REDUCTION;
-		currentRenderingPosition -= currentSegmentHeight;
-	}
-
-	firstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + 0.05f, 1.0f);
-}*/
-
 void ModuleFloor::RenderHorizontalLines()
 {
-	//float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
-
 	float baseSegmentHeight = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (1 +	SEGMENT_REDUCTION + 
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
@@ -137,17 +116,14 @@ void ModuleFloor::RenderHorizontalLines()
 	float currentSegmentHeight = firstSegmentHeight;
 	float currentRenderingPosition = startingRenderingPosition;
 	  
-	int i = 0;
-
-	//while (currentRenderingPosition > horizonRenderHeight) {
-	while (i < 9) {
-		i++;
+	for (int currentQuad = 0; currentQuad < 9; currentQuad++)
+	{
 		float currentSegmentPrintedHeight = currentSegmentHeight * 0.40f;
-		horizontalQuads[i] = { 0, (int)currentRenderingPosition, SCREEN_WIDTH*SCREEN_SIZE, (int)currentSegmentPrintedHeight };
+		horizontalQuads[currentQuad].y = (int)currentRenderingPosition;
+		horizontalQuads[currentQuad].h = (int)currentSegmentPrintedHeight;
 		currentSegmentHeight = currentSegmentHeight * SEGMENT_REDUCTION;
 		currentRenderingPosition -= currentSegmentHeight;
 	}
-
 	App->renderer->DrawQuads(horizontalQuads, 9, 0, 0, 0, 50);
 
 	firstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + 0.02f, 1.0f);

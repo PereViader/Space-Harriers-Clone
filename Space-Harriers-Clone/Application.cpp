@@ -43,7 +43,7 @@ Application::Application()
 
 Application::~Application()
 {
-	for(list<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
+	for(list<Module*>::reverse_iterator it = modules.rbegin(); it != modules.rend(); it++)
 		RELEASE(*it);
 }
 
@@ -51,10 +51,10 @@ bool Application::Init()
 {
 	bool ret = true;
 
-	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
+	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; it++)
 		ret = (*it)->Init(); // we init everything, even if not anabled
 
-	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
+	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; it++)
 	{
 		if((*it)->IsEnabled() == true)
 			ret = (*it)->Start();

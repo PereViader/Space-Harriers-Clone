@@ -34,7 +34,7 @@ private:
 	float firstSegmentPositionPercentage;
 	const float SEGMENT_REDUCTION = 0.66f;
 
-	SDL_Rect* horizontalQuads = new SDL_Rect[9];
+	SDL_Rect horizontalQuads[9];
 
 
 private:
