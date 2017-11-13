@@ -123,22 +123,32 @@ void ModuleFloor::RenderHorizontalLines()
 {
 	//float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
 
-	float startingRenderingPosition = SCREEN_HEIGHT*SCREEN_SIZE - FIRST_HORIZONTAL_SEGMENT_HEIGHT*(1.0f - firstSegmentPositionPercentage);
-	float firstSegmentHeight = FIRST_HORIZONTAL_SEGMENT_HEIGHT * (1.0f - firstSegmentPositionPercentage) + FIRST_HORIZONTAL_SEGMENT_HEIGHT * (1.0f / SEGMENT_REDUCTION) * (firstSegmentPositionPercentage);
+	float baseSegmentHeight = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (1 +	SEGMENT_REDUCTION + 
+																								SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
+																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
+																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
+																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION +
+																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION +
+																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION);
+
+	float startingRenderingPosition = SCREEN_HEIGHT*SCREEN_SIZE - baseSegmentHeight*(1.0f - firstSegmentPositionPercentage);
+	float firstSegmentHeight = baseSegmentHeight * (1.0f - firstSegmentPositionPercentage) + baseSegmentHeight * (1.0f / SEGMENT_REDUCTION) * (firstSegmentPositionPercentage);
 
 	float currentSegmentHeight = firstSegmentHeight;
 	float currentRenderingPosition = startingRenderingPosition;
 	  
 	int i = 0;
-	//while (currentRenderingPosition > horizonRenderHeight) {
-	while (i++ < 50) {
-		float currentSegmentPrintedHeight = currentSegmentHeight * 0.40f;
-		SDL_Rect quadRect = { 0, (int)currentRenderingPosition, SCREEN_WIDTH*SCREEN_SIZE, (int)currentSegmentPrintedHeight };
-		App->renderer->DrawQuad(quadRect, 0, 0, 0, 50, false);
 
+	//while (currentRenderingPosition > horizonRenderHeight) {
+	while (i < 9) {
+		i++;
+		float currentSegmentPrintedHeight = currentSegmentHeight * 0.40f;
+		horizontalQuads[i] = { 0, (int)currentRenderingPosition, SCREEN_WIDTH*SCREEN_SIZE, (int)currentSegmentPrintedHeight };
 		currentSegmentHeight = currentSegmentHeight * SEGMENT_REDUCTION;
 		currentRenderingPosition -= currentSegmentHeight;
 	}
 
-	firstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + 0.05f, 1.0f);
+	App->renderer->DrawQuads(horizontalQuads, 9, 0, 0, 0, 50);
+
+	firstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + 0.02f, 1.0f);
 }

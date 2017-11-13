@@ -155,6 +155,22 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	return ret;
 }
 
+bool ModuleRender::DrawQuads(const SDL_Rect rects[], int count, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+	bool ret = true;
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+	if (SDL_RenderFillRects(renderer,rects,count) != 0)
+	{
+		LOG("Cannot draw quad to screen. SDL_RenderFillRects error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
 bool ModuleRender::DrawPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);

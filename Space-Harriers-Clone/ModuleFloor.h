@@ -32,8 +32,10 @@ private:
 
 	//horizontal lines
 	float firstSegmentPositionPercentage;
-	const float FIRST_HORIZONTAL_SEGMENT_HEIGHT = 50.0f;
 	const float SEGMENT_REDUCTION = 0.66f;
+
+	SDL_Rect* horizontalQuads = new SDL_Rect[9];
+
 
 private:
 	void RenderFloor();

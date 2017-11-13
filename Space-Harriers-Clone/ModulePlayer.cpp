@@ -108,8 +108,8 @@ update_status ModulePlayer::Update()
 	position.y = min(1.0f, max(-1.0f, position.y + movement.y));
 
 	// Project player position to the screen
-	int screenX = SCREEN_WIDTH * SCREEN_SIZE * ((position.x + 1.0f) / 2.0f);
-	int screenY = SCREEN_HEIGHT * SCREEN_SIZE * ((position.y + 1.0f) / 2.0f);
+	int screenX = (int)(SCREEN_WIDTH  * SCREEN_SIZE * ((position.x + 1.0f) / 2.0f));
+	int screenY = (int)(SCREEN_HEIGHT * SCREEN_SIZE * ((position.y + 1.0f) / 2.0f));
 	
 	SDL_Rect screenPosition = { screenX,screenY,10,10 };
 
