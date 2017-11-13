@@ -51,7 +51,7 @@ update_status ModuleFloor::Update()
 	fPoint playerPosition = App->player->GetPosition();
 	
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x;
-	horizonRenderHeight = HORIZON_MAX_HEIGHT + (HORIZON_MIN_HEIGHT-HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f);
+	horizonRenderHeight = (int)(HORIZON_MAX_HEIGHT + (HORIZON_MIN_HEIGHT-HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f));
 
 	return UPDATE_CONTINUE;
 }
