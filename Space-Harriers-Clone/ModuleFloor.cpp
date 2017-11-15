@@ -144,7 +144,7 @@ void ModuleFloor::RenderHorizontalLines()
 	float currentRenderingPosition = startingRenderingPosition;
 	
 	int currentQuad = firstQuadIndex;
-	bool hasEnded = false;
+	bool hasLoopedArray = false;
 	do {
 		float currentSegmentPrintedHeight = currentSegmentHeight * (1.0f - SEGMENT_REDUCTION);
 		horizontalQuads[currentQuad].y = (int)currentRenderingPosition;
@@ -153,8 +153,8 @@ void ModuleFloor::RenderHorizontalLines()
 		currentRenderingPosition -= currentSegmentHeight;
 
 		currentQuad = (currentQuad + 1) % nHorizonQuads;
-		hasEnded = currentQuad == firstQuadIndex;
-	} while (!hasEnded);
+		hasLoopedArray = currentQuad == firstQuadIndex;
+	} while (!hasLoopedArray);
 
 	App->renderer->DrawQuads(horizontalQuads, nHorizonQuads, 0, 0, 0, 50);
 
