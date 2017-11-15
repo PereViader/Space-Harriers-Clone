@@ -37,10 +37,15 @@ private:
 	static const float HORIZONTAL_LINES_SPEED;
 
 	static const int nHorizonQuads = 11;
+	int firstQuadIndex;
 	SDL_Rect horizontalQuads[nHorizonQuads];
 
+	//temp
+	float positionPercentage;
+	int objectQuadIndex;
 
 private:
+	void RenderObject();
 	void RenderFloor();
 	void RenderVerticalLines();
 	void RenderHorizontalLines();
