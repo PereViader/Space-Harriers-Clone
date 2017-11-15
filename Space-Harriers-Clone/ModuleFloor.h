@@ -15,26 +15,29 @@ public:
 	update_status Update() override;
 
 private:
+
+	//Horizon
 	static const int HORIZON_MAX_HEIGHT = (int)((SCREEN_HEIGHT * SCREEN_SIZE) / 2.0f);
-	//static const int HORIZON_MIN_HEIGHT = HORIZON_MAX_HEIGHT + (int)((SCREEN_HEIGHT * SCREEN_SIZE) / 5.0f);
 	static const int HORIZON_MIN_HEIGHT = SCREEN_HEIGHT * SCREEN_SIZE - 50;
 
+	int horizonRenderHeight;
+
+	//vertical lines
+	SDL_Texture * floor;
 	static const int FLOOR_PIXEL_HEIGHT = 400;
 	static const int FLOOR_PIXEL_WIDTH = 800;
 
-	SDL_Texture * floor;
-
-	//vertical lines
-	int horizonRenderHeight;
-	const float HORIZONTAL_SPEED_MAX = 0.01f;
+	static const float HORIZONTAL_SPEED_MAX;
 	float horizontalSpeed;
 	float previousHorizontalMovePercentage;
 
 	//horizontal lines
 	float firstSegmentPositionPercentage;
-	const float SEGMENT_REDUCTION = 0.66f;
+	static const float SEGMENT_REDUCTION;
+	static const float HORIZONTAL_LINES_SPEED;
 
-	SDL_Rect horizontalQuads[9];
+	static const int nHorizonQuads = 11;
+	SDL_Rect horizontalQuads[nHorizonQuads];
 
 
 private:
@@ -42,3 +45,5 @@ private:
 	void RenderVerticalLines();
 	void RenderHorizontalLines();
 };
+
+

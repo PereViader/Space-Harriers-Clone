@@ -83,7 +83,9 @@
       <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h" />
-    <ClInclude Include="ModuleFloor.h" />
+    <ClInclude Include="ModuleFloor.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -144,7 +146,7 @@
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFloor.cpp">
-      <Filter>Main</Filter>
+      <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

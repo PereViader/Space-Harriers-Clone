@@ -12,6 +12,10 @@
 
 using namespace std; 
 
+const float ModuleFloor::HORIZONTAL_SPEED_MAX = 0.01f;
+const float ModuleFloor::SEGMENT_REDUCTION = 0.60f;
+const float ModuleFloor::HORIZONTAL_LINES_SPEED = 0.02f;
+
 ModuleFloor::ModuleFloor(bool enabled) :
 	Module(enabled)
 {
@@ -35,7 +39,7 @@ bool ModuleFloor::Init()
 	previousHorizontalMovePercentage = 0.0f;
 	firstSegmentPositionPercentage = 0.0f;
 
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < nHorizonQuads; i++) {
 		horizontalQuads[i].x = 0;
 		horizontalQuads[i].w = SCREEN_SIZE*SCREEN_WIDTH;
 	}
@@ -109,7 +113,9 @@ void ModuleFloor::RenderHorizontalLines()
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION +
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION +
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION +
-																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION);
+																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
+																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION +
+										 														SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION );
 
 	float startingRenderingPosition = SCREEN_HEIGHT*SCREEN_SIZE - baseSegmentHeight*(1.0f - firstSegmentPositionPercentage);
 	float firstSegmentHeight = baseSegmentHeight * (1.0f - firstSegmentPositionPercentage) + baseSegmentHeight * (1.0f / SEGMENT_REDUCTION) * (firstSegmentPositionPercentage);
@@ -117,15 +123,15 @@ void ModuleFloor::RenderHorizontalLines()
 	float currentSegmentHeight = firstSegmentHeight;
 	float currentRenderingPosition = startingRenderingPosition;
 	  
-	for (int currentQuad = 0; currentQuad < 9; currentQuad++)
+	for (int currentQuad = 0; currentQuad < nHorizonQuads; currentQuad++)
 	{
-		float currentSegmentPrintedHeight = currentSegmentHeight * 0.40f;
+		float currentSegmentPrintedHeight = currentSegmentHeight * (1.0f - SEGMENT_REDUCTION);
 		horizontalQuads[currentQuad].y = (int)currentRenderingPosition;
 		horizontalQuads[currentQuad].h = (int)currentSegmentPrintedHeight;
 		currentSegmentHeight = currentSegmentHeight * SEGMENT_REDUCTION;
 		currentRenderingPosition -= currentSegmentHeight;
 	}
-	App->renderer->DrawQuads(horizontalQuads, 9, 0, 0, 0, 50);
+	App->renderer->DrawQuads(horizontalQuads, nHorizonQuads, 0, 0, 0, 50);
 
-	firstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + 0.02f, 1.0f);
+	firstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + HORIZONTAL_LINES_SPEED, 1.0f);
 }
