@@ -18,20 +18,25 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	recoverSpeed = 0.022f;
 	position = { 0.0f, 0.0f };
 
-	// idle animation (just the ship)
-	idle.frames.push_back({66, 1, 32, 14});
+	ground_running.frames.push_back({ 4, 4, 20, 47 });
+	ground_running.frames.push_back({ 25, 4, 20, 47 });
+	ground_running.frames.push_back({ 49, 2, 25, 49 });
+	ground_running.frames.push_back({ 75, 3, 21, 47 });
+	ground_running.speed = 0.05f;
 
-	// move upwards
-	up.frames.push_back({100, 1, 32, 14});
-	up.frames.push_back({132, 0, 32, 14});
-	up.loop = false;
-	up.speed = 0.1f;
+	hover_center.frames.push_back({ 108,2,26,49 });
 
-	// Move down
-	down.frames.push_back({33, 1, 32, 14});
-	down.frames.push_back({0, 1, 32, 14});
-	down.loop = false;
-	down.speed = 0.1f;
+	hover_left.frames.push_back({ 142,2,22,50 });
+
+	hover_left_most.frames.push_back({ 170,3,20,48 });
+
+	hover_right.frames.push_back({ 197,3,20,48 });
+
+	hover_right_most.frames.push_back({ 221,3,22,49 });
+
+	currentAnimation = &hover_center;
+
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -42,7 +47,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	graphics = App->textures->Load("rtype/ship.png");
+	graphics = App->textures->Load("rtype/player.png");
 
 	destroyed = false;
 	position.x = 150;
@@ -69,39 +74,20 @@ const fPoint & ModulePlayer::GetPosition() const
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	fPoint movement = { 0.0f, 0.0f };
+	fPoint movement;
+	movement.x = App->input->GetAxis(Axis::Horizontal)*speed;
+	movement.y = App->input->GetAxis(Axis::Vertical)*speed;
 
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		movement.x += -speed;
-	}
+	if (movement.x == 0.0f)
+		movement.x = -position.x*recoverSpeed;
 
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		movement.x += speed;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		movement.y += speed;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		movement.y += -speed;
-	}
+	if (movement.y == 0.0f)
+		movement.y = -position.y*recoverSpeed;
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		// TODO 6: Shoot a laser using the particle system
 	}
-
-	if (movement.x == 0.0f)
-		movement.x = -position.x*recoverSpeed;
-	
-	if(movement.y == 0.0f)
-		movement.y = -position.y*recoverSpeed;
-
 
 	// Clamp position values between -1 and 1
 	position.x =  min(1.0f, max(-1.0f, position.x + movement.x));
@@ -111,11 +97,9 @@ update_status ModulePlayer::Update()
 	int screenX = (int)(SCREEN_WIDTH  * SCREEN_SIZE * ((position.x + 1.0f) / 2.0f));
 	int screenY = (int)(SCREEN_HEIGHT * SCREEN_SIZE * ((position.y + 1.0f) / 2.0f));
 	
-	SDL_Rect screenPosition = { screenX,screenY,10,10 };
-
 	// Draw everything --------------------------------------
 	if (!destroyed)
-		App->renderer->DrawQuad(screenPosition, 255, 0, 0, 255, false);
+		App->renderer->BlitWithPivotScaled(graphics, &currentAnimation->GetCurrentFrame(),4, 0.5f, 1.0f, screenX, screenY);
 
 	return UPDATE_CONTINUE;
 }

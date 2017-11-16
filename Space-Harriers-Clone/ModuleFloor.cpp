@@ -71,8 +71,8 @@ void ModuleFloor::RenderObject()
 	const SDL_Rect& renderQuad = horizontalQuads[objectQuadIndex];
 
 	SDL_Rect object;
-	object.x = SCREEN_WIDTH*SCREEN_SIZE / 2.0f;
-	object.y = renderQuad.y + renderQuad.h * positionPercentage;
+	object.x = (int)(SCREEN_WIDTH*SCREEN_SIZE / 2.0f);
+	object.y = (int)(renderQuad.y + renderQuad.h * positionPercentage);
 	object.w = 10;
 	object.h = 10;
 

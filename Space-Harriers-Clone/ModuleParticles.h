@@ -12,7 +12,6 @@ struct SDL_Texture;
 
 struct Particle
 {
-	// TODO 1: Fill in the structure with all the properties you need for each particle
 	bool to_delete = false;
 	iPoint position = { 0, 0 };
 	Animation anim;

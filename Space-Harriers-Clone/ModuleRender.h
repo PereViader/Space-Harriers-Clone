@@ -21,6 +21,7 @@ public:
 	bool CleanUp();
 
 	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0f);
+	bool BlitWithPivotScaled(SDL_Texture*, SDL_Rect* section, float scale, float pivotX, float pivotY, int x, int y);
 	bool DirectBlit(SDL_Texture* texture, SDL_Rect* section, SDL_Rect* destiny);
 
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = SDL_ALPHA_OPAQUE, bool use_camera = true);

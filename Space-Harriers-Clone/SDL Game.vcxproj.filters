@@ -86,6 +86,9 @@
     <ClInclude Include="ModuleFloor.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleBackground.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -146,6 +149,9 @@
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFloor.cpp">
+      <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleBackground.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>

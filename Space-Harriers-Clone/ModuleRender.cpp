@@ -117,6 +117,22 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	return ret;
 }
 
+bool ModuleRender::BlitWithPivotScaled(SDL_Texture * texture, SDL_Rect * section, float scale, float pivotX, float pivotY, int x, int y)
+{
+
+	float width = section->w*scale;
+	float height = section->h*scale;
+
+	SDL_Rect rectForPivot;
+	rectForPivot.w = (int)(width);
+	rectForPivot.h = (int)(height);
+	rectForPivot.x = (int)(x - (width*pivotX));
+	rectForPivot.y = (int)(y - (height*pivotY));
+
+	DirectBlit(texture, section, &rectForPivot);
+	return true;
+}
+
 bool ModuleRender::DirectBlit(SDL_Texture* texture, SDL_Rect* section, SDL_Rect* destiny)
 {
 	bool ret = true;

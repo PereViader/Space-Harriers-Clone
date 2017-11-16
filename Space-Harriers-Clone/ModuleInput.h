@@ -24,6 +24,11 @@ enum KeyState
 	KEY_UP
 };
 
+enum Axis {
+	Horizontal,
+	Vertical
+};
+
 class ModuleInput : public Module
 {
 
@@ -51,6 +56,8 @@ public:
 	{
 		return keyboard[id];
 	}
+
+	float GetAxis(Axis) const;
 
 	KeyState GetMouseButtonDown(int id) const
 	{

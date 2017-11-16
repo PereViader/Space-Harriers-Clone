@@ -21,10 +21,19 @@ public:
 public:
 
 	SDL_Texture* graphics = nullptr;
-	Animation* current_animation = nullptr;
-	Animation idle;
-	Animation up;
-	Animation down;
+
+	Animation * currentAnimation;
+
+	Animation ground_running;
+	Animation hover_center;
+	Animation hover_left;
+	Animation hover_left_most;
+	Animation hover_right;
+	Animation hover_right_most;
+	Animation takeDamage;
+	Animation tripOverHazzard;
+
+
 	bool destroyed = false;
 
 private:

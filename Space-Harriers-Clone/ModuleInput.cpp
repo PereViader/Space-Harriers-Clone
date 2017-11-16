@@ -136,6 +136,21 @@ bool ModuleInput::CleanUp()
 	return true;
 }
 
+float ModuleInput::GetAxis(Axis axis) const
+{
+	float ret = 0.0f;
+	if (axis == Axis::Horizontal) {
+		ret -= GetKey(SDL_SCANCODE_A) == KEY_REPEAT ? 1 : 0;
+		ret += GetKey(SDL_SCANCODE_D) == KEY_REPEAT ? 1 : 0;
+	}
+	else {
+		ret -= GetKey(SDL_SCANCODE_W) == KEY_REPEAT ? 1 : 0;
+		ret += GetKey(SDL_SCANCODE_S) == KEY_REPEAT ? 1 : 0;
+	}
+
+	return ret;
+}
+
 // ---------
 bool ModuleInput::GetWindowEvent(EventWindow ev) const
 {
