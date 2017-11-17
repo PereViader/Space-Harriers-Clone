@@ -53,20 +53,32 @@ bool ModuleBackground::Start()
 
 update_status ModuleBackground::Update()
 {
-	SDL_Rect backgroundRect;
-	backgroundRect.x = currentRenderingBackgroundStartInTexture;
-	backgroundRect.y = 0;
-	backgroundRect.h = currentLevelHorizonDecalTextureHeight;
+	SDL_Rect backgroundScreenSection = { 0,0,SCREEN_WIDTH*SCREEN_SIZE,App->moduleFloor->GetHorizonRenderHeight() };
+
+	SDL_Rect backgroundTextureSection;
+	<.x = currentRenderingBackgroundStartInTexture;
+	backgroundTextureSection.y = 0;
+	backgroundTextureSection.h = currentLevelBackgroundTextureHeight;
 	if (currentRenderingBackgroundStartInTexture + HORIZON_DECAL_WINDOW_WIDTH <= currentLevelBackgroundTextureWidth) {
-		backgroundRect.w = HORIZON_DECAL_WINDOW_WIDTH;
+		backgroundTextureSection.w = HORIZON_DECAL_WINDOW_WIDTH;
 	}
 	else {
+
+
 		int leftWarpSize = (currentRenderingBackgroundStartInTexture + HORIZON_DECAL_WINDOW_WIDTH - currentLevelBackgroundTextureWidth);
-		backgroundRect.w = HORIZON_DECAL_WINDOW_WIDTH - leftWarpSize;
-		SDL_Rect warpBackgroundRect = backgroundRect;
+		SDL_Rect backgroundWarpScreenSection = { 0,0,leftWarpSize,App->moduleFloor->GetHorizonRenderHeight() };
+		backgroundScreenSection.x = leftWarpSize;
+		backgroundTextureSection.w = HORIZON_DECAL_WINDOW_WIDTH - leftWarpSize;
+		SDL_Rect warpBackgroundRect = backgroundTextureSection;
 		warpBackgroundRect.w = leftWarpSize;
-		App->renderer->Blit(background[currentLevel], currentRenderingBackgroundStartInTexture,)
+		App->renderer->DirectBlit(background[currentLevel],)
 	}
+
+	App->renderer->DirectBlit(background[currentLevel], )
+
+
+
+
 }
 
 void ModuleBackground::NextLevel()

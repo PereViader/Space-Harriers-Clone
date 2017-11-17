@@ -66,6 +66,11 @@ update_status ModuleFloor::Update()
 	return UPDATE_CONTINUE;
 }
 
+int ModuleFloor::GetHorizonRenderHeight() const
+{
+	return horizonRenderHeight;
+}
+
 void ModuleFloor::RenderObject()
 {
 	const SDL_Rect& renderQuad = horizontalQuads[objectQuadIndex];

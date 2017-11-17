@@ -14,8 +14,9 @@ public:
 	bool Init() override;
 	update_status Update() override;
 
-private:
+	int GetHorizonRenderHeight() const;
 
+private:
 	//Horizon
 	static const int HORIZON_MAX_HEIGHT = (int)((SCREEN_HEIGHT * SCREEN_SIZE) / 2.0f);
 	static const int HORIZON_MIN_HEIGHT = SCREEN_HEIGHT * SCREEN_SIZE - 50;
