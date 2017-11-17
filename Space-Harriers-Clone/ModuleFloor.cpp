@@ -5,6 +5,8 @@
 #include "SDL\include\SDL.h"
 #include "ModuleInput.h"
 #include "ModulePlayer.h"
+#include "ModuleBackground.h"
+
 #include <algorithm>
 
 #include <iostream>
@@ -31,7 +33,8 @@ ModuleFloor::~ModuleFloor()
 bool ModuleFloor::Init()
 {
 	App->player->Enable();
-	floor = App->textures->Load("rtype/background.bmp");
+	App->moduleBackground->Enable();
+	floor = App->textures->Load("rtype/floor.bmp");
 	//vertical lines
 	horizonRenderHeight = HORIZON_MIN_HEIGHT;
 	horizontalSpeed = 0;

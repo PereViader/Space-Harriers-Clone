@@ -15,6 +15,7 @@ class ModuleCollision;
 class ModuleParticles;
 class ModuleScene;
 class ModuleFloor;
+class ModuleBackground;
 
 // Game modules ---
 class ModulePlayer;
@@ -47,6 +48,7 @@ public:
 	ModuleSceneIntro* scene_intro;
 	ModuleSceneSpace* scene_space;
 	ModuleScene* gameScene;
+	ModuleBackground* moduleBackground;
 	ModuleFloor* moduleFloor;
 
 private:

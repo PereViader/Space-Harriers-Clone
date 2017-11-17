@@ -6,11 +6,16 @@ class ModuleBackground :
 	public Module
 {
 public:
-	ModuleBackground();
+	ModuleBackground(bool enabled);
 	~ModuleBackground();
 
 	bool Start() override;
 	update_status Update() override;
+
+	void DrawBackground();
+
+	void MoveBackground();
+
 
 	void NextLevel();
 
@@ -20,9 +25,7 @@ private:
 	static const float BACKGROUND_HORIZONTAL_SPEED;
 	static const float HORIZON_DECAL_HORIZONTAL_SPEED;
 
-	static const int HORIZON_DECAL_WINDOW_WIDTH;
-	static const int HORIZON_DECAL_WINDOW_HEIGHT;
-
+	static const int BACKGROUND_TEXTURE_HORIZONTAL_RENDERING_WINDOW;
 
 	static const int NUMBER_OF_LEVELS = 1;
 	SDL_Texture * horizonDecal[NUMBER_OF_LEVELS];
@@ -36,6 +39,10 @@ private:
 	int currentLevelHorizonDecalTextureHeight;
 
 
-	int currentRenderingBackgroundStartInTexture;
+	int backgroundTextureOffset;
+
+private:
+	bool DoesBackgroundNeed2Blits() const;
+
 };
 

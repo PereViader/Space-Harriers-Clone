@@ -13,6 +13,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleSceneSpace.h"
 #include "ModulePlayer.h"
+#include "ModuleBackground.h"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ Application::Application()
 	modules.push_back(audio = new ModuleAudio());
 
 	// Game Modules
+	modules.push_back(moduleBackground = new ModuleBackground(false));
 	modules.push_back(moduleFloor = new ModuleFloor(false));
 	modules.push_back(scene_intro = new ModuleSceneIntro(false));
 	modules.push_back(scene_space = new ModuleSceneSpace(false));
