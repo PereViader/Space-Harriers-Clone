@@ -50,46 +50,6 @@ bool ModuleBackground::Start()
 	return true;
 }
 
-/*update_status ModuleBackground::Update()
-{
-	fPoint playerPosition = App->player->GetPosition();
-	currentRenderingBackgroundStartInTexture = (int)(currentRenderingBackgroundStartInTexture + playerPosition.x * BACKGROUND_HORIZONTAL_SPEED) % currentLevelBackgroundTextureWidth;
-
-
-	SDL_Rect backgroundScreenSection = { 0,0,SCREEN_WIDTH*SCREEN_SIZE,App->moduleFloor->GetHorizonRenderHeight() };
-
-	SDL_Rect backgroundTextureSection;
-	backgroundTextureSection.x = currentRenderingBackgroundStartInTexture;
-	backgroundTextureSection.y = 0;
-	backgroundTextureSection.h = currentLevelBackgroundTextureHeight;
-	backgroundTextureSection.w = HORIZON_DECAL_WINDOW_WIDTH;
-
-	if (currentRenderingBackgroundStartInTexture < 0) {
-		int leftWarpSize = -currentRenderingBackgroundStartInTexture;
-		backgroundScreenSection.w -= leftWarpSize;
-		backgroundTextureSection.w = HORIZON_DECAL_WINDOW_WIDTH - leftWarpSize;
-
-		SDL_Rect warpBackgroundSection = backgroundTextureSection;
-		warpBackgroundSection.x = currentLevelBackgroundTextureWidth - leftWarpSize;
-
-
-	} else if (currentRenderingBackgroundStartInTexture + HORIZON_DECAL_WINDOW_WIDTH > currentLevelBackgroundTextureWidth) {
-		int rightWarpSize = (currentRenderingBackgroundStartInTexture + HORIZON_DECAL_WINDOW_WIDTH - currentLevelBackgroundTextureWidth);
-		backgroundScreenSection.w -= rightWarpSize;
-		
-		backgroundTextureSection.w = HORIZON_DECAL_WINDOW_WIDTH - rightWarpSize;
-
-		SDL_Rect warpBackgroundSection = backgroundTextureSection;
-		warpBackgroundSection.x = 0;
-		warpBackgroundSection.w = rightWarpSize;
-
-		SDL_Rect warpbackgroundScreenSection = { HORIZON_DECAL_WINDOW_WIDTH - rightWarpSize,0,rightWarpSize,App->moduleFloor->GetHorizonRenderHeight() };
-		App->renderer->DirectBlit(background[currentLevel], &warpBackgroundSection, &warpbackgroundScreenSection);
-	}
-	App->renderer->DirectBlit(background[currentLevel], &backgroundTextureSection, &backgroundScreenSection);
-	return UPDATE_CONTINUE;
-}*/
-
 update_status ModuleBackground::Update()
 {
 	DrawBackground();
