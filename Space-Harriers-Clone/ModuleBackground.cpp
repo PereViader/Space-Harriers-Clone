@@ -8,13 +8,15 @@
 
 #include <string>
 #include <assert.h>
+#include <iostream>
 
 #include "Globals.h"
 
 const float ModuleBackground::BACKGROUND_HORIZONTAL_SPEED = 1;
 const float ModuleBackground::HORIZON_DECAL_HORIZONTAL_SPEED = 1.5f;
 
-const int ModuleBackground::BACKGROUND_TEXTURE_HORIZONTAL_RENDERING_WINDOW = 400;
+const float ModuleBackground::BACKGROUND_SCALE = 3.0f;
+const float ModuleBackground::DECAL_SCALE = 1.0f;
 
 
 ModuleBackground::ModuleBackground(bool enabled) : Module(enabled)
@@ -34,18 +36,18 @@ bool ModuleBackground::Start()
 		path = "rtype/horizonDecal";
 		path.append(std::to_string(i));
 		path.append(".png");
-		horizonDecal[i] = App->textures->Load(path.c_str()); // TODO: Encontrar horizonte bueno
+		horizonDecal[i] = App->textures->Load(path.c_str());
 		path = "rtype/background";
 		path.append(std::to_string(i));
 		path.append(".png");
-		background[i] = App->textures->Load(path.c_str()); // TODO: Igual
+		background[i] = App->textures->Load(path.c_str());
 	}
 
 	SetLevel(0);
 
 
 	//Initialize variables
-	backgroundTextureOffset = 1000;
+	backgroundTextureOffset = 0;
 
 	return true;
 }
@@ -53,52 +55,49 @@ bool ModuleBackground::Start()
 update_status ModuleBackground::Update()
 {
 	DrawBackground();
+	DrawDecal();
 	return UPDATE_CONTINUE;
 }
 
 void ModuleBackground::DrawBackground() {
 	MoveBackground();
 
-	SDL_Rect leftScreenSection, leftTextureSection;
+	int horizonRenderHeight = App->moduleFloor->GetHorizonRenderHeight();
+	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE) {
+		int screenX = (int)((currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE);
+		float pivotXRight = 0;
+		float pivotYRight = 1;
+		float pivotXLeft = 1;
+		float pivotYLeft = 1;
 
-	// Shared attibutes initialization
-	leftScreenSection.x = 0;
-	leftScreenSection.y = 0;
-	leftScreenSection.h = App->moduleFloor->GetHorizonRenderHeight();
-
-	leftTextureSection.y = 0;
-	leftTextureSection.h = currentLevelBackgroundTextureHeight;
-
-	if (DoesBackgroundNeed2Blits()) {				
-		SDL_Rect rightScreenSection, rightTextureSection;
-		rightScreenSection = leftScreenSection;
-		rightTextureSection = leftTextureSection;
-
-		rightTextureSection.x = backgroundTextureOffset;
-		rightTextureSection.w = currentLevelBackgroundTextureWidth - backgroundTextureOffset;
-
-		leftTextureSection.x = 0;
-		leftTextureSection.w = BACKGROUND_TEXTURE_HORIZONTAL_RENDERING_WINDOW - rightTextureSection.w;
-
-
-		float rightTexturePercentage = (float)rightTextureSection.w / BACKGROUND_TEXTURE_HORIZONTAL_RENDERING_WINDOW;
-
-		leftScreenSection.w = (int)(SCREEN_WIDTH*SCREEN_SIZE*rightTexturePercentage);
-
-
-		rightScreenSection.w = SCREEN_WIDTH*SCREEN_SIZE- leftScreenSection.w;
-		rightScreenSection.x = SCREEN_WIDTH*SCREEN_SIZE - rightScreenSection.w;
-
-
-		App->renderer->DirectBlit(background[currentLevel], &rightTextureSection, &leftScreenSection);
-		App->renderer->DirectBlit(background[currentLevel], &leftTextureSection, &rightScreenSection);
+		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, pivotXRight, pivotYRight, screenX, horizonRenderHeight);
+		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, pivotXLeft, pivotYLeft, screenX, horizonRenderHeight);
 	}
 	else {
-		leftScreenSection.w = SCREEN_WIDTH*SCREEN_SIZE;
+		float pivotX = (float)backgroundTextureOffset/currentLevelBackgroundTextureWidth;
+		float pivotY = 1;
+		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, pivotX, pivotY, 0, horizonRenderHeight);
+	}
+}
 
-		leftTextureSection.x = backgroundTextureOffset;
-		leftTextureSection.w = BACKGROUND_TEXTURE_HORIZONTAL_RENDERING_WINDOW;
-		App->renderer->DirectBlit(background[currentLevel], &leftTextureSection, &leftScreenSection);
+void ModuleBackground::DrawDecal() {
+	MoveDecal();
+
+	int horizonRenderHeight = App->moduleFloor->GetHorizonRenderHeight();
+	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE) {
+		int screenX = (int)((currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE);
+		float pivotXRight = 0;
+		float pivotYRight = 1;
+		float pivotXLeft = 1;
+		float pivotYLeft = 1;
+
+		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, pivotXRight, pivotYRight, screenX, horizonRenderHeight);
+		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, pivotXLeft, pivotYLeft, screenX, horizonRenderHeight);
+	}
+	else {
+		float pivotX = (float)decalTextureOffset / currentLevelHorizonDecalTextureWidth;
+		float pivotY = 1;
+		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, pivotX, pivotY, 0, horizonRenderHeight);
 	}
 }
 
@@ -109,9 +108,11 @@ void ModuleBackground::MoveBackground()
 		backgroundTextureOffset = currentLevelBackgroundTextureWidth - backgroundTextureOffset - 1;
 }
 
-bool ModuleBackground::DoesBackgroundNeed2Blits() const
+void ModuleBackground::MoveDecal()
 {
-	return backgroundTextureOffset + BACKGROUND_TEXTURE_HORIZONTAL_RENDERING_WINDOW > currentLevelBackgroundTextureWidth;
+	decalTextureOffset = (int)(decalTextureOffset + App->player->GetPosition().x * HORIZON_DECAL_HORIZONTAL_SPEED) % currentLevelHorizonDecalTextureWidth;
+	if (decalTextureOffset < 0)
+		decalTextureOffset = currentLevelHorizonDecalTextureWidth - decalTextureOffset - 1;
 }
 
 void ModuleBackground::NextLevel()

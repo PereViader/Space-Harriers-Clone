@@ -15,7 +15,7 @@ struct Particle
 	bool to_delete = false;
 	iPoint position = { 0, 0 };
 	Animation anim;
-
+	int sfxId;
 	// TODO 11: Add an optional collider to each particle
 
 
@@ -47,6 +47,7 @@ private:
 public:
 
 	// prototype particles go here ...
+	Particle playerParticlePrototype;
 };
 
 #endif // __MODULEPARTICLES_H__

@@ -6,6 +6,7 @@
 #include "ModuleInput.h"
 #include "ModulePlayer.h"
 #include "ModuleBackground.h"
+#include "ModuleAudio.h"
 
 #include <algorithm>
 
@@ -32,8 +33,12 @@ ModuleFloor::~ModuleFloor()
 
 bool ModuleFloor::Init()
 {
+	//temporal
 	App->player->Enable();
 	App->moduleBackground->Enable();
+	App->audio->PlayMusic("rtype/main_theme.wav");
+
+
 	floor = App->textures->Load("rtype/floor.bmp");
 	//vertical lines
 	horizonRenderHeight = HORIZON_MIN_HEIGHT;
@@ -47,7 +52,6 @@ bool ModuleFloor::Init()
 	}
 
 	firstQuadIndex = 0;
-
 
 	positionPercentage = 0.0f;
 	objectQuadIndex = nHorizonQuads -1;
@@ -72,6 +76,11 @@ update_status ModuleFloor::Update()
 int ModuleFloor::GetHorizonRenderHeight() const
 {
 	return horizonRenderHeight;
+}
+
+float ModuleFloor::GetCurrentHorizonPercentage() const
+{
+	return (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
 }
 
 void ModuleFloor::RenderObject()

@@ -18,9 +18,10 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("rtype/particles.png");
+	graphics = App->textures->Load("rtype/bullets.png");
 
-
+	playerParticlePrototype.anim.frames.push_back({ 3,2,87,56 });
+	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/playerBullet.wav");
 	// TODO 2: Create a prototype for the laser particle
 	// audio: rtype/laser.wav
 	// coords: {232, 103, 16, 12}; {249, 103, 16, 12};

@@ -119,9 +119,20 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 
 bool ModuleRender::BlitWithPivotScaled(SDL_Texture * texture, SDL_Rect * section, float scale, float pivotX, float pivotY, int x, int y)
 {
-
-	float width = section->w*scale;
-	float height = section->h*scale;
+	float width;
+	float height;
+	if (section != nullptr) {
+		width = (float)section->w;
+		height = (float)section->h;
+	}
+	else {
+		int w, h;
+		SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
+		width = (float)w;
+		height = (float)h;
+	}
+	width *= scale;
+	height *= scale;
 
 	SDL_Rect rectForPivot;
 	rectForPivot.w = (int)(width);

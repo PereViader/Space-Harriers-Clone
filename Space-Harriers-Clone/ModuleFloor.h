@@ -15,11 +15,15 @@ public:
 	update_status Update() override;
 
 	int GetHorizonRenderHeight() const;
+	float GetCurrentHorizonPercentage() const;	
 
-private:
+public:
 	//Horizon
 	static const int HORIZON_MAX_HEIGHT = (int)((SCREEN_HEIGHT * SCREEN_SIZE) / 2.0f);
 	static const int HORIZON_MIN_HEIGHT = SCREEN_HEIGHT * SCREEN_SIZE - 50;
+
+private:
+	
 
 	int horizonRenderHeight;
 
