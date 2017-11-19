@@ -90,9 +90,9 @@
     <ClInclude Include="ModuleParticles.h" />
     <ClInclude Include="ModulePlayer.h" />
     <ClInclude Include="ModuleRender.h" />
-    <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleSceneSpace.h" />
+    <ClInclude Include="ModuleStage.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleTime.h" />
     <ClInclude Include="ModuleWindow.h" />
@@ -116,9 +116,9 @@
     <ClCompile Include="ModuleParticles.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
-    <ClCompile Include="ModuleScene.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleSceneSpace.cpp" />
+    <ClCompile Include="ModuleStage.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTime.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />

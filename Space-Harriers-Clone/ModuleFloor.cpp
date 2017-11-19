@@ -34,12 +34,6 @@ ModuleFloor::~ModuleFloor()
 
 bool ModuleFloor::Init()
 {
-	//temporal
-	App->player->Enable();
-	App->moduleBackground->Enable();
-	//App->audio->PlayMusic("rtype/main_theme.wav");
-
-
 	floor = App->textures->Load("rtype/floor.bmp");
 	//vertical lines
 	horizonRenderHeight = HORIZON_MIN_HEIGHT;

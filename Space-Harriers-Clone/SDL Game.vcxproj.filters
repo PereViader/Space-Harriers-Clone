@@ -79,18 +79,24 @@
     <ClInclude Include="Object.h">
       <Filter>Unity Like</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleScene.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h" />
     <ClInclude Include="ModuleFloor.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleBackground.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTime.h" />
-    <ClInclude Include="ModuleEnemy.h" />
+    <ClInclude Include="ModuleTime.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEnemy.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Unity Like</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleStage.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -144,9 +150,6 @@
     <ClCompile Include="Component.cpp">
       <Filter>Unity Like</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleScene.cpp">
-      <Filter>Game Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>Main</Filter>
     </ClCompile>
@@ -157,10 +160,13 @@
       <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTime.cpp">
-      <Filter>Main</Filter>
+      <Filter>Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleEnemy.cpp">
-      <Filter>Main</Filter>
+      <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleStage.cpp">
+      <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
