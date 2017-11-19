@@ -83,6 +83,11 @@ float ModuleFloor::GetCurrentHorizonPercentage() const
 	return (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
 }
 
+float ModuleFloor::GetHorizonPercentageOfPosition(int position) const
+{
+	return (float)(horizonRenderHeight-position)/(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
+}
+
 void ModuleFloor::RenderObject()
 {
 	const SDL_Rect& renderQuad = horizontalQuads[objectQuadIndex];

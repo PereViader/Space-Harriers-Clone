@@ -16,6 +16,7 @@ public:
 
 	int GetHorizonRenderHeight() const;
 	float GetCurrentHorizonPercentage() const;	
+	float GetHorizonPercentageOfPosition(int position) const;
 
 public:
 	//Horizon
