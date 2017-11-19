@@ -69,13 +69,26 @@ bool ModulePlayer::CleanUp()
 	return true;
 }
 
-const fPoint & ModulePlayer::GetPosition() const
+const fPoint & ModulePlayer::GetNormalizedPosition() const
 {
 	return position;
 }
 
-// Update: draw background
-update_status ModulePlayer::Update()
+iPoint ModulePlayer::GetScreenPosition() const
+{
+	iPoint screenPosition;
+	screenPosition.x = (int)(SCREEN_WIDTH  * SCREEN_SIZE * ((position.x + 1.0f) / 2.0f));
+	screenPosition.y = (int)(SCREEN_HEIGHT * SCREEN_SIZE * ((position.y + 1.0f) / 2.0f));
+	return screenPosition;
+}
+
+void ModulePlayer::ShootLaser()
+{
+	iPoint screen = GetScreenPosition();
+	App->particles->AddParticle(App->particles->playerParticlePrototype, screen.x, screen.y);
+}
+
+void ModulePlayer::MovePlayer()
 {
 	fPoint movement;
 	movement.x = App->input->GetAxis(Axis::Horizontal)*PLAYER_SPEED*App->time->GetDeltaTime();
@@ -87,23 +100,35 @@ update_status ModulePlayer::Update()
 	if (movement.y == 0.0f)
 		movement.y = -position.y*PLAYER_RECOVER_SPEED*App->time->GetDeltaTime();
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		// TODO 6: Shoot a laser using the particle system
-	}
-
 	// Clamp position values between -1 and 1
-	position.x =  min(1.0f, max(-1.0f, position.x + movement.x));
+	position.x = min(1.0f, max(-1.0f, position.x + movement.x));
 	position.y = min(1.0f, max(-1.0f, position.y + movement.y));
 
+}
+
+void ModulePlayer::RenderPlayer()
+{
 	// Project player position to the screen
-	int screenX = (int)(SCREEN_WIDTH  * SCREEN_SIZE * ((position.x + 1.0f) / 2.0f));
-	int screenY = (int)(SCREEN_HEIGHT * SCREEN_SIZE * ((position.y + 1.0f) / 2.0f));
-	
+	iPoint screen = GetScreenPosition();
+
 	// Draw everything --------------------------------------
 	if (!destroyed)
-		App->renderer->BlitWithPivotScaled(graphics, &currentAnimation->GetCurrentFrame(),4, 0.5f, 1.0f, screenX, screenY);
+		App->renderer->BlitWithPivotScaled(graphics, &currentAnimation->GetCurrentFrame(), 4, 0.5f, 1.0f, screen.x, screen.y);
 
+}
+
+
+update_status ModulePlayer::Update()
+{
+	MovePlayer();
+
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		ShootLaser();
+	}
+
+	RenderPlayer();
+	
 	return UPDATE_CONTINUE;
 }
 

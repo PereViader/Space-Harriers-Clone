@@ -10,20 +10,32 @@
 
 struct SDL_Texture;
 
-struct Particle
+class Particle
 {
-	bool to_delete = false;
-	iPoint position = { 0, 0 };
+public:
+	bool to_delete;
+	bool isFirstFrame;
+
 	Animation anim;
 	int sfxId;
-	// TODO 11: Add an optional collider to each particle
 
+	float velocityX;
+	float velocityY;
+	float velocityZ;
+
+	fPoint position;
+	float positionZ;
+
+	// TODO 11: Add an optional collider to each particle
 
 	Particle();
 	Particle(const Particle& p);
 	~Particle();
 
 	void Update();
+
+private:
+	void MoveParticle();
 };
 
 class ModuleParticles : public Module

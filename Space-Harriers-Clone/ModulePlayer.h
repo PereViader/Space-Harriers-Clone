@@ -17,7 +17,8 @@ public:
 	update_status Update() override;
 	bool CleanUp() override;
 
-	const fPoint& GetPosition() const;
+	const fPoint& GetNormalizedPosition() const;
+	iPoint GetScreenPosition() const;
 public:
 
 	SDL_Texture* graphics = nullptr;
@@ -33,13 +34,17 @@ public:
 	Animation takeDamage;
 	Animation tripOverHazzard;
 
-
 	bool destroyed = false;
 
 private:
 	fPoint position;
 	static const float PLAYER_SPEED;
 	static const float PLAYER_RECOVER_SPEED;
+
+private:
+	void ShootLaser();
+	void MovePlayer();
+	void RenderPlayer();
 };
 
 #endif

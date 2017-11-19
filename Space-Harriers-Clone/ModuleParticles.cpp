@@ -5,6 +5,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
+#include "ModuleTime.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -22,6 +23,8 @@ bool ModuleParticles::Start()
 
 	playerParticlePrototype.anim.frames.push_back({ 3,2,87,56 });
 	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
+	playerParticlePrototype.velocityZ = 1;
+	playerParticlePrototype.velocityX = 3;
 
 	// TODO 12: Create a new "Explosion" particle 
 	// audio: rtype/explosion.wav
@@ -69,9 +72,12 @@ update_status ModuleParticles::Update()
 		Particle* p = *it;
 
 		p->Update();
-		App->renderer->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
-
-		// Handle particle fx here ?
+		App->renderer->BlitWithPivotScaled(graphics, &p->anim.GetCurrentFrame(), 1, 0.5f, 0.5f, (int)p->position.x, (int)p->position.y);
+		if (p->isFirstFrame)
+		{
+			App->audio->PlayFx(p->sfxId);
+			p->isFirstFrame = false;
+		}
 	}
 
 	return UPDATE_CONTINUE;
@@ -80,22 +86,34 @@ update_status ModuleParticles::Update()
 void ModuleParticles::AddParticle(const Particle& particle, int x, int y)
 {
 	Particle * instance = new Particle(particle);
-	instance->position = { x,y };
+	instance->position = { (float)x, (float)y };
 	this->active.push_back(instance);
 }
 
 // -------------------------------------------------------------
 // -------------------------------------------------------------
 
-Particle::Particle()
+Particle::Particle() :
+	to_delete(false),
+	isFirstFrame(true),
+	position({0,0}),
+	velocityX(0),
+	velocityY(0),
+	velocityZ(0)
 {}
 
 Particle::Particle(const Particle& p) : anim(p.anim), position(p.position)
 {
+	this->isFirstFrame = p.isFirstFrame;
 	this->anim = p.anim;
 	this->position = p.position;
+	this->positionZ = p.positionZ;
 	this->sfxId = p.sfxId;
 	this->to_delete = p.to_delete;
+
+	this->velocityX = p.velocityX;
+	this->velocityY = p.velocityY;
+	this->velocityZ = p.velocityZ;
 }
 
 Particle::~Particle()
@@ -104,9 +122,20 @@ Particle::~Particle()
 
 void Particle::Update()
 {
+
 	// TODO 5: This is the core of the particle logic
 	// draw and audio will be managed by ModuleParticle::Update()
 	// Note: Set to_delete to true is you want it deleted
 
+	MoveParticle();
+}
+
+void Particle::MoveParticle()
+{
+	float deltaTime = App->time->GetDeltaTime();
+
+	position.x += velocityX * deltaTime;
+	position.y += velocityY * deltaTime;
+	positionZ += velocityZ * deltaTime;
 }
 

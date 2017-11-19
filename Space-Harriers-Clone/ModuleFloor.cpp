@@ -37,7 +37,7 @@ bool ModuleFloor::Init()
 	//temporal
 	App->player->Enable();
 	App->moduleBackground->Enable();
-	App->audio->PlayMusic("rtype/main_theme.wav");
+	//App->audio->PlayMusic("rtype/main_theme.wav");
 
 
 	floor = App->textures->Load("rtype/floor.bmp");
@@ -66,7 +66,7 @@ update_status ModuleFloor::Update()
 
 	RenderFloor();
 
-	fPoint playerPosition = App->player->GetPosition();
+	fPoint playerPosition = App->player->GetNormalizedPosition();
 	
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
 	horizonRenderHeight = (int)(HORIZON_MAX_HEIGHT + (HORIZON_MIN_HEIGHT-HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f));
