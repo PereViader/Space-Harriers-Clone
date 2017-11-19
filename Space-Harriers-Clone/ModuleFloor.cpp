@@ -7,6 +7,7 @@
 #include "ModulePlayer.h"
 #include "ModuleBackground.h"
 #include "ModuleAudio.h"
+#include "ModuleTime.h"
 
 #include <algorithm>
 
@@ -15,9 +16,9 @@
 
 using namespace std; 
 
-const float ModuleFloor::HORIZONTAL_SPEED_MAX = 0.01f;
+const float ModuleFloor::HORIZONTAL_SPEED_MAX = 2.0f;
 const float ModuleFloor::SEGMENT_REDUCTION = 0.60f;
-const float ModuleFloor::HORIZONTAL_LINES_SPEED = 0.02f;
+const float ModuleFloor::HORIZONTAL_LINES_SPEED = 2.0f;
 
 ModuleFloor::ModuleFloor(bool enabled) :
 	Module(enabled)
@@ -67,7 +68,7 @@ update_status ModuleFloor::Update()
 
 	fPoint playerPosition = App->player->GetPosition();
 	
-	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x;
+	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
 	horizonRenderHeight = (int)(HORIZON_MAX_HEIGHT + (HORIZON_MIN_HEIGHT-HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f));
 
 	return UPDATE_CONTINUE;
@@ -180,7 +181,7 @@ void ModuleFloor::RenderHorizontalLines()
 
 	App->renderer->DrawQuads(horizontalQuads, nHorizonQuads, 0, 0, 0, 50);
 
-	float nextfirstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + HORIZONTAL_LINES_SPEED, 1.0f);
+	float nextfirstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + HORIZONTAL_LINES_SPEED*App->time->GetDeltaTime(), 1.0f);
 	if (nextfirstSegmentPositionPercentage < firstSegmentPositionPercentage) {
 		firstQuadIndex = (firstQuadIndex + 1) % nHorizonQuads;
 	}
