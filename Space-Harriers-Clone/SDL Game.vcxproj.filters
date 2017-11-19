@@ -90,6 +90,7 @@
       <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTime.h" />
+    <ClInclude Include="ModuleEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -156,6 +157,9 @@
       <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTime.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEnemy.cpp">
       <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
