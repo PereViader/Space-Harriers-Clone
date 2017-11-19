@@ -23,7 +23,7 @@ bool ModuleParticles::Start()
 
 	playerParticlePrototype.anim.frames.push_back({ 3,2,87,56 });
 	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
-	playerParticlePrototype.velocityZ = 1;
+	playerParticlePrototype.velocityZ = 5;
 	playerParticlePrototype.velocityX = 3;
 
 	// TODO 12: Create a new "Explosion" particle 
@@ -97,6 +97,7 @@ Particle::Particle() :
 	to_delete(false),
 	isFirstFrame(true),
 	position({0,0}),
+	positionZ(0),
 	velocityX(0),
 	velocityY(0),
 	velocityZ(0)
@@ -128,6 +129,8 @@ void Particle::Update()
 	// Note: Set to_delete to true is you want it deleted
 
 	MoveParticle();
+
+	to_delete = positionZ > Z_MAX || positionZ < 0;
 }
 
 void Particle::MoveParticle()

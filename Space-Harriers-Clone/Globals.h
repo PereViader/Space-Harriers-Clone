@@ -50,4 +50,9 @@ typedef unsigned int uint;
 #define VSYNC true
 #define TITLE "Super Awesome Game"
 
+
+
+//Game defines
+#define Z_MAX 25
+
 #endif //__GLOBALS_H__
