@@ -21,11 +21,7 @@ bool ModuleParticles::Start()
 	graphics = App->textures->Load("rtype/bullets.png");
 
 	playerParticlePrototype.anim.frames.push_back({ 3,2,87,56 });
-	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/playerBullet.wav");
-	// TODO 2: Create a prototype for the laser particle
-	// audio: rtype/laser.wav
-	// coords: {232, 103, 16, 12}; {249, 103, 16, 12};
-
+	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
 
 	// TODO 12: Create a new "Explosion" particle 
 	// audio: rtype/explosion.wav
@@ -83,7 +79,9 @@ update_status ModuleParticles::Update()
 
 void ModuleParticles::AddParticle(const Particle& particle, int x, int y)
 {
-	// TODO 4: Fill in a method to create an instance of a prototype particle	
+	Particle * instance = new Particle(particle);
+	instance->position = { x,y };
+	this->active.push_back(instance);
 }
 
 // -------------------------------------------------------------
@@ -92,9 +90,13 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y)
 Particle::Particle()
 {}
 
-// TODO 3: Fill in a copy constructor
 Particle::Particle(const Particle& p) : anim(p.anim), position(p.position)
-{}
+{
+	this->anim = p.anim;
+	this->position = p.position;
+	this->sfxId = p.sfxId;
+	this->to_delete = p.to_delete;
+}
 
 Particle::~Particle()
 {
