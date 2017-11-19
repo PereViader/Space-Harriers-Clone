@@ -16,6 +16,7 @@ class ModuleParticles;
 class ModuleScene;
 class ModuleFloor;
 class ModuleBackground;
+class ModuleTime;
 
 // Game modules ---
 class ModulePlayer;
@@ -39,6 +40,7 @@ public:
 	ModuleTextures* textures;
 	ModuleInput* input;
 	ModuleAudio* audio;
+	ModuleTime* time;
 	ModuleFadeToBlack* fade;
 	ModuleCollision* collision;
 	ModuleParticles* particles;

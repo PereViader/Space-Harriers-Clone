@@ -4,7 +4,7 @@ class ModuleTime :
 	public Module
 {
 public:
-	ModuleTime();
+	ModuleTime(bool enabled = true);
 	~ModuleTime();
 
 	bool Init() override;

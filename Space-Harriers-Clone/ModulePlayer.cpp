@@ -7,15 +7,18 @@
 #include "ModuleCollision.h"
 #include "ModuleFadeToBlack.h"
 #include "ModulePlayer.h"
+#include "ModuleTime.h"
 
 #include <algorithm>
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
+const float ModulePlayer::PLAYER_SPEED = 3;
+const float ModulePlayer::PLAYER_RECOVER_SPEED = 2.5;
+
+
 ModulePlayer::ModulePlayer(bool active) : Module(active)
 {
-	speed = 0.02f;
-	recoverSpeed = 0.022f;
 	position = { 0.0f, 0.0f };
 
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
@@ -75,14 +78,14 @@ const fPoint & ModulePlayer::GetPosition() const
 update_status ModulePlayer::Update()
 {
 	fPoint movement;
-	movement.x = App->input->GetAxis(Axis::Horizontal)*speed;
-	movement.y = App->input->GetAxis(Axis::Vertical)*speed;
+	movement.x = App->input->GetAxis(Axis::Horizontal)*PLAYER_SPEED*App->time->GetDeltaTime();
+	movement.y = App->input->GetAxis(Axis::Vertical)*PLAYER_SPEED*App->time->GetDeltaTime();
 
 	if (movement.x == 0.0f)
-		movement.x = -position.x*recoverSpeed;
+		movement.x = -position.x*PLAYER_RECOVER_SPEED*App->time->GetDeltaTime();
 
 	if (movement.y == 0.0f)
-		movement.y = -position.y*recoverSpeed;
+		movement.y = -position.y*PLAYER_RECOVER_SPEED*App->time->GetDeltaTime();
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{

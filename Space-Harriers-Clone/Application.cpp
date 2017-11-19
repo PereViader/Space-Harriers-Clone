@@ -4,6 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
+#include "ModuleTime.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleCollision.h"
 #include "ModuleParticles.h"
@@ -14,6 +15,7 @@
 #include "ModuleSceneSpace.h"
 #include "ModulePlayer.h"
 #include "ModuleBackground.h"
+
 
 using namespace std;
 
@@ -26,6 +28,7 @@ Application::Application()
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
 	modules.push_back(audio = new ModuleAudio());
+	modules.push_back(time = new ModuleTime());
 
 	// Game Modules
 	modules.push_back(moduleBackground = new ModuleBackground(false));

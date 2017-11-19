@@ -38,8 +38,8 @@ public:
 
 private:
 	fPoint position;
-	float speed;
-	float recoverSpeed;
+	static const float PLAYER_SPEED;
+	static const float PLAYER_RECOVER_SPEED;
 };
 
 #endif
