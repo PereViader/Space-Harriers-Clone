@@ -23,7 +23,7 @@ bool ModuleParticles::Start()
 
 	playerParticlePrototype.anim.frames.push_back({ 3,2,87,56 });
 	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
-	playerParticlePrototype.velocityZ = 5;
+	playerParticlePrototype.velocityZ = 35;
 	playerParticlePrototype.velocityX = 3;
 
 	// TODO 12: Create a new "Explosion" particle 
@@ -72,7 +72,8 @@ update_status ModuleParticles::Update()
 		Particle* p = *it;
 
 		p->Update();
-		App->renderer->BlitWithPivotScaled(graphics, &p->anim.GetCurrentFrame(), 1, 0.5f, 0.5f, (int)p->position.x, (int)p->position.y);
+		float scale = 1.0f - p->positionZ / Z_MAX;
+		App->renderer->BlitWithPivotScaled(graphics, &p->anim.GetCurrentFrame(), scale, 0.5f, 0.5f, (int)p->position.x, (int)p->position.y);
 		if (p->isFirstFrame)
 		{
 			App->audio->PlayFx(p->sfxId);
