@@ -17,6 +17,9 @@
     <Filter Include="Unity Like">
       <UniqueIdentifier>{b6d60e91-1b1e-4958-85e1-c9a5c3b463bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Modules\Enemies">
+      <UniqueIdentifier>{2f7f6ae8-2edf-47b0-9234-3e7833c279d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -88,14 +91,17 @@
     <ClInclude Include="ModuleTime.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleEnemy.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Unity Like</Filter>
     </ClInclude>
     <ClInclude Include="ModuleStage.h">
       <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEnemy.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Game Modules\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -150,9 +156,6 @@
     <ClCompile Include="Component.cpp">
       <Filter>Unity Like</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleFloor.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
@@ -162,11 +165,17 @@
     <ClCompile Include="ModuleTime.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleStage.cpp">
+      <Filter>Game Modules</Filter>
+    </ClCompile>
     <ClCompile Include="ModuleEnemy.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleStage.cpp">
-      <Filter>Game Modules</Filter>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Game Modules\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Unity Like</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
