@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include "Application.h"
+#include "ModuleTime.h"
 
 using namespace std;
 
@@ -25,7 +27,7 @@ public:
 	{
 		float last_frame = (float) frames.size();
 
-		current_frame += speed;
+		current_frame += speed*App->time->GetDeltaTime();
 		if (current_frame >= last_frame)
 		{
 			current_frame = (loop) ? 0.0f : MAX(last_frame - 1.0f, 0.0f);

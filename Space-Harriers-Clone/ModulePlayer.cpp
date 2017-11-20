@@ -40,13 +40,13 @@ ModulePlayer::ModulePlayer(bool active) :
 	ground_running.frames.push_back({ 25, 4, 20, 47 });
 	ground_running.frames.push_back({ 49, 2, 25, 49 });
 	ground_running.frames.push_back({ 75, 3, 21, 47 });
-	ground_running.speed = 0.05f;
+	ground_running.speed = 5.0f;
 
 	hover_center.frames.push_back({ 108,2,26,49 });
 	hover_left.frames.push_back({ 142,2,22,50 });
 	hover_left_most.frames.push_back({ 170,3,20,48 });
-	hover_right.frames.push_back({ 197,3,20,48 });
-	hover_right_most.frames.push_back({ 221,3,22,49 });
+	hover_right.frames.push_back({ 221,3,22,49 });
+	hover_right_most.frames.push_back({ 197,3,20,48 });
 }
 
 ModulePlayer::~ModulePlayer()
