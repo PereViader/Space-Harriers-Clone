@@ -68,6 +68,12 @@ update_status ModuleFloor::Update()
 	return UPDATE_CONTINUE;
 }
 
+bool ModuleFloor::CleanUp()
+{
+	App->textures->Unload(floor);
+	return true;
+}
+
 int ModuleFloor::GetHorizonRenderHeight() const
 {
 	return horizonRenderHeight;

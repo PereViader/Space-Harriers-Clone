@@ -13,6 +13,7 @@ public:
 
 	bool Init() override;
 	update_status Update() override;
+	bool CleanUp() override;
 
 	int GetHorizonRenderHeight() const;
 	float GetCurrentHorizonPercentage() const;	
