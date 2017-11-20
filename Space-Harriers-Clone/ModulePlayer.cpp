@@ -85,6 +85,11 @@ iPoint ModulePlayer::GetScreenPosition() const
 void ModulePlayer::ShootLaser()
 {
 	iPoint screen = GetScreenPosition();
+
+	// correct position to shoot from the gun
+	screen.x += 15;
+	screen.y -= 120;
+
 	App->particles->AddParticle(App->particles->playerParticlePrototype, screen.x, screen.y);
 }
 
