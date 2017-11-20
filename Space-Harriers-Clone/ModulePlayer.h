@@ -17,9 +17,31 @@ public:
 	update_status Update() override;
 	bool CleanUp() override;
 
+	void UpdateAnimation();
+
 	const fPoint& GetNormalizedPosition() const;
 	iPoint GetScreenPosition() const;
 public:
+
+	
+
+	bool destroyed = false;
+
+private:
+	fPoint position;
+	static const float PLAYER_SPEED;
+	static const float PLAYER_RECOVER_SPEED;
+
+	static const int MAX_HORIZONTAL_POSITION;
+	static const int MIN_HORIZONTAL_POSITION;
+	static const int MAX_VERTICAL_POSITION;
+	static const int MIN_VERTICAL_POSITION;
+
+	static const float TRANSITION_CENTER_RIGHT;
+	static const float TRANSITION_CENTER_LEFT;
+	static const float TRANSITION_LEFT;
+	static const float TRANSITION_RIGHT;
+
 
 	SDL_Texture* graphics = nullptr;
 
@@ -33,18 +55,6 @@ public:
 	Animation hover_right_most;
 	Animation takeDamage;
 	Animation tripOverHazzard;
-
-	bool destroyed = false;
-
-private:
-	fPoint position;
-	static const float PLAYER_SPEED;
-	static const float PLAYER_RECOVER_SPEED;
-
-	static const int MAX_HORIZONTAL_POSITION;
-	static const int MIN_HORIZONTAL_POSITION;
-	static const int MAX_VERTICAL_POSITION;
-	static const int MIN_VERTICAL_POSITION;
 
 
 private:

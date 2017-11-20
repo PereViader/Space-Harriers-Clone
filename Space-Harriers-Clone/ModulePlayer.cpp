@@ -9,6 +9,8 @@
 #include "ModulePlayer.h"
 #include "ModuleTime.h"
 
+
+#include <iostream>
 #include <algorithm>
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -22,9 +24,15 @@ const int ModulePlayer::MAX_VERTICAL_POSITION = SCREEN_HEIGHT*SCREEN_SIZE;
 const int ModulePlayer::MIN_VERTICAL_POSITION = 200;
 
 
+const float ModulePlayer::TRANSITION_LEFT = -0.6f;
+const float ModulePlayer::TRANSITION_CENTER_LEFT = -0.2;
+const float ModulePlayer::TRANSITION_CENTER_RIGHT = 0.2f;
+const float ModulePlayer::TRANSITION_RIGHT = 0.6f;
+
+
 ModulePlayer::ModulePlayer(bool active) : 
 	Module(active),
-	position({0,0}),
+	position({0,1}),
 	destroyed(false),
 	currentAnimation(&hover_center)
 {
@@ -62,6 +70,24 @@ bool ModulePlayer::CleanUp()
 	App->textures->Unload(graphics);
 
 	return true;
+}
+
+void ModulePlayer::UpdateAnimation()
+{
+	if (position.y == 1)
+		currentAnimation = &ground_running;
+	else {
+		if (position.x < TRANSITION_CENTER_LEFT && position.x >= TRANSITION_LEFT)
+			currentAnimation = &hover_left;
+		else if (position.x < TRANSITION_LEFT)
+			currentAnimation = &hover_left_most;
+		else if (position.x > TRANSITION_CENTER_RIGHT && position.x <= TRANSITION_RIGHT)
+			currentAnimation = &hover_right;
+		else if (position.x > TRANSITION_RIGHT)
+			currentAnimation = &hover_right_most;
+		else
+			currentAnimation = &hover_center;
+	}
 }
 
 const fPoint & ModulePlayer::GetNormalizedPosition() const
@@ -121,6 +147,7 @@ void ModulePlayer::RenderPlayer()
 update_status ModulePlayer::Update()
 {
 	MovePlayer();
+	UpdateAnimation();
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
