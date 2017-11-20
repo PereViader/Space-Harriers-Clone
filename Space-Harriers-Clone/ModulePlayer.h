@@ -41,6 +41,12 @@ private:
 	static const float PLAYER_SPEED;
 	static const float PLAYER_RECOVER_SPEED;
 
+	static const int MAX_HORIZONTAL_POSITION;
+	static const int MIN_HORIZONTAL_POSITION;
+	static const int MAX_VERTICAL_POSITION;
+	static const int MIN_VERTICAL_POSITION;
+
+
 private:
 	void ShootLaser();
 	void MovePlayer();

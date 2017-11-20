@@ -16,11 +16,18 @@
 const float ModulePlayer::PLAYER_SPEED = 3;
 const float ModulePlayer::PLAYER_RECOVER_SPEED = 2.5;
 
+const int ModulePlayer::MAX_HORIZONTAL_POSITION = SCREEN_WIDTH*SCREEN_SIZE - 50;
+const int ModulePlayer::MIN_HORIZONTAL_POSITION = 50;
+const int ModulePlayer::MAX_VERTICAL_POSITION = SCREEN_HEIGHT*SCREEN_SIZE;
+const int ModulePlayer::MIN_VERTICAL_POSITION = 200;
 
-ModulePlayer::ModulePlayer(bool active) : Module(active)
+
+ModulePlayer::ModulePlayer(bool active) : 
+	Module(active),
+	position({0,0}),
+	destroyed(false),
+	currentAnimation(&hover_center)
 {
-	position = { 0.0f, 0.0f };
-
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
 	ground_running.frames.push_back({ 25, 4, 20, 47 });
 	ground_running.frames.push_back({ 49, 2, 25, 49 });
@@ -28,18 +35,10 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	ground_running.speed = 0.05f;
 
 	hover_center.frames.push_back({ 108,2,26,49 });
-
 	hover_left.frames.push_back({ 142,2,22,50 });
-
 	hover_left_most.frames.push_back({ 170,3,20,48 });
-
 	hover_right.frames.push_back({ 197,3,20,48 });
-
 	hover_right_most.frames.push_back({ 221,3,22,49 });
-
-	currentAnimation = &hover_center;
-
-
 }
 
 ModulePlayer::~ModulePlayer()
@@ -51,10 +50,6 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("rtype/player.png");
-
-	destroyed = false;
-	position.x = 150;
-	position.y = 120;
 
 	return true;
 }
@@ -77,8 +72,8 @@ const fPoint & ModulePlayer::GetNormalizedPosition() const
 iPoint ModulePlayer::GetScreenPosition() const
 {
 	iPoint screenPosition;
-	screenPosition.x = (int)(SCREEN_WIDTH  * SCREEN_SIZE * ((position.x + 1.0f) / 2.0f));
-	screenPosition.y = (int)(SCREEN_HEIGHT * SCREEN_SIZE * ((position.y + 1.0f) / 2.0f));
+	screenPosition.x = (int)(MIN_HORIZONTAL_POSITION + (MAX_HORIZONTAL_POSITION - MIN_HORIZONTAL_POSITION)  * ((position.x + 1.0f) / 2.0f));
+	screenPosition.y = (int)(MIN_VERTICAL_POSITION + (MAX_VERTICAL_POSITION - MIN_VERTICAL_POSITION)  * ((position.y + 1.0f) / 2.0f));
 	return screenPosition;
 }
 
