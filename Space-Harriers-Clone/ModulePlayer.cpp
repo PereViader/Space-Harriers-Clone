@@ -8,6 +8,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModulePlayer.h"
 #include "ModuleTime.h"
+#include "ModuleCollision.h"
 
 
 #include <iostream>
@@ -25,9 +26,11 @@ const int ModulePlayer::MIN_VERTICAL_POSITION = 200;
 
 
 const float ModulePlayer::TRANSITION_LEFT = -0.6f;
-const float ModulePlayer::TRANSITION_CENTER_LEFT = -0.2;
+const float ModulePlayer::TRANSITION_CENTER_LEFT = -0.2f;
 const float ModulePlayer::TRANSITION_CENTER_RIGHT = 0.2f;
 const float ModulePlayer::TRANSITION_RIGHT = 0.6f;
+
+const float ModulePlayer::RENDER_SCALE = 4.0f;
 
 
 ModulePlayer::ModulePlayer(bool active) : 
@@ -58,6 +61,9 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("rtype/player.png");
+
+	SDL_Rect playerCollider = { 0,0,80,186 };
+	collider = App->collision->AddCollider(playerCollider, *this);
 
 	return true;
 }
@@ -132,6 +138,14 @@ void ModulePlayer::MovePlayer()
 
 }
 
+void ModulePlayer::MoveCollider()
+{
+	iPoint colliderPosition = GetScreenPosition();
+
+	collider->rect.x = colliderPosition.x - (int)((collider->rect.w / 2.0f));
+	collider->rect.y = colliderPosition.y - (int)(collider->rect.h);
+}
+
 void ModulePlayer::RenderPlayer()
 {
 	// Project player position to the screen
@@ -139,7 +153,7 @@ void ModulePlayer::RenderPlayer()
 
 	// Draw everything --------------------------------------
 	if (!destroyed)
-		App->renderer->BlitWithPivotScaled(graphics, &currentAnimation->GetCurrentFrame(), 4, 0.5f, 1.0f, screen.x, screen.y);
+		App->renderer->BlitWithPivotScaled(graphics, &currentAnimation->GetCurrentFrame(), RENDER_SCALE, 0.5f, 1.0f, screen.x, screen.y);
 
 }
 
@@ -147,6 +161,7 @@ void ModulePlayer::RenderPlayer()
 update_status ModulePlayer::Update()
 {
 	MovePlayer();
+	MoveCollider();
 	UpdateAnimation();
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)

@@ -6,6 +6,7 @@
 #include "Point.h"
 
 struct SDL_Texture;
+struct Collider;
 
 class ModulePlayer : public Module
 {
@@ -42,6 +43,8 @@ private:
 	static const float TRANSITION_LEFT;
 	static const float TRANSITION_RIGHT;
 
+	static const float RENDER_SCALE;
+
 
 	SDL_Texture* graphics = nullptr;
 
@@ -54,12 +57,15 @@ private:
 	Animation hover_right;
 	Animation hover_right_most;
 	Animation takeDamage;
-	Animation tripOverHazzard;
+	Animation tripOverHazzard; 
+
+	Collider* collider;
 
 
 private:
 	void ShootLaser();
 	void MovePlayer();
+	void MoveCollider();
 	void RenderPlayer();
 };
 
