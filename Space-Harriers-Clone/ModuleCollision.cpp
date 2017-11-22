@@ -4,6 +4,8 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 
+#include <iterator>     // std::advance
+
 using namespace std;
 
 ModuleCollision::ModuleCollision()
@@ -33,8 +35,14 @@ update_status ModuleCollision::PreUpdate()
 
 update_status ModuleCollision::Update()
 {
-	// TODO 8: Check collisions between all colliders. 
-	// After making it work, review that you are doing the minumum checks possible
+	for(list<Collider*>::const_iterator it0 = colliders.cbegin(), end = colliders.cend(); it0 != end; it0++) 
+		for (list<Collider*>::const_iterator it1 = next(it0, 1); it1 != end; it1++)
+			if ((*it0)->CheckCollision(**it1)) {
+				(*it0)->owner.OnCollision(*it0, *it1);
+				(*it1)->owner.OnCollision(*it1, *it0);
+			}
+		
+
 
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
@@ -48,7 +56,7 @@ update_status ModuleCollision::Update()
 void ModuleCollision::DebugDraw()
 {
 	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
-		App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
+		App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80,false);
 }
 
 // Called before quitting
@@ -64,9 +72,9 @@ bool ModuleCollision::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(const SDL_Rect& rect)
+Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, Module& owner)
 {
-	Collider* ret = new Collider(rect);
+	Collider* ret = new Collider(rect, owner);
 
 	colliders.push_back(ret);
 
@@ -75,10 +83,7 @@ Collider* ModuleCollision::AddCollider(const SDL_Rect& rect)
 
 // -----------------------------------------------------
 
-bool Collider::CheckCollision(const SDL_Rect& r) const
+bool Collider::CheckCollision(const Collider& r) const
 {
-	// TODO 7: Create by hand (avoid consulting the internet) a simple collision test
-	// Return true if rectangle argument "r" if intersecting with "this->rect"
-
-	return false;
+	return SDL_HasIntersection(&this->rect,&r.rect);
 }

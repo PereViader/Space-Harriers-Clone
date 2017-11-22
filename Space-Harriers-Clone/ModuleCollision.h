@@ -10,14 +10,18 @@
 
 struct Collider
 {
-	SDL_Rect rect = { 0,0,0,0 };
-	bool to_delete = false;
+	SDL_Rect rect;
+	bool to_delete;
 
 	// TODO 10: Add a way to notify other classes that a collision happened
+	Module& owner;
 
-	Collider(SDL_Rect rectangle) : // expand this call if you need to
-		rect(rectangle)
-	{}
+	Collider(SDL_Rect rectangle, Module& owner) : // expand this call if you need to
+		rect(rectangle),
+		to_delete(false),
+		owner(owner)
+	{
+	}
 
 	void SetPos(int x, int y)
 	{
@@ -25,7 +29,7 @@ struct Collider
 		rect.y = y;
 	}
 
-	bool CheckCollision(const SDL_Rect& r) const;
+	bool CheckCollision(const Collider& r) const;
 };
 
 class ModuleCollision : public Module
@@ -40,7 +44,7 @@ public:
 
 	bool CleanUp();
 
-	Collider* AddCollider(const SDL_Rect& rect);
+	Collider* AddCollider(const SDL_Rect& rect, Module& owner);
 	void DebugDraw();
 
 private:

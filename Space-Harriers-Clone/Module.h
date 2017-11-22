@@ -4,6 +4,7 @@
 #include "Globals.h"
 
 class Application;
+struct Collider;
 
 class Module
 {
@@ -67,6 +68,8 @@ public:
 	}
 
 	// Callbacks ---
+	virtual void OnCollision(const Collider* own, const Collider* other) {
+	}
 
 private:
 	bool enabled = true;
