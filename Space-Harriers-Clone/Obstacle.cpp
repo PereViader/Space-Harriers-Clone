@@ -20,7 +20,9 @@ Obstacle::~Obstacle()
 
 Enemy * Obstacle::Clone() const
 {
-	return new Obstacle(*this);
+	Obstacle * o = new Obstacle(*this);
+	o->renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
+	return o;
 }
 
 void Obstacle::Update()
@@ -42,8 +44,9 @@ void Obstacle::RenderObstacle() const
 iPoint Obstacle::GetScreenRenderPosition() const
 {
 	iPoint screen;
-	screen.x = int((SCREEN_WIDTH*SCREEN_HEIGHT) / 2.0f); //TODO
+	screen.x = int((SCREEN_WIDTH*SCREEN_SIZE) / 2.0f); //TODO
 	screen.y = App->floor->GetRenderHeightOfHorizontalStripe(renderingFloorId);
+	App->renderer->DrawQuad({ screen.x, screen.y, 20,20}, 0, 0, 0, 255,false);
 	return screen;
 }
 

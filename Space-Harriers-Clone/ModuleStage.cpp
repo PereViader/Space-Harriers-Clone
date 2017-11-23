@@ -25,15 +25,12 @@ bool ModuleStage::Start()
 	App->enemies->Enable();
 	App->audio->PlayMusic("rtype/main_theme.wav");
 
+	App->enemies->InstantiateEnemyByName("tree");
 	return true;
 }
 
 update_status ModuleStage::Update()
 {
-	currentTime += App->time->GetDeltaTime();
-	if (currentTime > 10) {
-		App->enemies->InstantiateEnemyByName("tree");
-		currentTime = 0;
-	}
+	
 	return UPDATE_CONTINUE;
 }

@@ -85,12 +85,17 @@ float ModuleFloor::GetCurrentHorizonPercentage() const
 float ModuleFloor::GetHorizonPercentageOfPosition(int position) const
 {
 	position = max(horizonRenderHeight, min(SCREEN_HEIGHT*SCREEN_SIZE, position));
-	return (float)(horizonRenderHeight-position)/(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
+	return 1.0f - (float)(SCREEN_HEIGHT*SCREEN_SIZE - position) / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
 }
 
 int ModuleFloor::GetRenderHeightOfHorizontalStripe(int index) const
 {
-	return horizontalQuads[index].h;
+	return horizontalQuads[index].y;
+}
+
+int ModuleFloor::GetFurtherHorizontalStripeIndex() const
+{
+	return (firstQuadIndex-1) < 0 ? (nHorizonQuads-1) : (firstQuadIndex - 1);
 }
 
 void ModuleFloor::RenderObject()
