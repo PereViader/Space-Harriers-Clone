@@ -31,7 +31,7 @@ bool ModuleEnemy::Start()
 	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false);
 	enemyPrototypes["tree"] = tree;
 
-	return false;
+	return true;
 }
 
 update_status ModuleEnemy::PreUpdate()
