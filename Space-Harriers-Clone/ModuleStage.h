@@ -8,5 +8,10 @@ public:
 	~ModuleStage();
 
 	bool Start() override;
+	update_status Update() override;
+
+private:
+	float currentTime;
+
 };
 

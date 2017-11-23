@@ -1,9 +1,15 @@
 #include "ModuleEnemy.h"
+
 #include "Enemy.h"
+#include "Obstacle.h"
+
 #include "Assert.h"
+#include "ModuleTextures.h"
 
 
-ModuleEnemy::ModuleEnemy()
+
+ModuleEnemy::ModuleEnemy(bool enabled) :
+	Module(enabled)
 {
 	//TODO finish method
 
@@ -12,48 +18,74 @@ ModuleEnemy::ModuleEnemy()
 
 ModuleEnemy::~ModuleEnemy()
 {
-	//TODO finish method
-
 }
 
-bool ModuleEnemy::Init()
+bool ModuleEnemy::Start()
 {
 	//TODO finish method
+	treeGraphic = App->textures->Load("rtype/tree.png");
+
+
+	Animation treeAnimation;
+	treeAnimation.frames.push_back({ 206,48,44,163 });
+	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false);
+	enemyPrototypes["tree"] = tree;
 
 	return false;
+}
+
+update_status ModuleEnemy::PreUpdate()
+{
+	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end();)
+	{
+		if ((*it)->to_delete == true)
+		{
+			RELEASE(*it);
+			it = enemies.erase(it);
+		}
+		else
+			++it;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status ModuleEnemy::Update()
 {
-	//TODO finish method
+	for (Enemy* enemy : enemies) {
+		enemy->Update();
+	}
 
-	return update_status();
+	return UPDATE_CONTINUE;
 }
 
 bool ModuleEnemy::CleanUp()
 {
+	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it)
+		RELEASE(*it);
 
-	//TODO finish method
-	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it) {
-		RELEASE(*it)
-	}
 	enemies.clear();
 
+	
+	for (map<string, const Enemy*>::iterator it = enemyPrototypes.begin(); it != enemyPrototypes.end(); ++it)
+		RELEASE(it->second);
+
+	enemyPrototypes.clear();
 
 
-	return false;
+
+	return true;
 }
 
 void ModuleEnemy::OnCollision(const Collider * own, const Collider * other)
 {
-	//TODO finish method
+	//TODO finish  
 
 
 }
 
 Enemy * ModuleEnemy::InstantiateEnemyByName(string name)
 {
-	Enemy* prototype = GetEnemyPrototypeByName(name);
+	const Enemy* prototype = GetEnemyPrototypeByName(name);
 	assert(prototype != nullptr);
 	
 	Enemy* instance = prototype->Clone();
@@ -62,8 +94,8 @@ Enemy * ModuleEnemy::InstantiateEnemyByName(string name)
 	return instance;
 }
 
-const Enemy * ModuleEnemy::GetEnemyPrototypeByName(string name)
+const Enemy* ModuleEnemy::GetEnemyPrototypeByName(string name)
 {
 	map<string, const Enemy*>::const_iterator res = enemyPrototypes.find(name);
-	return res != enemyPrototype.cend() ? res->second : nullptr;
+	return (res != enemyPrototypes.cend()) ? res->second : nullptr;
 }

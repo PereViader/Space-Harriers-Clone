@@ -103,6 +103,9 @@
     <ClInclude Include="Enemy.h">
       <Filter>Game Modules\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Game Modules\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -176,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>Unity Like</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Game Modules\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

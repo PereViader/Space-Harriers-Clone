@@ -10,6 +10,7 @@
 #include "ModuleParticles.h"
 #include "ModuleStage.h"
 #include "ModuleFloor.h"
+#include "ModuleEnemy.h"
 
 #include "ModuleSceneIntro.h"
 #include "ModuleSceneSpace.h"
@@ -32,11 +33,13 @@ Application::Application()
 
 	// Game Modules
 	modules.push_back(moduleStage = new ModuleStage(false));
-	modules.push_back(moduleBackground = new ModuleBackground(false));
-	modules.push_back(moduleFloor = new ModuleFloor(false));
+	modules.push_back(background = new ModuleBackground(false));
+	modules.push_back(floor = new ModuleFloor(false));
 	modules.push_back(scene_intro = new ModuleSceneIntro(false));
 	modules.push_back(scene_space = new ModuleSceneSpace(false));
 	modules.push_back(player = new ModulePlayer(false));
+	modules.push_back(enemies = new ModuleEnemy(false));
+
 
 
 	// Modules to draw on top of game logic

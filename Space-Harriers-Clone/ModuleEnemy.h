@@ -6,6 +6,8 @@
 #include <string>
 #include <list>
 
+struct SDL_Texture;
+
 using namespace std;
 
 class Enemy;
@@ -14,10 +16,12 @@ class ModuleEnemy :
 	public Module
 {
 public:
-	ModuleEnemy();
+	ModuleEnemy(bool enabled);
 	~ModuleEnemy();
 
-	bool Init() override;
+	bool Start() override;
+
+	update_status PreUpdate() override;
 	update_status Update() override;
 	bool CleanUp() override;
 
@@ -27,7 +31,9 @@ public:
 private:
 	const Enemy* GetEnemyPrototypeByName(string name);
 
-	map<string, const Enemy *> enemyPrototypes;
+	map<string, const Enemy*> enemyPrototypes;
+
+	SDL_Texture * treeGraphic;
 	
 	list<Enemy*> enemies;
 };

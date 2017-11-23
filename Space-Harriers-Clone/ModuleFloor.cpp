@@ -10,8 +10,6 @@
 #include "ModuleTime.h"
 
 #include <algorithm>
-
-#include <iostream>
 #include <cmath>
 
 using namespace std; 
@@ -86,7 +84,13 @@ float ModuleFloor::GetCurrentHorizonPercentage() const
 
 float ModuleFloor::GetHorizonPercentageOfPosition(int position) const
 {
+	position = max(horizonRenderHeight, min(SCREEN_HEIGHT*SCREEN_SIZE, position));
 	return (float)(horizonRenderHeight-position)/(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
+}
+
+int ModuleFloor::GetRenderHeightOfHorizontalStripe(int index) const
+{
+	return horizontalQuads[index].h;
 }
 
 void ModuleFloor::RenderObject()

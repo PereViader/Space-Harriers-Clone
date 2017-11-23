@@ -8,28 +8,15 @@ struct Collider;
 class Enemy
 {
 public:
+	virtual ~Enemy() {};
+
 	virtual Enemy* Clone() const = 0;
+	virtual void Update() = 0;
 
 public:
-	float positionX;
-	float positionY;
-	float positionZ;
-
-	float speedX;
-	float speedY;
-	float speedZ;
-
-	bool hasShadow;
 	bool to_delete;
 
-	bool canBeDestroyed;
-	Collider* collider;
-
-	Animation anim;
-
 protected:
-	Enemy(int x, int y, int z, int vx, int vy, int vz, bool hasShadow, bool canBeDestroyed);
-	Enemy(const Enemy&);
-	virtual ~Enemy();
+	
 };
 

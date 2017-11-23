@@ -62,7 +62,7 @@ update_status ModuleBackground::Update()
 void ModuleBackground::DrawBackground() {
 	MoveBackground();
 
-	int horizonRenderHeight = App->moduleFloor->GetHorizonRenderHeight();
+	int horizonRenderHeight = App->floor->GetHorizonRenderHeight();
 	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE) {
 		int screenX = (int)((currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE);
 		float pivotXRight = 0;
@@ -83,7 +83,7 @@ void ModuleBackground::DrawBackground() {
 void ModuleBackground::DrawDecal() {
 	MoveDecal();
 
-	int horizonRenderHeight = App->moduleFloor->GetHorizonRenderHeight();
+	int horizonRenderHeight = App->floor->GetHorizonRenderHeight();
 	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE) {
 		int screenX = (int)((currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE);
 		float pivotXRight = 0;
