@@ -49,7 +49,7 @@ void Obstacle::Init(map<string, void*> parameters)
 void Obstacle::Update()
 {
 	iPoint screen = GetScreenRenderPosition();
-	float scale = GetScaleForPosition(screen.y) * scalingFactor;
+	float scale = GetScaleForPosition((float)screen.y) * scalingFactor;
 	App->renderer->BlitWithPivotScaled(graphics, &animation.GetCurrentFrame(), scale, 0.5f, 1.0f, screen.x, screen.y);
 
 	collider->rect = GetRectInPositionWithPivot(screen.x, screen.y, animation.PeakCurrentFrame().w * scale, animation.PeakCurrentFrame().h * scale, 0.5f, 1.0f);
@@ -64,7 +64,7 @@ void Obstacle::MoveObstacle()
 void Obstacle::RenderObstacle()
 {
 	iPoint screen = GetScreenRenderPosition();
-	float scale = GetScaleForPosition(screen.y) * scalingFactor;
+	float scale = GetScaleForPosition((float)screen.y) * scalingFactor;
 	App->renderer->BlitWithPivotScaled(graphics, &animation.GetCurrentFrame(), scale, 0.5f, 1.0f, screen.x, screen.y);
 }
 
@@ -76,7 +76,7 @@ iPoint Obstacle::GetScreenRenderPosition() const
 	return screen;
 }
 
-float Obstacle::GetScaleForPosition(int screenY) const
+float Obstacle::GetScaleForPosition(float screenY) const
 {
 	return App->floor->GetHorizonPercentageOfPosition(screenY);
 }

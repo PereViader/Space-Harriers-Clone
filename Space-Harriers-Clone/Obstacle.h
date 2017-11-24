@@ -35,6 +35,6 @@ private:
 	void MoveObstacle();
 	void RenderObstacle();
 	iPoint GetScreenRenderPosition() const;
-	float GetScaleForPosition(int y) const;	
+	float GetScaleForPosition(float y) const;	
 };
 

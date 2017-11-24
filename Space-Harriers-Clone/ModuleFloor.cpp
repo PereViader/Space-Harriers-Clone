@@ -82,10 +82,15 @@ float ModuleFloor::GetCurrentHorizonPercentage() const
 	return (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
 }
 
-float ModuleFloor::GetHorizonPercentageOfPosition(int position) const
+float ModuleFloor::GetHorizonPercentageOfPosition(float position) const
 {
-	position = max(horizonRenderHeight, min(SCREEN_HEIGHT*SCREEN_SIZE, position));
+	position = max(static_cast<float>(horizonRenderHeight), min(static_cast<float>(SCREEN_HEIGHT*SCREEN_SIZE), position));
 	return 1.0f - (float)(SCREEN_HEIGHT*SCREEN_SIZE - position) / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
+}
+
+float ModuleFloor::GetHorizonDepthForPosition(float position) const
+{
+	return 0.0f;
 }
 
 int ModuleFloor::GetRenderHeightOfHorizontalStripe(int index) const
