@@ -26,7 +26,7 @@ bool ModuleSceneIntro::Start()
 	if(fx == 0)
 		fx = App->audio->LoadFx("rtype/starting.wav");
 
-	App->renderer->camera.x = App->renderer->camera.y = 0;
+	//App->renderer->camera.x = App->renderer->camera.y = 0;
 	
 	return true;
 }
@@ -44,7 +44,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	App->renderer->Blit(background, 0, 0, NULL);
+	//App->renderer->Blit(background, 0, 0, NULL);
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->fade->isFading() == false)
 	{

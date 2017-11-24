@@ -25,7 +25,7 @@ bool ModuleStage::Start()
 	App->enemies->Enable();
 	App->audio->PlayMusic("rtype/main_theme.wav");
 
-	App->enemies->InstantiateEnemyByName("tree");
+	App->enemies->InstantiateEnemyByName("tree",map<string,void*>());
 	return true;
 }
 

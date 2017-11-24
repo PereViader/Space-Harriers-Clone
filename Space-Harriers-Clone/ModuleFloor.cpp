@@ -108,7 +108,7 @@ void ModuleFloor::RenderObject()
 	object.w = 10;
 	object.h = 10;
 
-	App->renderer->DrawQuad(object, 0, 0, 255, 255,false);
+	App->renderer->DrawQuad(object, 0, 0, 255, 255);
 }
 
 void ModuleFloor::RenderFloor() {

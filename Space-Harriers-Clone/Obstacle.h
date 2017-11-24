@@ -17,6 +17,8 @@ public:
 	virtual Enemy * Clone() const override;
 	virtual void Update() override;
 
+	virtual void Init(map<string, void*> values) override;
+
 public:
 	float scalingFactor;
 
@@ -28,12 +30,10 @@ private:
 	float zSpeed;
 	int renderingFloorId;
 	
-	bool hasShadow;
-
 private:
 	void MoveObstacle();
 	void RenderObstacle();
 	iPoint GetScreenRenderPosition() const;
-	float GetScaleForPosition(int y) const;
+	float GetScaleForPosition(int y) const;	
 };
 

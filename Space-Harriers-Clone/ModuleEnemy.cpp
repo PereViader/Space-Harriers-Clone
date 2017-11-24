@@ -38,7 +38,7 @@ update_status ModuleEnemy::PreUpdate()
 {
 	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end();)
 	{
-		if ((*it)->to_delete == true)
+		if ((*it)->ToDelete())
 		{
 			RELEASE(*it);
 			it = enemies.erase(it);
@@ -83,12 +83,13 @@ void ModuleEnemy::OnCollision(const Collider * own, const Collider * other)
 
 }
 
-Enemy * ModuleEnemy::InstantiateEnemyByName(string name)
+Enemy * ModuleEnemy::InstantiateEnemyByName(string name, map<string, void*> parameters)
 {
 	const Enemy* prototype = GetEnemyPrototypeByName(name);
 	assert(prototype != nullptr);
 	
 	Enemy* instance = prototype->Clone();
+	instance->Init(parameters);
 	enemies.push_back(instance);
 
 	return instance;
