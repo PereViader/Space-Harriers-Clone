@@ -4,12 +4,11 @@
 #include "ModulePlayer.h"
 #include "ModuleFloor.h"
 
-#include "Animation.h"
-
-Obstacle::Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow) :
+Obstacle::Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, float scalingFactor) :
 	graphics(graphics),
 	animation(animation),
-	hasShadow(hasShadow)
+	hasShadow(hasShadow),
+	scalingFactor(scalingFactor)
 {
 }
 
@@ -34,11 +33,11 @@ void Obstacle::MoveObstacle()
 {
 }
 
-void Obstacle::RenderObstacle() const
+void Obstacle::RenderObstacle()
 {
 	iPoint screen = GetScreenRenderPosition();
-	float scale = GetScaleForPosition(screen.y);
-	App->renderer->BlitWithPivotScaled(graphics, nullptr, scale, 0.5f, 1.0f, screen.x, screen.y);
+	float scale = GetScaleForPosition(screen.y) * scalingFactor;
+	App->renderer->BlitWithPivotScaled(graphics, &animation.GetCurrentFrame(), scale, 0.5f, 1.0f, screen.x, screen.y);
 }
 
 iPoint Obstacle::GetScreenRenderPosition() const

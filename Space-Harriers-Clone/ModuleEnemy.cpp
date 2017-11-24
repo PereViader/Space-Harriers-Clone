@@ -28,7 +28,7 @@ bool ModuleEnemy::Start()
 
 	Animation treeAnimation;
 	treeAnimation.frames.push_back({ 206,48,44,163 });
-	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false);
+	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false,3.5f);
 	enemyPrototypes["tree"] = tree;
 
 	return true;
