@@ -71,7 +71,7 @@ bool ModuleEnemy::CleanUp()
 
 	enemyPrototypes.clear();
 
-
+	App->textures->Unload(treeGraphic);
 
 	return true;
 }
