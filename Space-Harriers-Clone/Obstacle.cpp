@@ -11,10 +11,22 @@ Obstacle::Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, f
 	Enemy(hasShadow,false),
 	graphics(graphics),
 	animation(animation),
+	collider(nullptr),
 	scalingFactor(scalingFactor),
-	collider()
+	zSpeed(0),
+	renderingFloorId(-1)
 {
-	collider = App->collision->AddCollider(animation.frames[0], *App->enemies);
+}
+
+Obstacle::Obstacle(const Obstacle & other) :
+	Enemy(other.hasShadow, other.toDelete),
+	scalingFactor(other.scalingFactor),
+	graphics(other.graphics),
+	animation(other.animation),
+	collider(nullptr),
+	zSpeed(other.zSpeed),
+	renderingFloorId(-1)
+{
 }
 
 
@@ -30,6 +42,7 @@ Enemy * Obstacle::Clone() const
 
 void Obstacle::Init(map<string, void*> parameters)
 {
+	collider = App->collision->AddCollider(animation.frames[0], *App->enemies);
 	renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
 }
 
@@ -60,7 +73,6 @@ iPoint Obstacle::GetScreenRenderPosition() const
 	iPoint screen;
 	screen.x = int((SCREEN_WIDTH*SCREEN_SIZE) / 2.0f); //TODO
 	screen.y = App->floor->GetRenderHeightOfHorizontalStripe(renderingFloorId);
-	App->renderer->DrawQuad({ screen.x, screen.y, 20,20}, 0, 0, 0, 255);
 	return screen;
 }
 

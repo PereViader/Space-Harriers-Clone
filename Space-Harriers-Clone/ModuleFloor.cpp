@@ -98,23 +98,9 @@ int ModuleFloor::GetFurtherHorizontalStripeIndex() const
 	return (firstQuadIndex-1) < 0 ? (nHorizonQuads-1) : (firstQuadIndex - 1);
 }
 
-void ModuleFloor::RenderObject()
-{
-	const SDL_Rect& renderQuad = horizontalQuads[objectQuadIndex];
-
-	SDL_Rect object;
-	object.x = (int)(SCREEN_WIDTH*SCREEN_SIZE / 2.0f);
-	object.y = (int)(renderQuad.y + renderQuad.h * positionPercentage);
-	object.w = 10;
-	object.h = 10;
-
-	App->renderer->DrawQuad(object, 0, 0, 255, 255);
-}
-
 void ModuleFloor::RenderFloor() {
 	RenderVerticalLines();
 	RenderHorizontalLines();
-	RenderObject();
 }
 
 void ModuleFloor::RenderVerticalLines()

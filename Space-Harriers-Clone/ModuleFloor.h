@@ -54,7 +54,6 @@ private:
 	int objectQuadIndex;
 
 private:
-	void RenderObject();
 	void RenderFloor();
 	void RenderVerticalLines();
 	void RenderHorizontalLines();

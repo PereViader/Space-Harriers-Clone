@@ -12,6 +12,7 @@ class Obstacle :
 {
 public:
 	Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, float scalingFactor=1);
+	Obstacle(const Obstacle&);
 	~Obstacle();
 
 	virtual Enemy * Clone() const override;
