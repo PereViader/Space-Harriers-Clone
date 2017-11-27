@@ -30,6 +30,7 @@ public:
 private:
 	float zSpeed;
 	int renderingFloorId;
+	float xPositionOffset;
 	
 private:
 	void MoveObstacle();

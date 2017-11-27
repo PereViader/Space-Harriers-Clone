@@ -14,7 +14,8 @@ Obstacle::Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, f
 	collider(nullptr),
 	scalingFactor(scalingFactor),
 	zSpeed(0),
-	renderingFloorId(-1)
+	renderingFloorId(-1),
+	xPositionOffset(0)
 {
 }
 
@@ -25,7 +26,8 @@ Obstacle::Obstacle(const Obstacle & other) :
 	animation(other.animation),
 	collider(nullptr),
 	zSpeed(other.zSpeed),
-	renderingFloorId(-1)
+	renderingFloorId(-1),
+	xPositionOffset(other.xPositionOffset)
 {
 }
 
@@ -43,16 +45,24 @@ Enemy * Obstacle::Clone() const
 void Obstacle::Init(map<string, void*> parameters)
 {
 	collider = App->collision->AddCollider(animation.frames[0], *App->enemies);
+	xPositionOffset = 0;
 	renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
 }
 
 void Obstacle::Update()
 {
+	xPositionOffset += App->floor->GetCurrentFloorMovement();
 	iPoint screen = GetScreenRenderPosition();
 	float scale = GetScaleForPosition((float)screen.y) * scalingFactor;
-	App->renderer->BlitWithPivotScaled(graphics, &animation.GetCurrentFrame(), scale, 0.5f, 1.0f, screen.x, screen.y);
 
-	collider->rect = GetRectInPositionWithPivot(screen.x, screen.y, animation.PeakCurrentFrame().w * scale, animation.PeakCurrentFrame().h * scale, 0.5f, 1.0f);
+	SDL_Rect& animationRect = animation.GetCurrentFrame();
+	
+	// Move collider
+	collider->rect = GetRectInPositionWithPivot(screen.x, screen.y, animationRect.w * scale, animationRect.h * scale, 0.5f, 1.0f);
+
+	//Render
+	float zValue = App->floor->GetHorizonDepthForPosition(screen.y);
+	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationRect, scale, 0.5f, 1.0f, screen.x, screen.y, zValue);
 }
 
 void Obstacle::MoveObstacle()
@@ -71,8 +81,8 @@ void Obstacle::RenderObstacle()
 iPoint Obstacle::GetScreenRenderPosition() const
 {
 	iPoint screen;
-	screen.x = int((SCREEN_WIDTH*SCREEN_SIZE) / 2.0f); //TODO
 	screen.y = App->floor->GetRenderHeightOfHorizontalStripe(renderingFloorId);
+	screen.x = (SCREEN_WIDTH*SCREEN_SIZE) / 2.0f + xPositionOffset * GetScaleForPosition((float)screen.y);
 	return screen;
 }
 
