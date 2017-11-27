@@ -19,7 +19,8 @@ const float ModuleFloor::SEGMENT_REDUCTION = 0.60f;
 const float ModuleFloor::HORIZONTAL_LINES_SPEED = 2.0f;
 
 ModuleFloor::ModuleFloor(bool enabled) :
-	Module(enabled)
+	Module(enabled),
+	floorSpeed(0)
 {
 }
 
@@ -53,6 +54,8 @@ bool ModuleFloor::Init()
 	return true;
 }
 
+#include <iostream>
+
 update_status ModuleFloor::Update()
 {
 
@@ -61,6 +64,7 @@ update_status ModuleFloor::Update()
 	fPoint playerPosition = App->player->GetNormalizedPosition();
 	
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
+
 	horizonRenderHeight = (int)(HORIZON_MAX_HEIGHT + (HORIZON_MIN_HEIGHT-HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f));
 
 	return UPDATE_CONTINUE;
@@ -90,7 +94,13 @@ float ModuleFloor::GetHorizonPercentageOfPosition(float position) const
 
 float ModuleFloor::GetHorizonDepthForPosition(float position) const
 {
-	return 0.0f;
+	float percentage = GetHorizonPercentageOfPosition(position);
+	return Z_MAX * percentage;
+}
+
+float ModuleFloor::GetCurrentFloorMovement() const
+{
+	return floorSpeed;
 }
 
 int ModuleFloor::GetRenderHeightOfHorizontalStripe(int index) const
@@ -113,7 +123,6 @@ void ModuleFloor::RenderVerticalLines()
 	//Number of pixels between each line from the texture to be blit to the screen
 	float originalTextureVerticalPixelsPerScreenRow = (float)FLOOR_PIXEL_HEIGHT / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
 
-
 	//Rects for blitting from the texture to the screen
 	const int extraSpaceForCurves = 260;
 	SDL_Rect floorTextureRect = { extraSpaceForCurves,0,FLOOR_PIXEL_WIDTH - extraSpaceForCurves * 2,1 };
@@ -121,12 +130,14 @@ void ModuleFloor::RenderVerticalLines()
 
 
 	//Move Floor Horizontally
-	float horizonDisplayPercentage = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
+	float horizonDisplayPercentage = GetCurrentHorizonPercentage();
 	float alphaIncrementForCurrentHorizon = 1.0f / horizonDisplayPercentage;
 	float currentMaxHorizontalAlpha = 0.33f*alphaIncrementForCurrentHorizon;
 
+
 	float horizontalAlpha = previousHorizontalMovePercentage*currentMaxHorizontalAlpha + horizontalSpeed*alphaIncrementForCurrentHorizon;
 	horizontalAlpha = fmod(horizontalAlpha, currentMaxHorizontalAlpha);
+
 	previousHorizontalMovePercentage = horizontalAlpha / currentMaxHorizontalAlpha;
 
 	float iterationAlpha = (float)floorTextureRect.x;
@@ -145,6 +156,7 @@ void ModuleFloor::RenderVerticalLines()
 		iterationAlpha += horizontalAlpha;
 		floorTextureRect.x = (int)iterationAlpha;
 	}
+	floorSpeed = currentMaxHorizontalAlpha;
 }
 
 void ModuleFloor::RenderHorizontalLines()
