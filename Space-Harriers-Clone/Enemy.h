@@ -5,6 +5,7 @@
 
 #include <string>
 #include <map>
+
 using namespace std;
 
 struct Collider;
@@ -22,8 +23,9 @@ public:
 	virtual void Init(map<string, void*> values) = 0;
 	virtual Enemy* Clone() const = 0;
 	virtual void Update() = 0;
-
+	
 	bool ToDelete() const { return toDelete; }
+
 protected:
 	bool toDelete;
 	bool hasShadow;
