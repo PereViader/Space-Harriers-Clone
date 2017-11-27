@@ -9,7 +9,7 @@
 
 ModuleStage::ModuleStage(bool enabled) : Module(enabled)
 {
-	currentTime = 10;
+	currentTime = 0;
 }
 
 
@@ -25,12 +25,20 @@ bool ModuleStage::Start()
 	App->enemies->Enable();
 	App->audio->PlayMusic("rtype/main_theme.wav");
 
-	App->enemies->InstantiateEnemyByName("tree",map<string,void*>());
+	//App->enemies->InstantiateEnemyByName("tree",map<string,void*>());
 	return true;
 }
 
 update_status ModuleStage::Update()
 {
+	if (currentTime >= 0) {
+		currentTime += App->time->GetDeltaTime();
+
+		if (currentTime > 2) {
+			App->enemies->InstantiateEnemyByName("tree", map<string, void*>());
+			currentTime = -1;
+		}
+	}
 	
 	return UPDATE_CONTINUE;
 }
