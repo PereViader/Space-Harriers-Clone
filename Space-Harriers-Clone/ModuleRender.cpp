@@ -47,11 +47,19 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
+	
+
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRender::PostUpdate()
 {
+	while (zBuffer.size() > 0) {
+		ZElement element = zBuffer.top();
+		zBuffer.pop();
+		DirectBlit(element.graphic, &element.section, &element.screen);
+	}
+
 	SDL_RenderPresent(renderer);
 	return UPDATE_CONTINUE;
 }

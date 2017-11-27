@@ -50,7 +50,7 @@ private:
 		SDL_Rect screen;
 
 		bool operator<(const ZElement& other) const{
-			return zValue < other.zValue;
+			return zValue >= other.zValue;
 		}
 	};
 
