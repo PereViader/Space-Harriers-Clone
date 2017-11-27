@@ -73,7 +73,7 @@ update_status ModuleParticles::Update()
 
 		p->Update();
 		float scale = 1.0f - p->positionZ / Z_MAX;
-		App->renderer->BlitWithPivotScaled(graphics, &p->anim.GetCurrentFrame(), scale, 0.5f, 0.5f, (int)p->position.x, (int)p->position.y);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, &p->anim.GetCurrentFrame(), scale, 0.5f, 0.5f, (int)p->position.x, (int)p->position.y, p->positionZ);
 		if (p->isFirstFrame)
 		{
 			App->audio->PlayFx(p->sfxId);
