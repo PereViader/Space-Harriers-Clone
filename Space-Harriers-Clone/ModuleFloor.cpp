@@ -64,6 +64,7 @@ update_status ModuleFloor::Update()
 	fPoint playerPosition = App->player->GetNormalizedPosition();
 	
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
+	floorSpeed = -horizontalSpeed * (SCREEN_WIDTH * SCREEN_SIZE) * 1.2f;
 
 	horizonRenderHeight = (int)(HORIZON_MAX_HEIGHT + (HORIZON_MIN_HEIGHT-HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f));
 
@@ -156,7 +157,6 @@ void ModuleFloor::RenderVerticalLines()
 		iterationAlpha += horizontalAlpha;
 		floorTextureRect.x = (int)iterationAlpha;
 	}
-	floorSpeed = currentMaxHorizontalAlpha;
 }
 
 void ModuleFloor::RenderHorizontalLines()
