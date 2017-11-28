@@ -153,7 +153,7 @@ void ModulePlayer::RenderPlayer()
 
 	// Draw everything --------------------------------------
 	if (!destroyed)
-		App->renderer->BlitWithPivotScaled(graphics, &currentAnimation->GetCurrentFrame(), RENDER_SCALE, 0.5f, 1.0f, screen.x, screen.y);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, &currentAnimation->GetCurrentFrame(), RENDER_SCALE, 0.5f, 1.0f, screen.x, screen.y, 0);
 
 }
 

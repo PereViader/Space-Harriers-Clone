@@ -93,7 +93,7 @@ float ModuleFloor::GetHorizonPercentageOfPosition(float position) const
 
 float ModuleFloor::GetHorizonDepthForPosition(float position) const
 {
-	float percentage = GetHorizonPercentageOfPosition(position);
+	float percentage = 1.0f - GetHorizonPercentageOfPosition(position);
 	return Z_MAX * percentage;
 }
 
