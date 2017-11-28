@@ -49,16 +49,11 @@ void Obstacle::Init(map<string, void*> parameters)
 	renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
 }
 
-#include <iostream>
-
 void Obstacle::Update()
 {
 	xPositionOffset += App->floor->GetCurrentFloorMovement();
 	fPoint screen = GetScreenRenderPosition();
 	float scale = GetScaleForPosition(screen.y) * scalingFactor;
-	
-	using namespace std;
-	cout << scale << endl;
 
 	SDL_Rect& animationRect = animation.GetCurrentFrame();
 	
