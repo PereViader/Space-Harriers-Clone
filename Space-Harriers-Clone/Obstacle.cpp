@@ -49,40 +49,32 @@ void Obstacle::Init(map<string, void*> parameters)
 	renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
 }
 
+#include <iostream>
+
 void Obstacle::Update()
 {
 	xPositionOffset += App->floor->GetCurrentFloorMovement();
-	iPoint screen = GetScreenRenderPosition();
-	float scale = GetScaleForPosition((float)screen.y) * scalingFactor;
+	fPoint screen = GetScreenRenderPosition();
+	float scale = GetScaleForPosition(screen.y) * scalingFactor;
+	
+	using namespace std;
+	cout << scale << endl;
 
 	SDL_Rect& animationRect = animation.GetCurrentFrame();
 	
 	// Move collider
-	collider->rect = GetRectInPositionWithPivot(screen.x, screen.y, animationRect.w * scale, animationRect.h * scale, 0.5f, 1.0f);
+	collider->rect = GetRectInPositionWithPivot(static_cast<int>(screen.x), static_cast<int>(screen.y), animationRect.w * scale, animationRect.h * scale, 0.5f, 1.0f);
 
 	//Render
 	float zValue = App->floor->GetHorizonDepthForPosition(screen.y);
-	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationRect, scale, 0.5f, 1.0f, screen.x, screen.y, zValue);
+	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationRect, scale, 0.5f, 1.0f, static_cast<int>(screen.x), static_cast<int>(screen.y), zValue);
 }
 
-void Obstacle::MoveObstacle()
+fPoint Obstacle::GetScreenRenderPosition() const
 {
-	iPoint screen = GetScreenRenderPosition();
-	collider->rect = GetRectInPositionWithPivot(screen.x, screen.y, (float)collider->rect.w, (float)collider->rect.h, 0.5f, 1.0f);
-}
-
-void Obstacle::RenderObstacle()
-{
-	iPoint screen = GetScreenRenderPosition();
-	float scale = GetScaleForPosition((float)screen.y) * scalingFactor;
-	App->renderer->BlitWithPivotScaled(graphics, &animation.GetCurrentFrame(), scale, 0.5f, 1.0f, screen.x, screen.y);
-}
-
-iPoint Obstacle::GetScreenRenderPosition() const
-{
-	iPoint screen;
+	fPoint screen;
 	screen.y = App->floor->GetRenderHeightOfHorizontalStripe(renderingFloorId);
-	screen.x = (SCREEN_WIDTH*SCREEN_SIZE) / 2.0f + xPositionOffset * GetScaleForPosition((float)screen.y);
+	screen.x = (SCREEN_WIDTH*SCREEN_SIZE) / 2.0f + xPositionOffset * GetScaleForPosition(screen.y);
 	return screen;
 }
 

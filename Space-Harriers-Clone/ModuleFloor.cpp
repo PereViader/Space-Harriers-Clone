@@ -58,16 +58,14 @@ bool ModuleFloor::Init()
 
 update_status ModuleFloor::Update()
 {
-
-	RenderFloor();
-
 	fPoint playerPosition = App->player->GetNormalizedPosition();
-	
+
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
 	floorSpeed = -horizontalSpeed * (SCREEN_WIDTH * SCREEN_SIZE) * 1.2f;
 
-	horizonRenderHeight = (int)(HORIZON_MAX_HEIGHT + (HORIZON_MIN_HEIGHT-HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f));
+	horizonRenderHeight = HORIZON_MAX_HEIGHT + static_cast<float>(HORIZON_MIN_HEIGHT - HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f);
 
+	RenderFloor();
 	return UPDATE_CONTINUE;
 }
 
@@ -77,7 +75,7 @@ bool ModuleFloor::CleanUp()
 	return true;
 }
 
-int ModuleFloor::GetHorizonRenderHeight() const
+float ModuleFloor::GetHorizonRenderHeight() const
 {
 	return horizonRenderHeight;
 }
@@ -89,8 +87,8 @@ float ModuleFloor::GetCurrentHorizonPercentage() const
 
 float ModuleFloor::GetHorizonPercentageOfPosition(float position) const
 {
-	position = max(static_cast<float>(horizonRenderHeight), min(static_cast<float>(SCREEN_HEIGHT*SCREEN_SIZE), position));
-	return 1.0f - (float)(SCREEN_HEIGHT*SCREEN_SIZE - position) / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
+	position = max(horizonRenderHeight, min(static_cast<float>(SCREEN_HEIGHT*SCREEN_SIZE), position));
+	return 1.0f - (SCREEN_HEIGHT*SCREEN_SIZE - position) / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
 }
 
 float ModuleFloor::GetHorizonDepthForPosition(float position) const
@@ -104,9 +102,9 @@ float ModuleFloor::GetCurrentFloorMovement() const
 	return floorSpeed;
 }
 
-int ModuleFloor::GetRenderHeightOfHorizontalStripe(int index) const
+float ModuleFloor::GetRenderHeightOfHorizontalStripe(int index) const
 {
-	return horizontalQuads[index].y;
+	return horizontalSegments[index].y;
 }
 
 int ModuleFloor::GetFurtherHorizontalStripeIndex() const
@@ -125,9 +123,9 @@ void ModuleFloor::RenderVerticalLines()
 	float originalTextureVerticalPixelsPerScreenRow = (float)FLOOR_PIXEL_HEIGHT / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
 
 	//Rects for blitting from the texture to the screen
-	const int extraSpaceForCurves = 260;
-	SDL_Rect floorTextureRect = { extraSpaceForCurves,0,FLOOR_PIXEL_WIDTH - extraSpaceForCurves * 2,1 };
-	SDL_Rect screenBlitRect = { 0,horizonRenderHeight,SCREEN_WIDTH*SCREEN_SIZE,1 };
+	const float extraSpaceForCurves = 260;
+	SDL_Rect floorTextureRect = { static_cast<int>(extraSpaceForCurves),0, static_cast<int>(FLOOR_PIXEL_WIDTH - extraSpaceForCurves * 2), 1 };
+	SDL_Rect screenBlitRect = { 0,static_cast<int>(horizonRenderHeight),SCREEN_WIDTH*SCREEN_SIZE,1 };
 
 
 	//Move Floor Horizontally
@@ -141,7 +139,7 @@ void ModuleFloor::RenderVerticalLines()
 
 	previousHorizontalMovePercentage = horizontalAlpha / currentMaxHorizontalAlpha;
 
-	float iterationAlpha = (float)floorTextureRect.x;
+	float iterationAlpha = extraSpaceForCurves;
 
 	// Texture row selector
 	float currentRenderPosition = 0;
@@ -161,7 +159,7 @@ void ModuleFloor::RenderVerticalLines()
 
 void ModuleFloor::RenderHorizontalLines()
 {
-	float baseSegmentHeight = (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (1.0f+ SEGMENT_REDUCTION + 
+	float baseSegmentHeight = static_cast<float>(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (1.0f+ SEGMENT_REDUCTION + 
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
@@ -177,13 +175,16 @@ void ModuleFloor::RenderHorizontalLines()
 
 	float currentSegmentHeight = firstSegmentHeight;
 	float currentRenderingPosition = startingRenderingPosition;
-	
+	 
 	int currentQuad = firstQuadIndex;
 	bool hasLoopedArray = false;
 	do {
 		float currentSegmentPrintedHeight = currentSegmentHeight * (1.0f - SEGMENT_REDUCTION);
 		horizontalQuads[currentQuad].y = (int)currentRenderingPosition;
+		horizontalSegments[currentQuad].y = currentRenderingPosition;
 		horizontalQuads[currentQuad].h = (int)currentSegmentPrintedHeight;
+		horizontalSegments[currentQuad].h = currentSegmentPrintedHeight;
+
 		currentSegmentHeight = currentSegmentHeight * SEGMENT_REDUCTION;
 		currentRenderingPosition -= currentSegmentHeight;
 

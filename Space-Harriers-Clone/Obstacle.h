@@ -33,9 +33,7 @@ private:
 	float xPositionOffset;
 	
 private:
-	void MoveObstacle();
-	void RenderObstacle();
-	iPoint GetScreenRenderPosition() const;
+	fPoint GetScreenRenderPosition() const;
 	float GetScaleForPosition(float y) const;	
 };
 

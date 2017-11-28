@@ -33,12 +33,11 @@ Application::Application()
 
 	// Game Modules
 	modules.push_back(moduleStage = new ModuleStage(false));
-	modules.push_back(background = new ModuleBackground(false));
 	modules.push_back(floor = new ModuleFloor(false));
-	modules.push_back(scene_intro = new ModuleSceneIntro(false));
-	modules.push_back(scene_space = new ModuleSceneSpace(false));
-	modules.push_back(player = new ModulePlayer(false));
+	modules.push_back(background = new ModuleBackground(false));
 	modules.push_back(enemies = new ModuleEnemy(false));
+	modules.push_back(player = new ModulePlayer(false));
+
 
 
 

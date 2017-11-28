@@ -15,14 +15,14 @@ public:
 	update_status Update() override;
 	bool CleanUp() override;
 
-	int GetHorizonRenderHeight() const;
+	float GetHorizonRenderHeight() const;
 	float GetCurrentHorizonPercentage() const;	
 
 	float GetHorizonPercentageOfPosition(float position) const;
 	float GetHorizonDepthForPosition(float position) const;
 
 	float GetCurrentFloorMovement() const;
-	int GetRenderHeightOfHorizontalStripe(int index) const;
+	float GetRenderHeightOfHorizontalStripe(int index) const;
 	int GetFurtherHorizontalStripeIndex() const;
 
 public:
@@ -33,9 +33,7 @@ public:
 	float floorSpeed;
 
 private:
-	
-
-	int horizonRenderHeight;
+	float horizonRenderHeight;
 
 	//vertical lines
 	SDL_Texture * floor;
@@ -54,6 +52,14 @@ private:
 	static const int nHorizonQuads = 11;
 	int firstQuadIndex;
 	SDL_Rect horizontalQuads[nHorizonQuads];
+
+
+	struct HorizontalSegmentContainer {
+		float y;
+		float h;
+	};
+
+	HorizontalSegmentContainer horizontalSegments[11];
 
 	//temp
 	float positionPercentage;
