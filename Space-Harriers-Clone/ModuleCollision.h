@@ -8,18 +8,33 @@
 #include <assert.h>
 #include "Vector3.h"
 
-// TODO 9: Create a matrix of game specific types of collision for early discard
-// Example: lasers should not collide with lasers but should collider with walls
-// enemy shots will collide with other enemies ? and against walls ?
+enum class ColliderType {
+	Enemy = 0,
+	Player = 1,
+	EnemyParticle = 2,
+	PlayerParticle = 3,
+	
+};
+
+static const bool collisionMatrix[4][4] =
+{
+	{0,1,0,1},
+	{1,0,1,0},
+	{0,1,0,0},
+	{1,0,0,0}
+};
 
 struct Collider
 {
+	ColliderType colliderType;
+
 	SDL_Rect rect;
 	bool to_delete;
 
 	ICollidable* owner;
 
-	Collider(SDL_Rect rectangle, ICollidable* owner) : 
+	Collider(SDL_Rect rectangle, ICollidable* owner, ColliderType colliderType) :
+		colliderType(colliderType),
 		rect(rectangle),
 		to_delete(false),
 		owner(owner)
@@ -46,8 +61,8 @@ public:
 
 	bool CleanUp();
 
-	Collider* AddCollider(const SDL_Rect& rect, ICollidable* owner);
-	Collider* AddPrototypeCollider(ICollidable* owner);
+	Collider* AddCollider(const SDL_Rect& rect, ICollidable* owner, ColliderType colliderType);
+	Collider* AddPrototypeCollider(ICollidable* owner, ColliderType colliderType);
 
 	Collider* RegisterPrototypeInstance(Collider* prototype, ICollidable * owner);
 

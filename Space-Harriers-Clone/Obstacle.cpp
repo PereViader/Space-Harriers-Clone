@@ -82,6 +82,10 @@ float Obstacle::GetScaleForPosition(float screenY) const
 
 void Obstacle::OnCollision(const Collider * own, const Collider * other)
 {
+	assert(own == collider);
+
+
+
 	LOG("%s", "enemy collided");
 }
 

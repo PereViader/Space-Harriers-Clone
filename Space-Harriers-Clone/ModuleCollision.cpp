@@ -76,19 +76,19 @@ bool ModuleCollision::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, ICollidable* owner)
+Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, ICollidable* owner, ColliderType colliderType)
 {
-	Collider* ret = new Collider(rect, owner);
+	Collider* ret = new Collider(rect, owner, colliderType);
 
 	colliders.push_back(ret);
 
 	return ret;
 }
 
-Collider * ModuleCollision::AddPrototypeCollider(ICollidable * owner)
+Collider * ModuleCollision::AddPrototypeCollider(ICollidable * owner, ColliderType colliderType)
 {
 	SDL_Rect temporalCollision = { 0,0,0,0 };
-	Collider* ret = new Collider(temporalCollision, owner);
+	Collider* ret = new Collider(temporalCollision, owner, colliderType);
 
 	prototypes.push_back(ret);
 

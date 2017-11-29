@@ -27,7 +27,7 @@ bool ModuleParticles::Start()
 	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
 	playerParticlePrototype.velocity.z = 35;
 	playerParticlePrototype.velocity.x = 3;
-	playerParticlePrototype.collider = App->collision->AddPrototypeCollider(&playerParticlePrototype);
+	playerParticlePrototype.collider = App->collision->AddPrototypeCollider(&playerParticlePrototype,ColliderType::PlayerParticle);
 
 	// TODO 12: Create a new "Explosion" particle 
 	// audio: rtype/explosion.wav
