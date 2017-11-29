@@ -7,6 +7,7 @@
 #include "Animation.h"
 #include "Point.h"
 #include "ModuleCollision.h"
+#include "Vector3.h"
 
 struct SDL_Texture;
 
@@ -20,12 +21,9 @@ public:
 	Animation anim;
 	int sfxId;
 
-	float velocityX;
-	float velocityY;
-	float velocityZ;
+	Vector3 velocity;
 
-	fPoint position;
-	float positionZ;
+	Vector3 position;
 
 	Collider* collider;
 

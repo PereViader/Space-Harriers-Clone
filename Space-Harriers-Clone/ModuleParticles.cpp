@@ -25,8 +25,8 @@ bool ModuleParticles::Start()
 
 	playerParticlePrototype.anim.frames.push_back({ 3,2,87,56 });
 	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
-	playerParticlePrototype.velocityZ = 35;
-	playerParticlePrototype.velocityX = 3;
+	playerParticlePrototype.velocity.z = 35;
+	playerParticlePrototype.velocity.x = 3;
 	playerParticlePrototype.collider = App->collision->AddPrototypeCollider(&playerParticlePrototype);
 
 	// TODO 12: Create a new "Explosion" particle 
@@ -75,8 +75,8 @@ update_status ModuleParticles::Update()
 		Particle* p = *it;
 
 		p->Update();
-		float scale = 1.0f - p->positionZ / Z_MAX;
-		App->renderer->BlitWithPivotScaledZBuffer(graphics, &p->anim.GetCurrentFrame(), scale, 0.5f, 0.5f, (int)p->position.x, (int)p->position.y, p->positionZ);
+		float scale = 1.0f - p->position.z / Z_MAX;
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, &p->anim.GetCurrentFrame(), scale, 0.5f, 0.5f, (int)p->position.x, (int)p->position.y, p->position.z);
 		if (p->isFirstFrame)
 		{
 			App->audio->PlayFx(p->sfxId);
@@ -90,7 +90,7 @@ update_status ModuleParticles::Update()
 void ModuleParticles::AddParticle(const Particle& particle, int x, int y)
 {
 	Particle * instance = new Particle(particle);
-	instance->position = { (float)x, (float)y };
+	instance->position = Vector3(static_cast<float>(x), static_cast<float>(y));
 	instance->collider = App->collision->RegisterPrototypeInstance(instance->collider, instance);
 	this->active.push_back(instance);
 }
@@ -101,11 +101,8 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y)
 Particle::Particle() :
 	to_delete(false),
 	isFirstFrame(true),
-	position({0,0}),
-	positionZ(0),
-	velocityX(0),
-	velocityY(0),
-	velocityZ(0),
+	position(Vector3()),
+	velocity(Vector3()),
 	collider(nullptr)
 {}
 
@@ -114,11 +111,8 @@ Particle::Particle(const Particle& p) :
 	isFirstFrame(p.isFirstFrame),
 	anim(p.anim), 
 	sfxId(p.sfxId),
-	velocityX(p.velocityX),
-	velocityY(p.velocityY),
-	velocityZ(p.velocityZ),
+	velocity(p.velocity),
 	position(p.position),
-	positionZ(p.positionZ),
 	collider(p.collider)
 {
 }
@@ -131,19 +125,17 @@ void Particle::Update()
 {
 	MoveParticle();
 
-	float scale = 1.0f - positionZ / Z_MAX;
-	collider->rect = GetRectInPositionWithPivot(position.x, position.y, 50 * scale, 50 * scale, 0.5f, 0.5f);
+	float scale = 1.0f - position.z / Z_MAX;
+	collider->rect = GetRectInPositionWithPivot(static_cast<int>(position.x), static_cast<int>(position.y), 50 * scale, 50 * scale, 0.5f, 0.5f);
 
-	to_delete = positionZ > Z_MAX || positionZ < 0;
+	to_delete = position.z > Z_MAX || position.z < 0;
 }
 
 void Particle::MoveParticle()
 {
 	float deltaTime = App->time->GetDeltaTime();
 
-	position.x += velocityX * deltaTime;
-	position.y += velocityY * deltaTime;
-	positionZ += velocityZ * deltaTime;
+	position = position + velocity * deltaTime;
 }
 
 void Particle::OnCollision(const Collider * own, const Collider * other)
