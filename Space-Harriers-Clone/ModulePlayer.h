@@ -29,9 +29,6 @@ public:
 	virtual void OnCollision(const Collider * own, const Collider * other) override;
 
 public:
-
-	
-
 	bool destroyed = false;
 
 private:
@@ -73,8 +70,6 @@ private:
 	void MovePlayer();
 	void MoveCollider();
 	void RenderPlayer();
-
-	
 };
 
 #endif
