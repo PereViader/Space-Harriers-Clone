@@ -183,9 +183,6 @@
     <ClCompile Include="ModuleEnemy.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Game Modules\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>Unity Like</Filter>
     </ClCompile>
