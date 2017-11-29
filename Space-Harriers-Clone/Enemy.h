@@ -14,7 +14,7 @@ class Enemy :
 	public ICollidable
 {
 public:
-	Enemy(bool hasShadow, bool toDelete) :
+	Enemy(bool hasShadow, bool toDelete = false) :
 		toDelete(toDelete),
 		hasShadow(hasShadow) 
 	{}

@@ -20,7 +20,7 @@ const float ModuleFloor::HORIZONTAL_LINES_SPEED = 2.0f;
 
 ModuleFloor::ModuleFloor(bool enabled) :
 	Module(enabled),
-	floorSpeed(0)
+	horizontalSpeedForOutsideUse(0)
 {
 }
 
@@ -61,7 +61,7 @@ update_status ModuleFloor::Update()
 	fPoint playerPosition = App->player->GetNormalizedPosition();
 
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
-	floorSpeed = -horizontalSpeed * (SCREEN_WIDTH * SCREEN_SIZE) * 1.2f;
+	horizontalSpeedForOutsideUse = -horizontalSpeed * (SCREEN_WIDTH * SCREEN_SIZE) * 1.2f;
 
 	horizonRenderHeight = HORIZON_MAX_HEIGHT + static_cast<float>(HORIZON_MIN_HEIGHT - HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f);
 
@@ -99,7 +99,7 @@ float ModuleFloor::GetHorizonDepthForPosition(float position) const
 
 float ModuleFloor::GetCurrentFloorMovement() const
 {
-	return floorSpeed;
+	return horizontalSpeedForOutsideUse;
 }
 
 float ModuleFloor::GetRenderHeightOfHorizontalStripe(int index) const

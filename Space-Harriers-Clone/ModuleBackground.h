@@ -12,11 +12,7 @@ public:
 	bool Start() override;
 	update_status Update() override;
 
-
-
-
 	void NextLevel();
-
 	void SetLevel(int level);
 
 private:

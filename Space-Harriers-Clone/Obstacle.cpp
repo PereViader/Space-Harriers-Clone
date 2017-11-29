@@ -10,7 +10,7 @@
 #include <assert.h>
 
 Obstacle::Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, float scalingFactor) :
-	Enemy(hasShadow,false),
+	Enemy(hasShadow),
 	graphics(graphics),
 	animation(animation),
 	collider(nullptr),

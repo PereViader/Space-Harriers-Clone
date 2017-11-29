@@ -30,7 +30,6 @@ public:
 	static const int HORIZON_MAX_HEIGHT = (int)((SCREEN_HEIGHT * SCREEN_SIZE) / 2.0f);
 	static const int HORIZON_MIN_HEIGHT = SCREEN_HEIGHT * SCREEN_SIZE - 50;
 
-	float floorSpeed;
 
 private:
 	float horizonRenderHeight;
@@ -42,6 +41,8 @@ private:
 
 	static const float HORIZONTAL_SPEED_MAX;
 	float horizontalSpeed;
+	float horizontalSpeedForOutsideUse;
+
 	float previousHorizontalMovePercentage;
 
 	//horizontal lines
@@ -59,7 +60,7 @@ private:
 		float h;
 	};
 
-	HorizontalSegmentContainer horizontalSegments[11];
+	HorizontalSegmentContainer horizontalSegments[nHorizonQuads];
 
 	//temp
 	float positionPercentage;
