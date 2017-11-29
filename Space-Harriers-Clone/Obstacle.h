@@ -20,6 +20,7 @@ public:
 
 	virtual void Init(map<string, void*> values) override;
 
+	virtual void OnCollision(const Collider * own, const Collider * other) override;
 public:
 	float scalingFactor;
 
@@ -35,5 +36,7 @@ private:
 private:
 	fPoint GetScreenRenderPosition() const;
 	float GetScaleForPosition(float y) const;	
+
+	
 };
 

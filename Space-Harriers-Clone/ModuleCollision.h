@@ -14,10 +14,9 @@ struct Collider
 	SDL_Rect rect;
 	bool to_delete;
 
-	// TODO 10: Add a way to notify other classes that a collision happened
-	ICollidable& owner;
+	ICollidable* owner;
 
-	Collider(SDL_Rect rectangle, ICollidable& owner) : // expand this call if you need to
+	Collider(SDL_Rect rectangle, ICollidable* owner) : 
 		rect(rectangle),
 		to_delete(false),
 		owner(owner)
@@ -45,12 +44,17 @@ public:
 
 	bool CleanUp();
 
-	Collider* AddCollider(const SDL_Rect& rect, ICollidable& owner);
+	Collider* AddCollider(const SDL_Rect& rect, ICollidable* owner);
+	Collider* AddPrototypeCollider(ICollidable* owner);
+
+	Collider* RegisterPrototypeInstance(Collider* prototype, ICollidable * owner);
+
 	void DebugDraw();
 
 private:
 
 	std::list<Collider*> colliders;
+	std::list<Collider*> prototypes;
 	bool debug = false;
 };
 

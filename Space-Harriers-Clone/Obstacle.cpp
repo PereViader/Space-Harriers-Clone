@@ -7,6 +7,8 @@
 #include "RectUtil.h"
 #include "ModuleCollision.h"
 
+#include <assert.h>
+
 Obstacle::Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, float scalingFactor) :
 	Enemy(hasShadow,false),
 	graphics(graphics),
@@ -24,7 +26,7 @@ Obstacle::Obstacle(const Obstacle & other) :
 	scalingFactor(other.scalingFactor),
 	graphics(other.graphics),
 	animation(other.animation),
-	collider(nullptr),
+	collider(other.collider),
 	zSpeed(other.zSpeed),
 	renderingFloorId(-1),
 	xPositionOffset(other.xPositionOffset)
@@ -44,8 +46,8 @@ Enemy * Obstacle::Clone() const
 
 void Obstacle::Init(map<string, void*> parameters)
 {
-	collider = App->collision->AddCollider(animation.frames[0], *static_cast<ICollidable*>(App->enemies));
-	xPositionOffset = 0;
+	collider = App->collision->RegisterPrototypeInstance(collider, this);
+	xPositionOffset = 0; //TODO set xPositionOffset to diferent values
 	renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
 }
 
@@ -76,6 +78,11 @@ fPoint Obstacle::GetScreenRenderPosition() const
 float Obstacle::GetScaleForPosition(float screenY) const
 {
 	return App->floor->GetHorizonPercentageOfPosition(screenY);
+}
+
+void Obstacle::OnCollision(const Collider * own, const Collider * other)
+{
+	LOG("%s", "enemy collided");
 }
 
 

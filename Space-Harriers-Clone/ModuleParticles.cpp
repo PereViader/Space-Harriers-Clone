@@ -6,6 +6,8 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 #include "ModuleTime.h"
+#include "RectUtil.h"
+#include "ModuleFloor.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -25,6 +27,7 @@ bool ModuleParticles::Start()
 	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
 	playerParticlePrototype.velocityZ = 35;
 	playerParticlePrototype.velocityX = 3;
+	playerParticlePrototype.collider = App->collision->AddPrototypeCollider(&playerParticlePrototype);
 
 	// TODO 12: Create a new "Explosion" particle 
 	// audio: rtype/explosion.wav
@@ -88,6 +91,7 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y)
 {
 	Particle * instance = new Particle(particle);
 	instance->position = { (float)x, (float)y };
+	instance->collider = App->collision->RegisterPrototypeInstance(instance->collider, instance);
 	this->active.push_back(instance);
 }
 
@@ -101,21 +105,22 @@ Particle::Particle() :
 	positionZ(0),
 	velocityX(0),
 	velocityY(0),
-	velocityZ(0)
+	velocityZ(0),
+	collider(nullptr)
 {}
 
-Particle::Particle(const Particle& p) : anim(p.anim), position(p.position)
+Particle::Particle(const Particle& p) : 
+	to_delete(p.to_delete),
+	isFirstFrame(p.isFirstFrame),
+	anim(p.anim), 
+	sfxId(p.sfxId),
+	velocityX(p.velocityX),
+	velocityY(p.velocityY),
+	velocityZ(p.velocityZ),
+	position(p.position),
+	positionZ(p.positionZ),
+	collider(p.collider)
 {
-	this->isFirstFrame = p.isFirstFrame;
-	this->anim = p.anim;
-	this->position = p.position;
-	this->positionZ = p.positionZ;
-	this->sfxId = p.sfxId;
-	this->to_delete = p.to_delete;
-
-	this->velocityX = p.velocityX;
-	this->velocityY = p.velocityY;
-	this->velocityZ = p.velocityZ;
 }
 
 Particle::~Particle()
@@ -124,12 +129,10 @@ Particle::~Particle()
 
 void Particle::Update()
 {
-
-	// TODO 5: This is the core of the particle logic
-	// draw and audio will be managed by ModuleParticle::Update()
-	// Note: Set to_delete to true is you want it deleted
-
 	MoveParticle();
+
+	float scale = 1.0f - positionZ / Z_MAX;
+	collider->rect = GetRectInPositionWithPivot(position.x, position.y, 50 * scale, 50 * scale, 0.5f, 0.5f);
 
 	to_delete = positionZ > Z_MAX || positionZ < 0;
 }
@@ -141,5 +144,10 @@ void Particle::MoveParticle()
 	position.x += velocityX * deltaTime;
 	position.y += velocityY * deltaTime;
 	positionZ += velocityZ * deltaTime;
+}
+
+void Particle::OnCollision(const Collider * own, const Collider * other)
+{
+	LOG("Particle collision");
 }
 

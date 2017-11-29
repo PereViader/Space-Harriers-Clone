@@ -64,7 +64,7 @@ bool ModulePlayer::Start()
 	graphics = App->textures->Load("rtype/player.png");
 
 	SDL_Rect playerCollider = { 0,0,80,186 };
-	collider = App->collision->AddCollider(playerCollider, *this);
+	collider = App->collision->AddCollider(playerCollider, this);
 
 	return true;
 }

@@ -10,7 +10,8 @@
 
 struct SDL_Texture;
 
-class Particle
+class Particle : 
+	public ICollidable
 {
 public:
 	bool to_delete;
@@ -26,7 +27,7 @@ public:
 	fPoint position;
 	float positionZ;
 
-	// TODO 11: Add an optional collider to each particle
+	Collider* collider;
 
 	Particle();
 	Particle(const Particle& p);
@@ -34,8 +35,11 @@ public:
 
 	void Update();
 
+	virtual void OnCollision(const Collider * own, const Collider * other) override;
+
 private:
 	void MoveParticle();
+
 };
 
 class ModuleParticles : public Module

@@ -4,6 +4,8 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 
+#include <assert.h>
+
 #include <iterator>     // std::advance
 
 using namespace std;
@@ -38,10 +40,9 @@ update_status ModuleCollision::Update()
 	for(list<Collider*>::const_iterator it0 = colliders.cbegin(), end = colliders.cend(); it0 != end; it0++) 
 		for (list<Collider*>::const_iterator it1 = next(it0, 1); it1 != end; it1++)
 			if ((*it0)->CheckCollision(**it1)) {
-				(*it0)->owner.OnCollision(*it0, *it1);
-				(*it1)->owner.OnCollision(*it1, *it0);
+				(*it0)->owner->OnCollision(*it0, *it1);
+				(*it1)->owner->OnCollision(*it1, *it0);
 			}
-		
 
 
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -66,13 +67,16 @@ bool ModuleCollision::CleanUp()
 
 	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
 		RELEASE(*it);
-
 	colliders.clear();
+
+	for (list<Collider*>::iterator it = prototypes.begin(); it != prototypes.end(); ++it)
+		RELEASE(*it);
+	prototypes.clear();
 
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, ICollidable& owner)
+Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, ICollidable* owner)
 {
 	Collider* ret = new Collider(rect, owner);
 
@@ -81,9 +85,31 @@ Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, ICollidable& owner)
 	return ret;
 }
 
+Collider * ModuleCollision::AddPrototypeCollider(ICollidable * owner)
+{
+	SDL_Rect temporalCollision = { 0,0,0,0 };
+	Collider* ret = new Collider(temporalCollision, owner);
+
+	prototypes.push_back(ret);
+
+	return ret;
+}
+
+Collider * ModuleCollision::RegisterPrototypeInstance(Collider * prototype, ICollidable * owner)
+{
+	assert(prototype != nullptr);
+	Collider* ret = new Collider(*prototype);
+	ret->owner = owner;
+	colliders.push_back(ret);
+	return ret;
+}
+
+
+
 // -----------------------------------------------------
 
 bool Collider::CheckCollision(const Collider& r) const
 {
+	//TODO Improve call to filter collision layers
 	return SDL_HasIntersection(&this->rect,&r.rect);
 }

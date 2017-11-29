@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ICollidable.h"
+
 #include "Point.h"
 #include "Animation.h"
 
@@ -8,9 +10,8 @@
 
 using namespace std;
 
-struct Collider;
-
-class Enemy
+class Enemy :
+	public ICollidable
 {
 public:
 	Enemy(bool hasShadow, bool toDelete) :
@@ -29,6 +30,5 @@ public:
 protected:
 	bool toDelete;
 	bool hasShadow;
-
 };
 
