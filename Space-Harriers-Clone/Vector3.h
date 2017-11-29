@@ -1,6 +1,23 @@
 #pragma once
 
 #include <cmath>
+#include <algorithm>
+
+class Vector3;
+
+Vector3 operator*(float d, const Vector3& v);
+Vector3 operator*(const Vector3& v, float d);
+
+Vector3 operator/(const Vector3& v, float d);
+Vector3 operator/(float d, const Vector3& v);
+
+float Dot(const Vector3& a, const Vector3& b);
+
+Vector3 Lerp(const Vector3& a, const Vector3& b, float t);
+Vector3 LerpUnclamped(const Vector3& a, const Vector3& b, float t);
+
+Vector3 MoveTowards(const Vector3& current, const Vector3& target, float maxDistanceDelta);
+
 
 class Vector3 {
 public:
@@ -41,7 +58,7 @@ public:
 	}
 
 	Vector3 Normalized() const {
-		return *this / Magnitude();
+		return operator/(*this,Magnitude());
 	}
 };
 
