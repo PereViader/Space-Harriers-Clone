@@ -126,7 +126,8 @@ void Particle::Update()
 	MoveParticle();
 
 	float scale = 1.0f - position.z / Z_MAX;
-	collider->rect = GetRectInPositionWithPivot(static_cast<int>(position.x), static_cast<int>(position.y), 50 * scale, 50 * scale, 0.5f, 0.5f);
+	collider->UpdateValues(position, 0.5f, 0.5f, 100 * scale, 80 * scale);
+	//collider->rect = GetRectInPositionWithPivot(static_cast<int>(position.x), static_cast<int>(position.y), 50 * scale, 50 * scale, 0.5f, 0.5f);
 
 	to_delete = position.z > Z_MAX || position.z < 0;
 }

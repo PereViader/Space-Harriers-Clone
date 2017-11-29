@@ -4,6 +4,9 @@
 #include<list>
 #include "Module.h"
 #include "ICollidable.h"
+#include "RectUtil.h"
+#include <assert.h>
+#include "Vector3.h"
 
 // TODO 9: Create a matrix of game specific types of collision for early discard
 // Example: lasers should not collide with lasers but should collider with walls
@@ -23,10 +26,9 @@ struct Collider
 	{
 	}
 
-	void SetPos(int x, int y)
-	{
-		rect.x = x;
-		rect.y = y;
+	void UpdateValues(const Vector3& position, float xPivot, float yPivot, float width, float height) {
+		assert(xPivot >= 0.0f && yPivot >= 0.0f && xPivot <= 1.0f && yPivot <= 1.0f);
+		rect = GetRectInPositionWithPivot(static_cast<int>(position.x), static_cast<int>(position.y), width, height, xPivot, yPivot);
 	}
 
 	bool CheckCollision(const Collider& r) const;

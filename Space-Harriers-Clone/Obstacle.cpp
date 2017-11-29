@@ -55,12 +55,12 @@ void Obstacle::Update()
 {
 	xPositionOffset += App->floor->GetCurrentFloorMovement();
 	fPoint screen = GetScreenRenderPosition();
-	float scale = GetScaleForPosition(screen.y) * scalingFactor;
+	float scale = scalingFactor * GetScaleForPosition(screen.y);
 
 	SDL_Rect& animationRect = animation.GetCurrentFrame();
 	
 	// Move collider
-	collider->rect = GetRectInPositionWithPivot(static_cast<int>(screen.x), static_cast<int>(screen.y), animationRect.w * scale, animationRect.h * scale, 0.5f, 1.0f);
+	collider->UpdateValues(Vector3(screen.x,screen.y), 0.5f, 1.0f, animationRect.w * scale, animationRect.h * scale);
 
 	//Render
 	float zValue = App->floor->GetHorizonDepthForPosition(screen.y);
