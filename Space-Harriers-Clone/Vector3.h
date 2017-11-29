@@ -2,6 +2,8 @@
 class Vector3 {
 public:
 	Vector3() : x(0), y(0), z(0) {}
+	Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
+	Vector3(float x, float y) : x(x), y(y), z(0) {}
 
 	float x;
 	float y;
@@ -25,7 +27,7 @@ public:
 
 };
 
-Vector3 operator*(float d, const Vector3& v) {
+inline Vector3 operator*(float d, const Vector3& v) {
 	Vector3 ret(v);
 	ret.x *= d;
 	ret.y *= d;
@@ -33,11 +35,11 @@ Vector3 operator*(float d, const Vector3& v) {
 	return ret;
 }
 
-Vector3 operator*(const Vector3& v, float d) {
+inline Vector3 operator*(const Vector3& v, float d) {
 	return operator*(d, v);
 }
 
-Vector3 operator/(float d, const Vector3& v) {
+inline Vector3 operator/(float d, const Vector3& v) {
 	Vector3 ret(v);
 	ret.x /= d;
 	ret.y /= d;
@@ -45,6 +47,6 @@ Vector3 operator/(float d, const Vector3& v) {
 	return ret;
 }
 
-Vector3 operator/(const Vector3& v, float d) {
+inline Vector3 operator/(const Vector3& v, float d) {
 	return operator/(d, v);
 }
