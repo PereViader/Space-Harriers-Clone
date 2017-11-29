@@ -94,9 +94,6 @@
     <ClInclude Include="ModuleTime.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Unity Like</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleStage.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
@@ -114,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="ICollidable.h">
       <Filter>Interface Callbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,9 +182,6 @@
     </ClCompile>
     <ClCompile Include="ModuleEnemy.cpp">
       <Filter>Game Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Unity Like</Filter>
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
       <Filter>Game Modules\Enemies</Filter>
