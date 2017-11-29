@@ -79,6 +79,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="ICollidable.h" />
     <ClInclude Include="RectUtil.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Module.h" />

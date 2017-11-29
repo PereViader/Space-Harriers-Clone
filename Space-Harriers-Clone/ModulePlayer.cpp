@@ -1,3 +1,5 @@
+#include "ModulePlayer.h"
+
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleTextures.h"
@@ -6,7 +8,6 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 #include "ModuleFadeToBlack.h"
-#include "ModulePlayer.h"
 #include "ModuleTime.h"
 #include "ModuleCollision.h"
 
@@ -155,6 +156,11 @@ void ModulePlayer::RenderPlayer()
 	if (!destroyed)
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, &currentAnimation->GetCurrentFrame(), RENDER_SCALE, 0.5f, 1.0f, screen.x, screen.y, 0);
 
+}
+
+void ModulePlayer::OnCollision(const Collider * own, const Collider * other)
+{
+	LOG("%s", "collided player");
 }
 
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Module.h"
+#include "ICollidable.h"
 
 #include <map>
 #include <string>
@@ -13,7 +14,7 @@ using namespace std;
 class Enemy;
 
 class ModuleEnemy :
-	public Module
+	public Module, public ICollidable
 {
 public:
 	ModuleEnemy(bool enabled);

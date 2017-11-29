@@ -72,7 +72,7 @@ bool ModuleCollision::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, Module& owner)
+Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, ICollidable& owner)
 {
 	Collider* ret = new Collider(rect, owner);
 

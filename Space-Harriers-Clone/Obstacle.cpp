@@ -44,7 +44,7 @@ Enemy * Obstacle::Clone() const
 
 void Obstacle::Init(map<string, void*> parameters)
 {
-	collider = App->collision->AddCollider(animation.frames[0], *App->enemies);
+	collider = App->collision->AddCollider(animation.frames[0], *static_cast<ICollidable*>(App->enemies));
 	xPositionOffset = 0;
 	renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
 }

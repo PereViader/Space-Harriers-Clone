@@ -2,13 +2,15 @@
 #define __ModulePlayer_H__
 
 #include "Module.h"
+#include "ICollidable.h"
+
 #include "Animation.h"
 #include "Point.h"
 
 struct SDL_Texture;
 struct Collider;
 
-class ModulePlayer : public Module
+class ModulePlayer : public Module, public ICollidable
 {
 public:
 	ModulePlayer(bool active = true);
@@ -22,6 +24,10 @@ public:
 
 	const fPoint& GetNormalizedPosition() const;
 	iPoint GetScreenPosition() const;
+
+	// Inherited via ICollidable
+	virtual void OnCollision(const Collider * own, const Collider * other) override;
+
 public:
 
 	
@@ -67,6 +73,8 @@ private:
 	void MovePlayer();
 	void MoveCollider();
 	void RenderPlayer();
+
+	
 };
 
 #endif

@@ -20,6 +20,9 @@
     <Filter Include="Game Modules\Enemies">
       <UniqueIdentifier>{2f7f6ae8-2edf-47b0-9234-3e7833c279d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interface Callbacks">
+      <UniqueIdentifier>{bde14a8e-04c5-4214-8e6f-a42928a4cd3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -108,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="RectUtil.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollidable.h">
+      <Filter>Interface Callbacks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 
 #include<list>
 #include "Module.h"
+#include "ICollidable.h"
 
 // TODO 9: Create a matrix of game specific types of collision for early discard
 // Example: lasers should not collide with lasers but should collider with walls
@@ -14,9 +15,9 @@ struct Collider
 	bool to_delete;
 
 	// TODO 10: Add a way to notify other classes that a collision happened
-	Module& owner;
+	ICollidable& owner;
 
-	Collider(SDL_Rect rectangle, Module& owner) : // expand this call if you need to
+	Collider(SDL_Rect rectangle, ICollidable& owner) : // expand this call if you need to
 		rect(rectangle),
 		to_delete(false),
 		owner(owner)
@@ -44,7 +45,7 @@ public:
 
 	bool CleanUp();
 
-	Collider* AddCollider(const SDL_Rect& rect, Module& owner);
+	Collider* AddCollider(const SDL_Rect& rect, ICollidable& owner);
 	void DebugDraw();
 
 private:

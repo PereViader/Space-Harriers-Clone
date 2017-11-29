@@ -67,10 +67,6 @@ public:
 		return true; 
 	}
 
-	// Callbacks ---
-	virtual void OnCollision(const Collider* own, const Collider* other) {
-	}
-
 private:
 	bool enabled = true;
 };
