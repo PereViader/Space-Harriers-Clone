@@ -21,8 +21,6 @@ class ModuleEnemy;
 
 // Game modules ---
 class ModulePlayer;
-class ModuleSceneIntro;
-class ModuleSceneSpace;
 
 class Application
 {
@@ -49,8 +47,6 @@ public:
 	// Game modules ---
 	ModuleStage* moduleStage;
 	ModulePlayer* player;
-	ModuleSceneIntro* scene_intro;
-	ModuleSceneSpace* scene_space;
 	ModuleBackground* background;
 	ModuleFloor* floor;
 	ModuleEnemy* enemies;
