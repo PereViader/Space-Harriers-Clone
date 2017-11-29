@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 class Vector3 {
 public:
 	Vector3() : x(0), y(0), z(0) {}
@@ -26,6 +28,21 @@ public:
 		return ret;
 	}
 
+	float Magnitude() const {
+		return sqrt(SqrMagnitude());
+	}
+
+	float SqrMagnitude() const {
+		return Dot(*this,*this);
+	}
+
+	void Normalize() {
+		*this = Normalized();
+	}
+
+	Vector3 Normalized() const {
+		return *this / Magnitude();
+	}
 };
 
 inline Vector3 operator*(float d, const Vector3& v) {
@@ -50,4 +67,26 @@ inline Vector3 operator/(float d, const Vector3& v) {
 
 inline Vector3 operator/(const Vector3& v, float d) {
 	return operator/(d, v);
+}
+
+
+inline float Dot(const Vector3& a, const Vector3& b) {
+	return a.x*b.x + a.y*b.y + a.z*b.z;
+}
+
+inline Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
+	t = max(0.0f, min(1.0f, t));
+	return LerpUnclamped(a,b,t);
+}
+
+inline Vector3 LerpUnclamped(const Vector3& a, const Vector3& b, float t) {
+	return a*(1.0f - t) + b*t;
+}
+
+inline Vector3 MoveTowards(const Vector3& current, const Vector3& target, float maxDistanceDelta) {
+	Vector3 totalMovementVector = target - current;
+	float distance = totalMovementVector.Magnitude();
+	float clampedDistance = min(maxDistanceDelta, distance);
+	Vector3 unitMovementVector = totalMovementVector.Normalized();
+	return current + unitMovementVector * clampedDistance;
 }
