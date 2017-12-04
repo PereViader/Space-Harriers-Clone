@@ -15,7 +15,6 @@ Obstacle::Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, f
 	animation(animation),
 	collider(nullptr),
 	scalingFactor(scalingFactor),
-	zSpeed(0),
 	renderingFloorId(-1),
 	xPositionOffset(0)
 {
@@ -27,7 +26,6 @@ Obstacle::Obstacle(const Obstacle & other) :
 	graphics(other.graphics),
 	animation(other.animation),
 	collider(other.collider),
-	zSpeed(other.zSpeed),
 	renderingFloorId(-1),
 	xPositionOffset(other.xPositionOffset)
 {
@@ -70,7 +68,7 @@ void Obstacle::Update()
 fPoint Obstacle::GetScreenRenderPosition() const
 {
 	fPoint screen;
-	screen.y = App->floor->GetRenderHeightOfHorizontalStripe(renderingFloorId);
+	screen.y = App->floor->GetRenderYOfHorizontalStripe(renderingFloorId);
 	screen.x = (SCREEN_WIDTH*SCREEN_SIZE) / 2.0f + xPositionOffset * GetScaleForPosition(screen.y);
 	return screen;
 }

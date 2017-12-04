@@ -102,9 +102,14 @@ float ModuleFloor::GetCurrentFloorMovement() const
 	return horizontalSpeedForOutsideUse;
 }
 
-float ModuleFloor::GetRenderHeightOfHorizontalStripe(int index) const
+float ModuleFloor::GetRenderYOfHorizontalStripe(int index) const
 {
 	return horizontalSegments[index].y;
+}
+
+float ModuleFloor::GetRenderHOfHorizontalStripe(int index) const
+{
+	return horizontalSegments[index].h;
 }
 
 int ModuleFloor::GetFurtherHorizontalStripeIndex() const

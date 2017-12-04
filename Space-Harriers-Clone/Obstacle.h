@@ -22,14 +22,13 @@ public:
 
 	virtual void OnCollision(const Collider * own, const Collider * other) override;
 public:
-	float scalingFactor;
-
 	SDL_Texture* graphics;
 	Animation animation;
 	Collider* collider;
 
 private:
-	float zSpeed;
+	float scalingFactor;
+
 	int renderingFloorId;
 	float xPositionOffset;
 	

@@ -23,6 +23,9 @@
     <Filter Include="Interface Callbacks">
       <UniqueIdentifier>{bde14a8e-04c5-4214-8e6f-a42928a4cd3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils\Transforms">
+      <UniqueIdentifier>{e600a23c-bbe9-4cb8-a50a-6c184dfff218}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -115,6 +118,12 @@
     <ClInclude Include="Vector3.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Utils\Transforms</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorBoundTransform.h">
+      <Filter>Utils\Transforms</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -185,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
       <Filter>Game Modules\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorBoundTransform.cpp">
+      <Filter>Utils\Transforms</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -108,8 +108,12 @@ Collider * ModuleCollision::RegisterPrototypeInstance(Collider * prototype, ICol
 
 // -----------------------------------------------------
 
+inline bool DoColliderLayersCollide(const Collider& a, const Collider& b) {
+	return collisionMatrix[static_cast<int>(a.colliderType)][static_cast<int>(b.colliderType)];
+}
+
 bool Collider::CheckCollision(const Collider& r) const
 {
 	//TODO Improve call to filter collision layers
-	return SDL_HasIntersection(&this->rect,&r.rect);
+	return DoColliderLayersCollide(*this, r) && SDL_HasIntersection(&this->rect, &r.rect);
 }

@@ -1,12 +1,15 @@
 #pragma once
 
 #include "Module.h"
+#include "FloorBoundTransform.h"
 
 struct SDL_Texture;
 
 class ModuleFloor :
 	public Module
 {
+	friend class FloorBoundTransform;
+
 public:
 	ModuleFloor(bool enabled);
 	virtual ~ModuleFloor();
@@ -22,7 +25,9 @@ public:
 	float GetHorizonDepthForPosition(float position) const;
 
 	float GetCurrentFloorMovement() const;
-	float GetRenderHeightOfHorizontalStripe(int index) const;
+	float GetRenderYOfHorizontalStripe(int index) const;
+	float GetRenderHOfHorizontalStripe(int index) const;
+
 	int GetFurtherHorizontalStripeIndex() const;
 
 public:

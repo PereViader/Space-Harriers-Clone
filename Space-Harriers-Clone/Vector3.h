@@ -5,6 +5,8 @@
 
 class Vector3;
 
+using namespace std;
+
 Vector3 operator*(float d, const Vector3& v);
 Vector3 operator*(const Vector3& v, float d);
 
