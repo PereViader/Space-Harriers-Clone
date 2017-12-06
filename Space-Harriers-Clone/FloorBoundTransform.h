@@ -16,7 +16,6 @@ public:
 	~FloorBoundTransform();
 
 	virtual Vector3 GetScreenPositionAndDepth() const override;
-
 private:
 	int renderingFloorId;
 	float percentageInsideSegment;

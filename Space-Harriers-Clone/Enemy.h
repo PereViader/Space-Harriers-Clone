@@ -4,9 +4,12 @@
 
 #include "Point.h"
 #include "Animation.h"
+#include "Transform.h"
+
 
 #include <string>
 #include <map>
+
 
 using namespace std;
 
@@ -28,6 +31,7 @@ public:
 	bool ToDelete() const { return toDelete; }
 
 protected:
+	Transform * transform;
 	bool toDelete;
 	bool hasShadow;
 };
