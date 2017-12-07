@@ -9,16 +9,19 @@ class FloorBoundTransform :
 	public Transform
 {
 public:
-	FloorBoundTransform(float startingXPositionOffset, float percentageInsideSegment);
+	FloorBoundTransform(float startingXPositionOffset, float yOffset, float percentageInsideSegment);
+	FloorBoundTransform(const FloorBoundTransform&);
 	FloorBoundTransform(const Transform&);
-
 
 	~FloorBoundTransform();
 
 	virtual Vector3 GetScreenPositionAndDepth() const override;
+
+	virtual FloorBoundTransform * Clone() const override;
 private:
 	int renderingFloorId;
 	float percentageInsideSegment;
 	float xPositionOffset;
+	float yOffset;
 };
 
