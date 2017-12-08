@@ -14,7 +14,6 @@ ModuleCollision::ModuleCollision()
 {
 }
 
-// Destructor
 ModuleCollision::~ModuleCollision()
 {}
 
@@ -60,7 +59,6 @@ void ModuleCollision::DebugDraw()
 		App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
 }
 
-// Called before quitting
 bool ModuleCollision::CleanUp()
 {
 	LOG("Freeing all colliders");
@@ -76,23 +74,26 @@ bool ModuleCollision::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, ICollidable* owner, ColliderType colliderType)
+Collider* ModuleCollision::AddCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner)
 {
-	Collider* ret = new Collider(rect, owner, colliderType);
+	Collider* ret = CreateCollider(colliderType, width, height, xPivot, yPivot, owner);
 
 	colliders.push_back(ret);
 
 	return ret;
 }
 
-Collider * ModuleCollision::AddPrototypeCollider(ICollidable * owner, ColliderType colliderType)
+Collider * ModuleCollision::AddPrototypeCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner)
 {
-	SDL_Rect temporalCollision = { 0,0,0,0 };
-	Collider* ret = new Collider(temporalCollision, owner, colliderType);
+	Collider* ret = CreateCollider(colliderType, width, height, xPivot, yPivot, owner);
 
 	prototypes.push_back(ret);
 
 	return ret;
+}
+
+Collider * ModuleCollision::CreateCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner) const {
+	return new Collider(colliderType, width, height, xPivot, yPivot, owner);
 }
 
 Collider * ModuleCollision::RegisterPrototypeInstance(Collider * prototype, ICollidable * owner)

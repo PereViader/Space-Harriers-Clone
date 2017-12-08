@@ -6,7 +6,11 @@
 #include "ICollidable.h"
 #include "RectUtil.h"
 #include <assert.h>
+
+
 #include "Vector3.h"
+#include "Transform.h"
+#include "ModuleFloor.h"
 
 enum class ColliderType {
 	Enemy = 0,
@@ -28,22 +32,34 @@ struct Collider
 {
 	ColliderType colliderType;
 
+	float width;
+	float height;
+
+	float xPivot;
+	float yPivot;
+
 	SDL_Rect rect;
+
 	bool to_delete;
 
 	ICollidable* owner;
 
-	Collider(SDL_Rect rectangle, ICollidable* owner, ColliderType colliderType) :
+	Collider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner) :
 		colliderType(colliderType),
-		rect(rectangle),
+		width(width),
+		height(height),
+		xPivot(xPivot),
+		yPivot(yPivot),
+		rect({0,0,static_cast<int>(width),static_cast<int>(height)}),
 		to_delete(false),
 		owner(owner)
 	{
 	}
 
-	void UpdateValues(const Vector3& position, float xPivot, float yPivot, float width, float height) {
-		assert(xPivot >= 0.0f && yPivot >= 0.0f && xPivot <= 1.0f && yPivot <= 1.0f);
-		rect = GetRectInPositionWithPivot(static_cast<int>(position.x), static_cast<int>(position.y), width, height, xPivot, yPivot);
+	void UpdateValues(const Transform& transform) {
+		Vector3 position = transform.GetScreenPositionAndDepth();
+		float scale = CalculatePercentageOfPositionInFloor(position.z);
+		rect = GetRectInPositionWithPivot(static_cast<int>(position.x), static_cast<int>(position.y), width*scale, height*scale, xPivot, yPivot);
 	}
 
 	bool CheckCollision(const Collider& r) const;
@@ -61,8 +77,8 @@ public:
 
 	bool CleanUp();
 
-	Collider* AddCollider(const SDL_Rect& rect, ICollidable* owner, ColliderType colliderType);
-	Collider* AddPrototypeCollider(ICollidable* owner, ColliderType colliderType);
+	Collider* AddCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner);
+	Collider* AddPrototypeCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner);
 
 	Collider* RegisterPrototypeInstance(Collider* prototype, ICollidable * owner);
 
@@ -73,6 +89,9 @@ private:
 	std::list<Collider*> colliders;
 	std::list<Collider*> prototypes;
 	bool debug = false;
+
+private:
+	Collider * CreateCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner) const;
 };
 
 #endif // __ModuleCollision_H__
