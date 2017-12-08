@@ -15,12 +15,13 @@ public:
 	Obstacle(const Obstacle&);
 	~Obstacle();
 
-	virtual Enemy * Clone() const override;
+	virtual Obstacle* Clone() const override;
 	virtual void Update() override;
 
 	virtual void Init(map<string, void*> values) override;
 
 	virtual void OnCollision(const Collider * own, const Collider * other) override;
+
 public:
 	SDL_Texture* graphics;
 	Animation animation;
@@ -28,14 +29,8 @@ public:
 
 private:
 	float scalingFactor;
-
-	int renderingFloorId;
-	float xPositionOffset;
 	
 private:
-	fPoint GetScreenRenderPosition() const;
-	float GetScaleForPosition(float y) const;	
-
-	
+	float GetScaleForPosition(float y) const;
 };
 

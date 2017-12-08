@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ICollidable.h"
+#include "IClonable.h"
 
 #include "Point.h"
 #include "Animation.h"
@@ -14,18 +15,20 @@
 using namespace std;
 
 class Enemy :
-	public ICollidable
+	public ICollidable, public IClonable<Enemy*>
 {
 public:
-	Enemy(bool hasShadow, bool toDelete = false) :
+	Enemy(Transform * transform, bool hasShadow, bool toDelete = false) :
+		transform(transform),
 		toDelete(toDelete),
-		hasShadow(hasShadow) 
+		hasShadow(hasShadow)
 	{}
 
-	virtual ~Enemy() {};
+	virtual ~Enemy() {
+		delete transform;
+	};
 
 	virtual void Init(map<string, void*> values) = 0;
-	virtual Enemy* Clone() const = 0;
 	virtual void Update() = 0;
 	
 	bool ToDelete() const { return toDelete; }

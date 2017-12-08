@@ -6,28 +6,25 @@
 #include "ModuleFloor.h"
 #include "RectUtil.h"
 #include "ModuleCollision.h"
+#include "FloorBoundTransform.h"
 
 #include <assert.h>
 
 Obstacle::Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, float scalingFactor) :
-	Enemy(hasShadow),
+	Enemy(new FloorBoundTransform(0,0,0), hasShadow),
 	graphics(graphics),
 	animation(animation),
 	collider(nullptr),
-	scalingFactor(scalingFactor),
-	renderingFloorId(-1),
-	xPositionOffset(0)
+	scalingFactor(scalingFactor)
 {
 }
 
 Obstacle::Obstacle(const Obstacle & other) :
-	Enemy(other.hasShadow, other.toDelete),
+	Enemy(other.transform->Clone(), other.hasShadow, other.toDelete),
 	scalingFactor(other.scalingFactor),
 	graphics(other.graphics),
 	animation(other.animation),
-	collider(other.collider),
-	renderingFloorId(-1),
-	xPositionOffset(other.xPositionOffset)
+	collider(other.collider)
 {
 }
 
@@ -36,41 +33,31 @@ Obstacle::~Obstacle()
 {
 }
 
-Enemy * Obstacle::Clone() const
+Obstacle * Obstacle::Clone() const
 {
-	Obstacle * o = new Obstacle(*this);
-	return o;
+	return new Obstacle(*this);
 }
 
 void Obstacle::Init(map<string, void*> parameters)
 {
 	collider = App->collision->RegisterPrototypeInstance(collider, this);
-	xPositionOffset = 0; //TODO set xPositionOffset to diferent values
-	renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
 }
 
 void Obstacle::Update()
 {
-	xPositionOffset += App->floor->GetCurrentFloorMovement();
-	fPoint screen = GetScreenRenderPosition();
+	//Move Obstacle
+	Vector3 movement(App->floor->GetCurrentFloorMovement(), 0, 0);
+	transform->Move(movement);
+
+	// Move collider
+	collider->UpdateValues(*transform);
+
+	//Render
+	Vector3 screen = transform->GetScreenPositionAndDepth();
 	float scale = scalingFactor * GetScaleForPosition(screen.y);
 
 	SDL_Rect& animationRect = animation.GetCurrentFrame();
-	
-	// Move collider
-	collider->UpdateValues(Vector3(screen.x,screen.y), 0.5f, 1.0f, animationRect.w * scale, animationRect.h * scale);
-
-	//Render
-	float zValue = App->floor->GetHorizonDepthForPosition(screen.y);
-	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationRect, scale, 0.5f, 1.0f, static_cast<int>(screen.x), static_cast<int>(screen.y), zValue);
-}
-
-fPoint Obstacle::GetScreenRenderPosition() const
-{
-	fPoint screen;
-	screen.y = App->floor->GetRenderYOfHorizontalStripe(renderingFloorId);
-	screen.x = (SCREEN_WIDTH*SCREEN_SIZE) / 2.0f + xPositionOffset * GetScaleForPosition(screen.y);
-	return screen;
+	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationRect, scale, 0.5f, 1.0f, static_cast<int>(screen.x), static_cast<int>(screen.y), screen.z);
 }
 
 float Obstacle::GetScaleForPosition(float screenY) const
@@ -81,9 +68,6 @@ float Obstacle::GetScaleForPosition(float screenY) const
 void Obstacle::OnCollision(const Collider * own, const Collider * other)
 {
 	assert(own == collider);
-
-
-
 	LOG("%s", "enemy collided");
 }
 
