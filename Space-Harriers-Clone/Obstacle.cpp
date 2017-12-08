@@ -49,20 +49,15 @@ void Obstacle::Update()
 	Vector3 movement(App->floor->GetCurrentFloorMovement(), 0, 0);
 	transform->Move(movement);
 
-	// Move collider
+	//Update collider
 	collider->UpdateValues(*transform);
 
 	//Render
 	Vector3 screen = transform->GetScreenPositionAndDepth();
-	float scale = scalingFactor * GetScaleForPosition(screen.y);
+	float scale = scalingFactor * transform->GetRenderingScale();
 
 	SDL_Rect& animationRect = animation.GetCurrentFrame();
 	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationRect, scale, 0.5f, 1.0f, static_cast<int>(screen.x), static_cast<int>(screen.y), screen.z);
-}
-
-float Obstacle::GetScaleForPosition(float screenY) const
-{
-	return App->floor->GetHorizonPercentageOfPosition(screenY);
 }
 
 void Obstacle::OnCollision(const Collider * own, const Collider * other)
@@ -70,5 +65,3 @@ void Obstacle::OnCollision(const Collider * own, const Collider * other)
 	assert(own == collider);
 	LOG("%s", "enemy collided");
 }
-
-

@@ -29,8 +29,4 @@ public:
 
 private:
 	float scalingFactor;
-	
-private:
-	float GetScaleForPosition(float y) const;
 };
-
