@@ -33,8 +33,10 @@ public:
 	
 	bool ToDelete() const { return toDelete; }
 
-protected:
 	Transform * transform;
+
+
+protected:
 	bool toDelete;
 	bool hasShadow;
 };
