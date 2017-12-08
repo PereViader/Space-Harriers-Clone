@@ -6,6 +6,8 @@
 #include "ModuleBackground.h"
 #include "ModuleFloor.h"
 #include "ModuleEnemy.h"
+#include "Enemy.h"
+#include "Transform.h"
 
 ModuleStage::ModuleStage(bool enabled) : Module(enabled)
 {
@@ -25,7 +27,8 @@ bool ModuleStage::Start()
 	App->enemies->Enable();
 	App->audio->PlayMusic("rtype/main_theme.wav");
 
-	//App->enemies->InstantiateEnemyByName("tree",map<string,void*>());
+	//Enemy * enemy = App->enemies->InstantiateEnemyByName("tree",map<string,void*>());
+	//enemy->transform->Move(Vector3(500, 0, 0));
 	return true;
 }
 
@@ -35,7 +38,8 @@ update_status ModuleStage::Update()
 		currentTime += App->time->GetDeltaTime();
 
 		if (currentTime > 2) {
-			App->enemies->InstantiateEnemyByName("tree", map<string, void*>());
+			Enemy * enemy = App->enemies->InstantiateEnemyByName("rock", map<string, void*>());
+			enemy->transform->Move(Vector3(0, 500, 0));
 			currentTime = -1;
 		}
 	}
