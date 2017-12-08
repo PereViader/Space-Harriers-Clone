@@ -77,4 +77,6 @@ private:
 	void RenderHorizontalLines();
 };
 
-
+inline float CalculatePercentageOfPositionInFloor(float zPosition) {
+	return 1.0f - zPosition / Z_MAX;
+}

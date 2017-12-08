@@ -91,9 +91,9 @@ float ModuleFloor::GetHorizonPercentageOfPosition(float position) const
 	return 1.0f - (SCREEN_HEIGHT*SCREEN_SIZE - position) / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
 }
 
-float ModuleFloor::GetHorizonDepthForPosition(float position) const
+float ModuleFloor::GetHorizonDepthForPosition(float yPosition) const
 {
-	float percentage = 1.0f - GetHorizonPercentageOfPosition(position);
+	float percentage = 1.0f - GetHorizonPercentageOfPosition(yPosition);
 	return Z_MAX * percentage;
 }
 
