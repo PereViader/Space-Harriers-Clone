@@ -36,9 +36,10 @@ bool ModuleEnemy::Start()
 
 	
 	Animation rockAnimation;
-	rockAnimation.frames.push_back({192,172,59,38});
-	Obstacle * rock = new Obstacle(rock_bush, rockAnimation, true, 2);
-	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, 59 * 2.0f, 38 * 2.0f, 0.5f, 1.0f, rock);
+	rockAnimation.frames.push_back({192,72,59,37});
+	const float rockScalingFactor = 3;
+	Obstacle * rock = new Obstacle(rock_bush, rockAnimation, true, rockScalingFactor);
+	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, 59 * rockScalingFactor, 37 * rockScalingFactor, 0.5f, 1.0f, rock);
 	enemyPrototypes["rock"] = rock;
 
 	return true;
