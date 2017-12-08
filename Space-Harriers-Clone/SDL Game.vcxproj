@@ -80,6 +80,7 @@
     <ClInclude Include="FloorBoundTransform.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="IClonable.h" />
     <ClInclude Include="ICollidable.h" />
     <ClInclude Include="RectUtil.h" />
     <ClInclude Include="MemLeaks.h" />
@@ -103,6 +104,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="ScreenBoundTransform.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
@@ -131,6 +133,7 @@
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="ScreenBoundTransform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

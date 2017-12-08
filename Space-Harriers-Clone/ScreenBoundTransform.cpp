@@ -22,3 +22,13 @@ ScreenBoundTransform* ScreenBoundTransform::Clone() const
 {
 	return new ScreenBoundTransform(*this);
 }
+
+void ScreenBoundTransform::SetScreenPosition(Vector3 position)
+{
+	this->position = position;
+}
+
+void ScreenBoundTransform::Move(Vector3 movement)
+{
+	position = position + movement;
+}

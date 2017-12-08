@@ -16,6 +16,8 @@ public:
 	~FloorBoundTransform();
 
 	virtual Vector3 GetScreenPositionAndDepth() const override;
+	virtual void Move(Vector3 movement) override;
+
 
 	virtual FloorBoundTransform * Clone() const override;
 private:

@@ -20,11 +20,11 @@
     <Filter Include="Game Modules\Enemies">
       <UniqueIdentifier>{2f7f6ae8-2edf-47b0-9234-3e7833c279d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface Callbacks">
-      <UniqueIdentifier>{bde14a8e-04c5-4214-8e6f-a42928a4cd3c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils\Transforms">
       <UniqueIdentifier>{e600a23c-bbe9-4cb8-a50a-6c184dfff218}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{bde14a8e-04c5-4214-8e6f-a42928a4cd3c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -113,7 +113,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ICollidable.h">
-      <Filter>Interface Callbacks</Filter>
+      <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Utils</Filter>
@@ -122,6 +122,12 @@
       <Filter>Utils\Transforms</Filter>
     </ClInclude>
     <ClInclude Include="FloorBoundTransform.h">
+      <Filter>Utils\Transforms</Filter>
+    </ClInclude>
+    <ClInclude Include="IClonable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenBoundTransform.h">
       <Filter>Utils\Transforms</Filter>
     </ClInclude>
   </ItemGroup>
@@ -196,6 +202,9 @@
       <Filter>Game Modules\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="FloorBoundTransform.cpp">
+      <Filter>Utils\Transforms</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenBoundTransform.cpp">
       <Filter>Utils\Transforms</Filter>
     </ClCompile>
   </ItemGroup>
