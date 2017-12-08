@@ -30,7 +30,7 @@ bool ModuleEnemy::Start()
 	Animation treeAnimation;
 	treeAnimation.frames.push_back({ 206,48,44,163 });
 	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false,3.5f);
-	tree->collider = App->collision->AddPrototypeCollider(tree, ColliderType::Enemy);
+	tree->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy,44*3.5f,163*3.5f,0.5f,1.0f,tree);
 	enemyPrototypes["tree"] = tree;
 
 	return true;
