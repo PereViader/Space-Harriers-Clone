@@ -7,6 +7,8 @@ class ScreenBoundTransform :
 {
 public:
 	ScreenBoundTransform();
+	ScreenBoundTransform(const ScreenBoundTransform&);
+	ScreenBoundTransform(const Transform&);
 	ScreenBoundTransform(Vector3 position);
 	~ScreenBoundTransform();
 

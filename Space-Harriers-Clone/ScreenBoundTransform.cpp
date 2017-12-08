@@ -6,6 +6,16 @@ ScreenBoundTransform::ScreenBoundTransform()
 {
 }
 
+ScreenBoundTransform::ScreenBoundTransform(const ScreenBoundTransform & o) :
+	position(o.position)
+{
+}
+
+ScreenBoundTransform::ScreenBoundTransform(const Transform & o) :
+	position(o.GetScreenPositionAndDepth())
+{
+}
+
 ScreenBoundTransform::ScreenBoundTransform(Vector3 position) :
 	position(position)
 {

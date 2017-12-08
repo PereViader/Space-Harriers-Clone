@@ -23,7 +23,6 @@ FloorBoundTransform::FloorBoundTransform(const Transform& t)
 	assert(false); //TODO
 }
 
-
 FloorBoundTransform::~FloorBoundTransform()
 {
 }
