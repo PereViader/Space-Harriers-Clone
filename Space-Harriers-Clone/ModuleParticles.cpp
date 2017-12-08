@@ -27,7 +27,7 @@ bool ModuleParticles::Start()
 	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
 	playerParticlePrototype.velocity.z = 35;
 	playerParticlePrototype.velocity.x = 3;
-	playerParticlePrototype.collider = App->collision->AddPrototypeCollider(&playerParticlePrototype,ColliderType::PlayerParticle);
+	playerParticlePrototype.collider = App->collision->AddPrototypeCollider(ColliderType::PlayerParticle,87,56,0.5f,0.5f,&playerParticlePrototype);
 
 	// TODO 12: Create a new "Explosion" particle 
 	// audio: rtype/explosion.wav
@@ -75,8 +75,10 @@ update_status ModuleParticles::Update()
 		Particle* p = *it;
 
 		p->Update();
-		float scale = 1.0f - p->position.z / Z_MAX;
-		App->renderer->BlitWithPivotScaledZBuffer(graphics, &p->anim.GetCurrentFrame(), scale, 0.5f, 0.5f, (int)p->position.x, (int)p->position.y, p->position.z);
+		Vector3 screenPosition = p->transform.GetScreenPositionAndDepth();
+
+		float scale = CalculatePercentageOfPositionInFloor(screenPosition.z);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, &p->anim.GetCurrentFrame(), scale, 0.5f, 0.5f, static_cast<int>(screenPosition.x), static_cast<int>(screenPosition.y), screenPosition.z);
 		if (p->isFirstFrame)
 		{
 			App->audio->PlayFx(p->sfxId);
@@ -89,8 +91,8 @@ update_status ModuleParticles::Update()
 
 void ModuleParticles::AddParticle(const Particle& particle, int x, int y)
 {
-	Particle * instance = new Particle(particle);
-	instance->position = Vector3(static_cast<float>(x), static_cast<float>(y));
+	Particle * instance = particle.Clone();
+	instance->transform.SetScreenPosition(Vector3(static_cast<float>(x), static_cast<float>(y)));
 	instance->collider = App->collision->RegisterPrototypeInstance(instance->collider, instance);
 	this->active.push_back(instance);
 }
@@ -101,7 +103,6 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y)
 Particle::Particle() :
 	to_delete(false),
 	isFirstFrame(true),
-	position(Vector3()),
 	velocity(Vector3()),
 	collider(nullptr)
 {}
@@ -112,7 +113,6 @@ Particle::Particle(const Particle& p) :
 	anim(p.anim), 
 	sfxId(p.sfxId),
 	velocity(p.velocity),
-	position(p.position),
 	collider(p.collider)
 {
 }
@@ -125,18 +125,21 @@ void Particle::Update()
 {
 	MoveParticle();
 
-	float scale = 1.0f - position.z / Z_MAX;
-	collider->UpdateValues(position, 0.5f, 0.5f, 100 * scale, 80 * scale);
-	//collider->rect = GetRectInPositionWithPivot(static_cast<int>(position.x), static_cast<int>(position.y), 50 * scale, 50 * scale, 0.5f, 0.5f);
-
-	to_delete = position.z > Z_MAX || position.z < 0;
+	collider->UpdateValues(transform);
+	float depth = transform.GetScreenPositionAndDepth().z;
+	to_delete = depth > Z_MAX || depth < 0;
 }
 
 void Particle::MoveParticle()
 {
 	float deltaTime = App->time->GetDeltaTime();
 
-	position = position + velocity * deltaTime;
+	transform.Move(velocity * deltaTime);
+}
+
+Particle* Particle::Clone() const
+{
+	return new Particle(*this);
 }
 
 void Particle::OnCollision(const Collider * own, const Collider * other)

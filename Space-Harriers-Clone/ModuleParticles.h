@@ -1,6 +1,11 @@
 #ifndef __MODULEPARTICLES_H__
 #define __MODULEPARTICLES_H__
 
+#include "ICollidable.h"
+#include "IClonable.h"
+
+#include "ScreenBoundTransform.h"
+
 #include<list>
 #include "Globals.h"
 #include "Module.h"
@@ -12,7 +17,7 @@
 struct SDL_Texture;
 
 class Particle : 
-	public ICollidable
+	public ICollidable, public IClonable<Particle*>
 {
 public:
 	bool to_delete;
@@ -23,7 +28,7 @@ public:
 
 	Vector3 velocity;
 
-	Vector3 position;
+	ScreenBoundTransform transform;
 
 	Collider* collider;
 
@@ -34,10 +39,9 @@ public:
 	void Update();
 
 	virtual void OnCollision(const Collider * own, const Collider * other) override;
-
+	virtual Particle* Clone() const override;
 private:
 	void MoveParticle();
-
 };
 
 class ModuleParticles : public Module
