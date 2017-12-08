@@ -35,13 +35,17 @@ inline float GetScaleForPosition(float screenY)
 
 Vector3 FloorBoundTransform::GetScreenPositionAndDepth() const
 {
+	Vector3 position_scale = GetFloorPositionAndDepth();
+	position_scale.y -= yOffset * CalculatePercentageOfPositionInFloor(position_scale.z);
+	return position_scale;
+}
+
+inline Vector3 FloorBoundTransform::GetFloorPositionAndDepth() const
+{
 	Vector3 position_scale;
 	position_scale.y = App->floor->horizontalSegments[renderingFloorId].y + App->floor->horizontalSegments[renderingFloorId].h * percentageInsideSegment;
 	position_scale.x = (SCREEN_WIDTH*SCREEN_SIZE) / 2.0f + xPositionOffset * GetScaleForPosition(position_scale.y);
 	position_scale.z = App->floor->GetHorizonDepthForPosition(position_scale.y);
-
-	position_scale.y += yOffset * CalculatePercentageOfPositionInFloor(position_scale.z);
-
 	return position_scale;
 }
 
@@ -50,7 +54,13 @@ FloorBoundTransform * FloorBoundTransform::Clone() const
 	return new FloorBoundTransform(*this);
 }
 
+float FloorBoundTransform::GetRenderingScale()
+{
+	return App->floor->GetHorizonPercentageOfPosition(App->floor->horizontalSegments[renderingFloorId].y + App->floor->horizontalSegments[renderingFloorId].h * percentageInsideSegment);
+}
+
 void FloorBoundTransform::Move(Vector3 movement)
 {
 	xPositionOffset += movement.x;
+	yOffset += movement.y;
 }

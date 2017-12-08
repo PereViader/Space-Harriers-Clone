@@ -11,8 +11,12 @@ public:
 	~ScreenBoundTransform();
 
 	virtual Vector3 GetScreenPositionAndDepth() const override;
+	virtual Vector3 GetFloorPositionAndDepth() const override;
 
 	virtual void Move(Vector3 movement) override;
+
+	virtual float GetRenderingScale() override;
+
 	virtual ScreenBoundTransform* Clone() const override;
 
 	void SetScreenPosition(Vector3 position);
@@ -20,4 +24,3 @@ public:
 private:
 	Vector3 position;
 };
-
