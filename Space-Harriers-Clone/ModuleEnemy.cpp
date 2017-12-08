@@ -25,6 +25,7 @@ bool ModuleEnemy::Start()
 {
 	//TODO finish method
 	treeGraphic = App->textures->Load("rtype/tree.png");
+	rock_bush = App->textures->Load("rtype/rock_bush.png");
 
 
 	Animation treeAnimation;
@@ -32,6 +33,13 @@ bool ModuleEnemy::Start()
 	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false,3.5f);
 	tree->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy,44*3.5f,163*3.5f,0.5f,1.0f,tree);
 	enemyPrototypes["tree"] = tree;
+
+	
+	Animation rockAnimation;
+	rockAnimation.frames.push_back({192,172,59,38});
+	Obstacle * rock = new Obstacle(rock_bush, rockAnimation, true, 2);
+	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, 59 * 2.0f, 38 * 2.0f, 0.5f, 1.0f, rock);
+	enemyPrototypes["rock"] = rock;
 
 	return true;
 }

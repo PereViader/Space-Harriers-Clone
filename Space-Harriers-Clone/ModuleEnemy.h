@@ -35,6 +35,7 @@ private:
 	map<string, const Enemy*> enemyPrototypes;
 
 	SDL_Texture * treeGraphic;
+	SDL_Texture * rock_bush;
 	
 	list<Enemy*> enemies;
 };
