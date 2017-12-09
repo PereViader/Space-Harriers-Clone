@@ -136,6 +136,13 @@
     <ClInclude Include="IRenderable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleShadow.h" />
+    <ClInclude Include="Pivot2D.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Size2D.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -217,6 +224,12 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleShadow.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Pivot2D.cpp">
       <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
