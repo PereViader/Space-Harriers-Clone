@@ -37,9 +37,8 @@ update_status ModuleStage::Update()
 
 	if (currentTime > 0.5) {
 		Enemy * enemy = App->enemies->InstantiateEnemyByName("rock", map<string, void*>());
-		float yPos = (float)(rand() % 300 + 300);
-		float xPos = 0;
-		enemy->transform->Move(Vector3(xPos, yPos, 0));
+		Vector3 startingPositionDelta((float)(rand() % 800 - 500), (float)(rand() % 300 + 300));
+		enemy->transform->Move(startingPositionDelta);
 		currentTime = 0.0f;
 	}
 	

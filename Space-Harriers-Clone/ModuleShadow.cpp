@@ -10,6 +10,8 @@
 #include "Transform.h"
 
 
+const float ModuleShadow::SHADOW_SCALE_FACTOR = 5.0f;
+
 ModuleShadow::ModuleShadow()
 {
 }
@@ -23,16 +25,15 @@ bool ModuleShadow::Start()
 {
 	shadow = App->textures->Load("rtype/Character_full.png");
 	assert(shadow != nullptr);
-	shadowRect = { 197,76,256,225 };
+	shadowRect = { 197,76,43,20 };
 	return true;
 }
 
 void ModuleShadow::DrawShadow(const Transform & t)
 {
 	Vector3 screen = t.GetFloorPositionAndDepth();
-	LOG("%f, %f, %f", screen.x, screen.y, screen.z);
-
-	App->renderer->BlitWithPivotScaledZBuffer(shadow, &shadowRect, t.GetRenderingScale(), Pivot2D::MIDDLE_CENTER, screen );
+	float scale = SHADOW_SCALE_FACTOR * t.GetRenderingScale();
+	App->renderer->BlitWithPivotScaledZBuffer(shadow, &shadowRect, scale, Pivot2D::MIDDLE_CENTER, screen );
 }
 
 bool ModuleShadow::CleanUp()

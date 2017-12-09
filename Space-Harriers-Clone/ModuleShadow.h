@@ -17,6 +17,8 @@ public:
 
 	bool CleanUp() override;
 private:
+
+	static const float SHADOW_SCALE_FACTOR;
 	SDL_Texture* shadow;
 	SDL_Rect shadowRect;
 };

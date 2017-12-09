@@ -74,7 +74,6 @@ void Obstacle::Render()
 {
 	if (!toDelete) {
 		Vector3 screen = transform->GetScreenPositionAndDepth();
-		LOG("%f, %f, %f", screen.x, screen.y, screen.z);
 		float scale = scalingFactor * transform->GetRenderingScale();
 		SDL_Rect& animationFrame = animation.GetCurrentFrame();
 
