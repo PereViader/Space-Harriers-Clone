@@ -18,6 +18,7 @@ class ModuleFloor;
 class ModuleBackground;
 class ModuleTime;
 class ModuleEnemy;
+class ModuleShadow;
 
 // Game modules ---
 class ModulePlayer;
@@ -43,6 +44,7 @@ public:
 	ModuleFadeToBlack* fade;
 	ModuleCollision* collision;
 	ModuleParticles* particles;
+	ModuleShadow* shadow;
 
 	// Game modules ---
 	ModuleStage* moduleStage;
