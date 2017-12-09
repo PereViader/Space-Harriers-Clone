@@ -36,7 +36,6 @@ public:
 
 	Transform * transform;
 
-
 protected:
 	bool toDelete;
 	bool hasShadow;
