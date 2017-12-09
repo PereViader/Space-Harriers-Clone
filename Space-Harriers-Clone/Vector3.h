@@ -5,6 +5,7 @@
 #include <algorithm>
 
 class Vector3;
+class Vector2;
 
 using namespace std;
 
@@ -27,6 +28,7 @@ public:
 	Vector3() : x(0), y(0), z(0) {}
 	Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
 	Vector3(float x, float y) : x(x), y(y), z(0) {}
+	Vector3(const Vector2&);
 
 	float x;
 	float y;
