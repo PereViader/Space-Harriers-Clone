@@ -32,7 +32,7 @@ void ModuleShadow::DrawShadow(const Transform & t)
 	Vector3 screen = t.GetFloorPositionAndDepth();
 	LOG("%f, %f, %f", screen.x, screen.y, screen.z);
 
-	App->renderer->BlitWithPivotScaledZBuffer(shadow, &shadowRect, 1, Pivot2D::MIDDLE_CENTER, screen );
+	App->renderer->BlitWithPivotScaledZBuffer(shadow, &shadowRect, t.GetRenderingScale(), Pivot2D::MIDDLE_CENTER, screen );
 }
 
 bool ModuleShadow::CleanUp()
