@@ -106,6 +106,7 @@
     <ClInclude Include="Point.h" />
     <ClInclude Include="ScreenBoundTransform.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +135,8 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="ScreenBoundTransform.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -130,6 +130,9 @@
     <ClInclude Include="ScreenBoundTransform.h">
       <Filter>Utils\Transforms</Filter>
     </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -206,6 +209,12 @@
     </ClCompile>
     <ClCompile Include="ScreenBoundTransform.cpp">
       <Filter>Utils\Transforms</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
