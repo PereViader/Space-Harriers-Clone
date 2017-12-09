@@ -31,6 +31,7 @@ Obstacle::Obstacle(const Obstacle & other) :
 
 Obstacle::~Obstacle()
 {
+	collider->to_delete = true;
 }
 
 Obstacle * Obstacle::Clone() const
@@ -58,6 +59,10 @@ void Obstacle::Update()
 
 	SDL_Rect& animationRect = animation.GetCurrentFrame();
 	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationRect, scale, 0.5f, 1.0f, static_cast<int>(screen.x), static_cast<int>(screen.y), screen.z);
+
+	if (transform->GetFloorPositionAndDepth().z <= 0.3f) {
+		toDelete = true;
+	}
 }
 
 void Obstacle::OnCollision(const Collider * own, const Collider * other)
@@ -66,6 +71,5 @@ void Obstacle::OnCollision(const Collider * own, const Collider * other)
 	LOG("%s", "enemy collided");
 	if (other->colliderType == ColliderType::PlayerParticle) {
 		toDelete = true;
-		collider->to_delete = true;
 	}
 }
