@@ -40,7 +40,7 @@ update_status ModuleStage::Update()
 		float yPos = (float)(rand() % 300 + 300);
 		float xPos = 0;
 		enemy->transform->Move(Vector3(xPos, yPos, 0));
-		currentTime = -999999999.0f;
+		currentTime = 0.0f;
 	}
 	
 	return UPDATE_CONTINUE;
