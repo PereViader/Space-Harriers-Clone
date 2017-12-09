@@ -66,6 +66,10 @@ update_status ModuleEnemy::Update()
 		enemy->Update();
 	}
 
+	for (Enemy* enemy : enemies) {
+		enemy->Render();
+	}
+
 	return UPDATE_CONTINUE;
 }
 

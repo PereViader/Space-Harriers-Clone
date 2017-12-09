@@ -52,14 +52,7 @@ void Obstacle::Update()
 
 	//Update collider
 	collider->UpdateValues(*transform);
-
-	//Render
-	Vector3 screen = transform->GetScreenPositionAndDepth();
-	float scale = scalingFactor * transform->GetRenderingScale();
-
-	SDL_Rect& animationRect = animation.GetCurrentFrame();
-	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationRect, scale, 0.5f, 1.0f, static_cast<int>(screen.x), static_cast<int>(screen.y), screen.z);
-
+	
 	if (transform->GetFloorPositionAndDepth().z <= 0.3f) {
 		toDelete = true;
 	}
@@ -72,4 +65,13 @@ void Obstacle::OnCollision(const Collider * own, const Collider * other)
 	if (other->colliderType == ColliderType::PlayerParticle) {
 		toDelete = true;
 	}
+}
+
+void Obstacle::Render()
+{
+	Vector3 screen = transform->GetScreenPositionAndDepth();
+	float scale = scalingFactor * transform->GetRenderingScale();
+	SDL_Rect& animationFrame = animation.GetCurrentFrame();
+
+	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationFrame, scale, 0.5f, 1.0f, static_cast<int>(screen.x), static_cast<int>(screen.y), screen.z);
 }

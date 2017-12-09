@@ -2,6 +2,7 @@
 
 #include "ICollidable.h"
 #include "IClonable.h"
+#include "IRenderable.h"
 
 #include "Point.h"
 #include "Animation.h"
@@ -15,7 +16,7 @@
 using namespace std;
 
 class Enemy :
-	public ICollidable, public IClonable<Enemy*>
+	public ICollidable, public IClonable<Enemy*>, public IRenderable
 {
 public:
 	Enemy(Transform * transform, bool hasShadow, bool toDelete = false) :
