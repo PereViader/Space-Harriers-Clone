@@ -133,6 +133,9 @@
     <ClInclude Include="Vector2.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="IRenderable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

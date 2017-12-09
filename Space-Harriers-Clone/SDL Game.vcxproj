@@ -82,6 +82,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="IClonable.h" />
     <ClInclude Include="ICollidable.h" />
+    <ClInclude Include="IRenderable.h" />
     <ClInclude Include="RectUtil.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Module.h" />
