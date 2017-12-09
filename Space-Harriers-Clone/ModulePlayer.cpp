@@ -11,6 +11,8 @@
 #include "ModuleTime.h"
 #include "ModuleCollision.h"
 
+#include "Vector2.h"
+
 
 #include <iostream>
 #include <algorithm>
@@ -63,7 +65,8 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load("rtype/player.png");
 
-	collider = App->collision->AddCollider(ColliderType::Player,80,186,0.5f,1.0f,this);
+	Size2D playerColliderSize(80, 186);
+	collider = App->collision->AddCollider(ColliderType::Player,playerColliderSize, Pivot2D::BOTTOM_CENTER,this);
 
 	return true;
 }
@@ -101,23 +104,23 @@ const fPoint & ModulePlayer::GetNormalizedPosition() const
 	return position;
 }
 
-iPoint ModulePlayer::GetScreenPosition() const
+Vector2 ModulePlayer::GetScreenPosition() const
 {
-	iPoint screenPosition;
-	screenPosition.x = (int)(MIN_HORIZONTAL_POSITION + (MAX_HORIZONTAL_POSITION - MIN_HORIZONTAL_POSITION)  * ((position.x + 1.0f) / 2.0f));
-	screenPosition.y = (int)(MIN_VERTICAL_POSITION + (MAX_VERTICAL_POSITION - MIN_VERTICAL_POSITION)  * ((position.y + 1.0f) / 2.0f));
+	Vector2 screenPosition;
+	screenPosition.x = MIN_HORIZONTAL_POSITION + (MAX_HORIZONTAL_POSITION - MIN_HORIZONTAL_POSITION)  * ((position.x + 1.0f) / 2.0f);
+	screenPosition.y = MIN_VERTICAL_POSITION + (MAX_VERTICAL_POSITION - MIN_VERTICAL_POSITION)  * ((position.y + 1.0f) / 2.0f);
 	return screenPosition;
 }
 
 void ModulePlayer::ShootLaser()
 {
-	iPoint screen = GetScreenPosition();
+	Vector2 screen = GetScreenPosition();
 
 	// correct position to shoot from the gun
 	screen.x += 15;
 	screen.y -= 120;
 
-	App->particles->AddParticle(App->particles->playerParticlePrototype, screen.x, screen.y);
+	App->particles->AddParticle(App->particles->playerParticlePrototype, screen );
 }
 
 void ModulePlayer::MovePlayer()
@@ -140,20 +143,20 @@ void ModulePlayer::MovePlayer()
 
 void ModulePlayer::MoveCollider()
 {
-	iPoint colliderPosition = GetScreenPosition();
+	Vector2 colliderPosition = GetScreenPosition();
 
-	collider->rect.x = colliderPosition.x - (int)((collider->rect.w / 2.0f));
-	collider->rect.y = colliderPosition.y - (int)(collider->rect.h);
+	collider->rect.x = colliderPosition.x - (collider->rect.w / 2.0f);
+	collider->rect.y = colliderPosition.y - collider->rect.h;
 }
 
 void ModulePlayer::RenderPlayer()
 {
 	// Project player position to the screen
-	iPoint screen = GetScreenPosition();
+	Vector2 screen = GetScreenPosition();
 
 	// Draw everything --------------------------------------
 	if (!destroyed)
-		App->renderer->BlitWithPivotScaledZBuffer(graphics, &currentAnimation->GetCurrentFrame(), RENDER_SCALE, 0.5f, 1.0f, screen.x, screen.y, 0);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, &currentAnimation->GetCurrentFrame(), RENDER_SCALE,Pivot2D::BOTTOM_CENTER,screen);
 
 }
 

@@ -8,6 +8,7 @@
 #include "ModuleEnemy.h"
 #include "Enemy.h"
 #include "Transform.h"
+#include <cstdlib>
 
 ModuleStage::ModuleStage(bool enabled) : Module(enabled)
 {
@@ -27,21 +28,19 @@ bool ModuleStage::Start()
 	App->enemies->Enable();
 	App->audio->PlayMusic("rtype/main_theme.wav");
 
-	//Enemy * enemy = App->enemies->InstantiateEnemyByName("tree",map<string,void*>());
-	//enemy->transform->Move(Vector3(500, 0, 0));
 	return true;
 }
 
 update_status ModuleStage::Update()
 {
-	if (currentTime >= 0) {
-		currentTime += App->time->GetDeltaTime();
+	currentTime += App->time->GetDeltaTime();
 
-		if (currentTime > 2) {
-			Enemy * enemy = App->enemies->InstantiateEnemyByName("rock", map<string, void*>());
-			enemy->transform->Move(Vector3(0, 500, 0));
-			currentTime = -1;
-		}
+	if (currentTime > 0.5) {
+		Enemy * enemy = App->enemies->InstantiateEnemyByName("rock", map<string, void*>());
+		float yPos = (float)(rand() % 300 + 300);
+		float xPos = 0;
+		enemy->transform->Move(Vector3(xPos, yPos, 0));
+		currentTime = -999999999.0f;
 	}
 	
 	return UPDATE_CONTINUE;

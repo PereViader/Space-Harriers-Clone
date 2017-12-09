@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "Globals.h"
+#include "Pivot2D.h"
 
 const float ModuleBackground::BACKGROUND_HORIZONTAL_SPEED = 1;
 const float ModuleBackground::HORIZON_DECAL_HORIZONTAL_SPEED = 1.5f;
@@ -62,42 +63,36 @@ update_status ModuleBackground::Update()
 void ModuleBackground::DrawBackground() {
 	MoveBackground();
 
-	int horizonRenderHeight = static_cast<int>(App->floor->GetHorizonRenderHeight());
+	Vector2 position;
+	position.y = App->floor->GetHorizonRenderHeight();
 	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE) {
-		int screenX = (int)((currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE);
-		float pivotXRight = 0;
-		float pivotYRight = 1;
-		float pivotXLeft = 1;
-		float pivotYLeft = 1;
+		position.x = (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE;
 
-		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, pivotXRight, pivotYRight, screenX, horizonRenderHeight);
-		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, pivotXLeft, pivotYLeft, screenX, horizonRenderHeight);
+		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, Pivot2D::BOTTOM_LEFT, position);
+		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, Pivot2D::BOTTOM_RIGHT, position);
 	}
 	else {
-		float pivotX = (float)backgroundTextureOffset/currentLevelBackgroundTextureWidth;
-		float pivotY = 1;
-		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, pivotX, pivotY, 0, horizonRenderHeight);
+		Pivot2D pivot(static_cast<float>(backgroundTextureOffset) / currentLevelBackgroundTextureWidth, 1);
+
+		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, pivot, position);
 	}
 }
 
 void ModuleBackground::DrawDecal() {
 	MoveDecal();
 
-	int horizonRenderHeight = static_cast<int>(App->floor->GetHorizonRenderHeight());
+	Vector2 position;
+	position.y = App->floor->GetHorizonRenderHeight();
 	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE) {
-		int screenX = (int)((currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE);
-		float pivotXRight = 0;
-		float pivotYRight = 1;
-		float pivotXLeft = 1;
-		float pivotYLeft = 1;
+		position.x = (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE;
 
-		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, pivotXRight, pivotYRight, screenX, horizonRenderHeight);
-		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, pivotXLeft, pivotYLeft, screenX, horizonRenderHeight);
+		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, Pivot2D::BOTTOM_LEFT, position);
+		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, Pivot2D::BOTTOM_RIGHT, position);
 	}
 	else {
-		float pivotX = (float)decalTextureOffset / currentLevelHorizonDecalTextureWidth;
-		float pivotY = 1;
-		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, pivotX, pivotY, 0, horizonRenderHeight);
+		Pivot2D pivot(static_cast<float>(decalTextureOffset) / currentLevelHorizonDecalTextureWidth, 1);
+
+		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, pivot, position);
 	}
 }
 

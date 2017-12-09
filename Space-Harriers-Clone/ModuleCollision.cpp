@@ -74,26 +74,26 @@ bool ModuleCollision::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner)
+Collider* ModuleCollision::AddCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner)
 {
-	Collider* ret = CreateCollider(colliderType, width, height, xPivot, yPivot, owner);
+	Collider* ret = CreateCollider(colliderType,size,pivot, owner);
 
 	colliders.push_back(ret);
 
 	return ret;
 }
 
-Collider * ModuleCollision::AddPrototypeCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner)
+Collider * ModuleCollision::AddPrototypeCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner)
 {
-	Collider* ret = CreateCollider(colliderType, width, height, xPivot, yPivot, owner);
+	Collider* ret = CreateCollider(colliderType, size, pivot, owner);
 
 	prototypes.push_back(ret);
 
 	return ret;
 }
 
-Collider * ModuleCollision::CreateCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner) const {
-	return new Collider(colliderType, width, height, xPivot, yPivot, owner);
+Collider * ModuleCollision::CreateCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) const {
+	return new Collider(colliderType,size,pivot, owner);
 }
 
 Collider * ModuleCollision::RegisterPrototypeInstance(Collider * prototype, ICollidable * owner)

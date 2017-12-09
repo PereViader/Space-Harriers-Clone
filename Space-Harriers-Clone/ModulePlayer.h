@@ -6,6 +6,7 @@
 
 #include "Animation.h"
 #include "Point.h"
+#include "Vector2.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -23,7 +24,7 @@ public:
 	void UpdateAnimation();
 
 	const fPoint& GetNormalizedPosition() const;
-	iPoint GetScreenPosition() const;
+	Vector2 GetScreenPosition() const;
 
 	// Inherited via ICollidable
 	virtual void OnCollision(const Collider * own, const Collider * other) override;

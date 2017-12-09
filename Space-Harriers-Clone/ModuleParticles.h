@@ -55,7 +55,7 @@ public:
 	update_status Update(); // draw
 	bool CleanUp();
 
-	void AddParticle(const Particle& particle, int x, int y); // feel free to expand this call
+	void AddParticle(const Particle& particle, const Vector2& position); // feel free to expand this call
 
 private:
 

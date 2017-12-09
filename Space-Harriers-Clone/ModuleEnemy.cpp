@@ -30,8 +30,10 @@ bool ModuleEnemy::Start()
 
 	Animation treeAnimation;
 	treeAnimation.frames.push_back({ 206,48,44,163 });
-	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false,3.5f);
-	tree->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy,44*3.5f,163*3.5f,0.5f,1.0f,tree);
+	const float treeScalingFactor = 3.5f;
+	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false,treeScalingFactor);
+	Size2D treeSize(44 * treeScalingFactor, 163 * treeScalingFactor);
+	tree->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy,treeSize, Pivot2D::BOTTOM_CENTER,tree);
 	enemyPrototypes["tree"] = tree;
 
 	
@@ -39,7 +41,8 @@ bool ModuleEnemy::Start()
 	rockAnimation.frames.push_back({192,72,59,37});
 	const float rockScalingFactor = 3;
 	Obstacle * rock = new Obstacle(rock_bush, rockAnimation, true, rockScalingFactor);
-	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, 59 * rockScalingFactor, 37 * rockScalingFactor, 0.5f, 1.0f, rock);
+	Size2D rockSize(59 * rockScalingFactor, 37 * rockScalingFactor);
+	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize , Pivot2D::MIDDLE_CENTER, rock);
 	enemyPrototypes["rock"] = rock;
 
 	return true;

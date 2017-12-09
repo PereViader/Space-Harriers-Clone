@@ -9,6 +9,8 @@
 
 
 #include "Vector3.h"
+#include "Size2D.h"
+#include "Pivot2D.h"
 #include "Transform.h"
 #include "ModuleFloor.h"
 
@@ -32,11 +34,8 @@ struct Collider
 {
 	ColliderType colliderType;
 
-	float width;
-	float height;
-
-	float xPivot;
-	float yPivot;
+	Size2D size;
+	Pivot2D pivot;
 
 	SDL_Rect rect;
 
@@ -44,13 +43,11 @@ struct Collider
 
 	ICollidable* owner;
 
-	Collider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner) :
+	Collider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) :
 		colliderType(colliderType),
-		width(width),
-		height(height),
-		xPivot(xPivot),
-		yPivot(yPivot),
-		rect({0,0,static_cast<int>(width),static_cast<int>(height)}),
+		size(size),
+		pivot(pivot),
+		rect({0,0,static_cast<int>(size.width),static_cast<int>(size.height)}),
 		to_delete(false),
 		owner(owner)
 	{
@@ -58,8 +55,9 @@ struct Collider
 
 	void UpdateValues(const Transform& transform) {
 		Vector3 position = transform.GetScreenPositionAndDepth();
-		float scale = CalculatePercentageOfPositionInFloor(position.z);
-		rect = GetRectInPositionWithPivot(static_cast<int>(position.x), static_cast<int>(position.y), width*scale, height*scale, xPivot, yPivot);
+		float scale = transform.GetRenderingScale();
+		Size2D currentSize(size.width*scale, size.height*scale);
+		rect = GetRectInPositionWithPivot(position,currentSize,pivot);
 	}
 
 	bool CheckCollision(const Collider& r) const;
@@ -77,8 +75,8 @@ public:
 
 	bool CleanUp();
 
-	Collider* AddCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner);
-	Collider* AddPrototypeCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner);
+	Collider* AddCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
+	Collider* AddPrototypeCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
 
 	Collider* RegisterPrototypeInstance(Collider* prototype, ICollidable * owner);
 
@@ -91,7 +89,7 @@ private:
 	bool debug = false;
 
 private:
-	Collider * CreateCollider(ColliderType colliderType, float width, float height, float xPivot, float yPivot, ICollidable* owner) const;
+	Collider * CreateCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) const;
 };
 
 #endif // __ModuleCollision_H__

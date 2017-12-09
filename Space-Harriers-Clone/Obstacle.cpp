@@ -6,6 +6,7 @@
 #include "ModuleFloor.h"
 #include "RectUtil.h"
 #include "ModuleCollision.h"
+#include "ModuleShadow.h"
 #include "FloorBoundTransform.h"
 
 #include <assert.h>
@@ -36,7 +37,9 @@ Obstacle::~Obstacle()
 
 Obstacle * Obstacle::Clone() const
 {
-	return new Obstacle(*this);
+	Obstacle* o = new Obstacle(*this);
+	static_cast<FloorBoundTransform*>(o->transform)->ResetPositionToTheHorizon();
+	return o;
 }
 
 void Obstacle::Init(map<string, void*> parameters)
@@ -69,9 +72,13 @@ void Obstacle::OnCollision(const Collider * own, const Collider * other)
 
 void Obstacle::Render()
 {
-	Vector3 screen = transform->GetScreenPositionAndDepth();
-	float scale = scalingFactor * transform->GetRenderingScale();
-	SDL_Rect& animationFrame = animation.GetCurrentFrame();
+	if (!toDelete) {
+		Vector3 screen = transform->GetScreenPositionAndDepth();
+		LOG("%f, %f, %f", screen.x, screen.y, screen.z);
+		float scale = scalingFactor * transform->GetRenderingScale();
+		SDL_Rect& animationFrame = animation.GetCurrentFrame();
 
-	App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationFrame, scale, 0.5f, 1.0f, static_cast<int>(screen.x), static_cast<int>(screen.y), screen.z);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationFrame, scale, Pivot2D::BOTTOM_CENTER, screen);
+		App->shadow->DrawShadow(*transform);
+	}
 }

@@ -11,6 +11,10 @@ struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
 
+class Pivot2D;
+class Vector2;
+class Vector3;
+
 using namespace std;
 
 class ModuleRender : public Module
@@ -26,10 +30,10 @@ public:
 	bool CleanUp();
 
 	bool BlitZBuffer(SDL_Texture * texture, SDL_Rect * section, SDL_Rect * screen, float z);
-	bool BlitWithPivotScaledZBuffer(SDL_Texture * texture, SDL_Rect * section, float scale, float pivotX, float pivotY, int x, int y, float z);
+	bool BlitWithPivotScaledZBuffer(SDL_Texture * texture, SDL_Rect * section, float scale, const Pivot2D& pivot, const Vector3& position);
 
 
-	bool BlitWithPivotScaled(SDL_Texture*, SDL_Rect* section, float scale, float pivotX, float pivotY, int x, int y);
+	bool BlitWithPivotScaled(SDL_Texture* texture, SDL_Rect* section, float scale, const Pivot2D& pivot, const Vector2& position);
 	bool DirectBlit(SDL_Texture* texture, SDL_Rect* section, SDL_Rect* destiny);
 
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = SDL_ALPHA_OPAQUE);

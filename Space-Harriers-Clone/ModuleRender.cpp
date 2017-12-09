@@ -6,6 +6,10 @@
 #include "RectUtil.h"
 #include "SDL/include/SDL.h"
 
+#include "Pivot2D.h"
+#include "Size2D.h"
+#include "Vector3.h"
+
 ModuleRender::ModuleRender()
 {
 }
@@ -90,49 +94,47 @@ bool ModuleRender::BlitZBuffer(SDL_Texture * texture, SDL_Rect * section, SDL_Re
 	return true;
 }
 
-bool ModuleRender::BlitWithPivotScaledZBuffer(SDL_Texture * texture, SDL_Rect * section, float scale, float pivotX, float pivotY, int x, int y, float z)
+bool ModuleRender::BlitWithPivotScaledZBuffer(SDL_Texture * texture, SDL_Rect * section, float scale, const Pivot2D& pivot, const Vector3& position)
 {
-	float width;
-	float height;
+	Size2D size;
+
 	if (section != nullptr) {
-		width = (float)section->w;
-		height = (float)section->h;
+		size.width = (float)section->w;
+		size.height = (float)section->h;
 	}
 	else {
 		int w, h;
 		SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
-		width = (float)w;
-		height = (float)h;
+		size.width = (float)w;
+		size.height = (float)h;
 	}
-	width *= scale;
-	height *= scale;
+	size.width *= scale;
+	size.height *= scale;
 
-
-	SDL_Rect rectForPivot = GetRectInPositionWithPivot(x, y, width, height, pivotX, pivotY);
-	BlitZBuffer(texture, section, &rectForPivot, z);
+	SDL_Rect rectForPivot = GetRectInPositionWithPivot(position,size,pivot);
+	BlitZBuffer(texture, section, &rectForPivot, position.z);
 
 	return true;
 }
 
-bool ModuleRender::BlitWithPivotScaled(SDL_Texture * texture, SDL_Rect * section, float scale, float pivotX, float pivotY, int x, int y)
+bool ModuleRender::BlitWithPivotScaled(SDL_Texture * texture, SDL_Rect * section, float scale, const Pivot2D& pivot, const Vector2& position)
 {
-	float width;
-	float height;
+	Size2D size;
 	if (section != nullptr) {
-		width = (float)section->w;
-		height = (float)section->h;
+		size.width = (float)section->w;
+		size.height = (float)section->h;
 	}
 	else {
 		int w, h;
 		SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
-		width = (float)w;
-		height = (float)h;
+		size.width = (float)w;
+		size.height = (float)h;
 	}
-	width *= scale;
-	height *= scale;
+	size.width *= scale;
+	size.height *= scale;
 
 
-	SDL_Rect rectForPivot = GetRectInPositionWithPivot(x, y, width, height, pivotX, pivotY);
+	SDL_Rect rectForPivot = GetRectInPositionWithPivot(position,size,pivot);
 
 	DirectBlit(texture, section, &rectForPivot);
 	return true;

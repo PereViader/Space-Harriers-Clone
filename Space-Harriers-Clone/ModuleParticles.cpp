@@ -17,7 +17,6 @@ ModuleParticles::ModuleParticles()
 ModuleParticles::~ModuleParticles()
 {}
 
-// Load assets
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
@@ -27,16 +26,11 @@ bool ModuleParticles::Start()
 	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
 	playerParticlePrototype.velocity.z = 35;
 	playerParticlePrototype.velocity.x = 3;
-	playerParticlePrototype.collider = App->collision->AddPrototypeCollider(ColliderType::PlayerParticle,87,56,0.5f,0.5f,&playerParticlePrototype);
-
-	// TODO 12: Create a new "Explosion" particle 
-	// audio: rtype/explosion.wav
-	// coords: {274, 296, 33, 30}; {313, 296, 33, 30}; {346, 296, 33, 30}; {382, 296, 33, 30}; {419, 296, 33, 30}; {457, 296, 33, 30};
+	playerParticlePrototype.collider = App->collision->AddPrototypeCollider(ColliderType::PlayerParticle,Size2D(87,56),Pivot2D::MIDDLE_CENTER,&playerParticlePrototype);
 
 	return true;
 }
 
-// Unload assets
 bool ModuleParticles::CleanUp()
 {
 	LOG("Unloading particles");
@@ -78,7 +72,7 @@ update_status ModuleParticles::Update()
 		Vector3 screenPosition = p->transform.GetScreenPositionAndDepth();
 
 		float scale = CalculatePercentageOfPositionInFloor(screenPosition.z);
-		App->renderer->BlitWithPivotScaledZBuffer(graphics, &p->anim.GetCurrentFrame(), scale, 0.5f, 0.5f, static_cast<int>(screenPosition.x), static_cast<int>(screenPosition.y), screenPosition.z);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, &p->anim.GetCurrentFrame(), scale, Pivot2D::MIDDLE_CENTER, screenPosition);
 		if (p->isFirstFrame)
 		{
 			App->audio->PlayFx(p->sfxId);
@@ -89,10 +83,10 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y)
+void ModuleParticles::AddParticle(const Particle& particle, const Vector2& position)
 {
 	Particle * instance = particle.Clone();
-	instance->transform.SetScreenPosition(Vector3(static_cast<float>(x), static_cast<float>(y)));
+	instance->transform.SetScreenPosition(position);
 	instance->collider = App->collision->RegisterPrototypeInstance(instance->collider, instance);
 	this->active.push_back(instance);
 }
