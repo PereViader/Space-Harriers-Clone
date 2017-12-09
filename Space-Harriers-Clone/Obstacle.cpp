@@ -56,7 +56,7 @@ void Obstacle::Update()
 	//Update collider
 	collider->UpdateValues(*transform);
 	
-	if (transform->GetFloorPositionAndDepth().z <= 0.3f) {
+	if (transform->GetFloorPositionAndDepth().z <= 0) {
 		toDelete = true;
 	}
 }
