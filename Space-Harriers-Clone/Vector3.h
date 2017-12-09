@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _VECTOR3_H
+#define _VECTOR3_H
 
 #include <cmath>
 #include <algorithm>
@@ -52,7 +53,7 @@ public:
 	}
 
 	float SqrMagnitude() const {
-		return Dot(*this,*this);
+		return Dot(*this, *this);
 	}
 
 	void Normalize() {
@@ -60,7 +61,7 @@ public:
 	}
 
 	Vector3 Normalized() const {
-		return operator/(*this,Magnitude());
+		return operator/(*this, Magnitude());
 	}
 };
 
@@ -95,17 +96,11 @@ inline float Dot(const Vector3& a, const Vector3& b) {
 
 inline Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
 	t = max(0.0f, min(1.0f, t));
-	return LerpUnclamped(a,b,t);
+	return LerpUnclamped(a, b, t);
 }
 
 inline Vector3 LerpUnclamped(const Vector3& a, const Vector3& b, float t) {
 	return a*(1.0f - t) + b*t;
 }
 
-inline Vector3 MoveTowards(const Vector3& current, const Vector3& target, float maxDistanceDelta) {
-	Vector3 totalMovementVector = target - current;
-	float distance = totalMovementVector.Magnitude();
-	float clampedDistance = min(maxDistanceDelta, distance);
-	Vector3 unitMovementVector = totalMovementVector.Normalized();
-	return current + unitMovementVector * clampedDistance;
-}
+#endif // !_VECTOR3_H
