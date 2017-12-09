@@ -33,6 +33,7 @@ ModuleFloor::~ModuleFloor()
 
 bool ModuleFloor::Init()
 {
+	segmentCount = 0;
 	floor = App->textures->Load("rtype/floor.bmp");
 	//vertical lines
 	horizonRenderHeight = HORIZON_MIN_HEIGHT;
@@ -202,6 +203,7 @@ void ModuleFloor::RenderHorizontalLines()
 	float nextfirstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + HORIZONTAL_LINES_SPEED*App->time->GetDeltaTime(), 1.0f);
 	if (nextfirstSegmentPositionPercentage < firstSegmentPositionPercentage) {
 		firstQuadIndex = (firstQuadIndex + 1) % nHorizonQuads;
+		segmentCount++;
 	}
 	firstSegmentPositionPercentage = nextfirstSegmentPositionPercentage;
 }

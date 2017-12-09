@@ -66,6 +66,7 @@ private:
 	};
 
 	HorizontalSegmentContainer horizontalSegments[nHorizonQuads];
+	int segmentCount;
 
 	//temp
 	float positionPercentage;
