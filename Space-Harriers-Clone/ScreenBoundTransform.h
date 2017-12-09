@@ -15,13 +15,13 @@ public:
 	virtual Vector3 GetScreenPositionAndDepth() const override;
 	virtual Vector3 GetFloorPositionAndDepth() const override;
 
-	virtual void Move(Vector3 movement) override;
+	virtual void Move(const Vector3& movement) override;
 
-	virtual float GetRenderingScale() override;
+	virtual float GetRenderingScale() const override;
 
 	virtual ScreenBoundTransform* Clone() const override;
 
-	void SetScreenPosition(Vector3 position);
+	void SetScreenPosition(const Vector3& position);
 
 private:
 	Vector3 position;

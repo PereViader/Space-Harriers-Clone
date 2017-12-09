@@ -67,12 +67,18 @@ FloorBoundTransform * FloorBoundTransform::Clone() const
 	return new FloorBoundTransform(*this);
 }
 
+void FloorBoundTransform::ResetPositionToTheHorizon()
+{
+	renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
+	renderingFloorSegmentCount = App->floor->segmentCount;
+}
+
 bool FloorBoundTransform::IsBoundSegmentPresentOnScreen() const
 {
 	return renderingFloorSegmentCount + App->floor->nHorizonQuads > App->floor->segmentCount;
 }
 
-float FloorBoundTransform::GetRenderingScale()
+float FloorBoundTransform::GetRenderingScale() const
 {
 	float scale;
 	if (IsBoundSegmentPresentOnScreen())
@@ -82,7 +88,7 @@ float FloorBoundTransform::GetRenderingScale()
 	return scale;
 }
 
-void FloorBoundTransform::Move(Vector3 movement)
+void FloorBoundTransform::Move(const Vector3& movement)
 {
 	xPositionOffset += movement.x;
 	yOffset += movement.y;

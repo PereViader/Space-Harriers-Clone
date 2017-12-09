@@ -35,7 +35,7 @@ ScreenBoundTransform* ScreenBoundTransform::Clone() const
 	return new ScreenBoundTransform(*this);
 }
 
-void ScreenBoundTransform::SetScreenPosition(Vector3 position)
+void ScreenBoundTransform::SetScreenPosition(const Vector3& position)
 {
 	this->position = position;
 }
@@ -45,12 +45,12 @@ Vector3 ScreenBoundTransform::GetFloorPositionAndDepth() const
 	return Vector3();
 }
 
-float ScreenBoundTransform::GetRenderingScale()
+float ScreenBoundTransform::GetRenderingScale() const
 {
 	return CalculatePercentageOfPositionInFloor(position.z);
 }
 
-void ScreenBoundTransform::Move(Vector3 movement)
+void ScreenBoundTransform::Move(const Vector3& movement)
 {
 	position = position + movement;
 }
