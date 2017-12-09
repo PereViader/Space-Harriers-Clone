@@ -24,8 +24,12 @@ public:
 	virtual FloorBoundTransform * Clone() const override;
 private:
 	int renderingFloorId;
+	int renderingFloorSegmentCount;
 	float percentageInsideSegment;
 	float xPositionOffset;
 	float yOffset;
+
+private:
+	bool IsBoundSegmentPresentOnScreen() const;
 };
 
