@@ -42,7 +42,7 @@ bool ModuleEnemy::Start()
 	const float rockScalingFactor = 3;
 	Obstacle * rock = new Obstacle(rock_bush, rockAnimation, true, rockScalingFactor);
 	Size2D rockSize(59 * rockScalingFactor, 37 * rockScalingFactor);
-	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize , Pivot2D::MIDDLE_CENTER, rock);
+	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize , Pivot2D::BOTTOM_CENTER, rock);
 	enemyPrototypes["rock"] = rock;
 
 	return true;
@@ -92,13 +92,6 @@ bool ModuleEnemy::CleanUp()
 	App->textures->Unload(treeGraphic);
 
 	return true;
-}
-
-void ModuleEnemy::OnCollision(const Collider * own, const Collider * other)
-{
-	//TODO finish  
-
-
 }
 
 Enemy * ModuleEnemy::InstantiateEnemyByName(string name, map<string, void*> parameters)

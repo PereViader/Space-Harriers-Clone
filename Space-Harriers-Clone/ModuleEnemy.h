@@ -14,7 +14,7 @@ using namespace std;
 class Enemy;
 
 class ModuleEnemy :
-	public Module, public ICollidable
+	public Module
 {
 public:
 	ModuleEnemy(bool enabled);
@@ -25,8 +25,6 @@ public:
 	update_status PreUpdate() override;
 	update_status Update() override;
 	bool CleanUp() override;
-
-	void OnCollision(const Collider* own, const Collider* other) override;
 
 	Enemy* InstantiateEnemyByName(string name, map<string, void*> parameters);
 private:
