@@ -36,6 +36,8 @@ struct Collider
 
 	Size2D size;
 	Pivot2D pivot;
+	Vector3 position;
+
 
 	SDL_Rect rect;
 
@@ -49,12 +51,13 @@ struct Collider
 		pivot(pivot),
 		rect({0,0,static_cast<int>(size.width),static_cast<int>(size.height)}),
 		to_delete(false),
-		owner(owner)
+		owner(owner),
+		position(-1,-1,-1)
 	{
 	}
 
 	void UpdateValues(const Transform& transform) {
-		Vector3 position = transform.GetScreenPositionAndDepth();
+		position = transform.GetScreenPositionAndDepth();
 		float scale = transform.GetRenderingScale();
 		Size2D currentSize(size.width*scale, size.height*scale);
 		rect = GetRectInPositionWithPivot(position,currentSize,pivot);
