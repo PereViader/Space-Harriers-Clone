@@ -59,7 +59,7 @@ bool ModuleFloor::Init()
 
 update_status ModuleFloor::Update()
 {
-	fPoint playerPosition = App->player->GetNormalizedPosition();
+	Vector2 playerPosition = App->player->GetNormalizedPosition();
 
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
 	horizontalSpeedForOutsideUse = -horizontalSpeed * (SCREEN_WIDTH * SCREEN_SIZE) * 1.2f;

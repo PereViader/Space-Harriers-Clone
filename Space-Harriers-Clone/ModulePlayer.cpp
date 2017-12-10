@@ -19,8 +19,8 @@
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
-const float ModulePlayer::PLAYER_SPEED = 3;
-const float ModulePlayer::PLAYER_RECOVER_SPEED = 2.5;
+const float ModulePlayer::PLAYER_SPEED = 800;
+//const float ModulePlayer::PLAYER_RECOVER_SPEED = 700;
 
 const int ModulePlayer::MAX_HORIZONTAL_POSITION = SCREEN_WIDTH*SCREEN_SIZE - 50;
 const int ModulePlayer::MIN_HORIZONTAL_POSITION = 50;
@@ -38,10 +38,11 @@ const float ModulePlayer::RENDER_SCALE = 4.0f;
 
 ModulePlayer::ModulePlayer(bool active) : 
 	Module(active),
-	position({0,1}),
 	destroyed(false),
 	currentAnimation(&hover_center)
 {
+	transform.SetScreenPosition(Vector2((SCREEN_WIDTH*SCREEN_SIZE / 2.0f), static_cast<float>(MAX_VERTICAL_POSITION)));
+
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
 	ground_running.frames.push_back({ 25, 4, 20, 47 });
 	ground_running.frames.push_back({ 49, 2, 25, 49 });
@@ -83,6 +84,7 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::UpdateAnimation()
 {
+	Vector3 position = transform.GetScreenPositionAndDepth();
 	if (position.y == 1)
 		currentAnimation = &ground_running;
 	else {
@@ -99,22 +101,9 @@ void ModulePlayer::UpdateAnimation()
 	}
 }
 
-const fPoint & ModulePlayer::GetNormalizedPosition() const
-{
-	return position;
-}
-
-Vector2 ModulePlayer::GetScreenPosition() const
-{
-	Vector2 screenPosition;
-	screenPosition.x = MIN_HORIZONTAL_POSITION + (MAX_HORIZONTAL_POSITION - MIN_HORIZONTAL_POSITION)  * ((position.x + 1.0f) / 2.0f);
-	screenPosition.y = MIN_VERTICAL_POSITION + (MAX_VERTICAL_POSITION - MIN_VERTICAL_POSITION)  * ((position.y + 1.0f) / 2.0f);
-	return screenPosition;
-}
-
 void ModulePlayer::ShootLaser()
 {
-	Vector2 screen = GetScreenPosition();
+	Vector2 screen = transform.GetScreenPositionAndDepth();
 
 	// correct position to shoot from the gun
 	screen.x += 15;
@@ -125,39 +114,48 @@ void ModulePlayer::ShootLaser()
 
 void ModulePlayer::MovePlayer()
 {
-	fPoint movement;
+	Vector2 movement;
 	movement.x = App->input->GetAxis(Axis::Horizontal)*PLAYER_SPEED*App->time->GetDeltaTime();
 	movement.y = App->input->GetAxis(Axis::Vertical)*PLAYER_SPEED*App->time->GetDeltaTime();
 
-	if (movement.x == 0.0f)
+	Vector2 position = transform.GetScreenPositionAndDepth();
+	
+	//Return to center when not moving
+	/*if (movement.x == 0.0f)
 		movement.x = -position.x*PLAYER_RECOVER_SPEED*App->time->GetDeltaTime();
 
 	if (movement.y == 0.0f)
-		movement.y = -position.y*PLAYER_RECOVER_SPEED*App->time->GetDeltaTime();
+		movement.y = -position.y*PLAYER_RECOVER_SPEED*App->time->GetDeltaTime();*/
 
-	// Clamp position values between -1 and 1
-	position.x = min(1.0f, max(-1.0f, position.x + movement.x));
-	position.y = min(1.0f, max(-1.0f, position.y + movement.y));
+	//Clamp position inside the screen
+	if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION)
+		movement.x = MIN_HORIZONTAL_POSITION - position.x;
+	else if (position.x == MAX_HORIZONTAL_POSITION && movement.x > 0 || position.x > MAX_HORIZONTAL_POSITION)
+		movement.x = MAX_HORIZONTAL_POSITION - position.x;
+	
+	if (position.y == MIN_VERTICAL_POSITION && movement.y < 0 || position.y < MIN_VERTICAL_POSITION)
+		movement.y = MIN_VERTICAL_POSITION - position.y;
+	else if (position.y == MAX_VERTICAL_POSITION && movement.y > 0 || position.y > MAX_VERTICAL_POSITION)
+		movement.y = MAX_VERTICAL_POSITION - position.y;
 
+	transform.Move(movement);
 }
 
-void ModulePlayer::MoveCollider()
+void ModulePlayer::Render()
 {
-	Vector2 colliderPosition = GetScreenPosition();
-
-	collider->rect.x = colliderPosition.x - (collider->rect.w / 2.0f);
-	collider->rect.y = colliderPosition.y - collider->rect.h;
-}
-
-void ModulePlayer::RenderPlayer()
-{
-	// Project player position to the screen
-	Vector2 screen = GetScreenPosition();
+	Vector2 screen = transform.GetScreenPositionAndDepth();
 
 	// Draw everything --------------------------------------
 	if (!destroyed)
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, &currentAnimation->GetCurrentFrame(), RENDER_SCALE,Pivot2D::BOTTOM_CENTER,screen);
+}
 
+Vector2 ModulePlayer::GetNormalizedPosition() const
+{
+	Vector2 position = transform.GetScreenPositionAndDepth();
+	position.x = (((position.x - MIN_HORIZONTAL_POSITION) / MAX_HORIZONTAL_POSITION) - 0.5f ) * 2.0f;
+	position.y = (((position.y - MIN_VERTICAL_POSITION) / MAX_VERTICAL_POSITION) - 0.5f) * 2.0f;
+	return position;
 }
 
 void ModulePlayer::OnCollision(const Collider * own, const Collider * other)
@@ -169,7 +167,7 @@ void ModulePlayer::OnCollision(const Collider * own, const Collider * other)
 update_status ModulePlayer::Update()
 {
 	MovePlayer();
-	MoveCollider();
+	collider->UpdateValues(transform);
 	UpdateAnimation();
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
@@ -177,13 +175,7 @@ update_status ModulePlayer::Update()
 		ShootLaser();
 	}
 
-	RenderPlayer();
+	Render();
 	
 	return UPDATE_CONTINUE;
 }
-
-// TODO 13: Make so is the laser collides, it is removed and create an explosion particle at its position
-
-// TODO 14: Make so if the player collides, it is removed and create few explosions at its positions
-// then fade away back to the first screen (use the "destroyed" bool already created 
-// You will need to create, update and destroy the collider with the player

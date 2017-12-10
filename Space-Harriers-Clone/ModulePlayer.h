@@ -5,37 +5,37 @@
 #include "ICollidable.h"
 
 #include "Animation.h"
-#include "Point.h"
 #include "Vector2.h"
+#include "ScreenBoundTransform.h"
+#include "IRenderable.h"
 
 struct SDL_Texture;
 struct Collider;
 
-class ModulePlayer : public Module, public ICollidable
+class ModulePlayer : public Module, public ICollidable, public IRenderable
 {
 public:
 	ModulePlayer(bool active = true);
 	~ModulePlayer();
 
-	bool Start() override;
-	update_status Update() override;
-	bool CleanUp() override;
+	virtual bool Start() override;
+	virtual update_status Update() override;
+	virtual bool CleanUp() override;
 
-	void UpdateAnimation();
+	virtual void Render() override;
 
-	const fPoint& GetNormalizedPosition() const;
-	Vector2 GetScreenPosition() const;
+	Vector2 GetNormalizedPosition() const;
 
 	// Inherited via ICollidable
 	virtual void OnCollision(const Collider * own, const Collider * other) override;
 
 public:
 	bool destroyed = false;
+	ScreenBoundTransform transform;
 
 private:
-	fPoint position;
 	static const float PLAYER_SPEED;
-	static const float PLAYER_RECOVER_SPEED;
+	//static const float PLAYER_RECOVER_SPEED;
 
 	static const int MAX_HORIZONTAL_POSITION;
 	static const int MIN_HORIZONTAL_POSITION;
@@ -69,8 +69,8 @@ private:
 private:
 	void ShootLaser();
 	void MovePlayer();
-	void MoveCollider();
-	void RenderPlayer();
+	void UpdateAnimation();
+
 };
 
 #endif
