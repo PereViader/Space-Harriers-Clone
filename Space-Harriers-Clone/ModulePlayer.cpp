@@ -84,7 +84,7 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::UpdateAnimation()
 {
-	Vector3 position = transform.GetScreenPositionAndDepth();
+	Vector2 position = GetNormalizedPosition();
 	if (position.y == 1)
 		currentAnimation = &ground_running;
 	else {
@@ -153,8 +153,8 @@ void ModulePlayer::Render()
 Vector2 ModulePlayer::GetNormalizedPosition() const
 {
 	Vector2 position = transform.GetScreenPositionAndDepth();
-	position.x = (((position.x - MIN_HORIZONTAL_POSITION) / MAX_HORIZONTAL_POSITION) - 0.5f ) * 2.0f;
-	position.y = (((position.y - MIN_VERTICAL_POSITION) / MAX_VERTICAL_POSITION) - 0.5f) * 2.0f;
+	position.x = (((position.x - MIN_HORIZONTAL_POSITION) / (MAX_HORIZONTAL_POSITION-MIN_HORIZONTAL_POSITION)) - 0.5f ) * 2.0f;
+	position.y = (((position.y - MIN_VERTICAL_POSITION) / (MAX_VERTICAL_POSITION- MIN_VERTICAL_POSITION)) - 0.5f) * 2.0f;
 	return position;
 }
 
