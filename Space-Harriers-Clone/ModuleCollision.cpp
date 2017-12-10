@@ -115,6 +115,5 @@ inline bool DoColliderLayersCollide(const Collider& a, const Collider& b) {
 
 bool Collider::CheckCollision(const Collider& r) const
 {
-	//TODO Improve call to filter collision layers
 	return DoColliderLayersCollide(*this, r) && abs(position.z - r.position.z) <= 1 && SDL_HasIntersection(&this->rect, &r.rect);
 }
