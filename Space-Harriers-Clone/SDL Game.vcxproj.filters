@@ -143,6 +143,10 @@
     <ClInclude Include="Size2D.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Ovni.h">
+      <Filter>Game Modules\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -230,6 +234,12 @@
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="Pivot2D.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Ovni.cpp">
+      <Filter>Game Modules\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
       <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>

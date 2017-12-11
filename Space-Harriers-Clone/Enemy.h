@@ -40,4 +40,3 @@ protected:
 	bool toDelete;
 	bool hasShadow;
 };
-
