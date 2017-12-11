@@ -25,10 +25,7 @@ bool ModuleShadow::Start()
 {
 	shadow = App->textures->Load("rtype/Character_full.png");
 	assert(shadow.GetTexture() != nullptr);
-
-	Animation animation;
-	animation.frames.push_back({ 197,76,43,20 });
-	shadow.UpdateTexture(animation);
+	shadow.UpdateTexture({ 197,76,43,20 });
 	return true;
 }
 

@@ -12,7 +12,7 @@ class Obstacle :
 	public Enemy
 {
 public:
-	Obstacle(const Texture& graphics, Animation animation, bool hasShadow, float scalingFactor=1);
+	Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, float scalingFactor=1);
 	Obstacle(const Obstacle&);
 	~Obstacle();
 
