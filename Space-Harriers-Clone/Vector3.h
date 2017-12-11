@@ -65,7 +65,17 @@ public:
 	Vector3 Normalized() const {
 		return operator/(*this, Magnitude());
 	}
+
+	
 };
+
+inline bool operator==(const Vector3& lhs, const Vector3& rhs) {
+	return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+}
+
+inline bool operator!=(const Vector3& lhs, const Vector3& rhs) {
+	return lhs.x != rhs.x || lhs.y != rhs.y || lhs.z != rhs.z;
+}
 
 inline Vector3 operator*(float d, const Vector3& v) {
 	Vector3 ret(v);

@@ -63,6 +63,13 @@ public:
 	}
 };
 
+inline bool operator==(const Vector2& lhs, const Vector2& rhs) {
+	return lhs.x == rhs.x && lhs.y == rhs.y;
+}
+
+inline bool operator!=(const Vector2& lhs, const Vector2& rhs) {
+	return lhs.x != rhs.x || lhs.y != rhs.y;
+}
 
 inline Vector2 operator*(float d, const Vector2& v) {
 	Vector2 ret(v);
