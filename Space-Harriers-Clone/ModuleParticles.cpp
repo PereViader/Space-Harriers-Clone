@@ -113,6 +113,7 @@ Particle::Particle(const Particle& p) :
 
 Particle::~Particle()
 {
+	collider->to_delete = true;
 }
 
 void Particle::Update()
@@ -138,6 +139,5 @@ Particle* Particle::Clone() const
 
 void Particle::OnCollision(const Collider * own, const Collider * other)
 {
-	LOG("Particle collision");
+	to_delete = true;
 }
-
