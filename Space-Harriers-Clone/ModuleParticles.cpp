@@ -71,7 +71,7 @@ update_status ModuleParticles::Update()
 		p->Update();
 		Vector3 screenPosition = p->transform.GetScreenPositionAndDepth();
 
-		float scale = CalculatePercentageOfPositionInFloor(screenPosition.z);
+		float scale = p->transform.GetRenderingScale();
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, &p->anim.GetCurrentFrame(), scale, Pivot2D::MIDDLE_CENTER, screenPosition);
 		if (p->isFirstFrame)
 		{
