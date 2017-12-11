@@ -20,7 +20,7 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading space intro");
 	
-	background = App->textures->Load("rtype/intro.png");
+	//background = App->textures->Load("rtype/intro.png");
 
 	App->audio->PlayMusic("rtype/intro.ogg", 1.0f);
 	if(fx == 0)
@@ -36,7 +36,7 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading space scene");
 
-	App->textures->Unload(background);
+	//App->textures->Unload(background);
 	
 	return true;
 }

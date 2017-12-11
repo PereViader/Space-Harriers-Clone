@@ -76,9 +76,6 @@
     <ClInclude Include="ModuleSceneIntro.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleSceneSpace.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Unity Like</Filter>
     </ClInclude>
@@ -188,9 +185,6 @@
     <ClCompile Include="ModuleSceneIntro.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleSceneSpace.cpp">
-      <Filter>Game Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Unity Like</Filter>
     </ClCompile>
@@ -238,9 +232,6 @@
     </ClCompile>
     <ClCompile Include="Ovni.cpp">
       <Filter>Game Modules\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

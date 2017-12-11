@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "SDL\include\SDL.h"
 
+#include "Texture.h"
+
 class ModuleBackground :
 	public Module
 {
@@ -24,8 +26,8 @@ private:
 
 
 	static const int NUMBER_OF_LEVELS = 1;
-	SDL_Texture * horizonDecal[NUMBER_OF_LEVELS];
-	SDL_Texture * background[NUMBER_OF_LEVELS];
+	Texture horizonDecal[NUMBER_OF_LEVELS];
+	Texture background[NUMBER_OF_LEVELS];
 
 	int currentLevel;
 	int currentLevelBackgroundTextureWidth;

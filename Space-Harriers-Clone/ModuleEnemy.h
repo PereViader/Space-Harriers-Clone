@@ -3,6 +3,8 @@
 #include "Module.h"
 #include "ICollidable.h"
 
+#include "Texture.h"
+
 #include <map>
 #include <string>
 #include <list>
@@ -32,8 +34,8 @@ private:
 
 	map<string, const Enemy*> enemyPrototypes;
 
-	SDL_Texture * treeGraphic;
-	SDL_Texture * rock_bush;
+	Texture treeGraphic;
+	Texture rock_bush;
 	
 	list<Enemy*> enemies;
 };

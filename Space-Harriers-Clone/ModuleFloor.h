@@ -2,8 +2,7 @@
 
 #include "Module.h"
 #include "FloorBoundTransform.h"
-
-struct SDL_Texture;
+#include "Texture.h"
 
 class ModuleFloor :
 	public Module
@@ -40,7 +39,7 @@ private:
 	float horizonRenderHeight;
 
 	//vertical lines
-	SDL_Texture * floor;
+	Texture floor;
 	static const int FLOOR_PIXEL_HEIGHT = 400;
 	static const int FLOOR_PIXEL_WIDTH = 800;
 

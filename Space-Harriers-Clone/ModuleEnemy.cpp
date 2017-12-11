@@ -90,6 +90,7 @@ bool ModuleEnemy::CleanUp()
 	enemyPrototypes.clear();
 
 	App->textures->Unload(treeGraphic);
+	App->textures->Unload(rock_bush);
 
 	return true;
 }

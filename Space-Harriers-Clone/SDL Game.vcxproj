@@ -100,7 +100,6 @@
     <ClInclude Include="ModulePlayer.h" />
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
-    <ClInclude Include="ModuleSceneSpace.h" />
     <ClInclude Include="ModuleStage.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleTime.h" />
@@ -133,7 +132,6 @@
     <ClCompile Include="ModulePlayer.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
-    <ClCompile Include="ModuleSceneSpace.cpp" />
     <ClCompile Include="ModuleShadow.cpp" />
     <ClCompile Include="ModuleStage.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
@@ -144,7 +142,6 @@
     <ClCompile Include="Ovni.cpp" />
     <ClCompile Include="Pivot2D.cpp" />
     <ClCompile Include="ScreenBoundTransform.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>

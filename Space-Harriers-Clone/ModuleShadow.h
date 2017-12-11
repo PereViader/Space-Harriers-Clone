@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Module.h"
-
-#include "SDL/include/SDL.h"
+#include "Texture.h"
 
 class Transform;
 
@@ -19,6 +18,6 @@ public:
 private:
 
 	static const float SHADOW_SCALE_FACTOR;
-	SDL_Texture* shadow;
+	Texture shadow;
 	SDL_Rect shadowRect;
 };

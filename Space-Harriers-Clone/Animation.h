@@ -23,23 +23,26 @@ public:
 	Animation(const Animation& anim) : loop(anim.loop), speed(anim.speed), frames(anim.frames)
 	{}
 
-	SDL_Rect& GetCurrentFrame()
-	{
-		float last_frame = (float) frames.size();
+	void UpdateFrame() {
+		float last_frame = (float)frames.size();
 
 		current_frame += speed*App->time->GetDeltaTime();
 		if (current_frame >= last_frame)
 		{
 			current_frame = (loop) ? 0.0f : MAX(last_frame - 1.0f, 0.0f);
 			loops++;
-		} 
+		}
+	}
 
+	const SDL_Rect& GetFrame() const
+	{
 		return frames[(int)current_frame];
 	}
 
-	const SDL_Rect& PeakCurrentFrame() const
+	const SDL_Rect& UpdateAndGetFrame()
 	{
-		return frames[(int)current_frame];
+		UpdateFrame();
+		return GetFrame();
 	}
 
 	bool Finished() const

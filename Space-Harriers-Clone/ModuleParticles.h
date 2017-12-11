@@ -13,8 +13,7 @@
 #include "Point.h"
 #include "ModuleCollision.h"
 #include "Vector3.h"
-
-struct SDL_Texture;
+#include "Texture.h"
 
 class Particle : 
 	public ICollidable, public IClonable<Particle*>
@@ -59,7 +58,7 @@ public:
 
 private:
 
-	SDL_Texture* graphics = nullptr;
+	Texture graphics;
 	std::list<Particle*> active;
 
 public:

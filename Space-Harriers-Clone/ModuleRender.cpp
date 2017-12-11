@@ -9,6 +9,7 @@
 #include "Pivot2D.h"
 #include "Size2D.h"
 #include "Vector3.h"
+#include "Texture.h"
 
 ModuleRender::ModuleRender()
 {
@@ -48,20 +49,12 @@ update_status ModuleRender::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-// Called every draw update
-update_status ModuleRender::Update()
-{
-	
-
-	return UPDATE_CONTINUE;
-}
-
 update_status ModuleRender::PostUpdate()
 {
 	while (zBuffer.size() > 0) {
 		ZElement element = zBuffer.top();
 		zBuffer.pop();
-		DirectBlit(element.graphic, &element.section, &element.screen);
+		DirectBlit(element.texture, &element.screen);
 	}
 
 	SDL_RenderPresent(renderer);
@@ -82,68 +75,33 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
-bool ModuleRender::BlitZBuffer(SDL_Texture * texture, SDL_Rect * section, SDL_Rect * screen, float z)
+bool ModuleRender::BlitZBuffer(const Texture& texture, SDL_Rect * screen, float z)
 {
-	ZElement zElement;
-	zElement.graphic = texture;
-	zElement.section = *section;
-	zElement.screen = *screen;
-	zElement.zValue = z;
-
+	ZElement zElement(texture,*screen,z);
 	zBuffer.push(zElement);
 	return true;
 }
 
-bool ModuleRender::BlitWithPivotScaledZBuffer(SDL_Texture * texture, SDL_Rect * section, float scale, const Pivot2D& pivot, const Vector3& position)
+bool ModuleRender::BlitWithPivotScaledZBuffer(const Texture& texture, float scale, const Pivot2D& pivot, const Vector3& position)
 {
-	Size2D size;
-
-	if (section != nullptr) {
-		size.width = (float)section->w;
-		size.height = (float)section->h;
-	}
-	else {
-		int w, h;
-		SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
-		size.width = (float)w;
-		size.height = (float)h;
-	}
-	size.width *= scale;
-	size.height *= scale;
-
+	Size2D size(scale * texture.GetSection().w, scale * texture.GetSection().h);
 	SDL_Rect rectForPivot = GetRectInPositionWithPivot(position,size,pivot);
-	BlitZBuffer(texture, section, &rectForPivot, position.z);
-
+	BlitZBuffer(texture, &rectForPivot, position.z);
 	return true;
 }
 
-bool ModuleRender::BlitWithPivotScaled(SDL_Texture * texture, SDL_Rect * section, float scale, const Pivot2D& pivot, const Vector2& position)
+bool ModuleRender::BlitWithPivotScaled(const Texture& texture, float scale, const Pivot2D& pivot, const Vector2& position)
 {
-	Size2D size;
-	if (section != nullptr) {
-		size.width = (float)section->w;
-		size.height = (float)section->h;
-	}
-	else {
-		int w, h;
-		SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
-		size.width = (float)w;
-		size.height = (float)h;
-	}
-	size.width *= scale;
-	size.height *= scale;
-
-
+	Size2D size(scale * texture.GetSection().w, scale * texture.GetSection().h);
 	SDL_Rect rectForPivot = GetRectInPositionWithPivot(position,size,pivot);
-
-	DirectBlit(texture, section, &rectForPivot);
+	DirectBlit(texture, &rectForPivot);
 	return true;
 }
 
-bool ModuleRender::DirectBlit(SDL_Texture* texture, SDL_Rect* section, SDL_Rect* destiny)
+bool ModuleRender::DirectBlit(const Texture& texture, SDL_Rect* destiny)
 {
 	bool ret = true;
-	if (SDL_RenderCopy(renderer, texture, section, destiny) != 0)
+	if (SDL_RenderCopy(renderer, texture.GetTexture(), &texture.GetSection(), destiny) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
@@ -201,17 +159,15 @@ bool ModuleRender::DrawPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 	return ret;
 }
 
-bool ModuleRender::DrawSegment(int startx, int starty, int endx, int endy, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+bool ModuleRender::DrawSegment(const Vector2& start, const Vector2& end, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 	bool ret = true;
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
-	if (SDL_RenderDrawLine(renderer, startx, starty, endx, endy) != 0)
+	if (SDL_RenderDrawLine(renderer, static_cast<int>(start.x), static_cast<int>(start.y), static_cast<int>(end.x), static_cast<int>(end.y)) != 0)
 	{
 		LOG("Cannot draw segment to screen. SDL_RenderDrawLine error: %s", SDL_GetError());
 		ret = false;
 	}
 	return ret;
 }
-
-

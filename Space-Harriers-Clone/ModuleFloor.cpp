@@ -151,7 +151,8 @@ void ModuleFloor::RenderVerticalLines()
 	float currentRenderPosition = 0;
 
 	for (; screenBlitRect.y < SCREEN_HEIGHT*SCREEN_SIZE; screenBlitRect.y++) {
-		App->renderer->DirectBlit(floor, &floorTextureRect, &screenBlitRect);
+		floor.UpdateTexture(floorTextureRect);
+		App->renderer->DirectBlit(floor, &screenBlitRect);
 
 		//Get the next texture line
 		currentRenderPosition += originalTextureVerticalPixelsPerScreenRow;

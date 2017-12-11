@@ -72,7 +72,9 @@ update_status ModuleParticles::Update()
 		Vector3 screenPosition = p->transform.GetScreenPositionAndDepth();
 
 		float scale = p->transform.GetRenderingScale();
-		App->renderer->BlitWithPivotScaledZBuffer(graphics, &p->anim.GetCurrentFrame(), scale, Pivot2D::MIDDLE_CENTER, screenPosition);
+		p->anim.UpdateFrame();
+		graphics.UpdateTexture(p->anim);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::MIDDLE_CENTER, screenPosition);
 		if (p->isFirstFrame)
 		{
 			App->audio->PlayFx(p->sfxId);

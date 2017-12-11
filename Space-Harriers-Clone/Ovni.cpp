@@ -1,8 +1,9 @@
 #include "Ovni.h"
 
+#include "ScreenBoundTransform.h"
 
-
-Ovni::Ovni()
+Ovni::Ovni() :
+	Enemy(new ScreenBoundTransform(),true)
 {
 }
 

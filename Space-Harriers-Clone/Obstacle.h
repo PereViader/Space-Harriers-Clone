@@ -1,17 +1,18 @@
 #pragma once
 
-#include "Point.h"
-#include "Animation.h"
 #include "Enemy.h"
 
-struct SDL_Texture;
+#include "Point.h"
+#include "Animation.h"
+#include "Texture.h"
+
 struct Collider;
 
 class Obstacle :
 	public Enemy
 {
 public:
-	Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, float scalingFactor=1);
+	Obstacle(const Texture& graphics, Animation animation, bool hasShadow, float scalingFactor=1);
 	Obstacle(const Obstacle&);
 	~Obstacle();
 
@@ -24,7 +25,7 @@ public:
 	virtual void Render() override;
 
 public:
-	SDL_Texture* graphics;
+	Texture graphics;
 	Animation animation;
 	Collider* collider;
 

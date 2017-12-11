@@ -68,13 +68,13 @@ void ModuleBackground::DrawBackground() {
 	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE) {
 		position.x = (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE;
 
-		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, Pivot2D::BOTTOM_LEFT, position);
-		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, Pivot2D::BOTTOM_RIGHT, position);
+		App->renderer->BlitWithPivotScaled(background[currentLevel], BACKGROUND_SCALE, Pivot2D::BOTTOM_LEFT, position);
+		App->renderer->BlitWithPivotScaled(background[currentLevel], BACKGROUND_SCALE, Pivot2D::BOTTOM_RIGHT, position);
 	}
 	else {
 		Pivot2D pivot(static_cast<float>(backgroundTextureOffset) / currentLevelBackgroundTextureWidth, 1);
 
-		App->renderer->BlitWithPivotScaled(background[currentLevel], nullptr, BACKGROUND_SCALE, pivot, position);
+		App->renderer->BlitWithPivotScaled(background[currentLevel], BACKGROUND_SCALE, pivot, position);
 	}
 }
 
@@ -86,13 +86,13 @@ void ModuleBackground::DrawDecal() {
 	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE) {
 		position.x = (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE;
 
-		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, Pivot2D::BOTTOM_LEFT, position);
-		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, Pivot2D::BOTTOM_RIGHT, position);
+		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], DECAL_SCALE, Pivot2D::BOTTOM_LEFT, position);
+		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], DECAL_SCALE, Pivot2D::BOTTOM_RIGHT, position);
 	}
 	else {
 		Pivot2D pivot(static_cast<float>(decalTextureOffset) / currentLevelHorizonDecalTextureWidth, 1);
 
-		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], nullptr, DECAL_SCALE, pivot, position);
+		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], DECAL_SCALE, pivot, position);
 	}
 }
 
@@ -120,6 +120,11 @@ void ModuleBackground::SetLevel(int level)
 {
 	assert(level >= 0 && level < NUMBER_OF_LEVELS);
 	currentLevel = level;
-	SDL_QueryTexture(horizonDecal[currentLevel], NULL, NULL, &currentLevelHorizonDecalTextureWidth, &currentLevelHorizonDecalTextureHeight);
-	SDL_QueryTexture(background[currentLevel], NULL, NULL, &currentLevelBackgroundTextureWidth, &currentLevelBackgroundTextureHeight);
+	currentLevelHorizonDecalTextureWidth = horizonDecal[currentLevel].GetSection().w;
+	currentLevelHorizonDecalTextureHeight = horizonDecal[currentLevel].GetSection().h;
+
+	currentLevelBackgroundTextureWidth = background[currentLevel].GetSection().w;
+	currentLevelBackgroundTextureHeight = background[currentLevel].GetSection().h;
+	//SDL_QueryTexture(horizonDecal[currentLevel].GetTexture(), NULL, NULL, &currentLevelHorizonDecalTextureWidth, &currentLevelHorizonDecalTextureHeight);
+	//SDL_QueryTexture(background[currentLevel].GetTexture(), NULL, NULL, &currentLevelBackgroundTextureWidth, &currentLevelBackgroundTextureHeight);
 }

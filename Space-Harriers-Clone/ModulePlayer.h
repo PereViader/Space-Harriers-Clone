@@ -2,14 +2,15 @@
 #define __ModulePlayer_H__
 
 #include "Module.h"
+#include "IRenderable.h"
 #include "ICollidable.h"
 
+#include "Texture.h"
 #include "Animation.h"
-#include "Vector2.h"
-#include "ScreenBoundTransform.h"
-#include "IRenderable.h"
 
-struct SDL_Texture;
+#include "ScreenBoundTransform.h"
+#include "Vector2.h"
+
 struct Collider;
 
 class ModulePlayer : public Module, public ICollidable, public IRenderable
@@ -50,7 +51,7 @@ private:
 	static const float RENDER_SCALE;
 
 
-	SDL_Texture* graphics = nullptr;
+	Texture graphics;
 
 	Animation * currentAnimation;
 

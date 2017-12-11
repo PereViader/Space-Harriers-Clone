@@ -146,8 +146,11 @@ void ModulePlayer::Render()
 	Vector2 screen = transform.GetScreenPositionAndDepth();
 
 	// Draw everything --------------------------------------
-	if (!destroyed)
-		App->renderer->BlitWithPivotScaledZBuffer(graphics, &currentAnimation->GetCurrentFrame(), RENDER_SCALE,Pivot2D::BOTTOM_CENTER,screen);
+	if (!destroyed) {
+		currentAnimation->UpdateFrame();
+		graphics.UpdateTexture(*currentAnimation);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, RENDER_SCALE, Pivot2D::BOTTOM_CENTER, screen);
+	}
 }
 
 Vector2 ModulePlayer::GetNormalizedPosition() const

@@ -1,11 +1,14 @@
 #ifndef __MODULETEXTURES_H__
 #define __MODULETEXTURES_H__
 
-#include<list>
+#include<map>
+#include <string>
+
 #include "Module.h"
 #include "Globals.h"
+#include "Texture.h"
 
-struct SDL_Texture;
+using namespace std;
 
 class ModuleTextures : public Module
 {
@@ -16,11 +19,12 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	SDL_Texture* const Load(const char* path);
-	void Unload(SDL_Texture* texture);
+	Texture Load(const string& path);
+	void Unload(const Texture& texture);
 
 private:
-	std::list<SDL_Texture*> textures;
+	map<string, SDL_Texture*> textures;
+	map<SDL_Texture*, unsigned int> textureUsage;
 };
 
 #endif // __MODULETEXTURES_H__

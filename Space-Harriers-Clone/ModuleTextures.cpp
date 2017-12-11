@@ -4,6 +4,8 @@
 #include "ModuleTextures.h"
 #include "SDL/include/SDL.h"
 
+#include <assert.h>
+
 #include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
 
@@ -43,52 +45,77 @@ bool ModuleTextures::CleanUp()
 {
 	LOG("Freeing textures and Image library");
 
-	for(list<SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it)
-		SDL_DestroyTexture(*it);
+	//TODO: Should check if all textures have been unloaded insted of unloading them now
+
+	for(map<string, SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it)
+		SDL_DestroyTexture(it->second);
 
 	textures.clear();
+	textureUsage.clear();
+
 	return true;
 }
 
 // Load new texture from file path
-SDL_Texture* const ModuleTextures::Load(const char* path)
+Texture ModuleTextures::Load(const string& path)
 {
 	SDL_Texture* texture = nullptr;
-	SDL_Surface* surface = IMG_Load(path);
 
-	if(surface == nullptr)
-	{
-		LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
+	auto aviableTexture = textures.find(path);
+	if (aviableTexture != textures.end()) {
+		textureUsage[aviableTexture->second] += 1;
+		texture = aviableTexture->second;
 	}
-	else
-	{
-		texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
+	else {
+		SDL_Surface* surface = IMG_Load(path.c_str());
 
-		if(texture == nullptr)
+		if (surface == nullptr)
 		{
-			LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
+			LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
 		}
 		else
 		{
-			textures.push_back(texture);
-		}
+			texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
 
-		SDL_FreeSurface(surface);
+			if (texture == nullptr)
+			{
+				LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
+			}
+			else
+			{
+				textures[path] = texture;
+				textureUsage[texture] = 1;
+			}
+
+			SDL_FreeSurface(surface);
+		}
 	}
 
-	return texture;
+	return Texture(texture);
 }
 
 // Free texture from memory
-void ModuleTextures::Unload(SDL_Texture* texture)
+void ModuleTextures::Unload(const Texture& texture)
 {
-	for(list<SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it)
+	map<SDL_Texture*, unsigned int>::iterator it0 = textureUsage.find(texture.GetTexture());
+	assert(it0 != textureUsage.end());
+	if (it0 != textureUsage.end())
 	{
-		if(*it == texture)
-		{
-			SDL_DestroyTexture(*it);
-			textures.erase(it);
-			break;
+		it0->second -= 1;
+		if (it0->second == 0) {
+			// remove texture from the path to texture map
+			for (map<string, SDL_Texture*>::iterator it1 = textures.begin(); it1 != textures.end(); it1++) {
+				if (it1->second == it0->first)
+				{
+					textures.erase(it1);
+					break;
+				}
+			}
+
+			// remove texture from the usage map
+			textureUsage.erase(it0);
+
+			SDL_DestroyTexture(texture.GetTexture());
 		}
 	}
 }

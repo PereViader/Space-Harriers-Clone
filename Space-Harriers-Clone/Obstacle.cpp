@@ -11,7 +11,7 @@
 
 #include <assert.h>
 
-Obstacle::Obstacle(SDL_Texture* graphics, Animation animation, bool hasShadow, float scalingFactor) :
+Obstacle::Obstacle(const Texture& graphics, Animation animation, bool hasShadow, float scalingFactor) :
 	Enemy(new FloorBoundTransform(0,0,0), hasShadow),
 	graphics(graphics),
 	animation(animation),
@@ -75,9 +75,9 @@ void Obstacle::Render()
 	if (!toDelete) {
 		Vector3 screen = transform->GetScreenPositionAndDepth();
 		float scale = scalingFactor * transform->GetRenderingScale();
-		SDL_Rect& animationFrame = animation.GetCurrentFrame();
-
-		App->renderer->BlitWithPivotScaledZBuffer(graphics, &animationFrame, scale, Pivot2D::BOTTOM_CENTER, screen);
+		animation.UpdateAndGetFrame();
+		graphics.UpdateTexture(animation);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::BOTTOM_CENTER, screen);
 		App->shadow->DrawShadow(*transform);
 	}
 }
