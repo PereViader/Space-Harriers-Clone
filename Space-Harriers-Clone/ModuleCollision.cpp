@@ -36,12 +36,17 @@ update_status ModuleCollision::PreUpdate()
 
 update_status ModuleCollision::Update()
 {
-	for(list<Collider*>::const_iterator it0 = colliders.cbegin(), end = colliders.cend(); it0 != end; it0++) 
-		for (list<Collider*>::const_iterator it1 = next(it0, 1); it1 != end; it1++)
+	for (list<Collider*>::const_iterator it0 = colliders.cbegin(), end = colliders.cend(); it0 != end; it0++)
+		for (list<Collider*>::const_iterator it1 = next(it0, 1); it1 != end; it1++) {
+			assert((*it0)->to_delete == false);
+			assert((*it1)->to_delete == false);
+
 			if ((*it0)->CheckCollision(**it1)) {
 				(*it0)->owner->OnCollision(*it0, *it1);
 				(*it1)->owner->OnCollision(*it1, *it0);
 			}
+		}
+			
 
 
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
