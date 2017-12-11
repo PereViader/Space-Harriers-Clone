@@ -2,6 +2,7 @@
 
 #include "Enemy.h"
 #include "Obstacle.h"
+#include "Ovni.h"
 
 #include "Assert.h"
 #include "ModuleTextures.h"
@@ -44,6 +45,18 @@ bool ModuleEnemy::Start()
 	Size2D rockSize(59 * rockScalingFactor, 37 * rockScalingFactor);
 	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize , Pivot2D::BOTTOM_CENTER, rock);
 	enemyPrototypes["rock"] = rock;
+
+
+	Vector3 startOvni(SCREEN_SIZE*SCREEN_WIDTH / 2.0f, SCREEN_SIZE*SCREEN_HEIGHT / 2.0f);
+
+	vector<Vector3> path;
+	path.push_back(Vector3(0, SCREEN_SIZE*SCREEN_HEIGHT / 2.0f));
+	path.push_back(Vector3(0, SCREEN_SIZE*SCREEN_HEIGHT,15));
+	path.push_back(Vector3(SCREEN_SIZE*SCREEN_WIDTH / 2.0f, SCREEN_SIZE*SCREEN_HEIGHT / 2.0f, 15));
+
+	Ovni * ovni = new Ovni(startOvni, 700, rock_bush, rockAnimation, path, rockScalingFactor);
+	ovni->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, ovni);
+	enemyPrototypes["ovni"] = ovni;
 
 	return true;
 }

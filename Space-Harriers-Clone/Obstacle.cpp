@@ -78,6 +78,7 @@ void Obstacle::Render()
 		animation.UpdateFrame();
 		graphics.UpdateTexture(animation);
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::BOTTOM_CENTER, screen);
-		App->shadow->DrawShadow(*transform);
+		if (hasShadow)
+			App->shadow->DrawShadow(*transform);
 	}
 }
