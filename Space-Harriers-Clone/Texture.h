@@ -1,7 +1,6 @@
 #pragma once
 
-struct SDL_Texture;
-struct SDL_Rect;
+#include "SDL\include\SDL.h"
 
 class Texture
 {
@@ -20,6 +19,7 @@ public:
 
 	SDL_Texture* GetTexture() { return texture; }
 	SDL_Rect* GetSection() { return section; }
+	void SetSection(const SDL_Rect& newSection ) { (*section) = newSection; }
 
 private:
 	SDL_Texture* texture;
