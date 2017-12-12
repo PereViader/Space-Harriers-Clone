@@ -22,6 +22,7 @@ Ovni::Ovni(const Vector3 startingPosition, float speed, const Texture& texture, 
 
 Ovni::~Ovni()
 {
+	collider->to_delete = true;
 }
 
 void Ovni::Init(map<string, void*> values)

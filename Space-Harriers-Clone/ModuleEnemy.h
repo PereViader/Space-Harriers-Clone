@@ -32,7 +32,7 @@ public:
 private:
 	const Enemy* GetEnemyPrototypeByName(string name);
 
-	map<string, const Enemy*> enemyPrototypes;
+	map<string, Enemy*> enemyPrototypes;
 
 	Texture treeGraphic;
 	Texture rock_bush;

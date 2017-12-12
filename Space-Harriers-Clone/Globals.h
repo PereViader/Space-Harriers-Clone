@@ -22,7 +22,8 @@ enum class update_status
 typedef unsigned int uint;
 
 // Deletes a buffer
-inline void RELEASE(const void* x) {
+template<typename T>
+inline void RELEASE(T*& x) {
 	if (x != nullptr)
 	{
 		delete x;
@@ -31,7 +32,8 @@ inline void RELEASE(const void* x) {
 }
 
 // Deletes an array of buffers
-inline void RELEASE_ARRAY(const void* x) {
+template<typename T>
+inline void RELEASE_ARRAY(T*& x) {
 	if( x != nullptr ) {
 		delete[] x;
 		x = nullptr;
@@ -39,9 +41,8 @@ inline void RELEASE_ARRAY(const void* x) {
 }
 
 // Configuration -----------
-#define SCREEN_SIZE 3
-#define SCREEN_WIDTH 384
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 1152
+#define SCREEN_HEIGHT 720
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "Super Awesome Game"

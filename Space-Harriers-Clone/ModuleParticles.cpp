@@ -49,7 +49,7 @@ update_status ModuleParticles::PreUpdate()
 {
 	for (list<Particle*>::iterator it = active.begin(); it != active.end();)
 	{
-		if ((*it)->to_delete == true)
+		if ((*it)->to_delete)
 		{
 			RELEASE(*it);
 			it = active.erase(it);

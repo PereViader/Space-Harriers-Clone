@@ -47,12 +47,12 @@ bool ModuleEnemy::Start()
 	enemyPrototypes["rock"] = rock;
 
 
-	Vector3 startOvni(SCREEN_SIZE*SCREEN_WIDTH / 2.0f, SCREEN_SIZE*SCREEN_HEIGHT / 2.0f);
+	Vector3 startOvni(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
 
 	vector<Vector3> path;
-	path.push_back(Vector3(0, SCREEN_SIZE*SCREEN_HEIGHT / 2.0f));
-	path.push_back(Vector3(0, SCREEN_SIZE*SCREEN_HEIGHT,15));
-	path.push_back(Vector3(SCREEN_SIZE*SCREEN_WIDTH / 2.0f, SCREEN_SIZE*SCREEN_HEIGHT / 2.0f, 15));
+	path.push_back(Vector3(0, SCREEN_HEIGHT / 2.0f));
+	path.push_back(Vector3(0, SCREEN_HEIGHT,15));
+	path.push_back(Vector3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 15));
 
 	Ovni * ovni = new Ovni(startOvni, 700, rock_bush, rockAnimation, path, rockScalingFactor);
 	ovni->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, ovni);
@@ -97,7 +97,7 @@ bool ModuleEnemy::CleanUp()
 	enemies.clear();
 
 	
-	for (map<string, const Enemy*>::iterator it = enemyPrototypes.begin(); it != enemyPrototypes.end(); ++it)
+	for (map<string, Enemy*>::iterator it = enemyPrototypes.begin(); it != enemyPrototypes.end(); ++it)
 		RELEASE(it->second);
 
 	enemyPrototypes.clear();
@@ -122,6 +122,6 @@ Enemy * ModuleEnemy::InstantiateEnemyByName(string name, map<string, void*> para
 
 const Enemy* ModuleEnemy::GetEnemyPrototypeByName(string name)
 {
-	map<string, const Enemy*>::const_iterator res = enemyPrototypes.find(name);
+	map<string, Enemy*>::const_iterator res = enemyPrototypes.find(name);
 	return (res != enemyPrototypes.cend()) ? res->second : nullptr;
 }

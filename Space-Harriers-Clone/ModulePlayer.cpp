@@ -22,9 +22,9 @@
 const float ModulePlayer::PLAYER_SPEED = 800;
 //const float ModulePlayer::PLAYER_RECOVER_SPEED = 700;
 
-const int ModulePlayer::MAX_HORIZONTAL_POSITION = SCREEN_WIDTH*SCREEN_SIZE - 50;
+const int ModulePlayer::MAX_HORIZONTAL_POSITION = SCREEN_WIDTH - 50;
 const int ModulePlayer::MIN_HORIZONTAL_POSITION = 50;
-const int ModulePlayer::MAX_VERTICAL_POSITION = SCREEN_HEIGHT*SCREEN_SIZE;
+const int ModulePlayer::MAX_VERTICAL_POSITION = SCREEN_HEIGHT;
 const int ModulePlayer::MIN_VERTICAL_POSITION = 200;
 
 
@@ -41,7 +41,7 @@ ModulePlayer::ModulePlayer(bool active) :
 	destroyed(false),
 	currentAnimation(&hover_center)
 {
-	transform.SetScreenPosition(Vector2((SCREEN_WIDTH*SCREEN_SIZE / 2.0f), static_cast<float>(MAX_VERTICAL_POSITION)));
+	transform.SetScreenPosition(Vector2((SCREEN_WIDTH / 2.0f), static_cast<float>(MAX_VERTICAL_POSITION)));
 
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
 	ground_running.frames.push_back({ 25, 4, 20, 47 });

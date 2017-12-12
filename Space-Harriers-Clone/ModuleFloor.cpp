@@ -43,7 +43,7 @@ bool ModuleFloor::Init()
 
 	for (int i = 0; i < nHorizonQuads; i++) {
 		horizontalQuads[i].x = 0;
-		horizontalQuads[i].w = SCREEN_SIZE*SCREEN_WIDTH;
+		horizontalQuads[i].w = SCREEN_WIDTH;
 	}
 
 	firstQuadIndex = 0;
@@ -62,7 +62,7 @@ update_status ModuleFloor::Update()
 	Vector2 playerPosition = App->player->GetNormalizedPosition();
 
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
-	horizontalSpeedForOutsideUse = -horizontalSpeed * (SCREEN_WIDTH * SCREEN_SIZE) * 1.2f;
+	horizontalSpeedForOutsideUse = -horizontalSpeed * (SCREEN_WIDTH) * 1.2f;
 
 	horizonRenderHeight = HORIZON_MAX_HEIGHT + static_cast<float>(HORIZON_MIN_HEIGHT - HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f);
 
@@ -83,13 +83,13 @@ float ModuleFloor::GetHorizonRenderHeight() const
 
 float ModuleFloor::GetCurrentHorizonPercentage() const
 {
-	return (float)(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (SCREEN_HEIGHT*SCREEN_SIZE - HORIZON_MAX_HEIGHT);
+	return (float)(SCREEN_HEIGHT - horizonRenderHeight) / (SCREEN_HEIGHT - HORIZON_MAX_HEIGHT);
 }
 
 float ModuleFloor::GetHorizonPercentageOfPosition(float position) const
 {
-	position = max(horizonRenderHeight, min(static_cast<float>(SCREEN_HEIGHT*SCREEN_SIZE), position));
-	return 1.0f - (SCREEN_HEIGHT*SCREEN_SIZE - position) / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
+	position = max(horizonRenderHeight, min(static_cast<float>(SCREEN_HEIGHT), position));
+	return 1.0f - (SCREEN_HEIGHT - position) / (SCREEN_HEIGHT - horizonRenderHeight);
 }
 
 float ModuleFloor::GetHorizonDepthForPosition(float yPosition) const
@@ -101,7 +101,7 @@ float ModuleFloor::GetHorizonDepthForPosition(float yPosition) const
 float ModuleFloor::GetHorizonPositionForDepth(float depth) const
 {
 	float percentage = CalculatePercentageOfPositionInFloor(depth);
-	return horizonRenderHeight + (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) * percentage;
+	return horizonRenderHeight + (SCREEN_HEIGHT - horizonRenderHeight) * percentage;
 }
 
 float ModuleFloor::GetCurrentFloorMovement() const
@@ -132,12 +132,12 @@ void ModuleFloor::RenderFloor() {
 void ModuleFloor::RenderVerticalLines()
 {
 	//Number of pixels between each line from the texture to be blit to the screen
-	float originalTextureVerticalPixelsPerScreenRow = (float)FLOOR_PIXEL_HEIGHT / (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight);
+	float originalTextureVerticalPixelsPerScreenRow = (float)FLOOR_PIXEL_HEIGHT / (SCREEN_HEIGHT - horizonRenderHeight);
 
 	//Rects for blitting from the texture to the screen
 	const float extraSpaceForCurves = 260;
 	SDL_Rect floorTextureRect = { static_cast<int>(extraSpaceForCurves),0, static_cast<int>(FLOOR_PIXEL_WIDTH - extraSpaceForCurves * 2), 1 };
-	SDL_Rect screenBlitRect = { 0,static_cast<int>(horizonRenderHeight),SCREEN_WIDTH*SCREEN_SIZE,1 };
+	SDL_Rect screenBlitRect = { 0,static_cast<int>(horizonRenderHeight),SCREEN_WIDTH,1 };
 
 
 	//Move Floor Horizontally
@@ -156,7 +156,7 @@ void ModuleFloor::RenderVerticalLines()
 	// Texture row selector
 	float currentRenderPosition = 0;
 
-	for (; screenBlitRect.y < SCREEN_HEIGHT*SCREEN_SIZE; screenBlitRect.y++) {
+	for (; screenBlitRect.y < SCREEN_HEIGHT; screenBlitRect.y++) {
 		floor.UpdateTexture(floorTextureRect);
 		App->renderer->DirectBlit(floor, &screenBlitRect);
 
@@ -172,7 +172,7 @@ void ModuleFloor::RenderVerticalLines()
 
 void ModuleFloor::RenderHorizontalLines()
 {
-	float baseSegmentHeight = static_cast<float>(SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) / (1.0f+ SEGMENT_REDUCTION + 
+	float baseSegmentHeight = static_cast<float>(SCREEN_HEIGHT - horizonRenderHeight) / (1.0f+ SEGMENT_REDUCTION + 
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION + 
@@ -183,7 +183,7 @@ void ModuleFloor::RenderHorizontalLines()
 																								SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION +
 										 														SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION*SEGMENT_REDUCTION );
 
-	float startingRenderingPosition = SCREEN_HEIGHT*SCREEN_SIZE - baseSegmentHeight*(1.0f - firstSegmentPositionPercentage);
+	float startingRenderingPosition = SCREEN_HEIGHT - baseSegmentHeight*(1.0f - firstSegmentPositionPercentage);
 	float firstSegmentHeight = baseSegmentHeight * (1.0f - firstSegmentPositionPercentage) + baseSegmentHeight * (1.0f / SEGMENT_REDUCTION) * (firstSegmentPositionPercentage);
 
 	float currentSegmentHeight = firstSegmentHeight;

@@ -65,7 +65,7 @@ void ModuleBackground::DrawBackground() {
 
 	Vector2 position;
 	position.y = App->floor->GetHorizonRenderHeight();
-	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE) {
+	if (SCREEN_WIDTH > (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE) {
 		position.x = (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE;
 
 		App->renderer->BlitWithPivotScaled(background[currentLevel], BACKGROUND_SCALE, Pivot2D::BOTTOM_LEFT, position);
@@ -83,7 +83,7 @@ void ModuleBackground::DrawDecal() {
 
 	Vector2 position;
 	position.y = App->floor->GetHorizonRenderHeight();
-	if (SCREEN_SIZE*SCREEN_WIDTH > (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE) {
+	if (SCREEN_WIDTH > (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE) {
 		position.x = (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE;
 
 		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], DECAL_SCALE, Pivot2D::BOTTOM_LEFT, position);
@@ -98,14 +98,14 @@ void ModuleBackground::DrawDecal() {
 
 void ModuleBackground::MoveBackground()
 {
-	backgroundTextureOffset = (int)(backgroundTextureOffset + App->player->GetNormalizedPosition().x * BACKGROUND_HORIZONTAL_SPEED) % currentLevelBackgroundTextureWidth;
+	backgroundTextureOffset = static_cast<int>(backgroundTextureOffset + App->player->GetNormalizedPosition().x * BACKGROUND_HORIZONTAL_SPEED) % currentLevelBackgroundTextureWidth;
 	if (backgroundTextureOffset < 0)
 		backgroundTextureOffset = currentLevelBackgroundTextureWidth - backgroundTextureOffset - 1;
 }
 
 void ModuleBackground::MoveDecal()
 {
-	decalTextureOffset = (int)(decalTextureOffset + App->player->GetNormalizedPosition().x * HORIZON_DECAL_HORIZONTAL_SPEED) % currentLevelHorizonDecalTextureWidth;
+	decalTextureOffset = static_cast<int>(decalTextureOffset + App->player->GetNormalizedPosition().x * HORIZON_DECAL_HORIZONTAL_SPEED) % currentLevelHorizonDecalTextureWidth;
 	if (decalTextureOffset < 0)
 		decalTextureOffset = currentLevelHorizonDecalTextureWidth - decalTextureOffset - 1;
 }

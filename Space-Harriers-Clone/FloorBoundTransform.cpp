@@ -50,12 +50,12 @@ inline Vector3 FloorBoundTransform::GetFloorPositionAndDepth() const
 
 	if (IsBoundSegmentPresentOnScreen()) {
 		position_scale.y = App->floor->horizontalSegments[renderingFloorId].y + App->floor->horizontalSegments[renderingFloorId].h * percentageInsideSegment;
-		position_scale.x = (SCREEN_WIDTH*SCREEN_SIZE) / 2.0f + xPositionOffset * GetScaleForPosition(position_scale.y);
+		position_scale.x = (SCREEN_WIDTH) / 2.0f + xPositionOffset * GetScaleForPosition(position_scale.y);
 		position_scale.z = App->floor->GetHorizonDepthForPosition(position_scale.y);
 	}
 	else {
-		position_scale.y = SCREEN_HEIGHT*SCREEN_SIZE;
-		position_scale.x = (SCREEN_WIDTH*SCREEN_SIZE) / 2.0f + xPositionOffset * GetScaleForPosition(position_scale.y);
+		position_scale.y = SCREEN_HEIGHT;
+		position_scale.x = (SCREEN_WIDTH) / 2.0f + xPositionOffset * GetScaleForPosition(position_scale.y);
 		position_scale.z = -1;
 	}
 
