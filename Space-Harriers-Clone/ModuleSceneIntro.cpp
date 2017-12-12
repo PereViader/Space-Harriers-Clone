@@ -52,5 +52,5 @@ update_status ModuleSceneIntro::Update()
 		App->audio->PlayFx(fx);
 	}
 
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }

@@ -57,7 +57,7 @@ update_status ModuleBackground::Update()
 {
 	DrawBackground();
 	DrawDecal();
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 void ModuleBackground::DrawBackground() {

@@ -22,7 +22,7 @@ update_status ModuleTime::PreUpdate()
 	Uint32 currentTicks = SDL_GetTicks();
 	currentDeltaTime = (currentTicks - previousTicks)/1000.0f;
 	previousTicks = currentTicks;
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 float ModuleTime::GetDeltaTime() const

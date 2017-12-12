@@ -11,7 +11,7 @@ void log(const char file[], int line, const char* format, ...);
 #define MIN( a, b ) ( ((a) < (b)) ? (a) : (b) )
 #define MAX( a, b ) ( ((a) > (b)) ? (a) : (b) )
 
-enum update_status
+enum class update_status
 {
 	UPDATE_CONTINUE = 1,
 	UPDATE_STOP,

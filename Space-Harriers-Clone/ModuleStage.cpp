@@ -42,5 +42,5 @@ update_status ModuleStage::Update()
 		currentTime = 0.0f;
 	}*/
 	
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }

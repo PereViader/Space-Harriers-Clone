@@ -180,5 +180,5 @@ update_status ModulePlayer::Update()
 
 	Render();
 	
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }

@@ -67,7 +67,7 @@ update_status ModuleFloor::Update()
 	horizonRenderHeight = HORIZON_MAX_HEIGHT + static_cast<float>(HORIZON_MIN_HEIGHT - HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f);
 
 	RenderFloor();
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 bool ModuleFloor::CleanUp()

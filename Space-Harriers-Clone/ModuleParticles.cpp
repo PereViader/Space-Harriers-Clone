@@ -58,7 +58,7 @@ update_status ModuleParticles::PreUpdate()
 			++it;
 	}
 
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 // Update all particle logic and draw them
@@ -82,7 +82,7 @@ update_status ModuleParticles::Update()
 		}
 	}
 
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 void ModuleParticles::AddParticle(const Particle& particle, const Vector2& position)

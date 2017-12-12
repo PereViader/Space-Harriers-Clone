@@ -73,7 +73,7 @@ update_status ModuleEnemy::PreUpdate()
 		else
 			++it;
 	}
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 update_status ModuleEnemy::Update()
@@ -86,7 +86,7 @@ update_status ModuleEnemy::Update()
 		enemy->Render();
 	}
 
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 bool ModuleEnemy::CleanUp()

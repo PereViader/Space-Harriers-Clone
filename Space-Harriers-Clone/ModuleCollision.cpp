@@ -31,7 +31,7 @@ update_status ModuleCollision::PreUpdate()
 			++it;
 	}
 
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 update_status ModuleCollision::Update()
@@ -55,7 +55,7 @@ update_status ModuleCollision::Update()
 	if(debug == true)
 		DebugDraw();
 
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 void ModuleCollision::DebugDraw()
