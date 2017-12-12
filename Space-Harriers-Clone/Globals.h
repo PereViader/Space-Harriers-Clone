@@ -22,25 +22,21 @@ enum class update_status
 typedef unsigned int uint;
 
 // Deletes a buffer
-#define RELEASE( x ) \
-    {									  \
-       if( x != nullptr )   \
-       {						      \
-         delete x;                  \
-	     x = nullptr;             \
-       }                      \
-    }
+inline void RELEASE(const void* x) {
+	if (x != nullptr)
+	{
+		delete x;
+		x = nullptr;
+	}
+}
 
 // Deletes an array of buffers
-#define RELEASE_ARRAY( x ) \
-	{                              \
-       if( x != nullptr )              \
-       {                            \
-           delete[] x;                \
-	       x = nullptr;                    \
-		 }                            \
-                              \
-	 }
+inline void RELEASE_ARRAY(const void* x) {
+	if( x != nullptr ) {
+		delete[] x;
+		x = nullptr;
+	}
+}
 
 // Configuration -----------
 #define SCREEN_SIZE 3
