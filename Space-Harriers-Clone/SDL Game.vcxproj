@@ -82,6 +82,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="IClonable.h" />
     <ClInclude Include="ICollidable.h" />
+    <ClInclude Include="IDeletable.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="ModuleShadow.h" />
     <ClInclude Include="Ovni.h" />

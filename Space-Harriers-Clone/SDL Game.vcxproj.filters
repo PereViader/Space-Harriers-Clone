@@ -144,6 +144,9 @@
       <Filter>Game Modules\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="IDeletable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

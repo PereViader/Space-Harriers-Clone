@@ -16,7 +16,6 @@ class Ovni :
 {
 public:
 	Ovni(const Vector3 startingPosition, float speed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, float scalingFactor = 1);
-	Ovni(const Ovni& other);
 	~Ovni();
 
 	virtual void Init(map<string, void*> values);
@@ -25,7 +24,6 @@ public:
 	virtual void OnCollision(const Collider * own, const Collider * other) override;
 	virtual Ovni* Clone() const override;
 	virtual void Render() override;
-
 
 public:
 	Collider* collider;
@@ -38,9 +36,6 @@ private:
 	int currentTarget;
 	vector<Vector3> path;
 
-	float speed;
-
-	// Inherited via Enemy
-	
+	float speed;	
 };
 

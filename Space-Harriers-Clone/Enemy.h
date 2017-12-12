@@ -3,11 +3,11 @@
 #include "ICollidable.h"
 #include "IClonable.h"
 #include "IRenderable.h"
+#include "IDeletable.h"
 
-#include "Point.h"
-#include "Animation.h"
+#include "Application.h"
+#include "ModuleShadow.h"
 #include "Transform.h"
-
 
 #include <string>
 #include <map>
@@ -16,14 +16,21 @@
 using namespace std;
 
 class Enemy :
-	public ICollidable, public IClonable<Enemy*>, public IRenderable
+	public ICollidable, public IClonable<Enemy*>, public IRenderable, public IDeletable
 {
 public:
-	Enemy(Transform * transform, bool hasShadow, bool toDelete = false) :
+	Enemy(Transform * transform, bool hasShadow) :
 		transform(transform),
-		toDelete(toDelete),
 		hasShadow(hasShadow)
 	{}
+
+	Enemy(const Enemy& other) :
+		IDeletable(other),
+		transform(other.transform->Clone()),
+		hasShadow(other.hasShadow)
+	{
+		
+	}
 
 	virtual ~Enemy() {
 		delete transform;
@@ -32,11 +39,14 @@ public:
 	virtual void Init(map<string, void*> values) = 0;
 	virtual void Update() = 0;
 	
-	bool ToDelete() const { return toDelete; }
+	virtual void Render() override {
+		if (!ToDelete() && hasShadow)
+			App->shadow->DrawShadow(*transform);
+	}
 
+	Transform& GetTransform() const { return *transform; }
+
+private:
 	Transform * transform;
-
-protected:
-	bool toDelete;
 	bool hasShadow;
 };

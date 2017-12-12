@@ -22,6 +22,7 @@ public:
 
 	float GetHorizonPercentageOfPosition(float position) const;
 	float GetHorizonDepthForPosition(float position) const;
+	float GetHorizonPositionForDepth(float depth) const;
 
 	float GetCurrentFloorMovement() const;
 	float GetRenderYOfHorizontalStripe(int index) const;

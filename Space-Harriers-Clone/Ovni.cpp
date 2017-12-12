@@ -20,39 +20,27 @@ Ovni::Ovni(const Vector3 startingPosition, float speed, const Texture& texture, 
 {
 }
 
-Ovni::Ovni(const Ovni& other) :
-	Enemy(other.transform->Clone(), true),
-	collider(other.collider),
-	speed(other.speed),
-	graphics(other.graphics),
-	animation(other.animation),
-	scalingFactor(other.scalingFactor),
-	currentTarget(other.currentTarget),
-	path(other.path) 
-{
-}
-
-
 Ovni::~Ovni()
 {
 }
 
 void Ovni::Init(map<string, void*> values)
 {
-	App->collision->RegisterPrototypeInstance(collider, this);
+	collider = App->collision->RegisterPrototypeInstance(collider, this);
 }
 
 void Ovni::Update()
 {
-	collider->UpdateValues(*transform);
 
 	float deltaTime = App->time->GetDeltaTime();
-	Vector3 newPosition = MoveTowards(transform->GetScreenPositionAndDepth(), path[currentTarget], speed*deltaTime);
-	static_cast<ScreenBoundTransform*>(transform)->SetScreenPosition(newPosition);
+	Vector3 newPosition = MoveTowards(GetTransform().GetScreenPositionAndDepth(), path[currentTarget], speed*deltaTime);
+	static_cast<ScreenBoundTransform&>(GetTransform()).SetScreenPosition(newPosition);
+	collider->UpdateValues(GetTransform());
+
 	if (newPosition == path[currentTarget]) {
 		currentTarget += 1;
 		if (currentTarget == path.size()) {
-			//toDelete = true;
+			//MarkAsDeleted();
 			currentTarget = 0;
 		}
 	}
@@ -60,7 +48,10 @@ void Ovni::Update()
 
 void Ovni::OnCollision(const Collider * own, const Collider * other)
 {
-	LOG("OVNI COLLIDED");
+	assert(own == collider);
+	if (other->colliderType == ColliderType::PlayerParticle) {
+		MarkAsDeleted();
+	}
 }
 
 Ovni* Ovni::Clone() const
@@ -70,13 +61,12 @@ Ovni* Ovni::Clone() const
 
 void Ovni::Render()
 {
-	//TODO Implement the part of hasshadow inside enemy
-	if (!toDelete) {
-		Vector3 screen = transform->GetScreenPositionAndDepth();
-		float scale = scalingFactor * transform->GetRenderingScale();
+	Enemy::Render();
+	if (!ToDelete()) {
+		Vector3 screen = GetTransform().GetScreenPositionAndDepth();
+		float scale = scalingFactor * GetTransform().GetRenderingScale();
 		animation.UpdateFrame();
 		graphics.UpdateTexture(animation);
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::BOTTOM_CENTER, screen);
-		App->shadow->DrawShadow(*transform);
 	}
 }

@@ -13,7 +13,6 @@ class Obstacle :
 {
 public:
 	Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, float scalingFactor=1);
-	Obstacle(const Obstacle&);
 	~Obstacle();
 
 	virtual Obstacle* Clone() const override;

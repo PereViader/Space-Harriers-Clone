@@ -98,6 +98,12 @@ float ModuleFloor::GetHorizonDepthForPosition(float yPosition) const
 	return Z_MAX * percentage;
 }
 
+float ModuleFloor::GetHorizonPositionForDepth(float depth) const
+{
+	float percentage = CalculatePercentageOfPositionInFloor(depth);
+	return horizonRenderHeight + (SCREEN_HEIGHT*SCREEN_SIZE - horizonRenderHeight) * percentage;
+}
+
 float ModuleFloor::GetCurrentFloorMovement() const
 {
 	return horizontalSpeedForOutsideUse;

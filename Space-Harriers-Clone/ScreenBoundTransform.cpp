@@ -42,7 +42,7 @@ void ScreenBoundTransform::SetScreenPosition(const Vector3& position)
 
 Vector3 ScreenBoundTransform::GetFloorPositionAndDepth() const
 {
-	return Vector3();
+	return Vector3(position.x, App->floor->GetHorizonPositionForDepth(position.z),position.z);
 }
 
 float ScreenBoundTransform::GetRenderingScale() const

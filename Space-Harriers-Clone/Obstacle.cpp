@@ -20,16 +20,6 @@ Obstacle::Obstacle(const Texture& graphics, const Animation& animation, bool has
 {
 }
 
-Obstacle::Obstacle(const Obstacle & other) :
-	Enemy(other.transform->Clone(), other.hasShadow, other.toDelete),
-	scalingFactor(other.scalingFactor),
-	graphics(other.graphics),
-	animation(other.animation),
-	collider(other.collider)
-{
-}
-
-
 Obstacle::~Obstacle()
 {
 	collider->to_delete = true;
@@ -38,7 +28,7 @@ Obstacle::~Obstacle()
 Obstacle * Obstacle::Clone() const
 {
 	Obstacle* o = new Obstacle(*this);
-	static_cast<FloorBoundTransform*>(o->transform)->ResetPositionToTheHorizon();
+	static_cast<FloorBoundTransform&>(o->GetTransform()).ResetPositionToTheHorizon();
 	return o;
 }
 
@@ -51,13 +41,13 @@ void Obstacle::Update()
 {
 	//Move Obstacle
 	Vector3 movement(App->floor->GetCurrentFloorMovement(), 0, 0);
-	transform->Move(movement);
+	GetTransform().Move(movement);
 
 	//Update collider
-	collider->UpdateValues(*transform);
+	collider->UpdateValues(GetTransform());
 	
-	if (transform->GetFloorPositionAndDepth().z <= 0) {
-		toDelete = true;
+	if (GetTransform().GetFloorPositionAndDepth().z <= 0) {
+		MarkAsDeleted();
 	}
 }
 
@@ -66,19 +56,18 @@ void Obstacle::OnCollision(const Collider * own, const Collider * other)
 	assert(own == collider);
 	LOG("%s", "enemy collided");
 	if (other->colliderType == ColliderType::PlayerParticle) {
-		toDelete = true;
+		MarkAsDeleted();
 	}
 }
 
 void Obstacle::Render()
 {
-	if (!toDelete) {
-		Vector3 screen = transform->GetScreenPositionAndDepth();
-		float scale = scalingFactor * transform->GetRenderingScale();
+	Enemy::Render();
+	if (!ToDelete()) {
+		Vector3 screen = GetTransform().GetScreenPositionAndDepth();
+		float scale = scalingFactor * GetTransform().GetRenderingScale();
 		animation.UpdateFrame();
 		graphics.UpdateTexture(animation);
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::BOTTOM_CENTER, screen);
-		if (hasShadow)
-			App->shadow->DrawShadow(*transform);
 	}
 }
