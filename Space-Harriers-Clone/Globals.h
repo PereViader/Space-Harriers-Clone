@@ -13,7 +13,7 @@ void log(const char file[], int line, const char* format, ...);
 
 enum class update_status
 {
-	UPDATE_CONTINUE = 1,
+	UPDATE_CONTINUE,
 	UPDATE_STOP,
 	UPDATE_ERROR
 };
