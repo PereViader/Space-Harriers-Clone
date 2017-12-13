@@ -4,6 +4,7 @@
 #include "ICollidable.h"
 
 #include "Texture.h"
+#include "ObjectStore.h"
 
 #include <map>
 #include <string>
@@ -28,9 +29,9 @@ public:
 	update_status Update() override;
 	bool CleanUp() override;
 
-	Enemy* InstantiateEnemyByName(string name, map<string, void*> parameters);
+	Enemy* InstantiateEnemyByName(const string& name, map<string, void*> parameters);
 private:
-	const Enemy* GetEnemyPrototypeByName(string name);
+	const Enemy* GetEnemyPrototypeByName(const string& name);
 
 	map<string, Enemy*> enemyPrototypes;
 

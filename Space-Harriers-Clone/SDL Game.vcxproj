@@ -85,6 +85,7 @@
     <ClInclude Include="IDeletable.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="ModuleShadow.h" />
+    <ClInclude Include="ObjectStore.h" />
     <ClInclude Include="Ovni.h" />
     <ClInclude Include="Pivot2D.h" />
     <ClInclude Include="RectUtil.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="ModuleTime.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectStore.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Ovni.cpp" />
     <ClCompile Include="Pivot2D.cpp" />

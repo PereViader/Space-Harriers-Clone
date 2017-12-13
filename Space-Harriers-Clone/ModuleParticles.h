@@ -54,6 +54,7 @@ public:
 	update_status Update(); // draw
 	bool CleanUp();
 
+	void AddParticleByName(const string& name, const Vector3& position);
 	void AddParticle(const Particle& particle, const Vector2& position); // feel free to expand this call
 
 private:

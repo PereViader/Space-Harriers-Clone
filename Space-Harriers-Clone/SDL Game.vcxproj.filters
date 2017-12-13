@@ -147,6 +147,7 @@
     <ClInclude Include="IDeletable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectStore.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -235,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="Ovni.cpp">
       <Filter>Game Modules\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectStore.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -28,7 +28,6 @@ bool ModuleEnemy::Start()
 	treeGraphic = App->textures->Load("rtype/tree.png");
 	rock_bush = App->textures->Load("rtype/rock_bush.png");
 
-
 	Animation treeAnimation;
 	treeAnimation.frames.push_back({ 206,48,44,163 });
 	const float treeScalingFactor = 3.5f;
@@ -108,7 +107,7 @@ bool ModuleEnemy::CleanUp()
 	return true;
 }
 
-Enemy * ModuleEnemy::InstantiateEnemyByName(string name, map<string, void*> parameters)
+Enemy * ModuleEnemy::InstantiateEnemyByName(const string& name, map<string, void*> parameters)
 {
 	const Enemy* prototype = GetEnemyPrototypeByName(name);
 	assert(prototype != nullptr);
@@ -120,8 +119,8 @@ Enemy * ModuleEnemy::InstantiateEnemyByName(string name, map<string, void*> para
 	return instance;
 }
 
-const Enemy* ModuleEnemy::GetEnemyPrototypeByName(string name)
+const Enemy* ModuleEnemy::GetEnemyPrototypeByName(const string& name)
 {
-	map<string, Enemy*>::const_iterator res = enemyPrototypes.find(name);
-	return (res != enemyPrototypes.cend()) ? res->second : nullptr;
+	map<string, Enemy*>::const_iterator it = enemyPrototypes.find(name);
+	return (it != enemyPrototypes.cend()) ? it->second : nullptr;
 }
