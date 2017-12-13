@@ -1,12 +1,13 @@
 #ifndef __MODULETEXTURES_H__
 #define __MODULETEXTURES_H__
 
+#include "Module.h"
+
 #include<map>
 #include <string>
 
-#include "Module.h"
-#include "Globals.h"
-#include "Texture.h"
+class Texture;
+struct SDL_Texture;
 
 using namespace std;
 
@@ -20,7 +21,7 @@ public:
 	bool CleanUp();
 
 	Texture Load(const string& path);
-	void Unload(const Texture& texture);
+	void Unload(Texture& texture);
 
 private:
 	map<string, SDL_Texture*> textures;

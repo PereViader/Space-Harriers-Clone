@@ -95,7 +95,7 @@ Texture ModuleTextures::Load(const string& path)
 }
 
 // Free texture from memory
-void ModuleTextures::Unload(const Texture& texture)
+void ModuleTextures::Unload(Texture& texture)
 {
 	map<SDL_Texture*, unsigned int>::iterator it0 = textureUsage.find(texture.GetTexture());
 	assert(it0 != textureUsage.end());
@@ -117,5 +117,6 @@ void ModuleTextures::Unload(const Texture& texture)
 
 			SDL_DestroyTexture(texture.GetTexture());
 		}
+		texture = Texture();
 	}
 }
