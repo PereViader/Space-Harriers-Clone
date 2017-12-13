@@ -6,12 +6,11 @@
 #include "ModuleInput.h"
 #include "ModuleParticles.h"
 #include "ModuleRender.h"
-#include "ModuleCollision.h"
-#include "ModuleFadeToBlack.h"
 #include "ModuleTime.h"
 #include "ModuleCollision.h"
+#include "Collider.h"
 
-#include "Vector2.h"
+#include "Vector3.h"
 
 
 #include <iostream>
@@ -103,13 +102,13 @@ void ModulePlayer::UpdateAnimation()
 
 void ModulePlayer::ShootLaser()
 {
-	Vector2 screen = transform.GetScreenPositionAndDepth();
+	Vector3 screen = transform.GetScreenPositionAndDepth();
 
 	// correct position to shoot from the gun
 	screen.x += 15;
 	screen.y -= 120;
 
-	App->particles->AddParticle(App->particles->playerParticlePrototype, screen );
+	App->particles->AddParticleByName("player", screen);
 }
 
 void ModulePlayer::MovePlayer()

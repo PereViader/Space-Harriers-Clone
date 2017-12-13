@@ -7,6 +7,7 @@
 #include "RectUtil.h"
 #include "ModuleCollision.h"
 #include "ModuleShadow.h"
+#include "Collider.h"
 #include "FloorBoundTransform.h"
 
 #include <assert.h>

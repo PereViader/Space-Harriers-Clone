@@ -1,8 +1,10 @@
+#include "ModuleCollision.h"
+
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
-#include "ModuleCollision.h"
+#include "Collider.h"
 
 #include <assert.h>
 
@@ -79,7 +81,7 @@ bool ModuleCollision::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner)
+Collider* ModuleCollision::AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner)
 {
 	Collider* ret = CreateCollider(colliderType,size,pivot, owner);
 
@@ -88,7 +90,7 @@ Collider* ModuleCollision::AddCollider(ColliderType colliderType, const Size2D& 
 	return ret;
 }
 
-Collider * ModuleCollision::AddPrototypeCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner)
+Collider * ModuleCollision::AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner)
 {
 	Collider* ret = CreateCollider(colliderType, size, pivot, owner);
 
@@ -97,7 +99,7 @@ Collider * ModuleCollision::AddPrototypeCollider(ColliderType colliderType, cons
 	return ret;
 }
 
-Collider * ModuleCollision::CreateCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) const {
+Collider * ModuleCollision::CreateCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) const {
 	return new Collider(colliderType,size,pivot, owner);
 }
 
@@ -108,17 +110,4 @@ Collider * ModuleCollision::RegisterPrototypeInstance(Collider * prototype, ICol
 	ret->owner = owner;
 	colliders.push_back(ret);
 	return ret;
-}
-
-
-
-// -----------------------------------------------------
-
-inline bool DoColliderLayersCollide(const Collider& a, const Collider& b) {
-	return collisionMatrix[static_cast<int>(a.colliderType)][static_cast<int>(b.colliderType)];
-}
-
-bool Collider::CheckCollision(const Collider& r) const
-{
-	return DoColliderLayersCollide(*this, r) && abs(position.z - r.position.z) <= 1 && SDL_HasIntersection(&this->rect, &r.rect);
 }

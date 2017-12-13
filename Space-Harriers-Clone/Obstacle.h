@@ -6,7 +6,7 @@
 #include "Animation.h"
 #include "Texture.h"
 
-struct Collider;
+class Collider;
 
 class Obstacle :
 	public Enemy

@@ -4,7 +4,6 @@
 #include "ICollidable.h"
 
 #include "Texture.h"
-#include "ObjectStore.h"
 
 #include <map>
 #include <string>

@@ -42,7 +42,7 @@ bool ModuleEnemy::Start()
 	const float rockScalingFactor = 3;
 	Obstacle * rock = new Obstacle(rock_bush, rockAnimation, true, rockScalingFactor);
 	Size2D rockSize(59 * rockScalingFactor, 37 * rockScalingFactor);
-	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize , Pivot2D::BOTTOM_CENTER, rock);
+	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, rock);
 	enemyPrototypes["rock"] = rock;
 
 

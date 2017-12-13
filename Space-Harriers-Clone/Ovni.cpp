@@ -7,6 +7,7 @@
 #include "Pivot2D.h"
 #include "ModuleShadow.h"
 #include "ModuleCollision.h"
+#include "Collider.h"
 
 Ovni::Ovni(const Vector3 startingPosition, float speed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, float scalingFactor) :
 	Enemy(new ScreenBoundTransform(startingPosition),true),

@@ -1,6 +1,6 @@
 #pragma once
 
-struct Collider;
+class Collider;
 
 class ICollidable {
 public:

@@ -4,7 +4,7 @@
 #include "Globals.h"
 
 class Application;
-struct Collider;
+class Collider;
 
 class Module
 {

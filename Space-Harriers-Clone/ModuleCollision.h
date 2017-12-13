@@ -14,6 +14,8 @@
 #include "Transform.h"
 #include "ModuleFloor.h"
 
+class Collider;
+
 enum class ColliderType {
 	Enemy = 0,
 	Player = 1,
@@ -30,42 +32,6 @@ static const bool collisionMatrix[4][4] =
 	{1,0,0,0}
 };
 
-struct Collider
-{
-	ColliderType colliderType;
-
-	Size2D size;
-	Pivot2D pivot;
-	Vector3 position;
-
-
-	SDL_Rect rect;
-
-	bool to_delete;
-
-	ICollidable* owner;
-
-	Collider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) :
-		colliderType(colliderType),
-		size(size),
-		pivot(pivot),
-		rect({0,0,static_cast<int>(size.width),static_cast<int>(size.height)}),
-		to_delete(false),
-		owner(owner),
-		position(-1,-1,-1)
-	{
-	}
-
-	void UpdateValues(const Transform& transform) {
-		position = transform.GetScreenPositionAndDepth();
-		float scale = transform.GetRenderingScale();
-		Size2D currentSize(size.width*scale, size.height*scale);
-		rect = GetRectInPositionWithPivot(position,currentSize,pivot);
-	}
-
-	bool CheckCollision(const Collider& r) const;
-};
-
 class ModuleCollision : public Module
 {
 public:
@@ -78,8 +44,8 @@ public:
 
 	bool CleanUp();
 
-	Collider* AddCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
-	Collider* AddPrototypeCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
+	Collider* AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
+	Collider* AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
 
 	Collider* RegisterPrototypeInstance(Collider* prototype, ICollidable * owner);
 
@@ -92,7 +58,7 @@ private:
 	bool debug = false;
 
 private:
-	Collider * CreateCollider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) const;
+	Collider * CreateCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) const;
 };
 
 #endif // __ModuleCollision_H__

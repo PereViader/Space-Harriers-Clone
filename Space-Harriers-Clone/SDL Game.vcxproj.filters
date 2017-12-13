@@ -26,6 +26,12 @@
     <Filter Include="Interfaces">
       <UniqueIdentifier>{bde14a8e-04c5-4214-8e6f-a42928a4cd3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Modules\Particles">
+      <UniqueIdentifier>{80ce35aa-3559-4277-ba6f-cf193b0c52d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Modules\Collision">
+      <UniqueIdentifier>{9ded952c-6e27-41a5-be78-2fa16b7621de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -67,12 +73,6 @@
     <ClInclude Include="MemLeaks.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleParticles.h">
-      <Filter>Core Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleCollision.h">
-      <Filter>Core Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleSceneIntro.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
@@ -95,9 +95,6 @@
       <Filter>Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleStage.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleEnemy.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -147,7 +144,21 @@
     <ClInclude Include="IDeletable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectStore.h" />
+    <ClInclude Include="Particle.h">
+      <Filter>Game Modules\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEnemy.h">
+      <Filter>Game Modules\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleParticles.h">
+      <Filter>Game Modules\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollision.h">
+      <Filter>Game Modules\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Game Modules\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -180,12 +191,6 @@
     <ClCompile Include="ModuleInput.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleParticles.cpp">
-      <Filter>Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleCollision.cpp">
-      <Filter>Core Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleSceneIntro.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
@@ -208,9 +213,6 @@
       <Filter>Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleStage.cpp">
-      <Filter>Game Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleEnemy.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
@@ -237,8 +239,20 @@
     <ClCompile Include="Ovni.cpp">
       <Filter>Game Modules\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectStore.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Game Modules\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEnemy.cpp">
+      <Filter>Game Modules\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleParticles.cpp">
+      <Filter>Game Modules\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCollision.cpp">
+      <Filter>Game Modules\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Game Modules\Collision</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

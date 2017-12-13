@@ -1,5 +1,5 @@
-#include <math.h>
 #include "ModuleParticles.h"
+
 #include "Application.h"
 #include "ModuleAudio.h"
 #include "ModuleTextures.h"
@@ -8,7 +8,10 @@
 #include "ModuleTime.h"
 #include "RectUtil.h"
 #include "ModuleFloor.h"
+#include "Particle.h"
+#include "Collider.h"
 
+#include <math.h>
 #include "SDL/include/SDL_timer.h"
 
 ModuleParticles::ModuleParticles()
@@ -22,11 +25,13 @@ bool ModuleParticles::Start()
 	LOG("Loading particles");
 	graphics = App->textures->Load("rtype/bullets.png");
 
-	playerParticlePrototype.anim.frames.push_back({ 3,2,87,56 });
-	playerParticlePrototype.sfxId = App->audio->LoadFx("rtype/Laser1.wav");
-	playerParticlePrototype.velocity.z = 35;
-	playerParticlePrototype.velocity.x = 3;
-	playerParticlePrototype.collider = App->collision->AddPrototypeCollider(ColliderType::PlayerParticle,Size2D(87,56),Pivot2D::MIDDLE_CENTER,&playerParticlePrototype);
+	Particle* playerParticlePrototype = new Particle();
+	playerParticlePrototype->anim.frames.push_back({ 3,2,87,56 });
+	playerParticlePrototype->sfxId = App->audio->LoadFx("rtype/Laser1.wav");
+	playerParticlePrototype->velocity.z = 35;
+	playerParticlePrototype->velocity.x = 3;
+	playerParticlePrototype->collider = App->collision->AddPrototypeCollider(ColliderType::PlayerParticle,Size2D(87,56),Pivot2D::MIDDLE_CENTER,playerParticlePrototype);
+	particlePrototypes["player"] = playerParticlePrototype;
 
 	return true;
 }
@@ -40,6 +45,9 @@ bool ModuleParticles::CleanUp()
 		RELEASE(*it);
 
 	active.clear();
+
+	for (map<string, Particle*>::iterator it = particlePrototypes.begin(); it != particlePrototypes.end(); ++it)
+		RELEASE(it->second);
 
 	return true;
 }
@@ -85,61 +93,18 @@ update_status ModuleParticles::Update()
 	return update_status::UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, const Vector2& position)
+void ModuleParticles::AddParticleByName(const string & name, const Vector3 & position)
 {
-	Particle * instance = particle.Clone();
+	const Particle * prototype = GetParticlePrototypeByName(name);
+	assert(prototype != nullptr);
+	Particle * instance = prototype->Clone();
 	instance->transform.SetScreenPosition(position);
 	instance->collider = App->collision->RegisterPrototypeInstance(instance->collider, instance);
 	this->active.push_back(instance);
 }
 
-// -------------------------------------------------------------
-// -------------------------------------------------------------
-
-Particle::Particle() :
-	to_delete(false),
-	isFirstFrame(true),
-	velocity(Vector3()),
-	collider(nullptr)
-{}
-
-Particle::Particle(const Particle& p) : 
-	to_delete(p.to_delete),
-	isFirstFrame(p.isFirstFrame),
-	anim(p.anim), 
-	sfxId(p.sfxId),
-	velocity(p.velocity),
-	collider(p.collider)
+const Particle * ModuleParticles::GetParticlePrototypeByName(const string & name) const
 {
-}
-
-Particle::~Particle()
-{
-	collider->to_delete = true;
-}
-
-void Particle::Update()
-{
-	MoveParticle();
-
-	collider->UpdateValues(transform);
-	float depth = transform.GetScreenPositionAndDepth().z;
-	to_delete = depth > Z_MAX || depth < 0;
-}
-
-void Particle::MoveParticle()
-{
-	float deltaTime = App->time->GetDeltaTime();
-
-	transform.Move(velocity * deltaTime);
-}
-
-Particle* Particle::Clone() const
-{
-	return new Particle(*this);
-}
-
-void Particle::OnCollision(const Collider * own, const Collider * other)
-{
-	to_delete = true;
+	map<string, Particle*>::const_iterator it = particlePrototypes.find(name);
+	return (it != particlePrototypes.cend()) ? it->second : nullptr;
 }

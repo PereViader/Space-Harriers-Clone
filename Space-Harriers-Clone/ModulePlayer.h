@@ -11,7 +11,7 @@
 #include "ScreenBoundTransform.h"
 #include "Vector2.h"
 
-struct Collider;
+class Collider;
 
 class ModulePlayer : public Module, public ICollidable, public IRenderable
 {

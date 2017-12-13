@@ -75,6 +75,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FloorBoundTransform.h" />
@@ -85,8 +86,8 @@
     <ClInclude Include="IDeletable.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="ModuleShadow.h" />
-    <ClInclude Include="ObjectStore.h" />
     <ClInclude Include="Ovni.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="Pivot2D.h" />
     <ClInclude Include="RectUtil.h" />
     <ClInclude Include="MemLeaks.h" />
@@ -118,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="FloorBoundTransform.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -140,9 +142,9 @@
     <ClCompile Include="ModuleTime.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="ObjectStore.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Ovni.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Pivot2D.cpp" />
     <ClCompile Include="ScreenBoundTransform.cpp" />
     <ClCompile Include="Vector2.cpp" />
