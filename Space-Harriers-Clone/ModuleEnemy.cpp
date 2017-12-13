@@ -9,14 +9,12 @@
 #include "ModuleCollision.h"
 
 
-
 ModuleEnemy::ModuleEnemy(bool enabled) :
 	Module(enabled)
 {
 	//TODO finish method
 
 }
-
 
 ModuleEnemy::~ModuleEnemy()
 {

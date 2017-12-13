@@ -4,15 +4,10 @@
 #include "ModuleAudio.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
-#include "ModuleCollision.h"
-#include "ModuleTime.h"
-#include "RectUtil.h"
-#include "ModuleFloor.h"
 #include "Particle.h"
 #include "Collider.h"
 
 #include <math.h>
-#include "SDL/include/SDL_timer.h"
 
 ModuleParticles::ModuleParticles()
 {}
