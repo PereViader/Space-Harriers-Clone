@@ -87,6 +87,7 @@ bool ModuleRender::BlitZBuffer(const Texture& texture, SDL_Rect * screen, float 
 
 bool ModuleRender::BlitWithPivotScaledZBuffer(const Texture& texture, float scale, const Pivot2D& pivot, const Vector3& position)
 {
+	assert(texture != Texture());
 	Size2D size(scale * texture.GetSection().w, scale * texture.GetSection().h);
 	SDL_Rect rectForPivot = GetRectInPositionWithPivot(position,size,pivot);
 	BlitZBuffer(texture, &rectForPivot, position.z);
@@ -95,6 +96,7 @@ bool ModuleRender::BlitWithPivotScaledZBuffer(const Texture& texture, float scal
 
 bool ModuleRender::BlitWithPivotScaled(const Texture& texture, float scale, const Pivot2D& pivot, const Vector2& position)
 {
+	assert(texture != Texture());
 	Size2D size(scale * texture.GetSection().w, scale * texture.GetSection().h);
 	SDL_Rect rectForPivot = GetRectInPositionWithPivot(position,size,pivot);
 	DirectBlit(texture, &rectForPivot);
@@ -103,6 +105,7 @@ bool ModuleRender::BlitWithPivotScaled(const Texture& texture, float scale, cons
 
 bool ModuleRender::DirectBlit(const Texture& texture, SDL_Rect* destiny)
 {
+	assert(texture != Texture());
 	bool ret = true;
 	if (SDL_RenderCopy(renderer, texture.GetTexture(), &texture.GetSection(), destiny) != 0)
 	{
