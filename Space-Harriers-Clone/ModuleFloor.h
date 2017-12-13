@@ -34,7 +34,7 @@ public:
 
 public:
 	//Horizon
-	static const int HORIZON_MAX_HEIGHT = static_cast<int>(SCREEN_HEIGHT / 2.0f);
+	static const int HORIZON_MAX_HEIGHT = SCREEN_HEIGHT / 2;
 	static const int HORIZON_MIN_HEIGHT = SCREEN_HEIGHT - 50;
 
 
