@@ -4,6 +4,8 @@
 #include "FloorBoundTransform.h"
 #include "Texture.h"
 
+#define Z_MAX 25
+
 class ModuleFloor :
 	public Module
 {
