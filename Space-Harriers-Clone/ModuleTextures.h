@@ -3,7 +3,7 @@
 
 #include "Module.h"
 
-#include<map>
+#include <map>
 #include <string>
 
 class Texture;

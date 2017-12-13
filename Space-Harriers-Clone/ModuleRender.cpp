@@ -1,10 +1,12 @@
-#include "Globals.h"
-#include "Application.h"
 #include "ModuleRender.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "RectUtil.h"
+
 #include "SDL/include/SDL.h"
+
+#include "Application.h"
+#include "ModuleWindow.h"
+
+#include "RectUtil.h"
+#include <assert.h>
 
 #include "Pivot2D.h"
 #include "Size2D.h"
@@ -77,6 +79,7 @@ bool ModuleRender::CleanUp()
 
 bool ModuleRender::BlitZBuffer(const Texture& texture, SDL_Rect * screen, float z)
 {
+	assert(texture != Texture());
 	ZElement zElement(texture,*screen,z);
 	zBuffer.push(zElement);
 	return true;

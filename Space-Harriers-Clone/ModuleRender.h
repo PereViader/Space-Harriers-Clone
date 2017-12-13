@@ -2,7 +2,6 @@
 #define __MODULERENDER_H__
 
 #include "Module.h"
-#include "Globals.h"
 #include "Texture.h"
 
 #include <queue>
@@ -53,6 +52,7 @@ private:
 			zValue(zValue)
 		{
 		}
+		
 
 		Texture texture;
 		SDL_Rect screen;

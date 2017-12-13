@@ -48,3 +48,16 @@ private:
 	SDL_Texture* texture;
 	SDL_Rect section;
 };
+
+inline bool operator==(const SDL_Rect& a, const SDL_Rect& b)
+{
+	return a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h;
+}
+
+inline bool operator==(const Texture& lhs, const Texture& rhs) {
+	return lhs.GetTexture() == rhs.GetTexture() && lhs.GetSection() == rhs.GetSection();
+}
+
+inline bool operator!=(const Texture& lhs, const Texture& rhs) {
+	return !operator==(lhs, rhs);
+}
