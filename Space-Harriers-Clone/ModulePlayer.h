@@ -25,14 +25,15 @@ public:
 
 	virtual void Render() override;
 
+	Transform& GetTransform() { return transform; }
 	Vector2 GetNormalizedPosition() const;
+	Vector3 GetChestPosition() const;
 
 	// Inherited via ICollidable
 	virtual void OnCollision(const Collider * own, const Collider * other) override;
 
 public:
 	bool destroyed = false;
-	ScreenBoundTransform transform;
 
 private:
 	static const float PLAYER_SPEED;
@@ -50,6 +51,7 @@ private:
 
 	static const float RENDER_SCALE;
 
+	ScreenBoundTransform transform;
 
 	Texture graphics;
 
@@ -66,12 +68,10 @@ private:
 
 	Collider* collider;
 
-
 private:
 	void ShootLaser();
 	void MovePlayer();
 	void UpdateAnimation();
-
 };
 
 #endif

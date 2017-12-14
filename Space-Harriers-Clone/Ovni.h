@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ class Ovni :
 	public Enemy
 {
 public:
-	Ovni(const Vector3 startingPosition, float speed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, float scalingFactor = 1);
+	Ovni(const Vector3 startingPosition, float speed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor = 1);
 	~Ovni();
 
 	virtual void Init(map<string, void*> values);
@@ -29,13 +30,16 @@ public:
 	Collider* collider;
 
 private:
+	static const int PARTICLE_SPEED;
+
 	Texture graphics;
 	Animation animation;
 	float scalingFactor;
 
 	int currentTarget;
 	vector<Vector3> path;
+	set<unsigned int> particleSpawnsIndex;
 
-	float speed;	
+	float speed;
 };
 

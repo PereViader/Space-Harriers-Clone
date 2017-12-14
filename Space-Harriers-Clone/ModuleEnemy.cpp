@@ -51,7 +51,9 @@ bool ModuleEnemy::Start()
 	path.push_back(Vector3(0, SCREEN_HEIGHT,15));
 	path.push_back(Vector3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 15));
 
-	Ovni * ovni = new Ovni(startOvni, 700, rock_bush, rockAnimation, path, rockScalingFactor);
+	set<unsigned int> particleSpawns;
+	particleSpawns.insert(1);
+	Ovni * ovni = new Ovni(startOvni, 700, rock_bush, rockAnimation, path, particleSpawns, rockScalingFactor);
 	ovni->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, ovni);
 	enemyPrototypes["ovni"] = ovni;
 

@@ -32,7 +32,7 @@ public:
 	update_status Update(); // draw
 	bool CleanUp();
 
-	void AddParticleByName(const string& name, const Vector3& position);
+	void AddParticleByName(const string& name, const Vector3& position, const Vector3& velocity);
 
 private:
 	Texture graphics;

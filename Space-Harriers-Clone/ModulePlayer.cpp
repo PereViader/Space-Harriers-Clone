@@ -108,7 +108,8 @@ void ModulePlayer::ShootLaser()
 	screen.x += 15;
 	screen.y -= 120;
 
-	App->particles->AddParticleByName("player", screen);
+	Vector3 speed(0, 0, 35);
+	App->particles->AddParticleByName("player", screen, speed);
 }
 
 void ModulePlayer::MovePlayer()
@@ -158,6 +159,11 @@ Vector2 ModulePlayer::GetNormalizedPosition() const
 	position.x = (((position.x - MIN_HORIZONTAL_POSITION) / (MAX_HORIZONTAL_POSITION-MIN_HORIZONTAL_POSITION)) - 0.5f ) * 2.0f;
 	position.y = (((position.y - MIN_VERTICAL_POSITION) / (MAX_VERTICAL_POSITION- MIN_VERTICAL_POSITION)) - 0.5f) * 2.0f;
 	return position;
+}
+
+Vector3 ModulePlayer::GetChestPosition() const
+{
+	return transform.GetScreenPositionAndDepth() + Vector3(0,-93);
 }
 
 void ModulePlayer::OnCollision(const Collider * own, const Collider * other)
