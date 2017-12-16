@@ -18,7 +18,7 @@ public:
 public:
 	
 	SDL_Texture* background = nullptr;
-	uint fx = 0;
+	unsigned int fx = 0;
 };
 
 #endif // __MODULESCENEINTRO_H__

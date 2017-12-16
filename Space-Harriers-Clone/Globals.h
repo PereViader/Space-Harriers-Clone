@@ -8,9 +8,6 @@
 
 void log(const char file[], int line, const char* format, ...);
 
-#define MIN( a, b ) ( ((a) < (b)) ? (a) : (b) )
-#define MAX( a, b ) ( ((a) > (b)) ? (a) : (b) )
-
 enum class update_status
 {
 	UPDATE_CONTINUE,
