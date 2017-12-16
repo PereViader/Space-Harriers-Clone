@@ -53,8 +53,13 @@ bool ModuleEnemy::Start()
 
 	set<unsigned int> particleSpawns;
 	particleSpawns.insert(1);
-	Ovni * ovni = new Ovni(startOvni, 700, 500, rock_bush, rockAnimation, path, particleSpawns, rockScalingFactor);
-	ovni->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, *ovni);
+
+	Animation ovniAnimation;
+	ovniAnimation.frames.push_back({ 198,127,46,30 });
+	const float ovniScalingFactor = 3;
+	Size2D ovniSize(46 * ovniScalingFactor, 30 * ovniScalingFactor);
+	Ovni * ovni = new Ovni(startOvni, 700, 500, rock_bush, ovniAnimation, path, particleSpawns, ovniScalingFactor);
+	ovni->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, ovniSize, Pivot2D::BOTTOM_CENTER, *ovni);
 	enemyPrototypes["ovni"] = ovni;
 
 	return true;
