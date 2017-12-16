@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Module.h"
+
 class ModuleTime :
 	public Module
 {
@@ -15,4 +17,3 @@ private:
 	float currentDeltaTime;
 	Uint32 previousTicks;
 };
-
