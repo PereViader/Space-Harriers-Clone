@@ -51,6 +51,9 @@ private:
 
 	static const float RENDER_SCALE;
 
+	static const Vector3 PLAYER_PARTICLE_VELOCITY;
+
+
 	ScreenBoundTransform transform;
 
 	Texture graphics;

@@ -34,6 +34,8 @@ const float ModulePlayer::TRANSITION_RIGHT = 0.6f;
 
 const float ModulePlayer::RENDER_SCALE = 4.0f;
 
+const Vector3 ModulePlayer::PLAYER_PARTICLE_VELOCITY(0, 90, 1000);
+
 
 ModulePlayer::ModulePlayer(bool active) : 
 	Module(active),
@@ -108,8 +110,7 @@ void ModulePlayer::ShootLaser()
 	screen.x += 15;
 	screen.y -= 120;
 
-	Vector3 speed(0, 0, 500);
-	App->particles->AddParticleByName("player", screen, speed);
+	App->particles->AddParticleByName("player", screen, PLAYER_PARTICLE_VELOCITY);
 }
 
 void ModulePlayer::MovePlayer()
