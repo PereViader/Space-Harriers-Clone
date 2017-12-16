@@ -4,10 +4,10 @@
 #include "Obstacle.h"
 #include "Ovni.h"
 
-#include "Assert.h"
 #include "ModuleTextures.h"
 #include "ModuleCollision.h"
 
+#include <assert.h>
 
 ModuleEnemy::ModuleEnemy(bool enabled) :
 	Module(enabled)
