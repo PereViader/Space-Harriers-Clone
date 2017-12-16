@@ -16,7 +16,7 @@ class Ovni :
 	public Enemy
 {
 public:
-	Ovni(const Vector3 startingPosition, float speed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor = 1);
+	Ovni(const Vector3 startingPosition, float speed, float particleSpeed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor = 1);
 	~Ovni();
 
 	virtual void Init(map<string, void*> values) override;
@@ -30,7 +30,6 @@ public:
 	Collider* collider;
 
 private:
-	static const float PARTICLE_SPEED;
 
 	Texture graphics;
 	Animation animation;
@@ -41,5 +40,6 @@ private:
 	set<unsigned int> particleSpawnsIndex;
 
 	float speed;
+	float particleSpeed;
 };
 

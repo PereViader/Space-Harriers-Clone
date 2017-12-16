@@ -12,12 +12,11 @@
 #include "Transform.h"
 #include "ModulePlayer.h"
 
-const float Ovni::PARTICLE_SPEED = 500;
-
-Ovni::Ovni(const Vector3 startingPosition, float speed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor) :
+Ovni::Ovni(const Vector3 startingPosition, float speed, float particleSpeed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor) :
 	Enemy(new ScreenBoundTransform(startingPosition),true),
 	collider(nullptr),
 	speed(speed),
+	particleSpeed(particleSpeed),
 	graphics(texture),
 	animation(animation),
 	scalingFactor(scalingFactor),
@@ -47,7 +46,7 @@ void Ovni::Update()
 	if (newPosition == path[currentTarget]) {
 		if (particleSpawnsIndex.count(currentTarget)) {
 			Vector3 velocity = App->player->GetChestPosition() - path[currentTarget];
-			velocity = velocity.Normalized() * PARTICLE_SPEED;
+			velocity = velocity.Normalized() * particleSpeed;
 			App->particles->AddParticleByName("ovni", path[currentTarget], velocity);
 		}
 		currentTarget += 1;
