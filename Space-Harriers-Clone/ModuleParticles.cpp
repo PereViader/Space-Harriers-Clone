@@ -56,7 +56,7 @@ update_status ModuleParticles::PreUpdate()
 {
 	for (list<Particle*>::iterator it = active.begin(); it != active.end();)
 	{
-		if ((*it)->to_delete)
+		if ((*it)->ToDelete())
 		{
 			RELEASE(*it);
 			it = active.erase(it);

@@ -4,14 +4,12 @@
 #include "ModuleFloor.h"
 
 Particle::Particle() :
-	to_delete(false),
 	isFirstFrame(true),
 	velocity(Vector3()),
 	collider(nullptr)
 {}
 
 Particle::Particle(const Particle& p) :
-	to_delete(p.to_delete),
 	isFirstFrame(p.isFirstFrame),
 	anim(p.anim),
 	sfxId(p.sfxId),
@@ -31,7 +29,7 @@ void Particle::Update()
 
 	collider->UpdateValues(transform);
 	float depth = transform.GetScreenPositionAndDepth().z;
-	to_delete = depth > Z_MAX || depth < 0;
+	SetDeleted(depth > Z_MAX || depth < 0);
 }
 
 void Particle::MoveParticle()
@@ -48,5 +46,5 @@ Particle* Particle::Clone() const
 
 void Particle::OnCollision(const Collider& own, const Collider& other)
 {
-	to_delete = true;
+	MarkAsDeleted();
 }

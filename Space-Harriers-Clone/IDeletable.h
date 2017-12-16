@@ -12,6 +12,10 @@ public:
 		toDelete = true;
 	}
 
+	void SetDeleted(bool state) {
+		toDelete = state;
+	}
+
 private:
 	bool toDelete;
 };

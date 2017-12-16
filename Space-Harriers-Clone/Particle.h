@@ -2,6 +2,7 @@
 
 #include "ICollidable.h"
 #include "IClonable.h"
+#include "IDeletable.h"
 
 #include "Animation.h"
 #include "Vector3.h"
@@ -10,10 +11,9 @@
 class Collider;
 
 class Particle :
-	public ICollidable, public IClonable<Particle*>
+	public ICollidable, public IClonable<Particle*>, public IDeletable
 {
 public:
-	bool to_delete;
 	bool isFirstFrame;
 
 	Animation anim;
