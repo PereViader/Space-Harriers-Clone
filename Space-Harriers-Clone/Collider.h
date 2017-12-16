@@ -1,11 +1,17 @@
 #pragma once
 
+#include "Vector3.h"
+#include "Size2D.h"
+#include "Pivot2D.h"
 #include "ModuleCollision.h"
+
+enum class ColliderType;
+class ICollidable;
 
 class Collider
 {
 public:
-	Collider(ColliderType colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner);
+	Collider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner);
 
 	void UpdateValues(const Transform& transform);
 

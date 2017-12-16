@@ -1,6 +1,12 @@
 #include "Collider.h"
 
-Collider::Collider(ColliderType colliderType, const Size2D & size, const Pivot2D & pivot, ICollidable & owner) :
+#include "ModuleCollision.h"
+#include "Size2D.h"
+#include "Pivot2D.h"
+#include "Vector3.h"
+#include "Transform.h"
+
+Collider::Collider(const ColliderType& colliderType, const Size2D & size, const Pivot2D & pivot, ICollidable & owner) :
 	colliderType(colliderType),
 	size(size),
 	pivot(pivot),

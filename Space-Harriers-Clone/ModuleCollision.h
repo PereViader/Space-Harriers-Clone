@@ -3,16 +3,16 @@
 
 #include "Module.h"
 
-#include "ICollidable.h"
 #include "RectUtil.h"
-#include "Vector3.h"
-#include "Size2D.h"
-#include "Pivot2D.h"
-#include "Transform.h"
-#include "ModuleFloor.h"
 
 #include <assert.h>
 #include<list>
+
+class Vector3;
+class Size2D;
+class Pivot2D;
+class Transform;
+class ICollidable;
 
 class Collider;
 
