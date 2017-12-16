@@ -31,7 +31,7 @@ public:
 
 	void Update();
 
-	virtual void OnCollision(const Collider * own, const Collider * other) override;
+	virtual void OnCollision(const Collider& own, const Collider& other) override;
 	virtual Particle* Clone() const override;
 private:
 	void MoveParticle();

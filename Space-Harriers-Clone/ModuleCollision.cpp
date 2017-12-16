@@ -38,32 +38,46 @@ update_status ModuleCollision::PreUpdate()
 
 update_status ModuleCollision::Update()
 {
-	for (list<Collider*>::const_iterator it0 = colliders.cbegin(), end = colliders.cend(); it0 != end; it0++)
-		for (list<Collider*>::const_iterator it1 = next(it0, 1); it1 != end; it1++) {
-			assert((*it0)->to_delete == false);
-			assert((*it1)->to_delete == false);
-
-			if ((*it0)->CheckCollision(**it1)) {
-				(*it0)->owner->OnCollision(*it0, *it1);
-				(*it1)->owner->OnCollision(*it1, *it0);
-			}
-		}
-			
-
-
-	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		debug = !debug;
-
-	if(debug == true)
-		DebugDraw();
+	DoCollisionDetection();
+	DoDebug();
 
 	return update_status::UPDATE_CONTINUE;
 }
 
+void ModuleCollision::DoDebug()
+{
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		debug = !debug;
+
+	if (debug == true)
+		DebugDraw();
+}
+
+void ModuleCollision::DoCollisionDetection()
+{
+	for (list<Collider*>::const_iterator it0 = colliders.cbegin(), end = colliders.cend(); it0 != end; ++it0) {
+		for (list<Collider*>::const_iterator it1 = next(it0, 1); it1 != end; ++it1) {
+			Collider& c0 = **it0;
+			Collider& c1 = **it1;
+
+			assert(!c0.to_delete);
+			assert(!c1.to_delete);
+
+			if (c0.CheckCollision(c1)) {
+				c0.owner->OnCollision(c0, c1);
+				c1.owner->OnCollision(c1, c0);
+			}
+		}
+	}
+}
+
 void ModuleCollision::DebugDraw()
 {
-	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
-		App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
+	for (Collider* c : colliders) {
+		if (!c->to_delete) {
+			App->renderer->DrawQuad(c->rect, 255, 0, 0, 80);
+		}
+	}
 }
 
 bool ModuleCollision::CleanUp()
@@ -103,10 +117,9 @@ Collider * ModuleCollision::CreateCollider(const ColliderType& colliderType, con
 	return new Collider(colliderType,size,pivot, owner);
 }
 
-Collider * ModuleCollision::RegisterPrototypeInstance(Collider * prototype, ICollidable * owner)
+Collider * ModuleCollision::RegisterPrototypeInstance(Collider& prototype, ICollidable * owner)
 {
-	assert(prototype != nullptr);
-	Collider* ret = new Collider(*prototype);
+	Collider* ret = new Collider(prototype);
 	ret->owner = owner;
 	colliders.push_back(ret);
 	return ret;

@@ -45,7 +45,7 @@ Particle* Particle::Clone() const
 	return new Particle(*this);
 }
 
-void Particle::OnCollision(const Collider * own, const Collider * other)
+void Particle::OnCollision(const Collider& own, const Collider& other)
 {
 	to_delete = true;
 }

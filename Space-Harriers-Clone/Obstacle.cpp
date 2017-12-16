@@ -35,7 +35,7 @@ Obstacle * Obstacle::Clone() const
 
 void Obstacle::Init(map<string, void*> parameters)
 {
-	collider = App->collision->RegisterPrototypeInstance(collider, this);
+	collider = App->collision->RegisterPrototypeInstance(*collider, this);
 }
 
 void Obstacle::Update()
@@ -52,11 +52,11 @@ void Obstacle::Update()
 	}
 }
 
-void Obstacle::OnCollision(const Collider * own, const Collider * other)
+void Obstacle::OnCollision(const Collider& own, const Collider& other)
 {
-	assert(own == collider);
+	assert(&own == collider);
 	LOG("%s", "enemy collided");
-	if (other->colliderType == ColliderType::PlayerParticle) {
+	if (other.colliderType == ColliderType::PlayerParticle) {
 		MarkAsDeleted();
 	}
 }

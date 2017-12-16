@@ -12,7 +12,7 @@
 #include "Transform.h"
 #include "ModulePlayer.h"
 
-const int Ovni::PARTICLE_SPEED = 500;
+const float Ovni::PARTICLE_SPEED = 500;
 
 Ovni::Ovni(const Vector3 startingPosition, float speed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor) :
 	Enemy(new ScreenBoundTransform(startingPosition),true),
@@ -34,7 +34,7 @@ Ovni::~Ovni()
 
 void Ovni::Init(map<string, void*> values)
 {
-	collider = App->collision->RegisterPrototypeInstance(collider, this);
+	collider = App->collision->RegisterPrototypeInstance(*collider, this);
 }
 
 void Ovni::Update()
@@ -58,10 +58,10 @@ void Ovni::Update()
 	}
 }
 
-void Ovni::OnCollision(const Collider * own, const Collider * other)
+void Ovni::OnCollision(const Collider& own, const Collider& other)
 {
-	assert(own == collider);
-	if (other->colliderType == ColliderType::PlayerParticle) {
+	assert(&own == collider);
+	if (other.colliderType == ColliderType::PlayerParticle) {
 		MarkAsDeleted();
 	}
 }

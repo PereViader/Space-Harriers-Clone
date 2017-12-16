@@ -99,7 +99,7 @@ void ModuleParticles::AddParticleByName(const string & name, const Vector3 & pos
 	Particle * instance = prototype->Clone();
 	instance->transform.SetScreenPosition(position);
 	instance->velocity = velocity;
-	instance->collider = App->collision->RegisterPrototypeInstance(instance->collider, instance);
+	instance->collider = App->collision->RegisterPrototypeInstance(*instance->collider, instance);
 	this->active.push_back(instance);
 }
 

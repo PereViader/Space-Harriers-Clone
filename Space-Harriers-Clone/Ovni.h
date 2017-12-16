@@ -22,7 +22,7 @@ public:
 	virtual void Init(map<string, void*> values);
 	virtual void Update() override;
 
-	virtual void OnCollision(const Collider * own, const Collider * other) override;
+	virtual void OnCollision(const Collider& own, const Collider& other) override;
 	virtual Ovni* Clone() const override;
 	virtual void Render() override;
 
@@ -30,7 +30,7 @@ public:
 	Collider* collider;
 
 private:
-	static const int PARTICLE_SPEED;
+	static const float PARTICLE_SPEED;
 
 	Texture graphics;
 	Animation animation;

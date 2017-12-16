@@ -42,14 +42,15 @@ public:
 	update_status PreUpdate();
 	update_status Update();
 
+	
+
 	bool CleanUp();
 
 	Collider* AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
 	Collider* AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
 
-	Collider* RegisterPrototypeInstance(Collider* prototype, ICollidable * owner);
+	Collider* RegisterPrototypeInstance(Collider& prototype, ICollidable * owner);
 
-	void DebugDraw();
 
 private:
 
@@ -59,6 +60,10 @@ private:
 
 private:
 	Collider * CreateCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) const;
+
+	void DoCollisionDetection();
+	void DoDebug();
+	void DebugDraw();
 };
 
 #endif // __ModuleCollision_H__

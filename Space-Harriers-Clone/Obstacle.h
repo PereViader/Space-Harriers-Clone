@@ -20,7 +20,7 @@ public:
 
 	virtual void Init(map<string, void*> values) override;
 
-	virtual void OnCollision(const Collider * own, const Collider * other) override;
+	virtual void OnCollision(const Collider& own, const Collider& other) override;
 	virtual void Render() override;
 
 public:

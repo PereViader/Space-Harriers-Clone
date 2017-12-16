@@ -166,7 +166,7 @@ Vector3 ModulePlayer::GetChestPosition() const
 	return transform.GetScreenPositionAndDepth() + Vector3(0,-93);
 }
 
-void ModulePlayer::OnCollision(const Collider * own, const Collider * other)
+void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
 {
 	LOG("%s", "collided player");
 }

@@ -30,7 +30,7 @@ public:
 	Vector3 GetChestPosition() const;
 
 	// Inherited via ICollidable
-	virtual void OnCollision(const Collider * own, const Collider * other) override;
+	virtual void OnCollision(const Collider& own, const Collider& other) override;
 
 public:
 	bool destroyed = false;
