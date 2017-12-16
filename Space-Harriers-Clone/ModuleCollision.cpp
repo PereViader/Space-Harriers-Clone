@@ -25,7 +25,7 @@ update_status ModuleCollision::PreUpdate()
 	// Remove all colliders scheduled for deletion
 	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end();)
 	{
-		if ((*it)->to_delete == true)
+		if ((*it)->ToDelete())
 		{
 			RELEASE(*it);
 			it = colliders.erase(it);
@@ -61,8 +61,8 @@ void ModuleCollision::DoCollisionDetection()
 			Collider& c0 = **it0;
 			Collider& c1 = **it1;
 
-			assert(!c0.to_delete);
-			assert(!c1.to_delete);
+			assert(!c0.ToDelete());
+			assert(!c1.ToDelete());
 
 			if (c0.CheckCollision(c1)) {
 				c0.owner->OnCollision(c0, c1);
@@ -75,7 +75,7 @@ void ModuleCollision::DoCollisionDetection()
 void ModuleCollision::DebugDraw()
 {
 	for (Collider* c : colliders) {
-		if (!c->to_delete) {
+		if (!c->ToDelete()) {
 			App->renderer->DrawQuad(c->rect, 255, 0, 0, 80);
 		}
 	}

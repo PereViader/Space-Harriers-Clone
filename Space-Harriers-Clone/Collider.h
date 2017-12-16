@@ -1,5 +1,7 @@
 #pragma once
 
+#include "IDeletable.h"
+
 #include "Vector3.h"
 #include "Size2D.h"
 #include "Pivot2D.h"
@@ -8,7 +10,8 @@
 enum class ColliderType;
 class ICollidable;
 
-class Collider
+class Collider :
+	public IDeletable
 {
 public:
 	Collider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner);
@@ -24,5 +27,4 @@ public:
 	Vector3 position;
 	ICollidable* owner;
 	SDL_Rect rect;
-	bool to_delete;
 };

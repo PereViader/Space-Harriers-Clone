@@ -20,7 +20,7 @@ Particle::Particle(const Particle& p) :
 
 Particle::~Particle()
 {
-	collider->to_delete = true;
+	collider->MarkAsDeleted();
 }
 
 void Particle::Update()

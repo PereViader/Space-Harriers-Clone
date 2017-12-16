@@ -29,7 +29,7 @@ Ovni::Ovni(const Vector3 startingPosition, float speed, const Texture& texture, 
 
 Ovni::~Ovni()
 {
-	collider->to_delete = true;
+	collider->MarkAsDeleted();
 }
 
 void Ovni::Init(map<string, void*> values)

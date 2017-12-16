@@ -11,7 +11,6 @@ Collider::Collider(const ColliderType& colliderType, const Size2D & size, const 
 	size(size),
 	pivot(pivot),
 	rect({ 0,0,static_cast<int>(size.width),static_cast<int>(size.height) }),
-	to_delete(false),
 	owner(&owner),
 	position(-1, -1, -1)
 {

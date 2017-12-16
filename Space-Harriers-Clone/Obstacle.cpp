@@ -17,7 +17,7 @@ Obstacle::Obstacle(const Texture& graphics, const Animation& animation, bool has
 
 Obstacle::~Obstacle()
 {
-	collider->to_delete = true;
+	collider->MarkAsDeleted();
 }
 
 Obstacle * Obstacle::Clone() const
