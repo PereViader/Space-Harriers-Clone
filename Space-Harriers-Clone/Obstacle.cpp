@@ -2,12 +2,12 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "Collider.h"
-#include "FloorBoundTransform.h"
+#include "FloorAnchoredTransform.h"
 
 #include <assert.h>
 
 Obstacle::Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, float scalingFactor) :
-	Enemy(new FloorBoundTransform(0,0,0), hasShadow),
+	Enemy(new FloorAnchoredTransform(0,0,0), hasShadow),
 	graphics(graphics),
 	animation(animation),
 	collider(nullptr),
@@ -23,7 +23,7 @@ Obstacle::~Obstacle()
 Obstacle * Obstacle::Clone() const
 {
 	Obstacle* o = new Obstacle(*this);
-	static_cast<FloorBoundTransform&>(o->GetTransform()).ResetPositionToTheHorizon();
+	static_cast<FloorAnchoredTransform&>(o->GetTransform()).ResetPositionToTheHorizon();
 	return o;
 }
 

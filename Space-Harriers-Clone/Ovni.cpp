@@ -11,9 +11,10 @@
 #include "Collider.h"
 #include "Transform.h"
 #include "ModulePlayer.h"
+#include "FloorBasedTransform.h"
 
 Ovni::Ovni(const Vector3 startingPosition, float speed, float particleSpeed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor) :
-	Enemy(new ScreenBoundTransform(startingPosition),true),
+	Enemy(new FloorBasedTransform(startingPosition),true),
 	collider(nullptr),
 	speed(speed),
 	particleSpeed(particleSpeed),
@@ -39,8 +40,10 @@ void Ovni::Init(map<string, void*> values)
 void Ovni::Update()
 {
 	float deltaTime = App->time->GetDeltaTime();
-	Vector3 newPosition = MoveTowards(GetTransform().GetScreenPositionAndDepth(), path[currentTarget], speed*deltaTime);
-	static_cast<ScreenBoundTransform&>(GetTransform()).SetScreenPosition(newPosition);
+
+	FloorBasedTransform& transform = static_cast<FloorBasedTransform&>(GetTransform());
+	Vector3 newPosition = MoveTowards(transform.GetPosition(), path[currentTarget], speed*deltaTime);
+	transform.SetPosition(newPosition);
 	collider->UpdateValues(GetTransform());
 
 	if (newPosition == path[currentTarget]) {

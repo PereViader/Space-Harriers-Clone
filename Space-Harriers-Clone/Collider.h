@@ -7,6 +7,7 @@
 #include "Pivot2D.h"
 #include "ModuleCollision.h"
 
+class Transform;
 enum class ColliderType;
 class ICollidable;
 

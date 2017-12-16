@@ -40,7 +40,7 @@ ModulePlayer::ModulePlayer(bool active) :
 	destroyed(false),
 	currentAnimation(&hover_center)
 {
-	transform.SetScreenPosition(Vector2((SCREEN_WIDTH / 2.0f), static_cast<float>(MAX_VERTICAL_POSITION)));
+	transform.SetScreenPosition(Vector2((SCREEN_WIDTH / 2.0f), SCREEN_HEIGHT));
 
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
 	ground_running.frames.push_back({ 25, 4, 20, 47 });
@@ -108,7 +108,7 @@ void ModulePlayer::ShootLaser()
 	screen.x += 15;
 	screen.y -= 120;
 
-	Vector3 speed(0, 0, 35);
+	Vector3 speed(0, 0, 500);
 	App->particles->AddParticleByName("player", screen, speed);
 }
 

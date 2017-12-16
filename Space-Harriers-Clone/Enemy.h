@@ -7,7 +7,7 @@
 
 #include "Application.h"
 #include "ModuleShadow.h"
-#include "Transform.h"
+#include "FloorRelatedTransform.h"
 
 #include <string>
 #include <map>
@@ -19,7 +19,7 @@ class Enemy :
 	public ICollidable, public IClonable<Enemy*>, public IRenderable, public IDeletable
 {
 public:
-	Enemy(Transform * transform, bool hasShadow) :
+	Enemy(FloorRelatedTransform * transform, bool hasShadow) :
 		transform(transform),
 		hasShadow(hasShadow)
 	{}
@@ -44,9 +44,9 @@ public:
 			App->shadow->DrawShadow(*transform);
 	}
 
-	Transform& GetTransform() const { return *transform; }
+	FloorRelatedTransform& GetTransform() const { return *transform; }
 
 private:
-	Transform * transform;
+	FloorRelatedTransform * transform;
 	bool hasShadow;
 };

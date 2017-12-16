@@ -40,11 +40,6 @@ void ScreenBoundTransform::SetScreenPosition(const Vector3& position)
 	this->position = position;
 }
 
-Vector3 ScreenBoundTransform::GetFloorPositionAndDepth() const
-{
-	return Vector3(position.x, App->floor->GetHorizonPositionForDepth(position.z),position.z);
-}
-
 float ScreenBoundTransform::GetRenderingScale() const
 {
 	return CalculatePercentageOfPositionInFloor(position.z);

@@ -3,7 +3,7 @@
 #include "Module.h"
 #include "Texture.h"
 
-class Transform;
+class FloorRelatedTransform;
 
 class ModuleShadow :
 	public Module
@@ -12,7 +12,7 @@ public:
 	ModuleShadow();
 	~ModuleShadow();
 	bool Start() override;
-	void DrawShadow(const Transform&);
+	void DrawShadow(const FloorRelatedTransform&);
 
 	bool CleanUp() override;
 private:

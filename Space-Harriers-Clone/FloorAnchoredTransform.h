@@ -1,19 +1,19 @@
 #pragma once
 
-#include "Transform.h"
+#include "FloorRelatedTransform.h"
 
 #include "Application.h"
 #include "ModuleFloor.h"
 
-class FloorBoundTransform :
-	public Transform
+class FloorAnchoredTransform :
+	public FloorRelatedTransform
 {
 public:
-	FloorBoundTransform(float startingXPositionOffset, float yOffset, float percentageInsideSegment);
-	FloorBoundTransform(const FloorBoundTransform&);
-	FloorBoundTransform(const Transform&);
+	FloorAnchoredTransform(float startingXPositionOffset, float yOffset, float percentageInsideSegment);
+	FloorAnchoredTransform(const FloorAnchoredTransform&);
+	FloorAnchoredTransform(const Transform&);
 
-	~FloorBoundTransform();
+	~FloorAnchoredTransform();
 
 	virtual Vector3 GetScreenPositionAndDepth() const override;
 	virtual Vector3 GetFloorPositionAndDepth() const override;
@@ -21,7 +21,7 @@ public:
 
 	virtual float GetRenderingScale() const override;
 
-	virtual FloorBoundTransform * Clone() const override;
+	virtual FloorAnchoredTransform * Clone() const override;
 
 	void ResetPositionToTheHorizon();
 private:

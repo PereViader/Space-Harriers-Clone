@@ -10,16 +10,15 @@ public:
 	ScreenBoundTransform(const ScreenBoundTransform&);
 	ScreenBoundTransform(const Transform&);
 	ScreenBoundTransform(Vector3 position);
-	~ScreenBoundTransform();
+	virtual ~ScreenBoundTransform();
 
 	virtual Vector3 GetScreenPositionAndDepth() const override;
-	virtual Vector3 GetFloorPositionAndDepth() const override;
 
 	virtual void Move(const Vector3& movement) override;
 
+	virtual ScreenBoundTransform* Clone() const override;
 	virtual float GetRenderingScale() const override;
 
-	virtual ScreenBoundTransform* Clone() const override;
 
 	void SetScreenPosition(const Vector3& position);
 

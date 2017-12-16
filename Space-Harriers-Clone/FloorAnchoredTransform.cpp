@@ -1,8 +1,8 @@
-#include "FloorBoundTransform.h"
+#include "FloorAnchoredTransform.h"
 
 #include <assert.h>
 
-FloorBoundTransform::FloorBoundTransform(float startingXPositionOffset, float yOffset, float percentageInsideSegment) :
+FloorAnchoredTransform::FloorAnchoredTransform(float startingXPositionOffset, float yOffset, float percentageInsideSegment) :
 	xPositionOffset(startingXPositionOffset),
 	percentageInsideSegment(percentageInsideSegment),
 	renderingFloorId(App->floor->GetFurtherHorizontalStripeIndex()),
@@ -11,7 +11,7 @@ FloorBoundTransform::FloorBoundTransform(float startingXPositionOffset, float yO
 {
 }
 
-FloorBoundTransform::FloorBoundTransform(const FloorBoundTransform & o) :
+FloorAnchoredTransform::FloorAnchoredTransform(const FloorAnchoredTransform & o) :
 	xPositionOffset(o.xPositionOffset),
 	percentageInsideSegment(o.percentageInsideSegment),
 	renderingFloorId(o.renderingFloorId),
@@ -20,12 +20,12 @@ FloorBoundTransform::FloorBoundTransform(const FloorBoundTransform & o) :
 {
 }
 
-FloorBoundTransform::FloorBoundTransform(const Transform& t)
+FloorAnchoredTransform::FloorAnchoredTransform(const Transform& t)
 {
 	assert(false); //TODO
 }
 
-FloorBoundTransform::~FloorBoundTransform()
+FloorAnchoredTransform::~FloorAnchoredTransform()
 {
 }
 
@@ -34,7 +34,7 @@ inline float GetScaleForPosition(float screenY)
 	return App->floor->GetHorizonPercentageOfPosition(screenY);
 }
 
-Vector3 FloorBoundTransform::GetScreenPositionAndDepth() const
+Vector3 FloorAnchoredTransform::GetScreenPositionAndDepth() const
 {
 	Vector3 position_scale = GetFloorPositionAndDepth();
 
@@ -44,7 +44,7 @@ Vector3 FloorBoundTransform::GetScreenPositionAndDepth() const
 	return position_scale;
 }
 
-inline Vector3 FloorBoundTransform::GetFloorPositionAndDepth() const
+inline Vector3 FloorAnchoredTransform::GetFloorPositionAndDepth() const
 {
 	Vector3 position_scale;
 
@@ -62,23 +62,23 @@ inline Vector3 FloorBoundTransform::GetFloorPositionAndDepth() const
 	return position_scale;
 }
 
-FloorBoundTransform * FloorBoundTransform::Clone() const
+FloorAnchoredTransform * FloorAnchoredTransform::Clone() const
 {
-	return new FloorBoundTransform(*this);
+	return new FloorAnchoredTransform(*this);
 }
 
-void FloorBoundTransform::ResetPositionToTheHorizon()
+void FloorAnchoredTransform::ResetPositionToTheHorizon()
 {
 	renderingFloorId = App->floor->GetFurtherHorizontalStripeIndex();
 	renderingFloorSegmentCount = App->floor->segmentCount;
 }
 
-bool FloorBoundTransform::IsBoundSegmentPresentOnScreen() const
+bool FloorAnchoredTransform::IsBoundSegmentPresentOnScreen() const
 {
 	return renderingFloorSegmentCount + App->floor->nHorizonQuads > App->floor->segmentCount;
 }
 
-float FloorBoundTransform::GetRenderingScale() const
+float FloorAnchoredTransform::GetRenderingScale() const
 {
 	float scale;
 	if (IsBoundSegmentPresentOnScreen())
@@ -88,7 +88,7 @@ float FloorBoundTransform::GetRenderingScale() const
 	return scale;
 }
 
-void FloorBoundTransform::Move(const Vector3& movement)
+void FloorAnchoredTransform::Move(const Vector3& movement)
 {
 	xPositionOffset += movement.x;
 	yOffset += movement.y;

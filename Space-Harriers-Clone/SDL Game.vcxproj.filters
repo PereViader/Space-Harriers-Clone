@@ -115,9 +115,6 @@
     <ClInclude Include="Transform.h">
       <Filter>Utils\Transforms</Filter>
     </ClInclude>
-    <ClInclude Include="FloorBoundTransform.h">
-      <Filter>Utils\Transforms</Filter>
-    </ClInclude>
     <ClInclude Include="IClonable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -158,6 +155,15 @@
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Game Modules\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorRelatedTransform.h">
+      <Filter>Utils\Transforms</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorAnchoredTransform.h">
+      <Filter>Utils\Transforms</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorBasedTransform.h">
+      <Filter>Utils\Transforms</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,9 +224,6 @@
     <ClCompile Include="Obstacle.cpp">
       <Filter>Game Modules\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="FloorBoundTransform.cpp">
-      <Filter>Utils\Transforms</Filter>
-    </ClCompile>
     <ClCompile Include="ScreenBoundTransform.cpp">
       <Filter>Utils\Transforms</Filter>
     </ClCompile>
@@ -253,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Game Modules\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorAnchoredTransform.cpp">
+      <Filter>Utils\Transforms</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorBasedTransform.cpp">
+      <Filter>Utils\Transforms</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

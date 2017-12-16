@@ -47,9 +47,9 @@ bool ModuleEnemy::Start()
 	Vector3 startOvni(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
 
 	vector<Vector3> path;
-	path.push_back(Vector3(0, SCREEN_HEIGHT / 2.0f));
-	path.push_back(Vector3(0, SCREEN_HEIGHT,15));
-	path.push_back(Vector3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 15));
+	path.push_back(Vector3(SCREEN_WIDTH / 2.0f, 200, 700));
+	path.push_back(Vector3(SCREEN_WIDTH / 2.0f, 200, 0));
+	path.push_back(Vector3(0, 50, 25));
 
 	set<unsigned int> particleSpawns;
 	particleSpawns.insert(1);

@@ -7,7 +7,7 @@
 #include "ModuleRender.h"
 
 #include "Pivot2D.h"
-#include "Transform.h"
+#include "FloorRelatedTransform.h"
 
 
 const float ModuleShadow::SHADOW_SCALE_FACTOR = 5.0f;
@@ -29,7 +29,7 @@ bool ModuleShadow::Start()
 	return true;
 }
 
-void ModuleShadow::DrawShadow(const Transform & t)
+void ModuleShadow::DrawShadow(const FloorRelatedTransform & t)
 {
 	Vector3 screen = t.GetFloorPositionAndDepth();
 	float scale = SHADOW_SCALE_FACTOR * t.GetRenderingScale();

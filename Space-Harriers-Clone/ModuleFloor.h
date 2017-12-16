@@ -1,15 +1,14 @@
 #pragma once
 
 #include "Module.h"
-#include "FloorBoundTransform.h"
 #include "Texture.h"
 
-#define Z_MAX 25
+#define Z_MAX 700
 
 class ModuleFloor :
 	public Module
 {
-	friend class FloorBoundTransform;
+	friend class FloorAnchoredTransform;
 
 public:
 	ModuleFloor(bool enabled);

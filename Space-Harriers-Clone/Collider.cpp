@@ -26,5 +26,5 @@ void Collider::UpdateValues(const Transform & transform)
 
 bool Collider::CheckCollision(const Collider& r) const
 {
-	return DoColliderLayersCollide(colliderType, r.colliderType) && abs(position.z - r.position.z) <= 1 && SDL_HasIntersection(&this->rect, &r.rect);
+	return DoColliderLayersCollide(colliderType, r.colliderType) && abs(position.z - r.position.z) <= 28 && SDL_HasIntersection(&this->rect, &r.rect);
 }
