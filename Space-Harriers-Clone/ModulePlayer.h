@@ -24,13 +24,11 @@ public:
 	virtual bool CleanUp() override;
 
 	virtual void Render() override;
+	virtual void OnCollision(const Collider& own, const Collider& other) override;
 
 	Transform& GetTransform() { return transform; }
 	Vector2 GetNormalizedPosition() const;
 	Vector3 GetChestPosition() const;
-
-	// Inherited via ICollidable
-	virtual void OnCollision(const Collider& own, const Collider& other) override;
 
 public:
 	bool destroyed = false;
