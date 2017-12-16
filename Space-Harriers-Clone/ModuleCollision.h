@@ -1,18 +1,18 @@
 #ifndef __ModuleCollision_H__
 #define __ModuleCollision_H__
 
-#include<list>
 #include "Module.h"
+
 #include "ICollidable.h"
 #include "RectUtil.h"
-#include <assert.h>
-
-
 #include "Vector3.h"
 #include "Size2D.h"
 #include "Pivot2D.h"
 #include "Transform.h"
 #include "ModuleFloor.h"
+
+#include <assert.h>
+#include<list>
 
 class Collider;
 
@@ -24,13 +24,17 @@ enum class ColliderType {
 	
 };
 
-static const bool collisionMatrix[4][4] =
+static const bool COLLISION_MATRIX[4][4] =
 {
-	{0,1,0,1},
-	{1,0,1,0},
-	{0,1,0,0},
-	{1,0,0,0}
+	{ 0,1,0,1 },
+	{ 1,0,1,0 },
+	{ 0,1,0,0 },
+	{ 1,0,0,0 }
 };
+
+inline bool DoColliderLayersCollide(const ColliderType& a, const ColliderType& b) {
+	return COLLISION_MATRIX[static_cast<int>(a)][static_cast<int>(b)];
+}
 
 class ModuleCollision : public Module
 {
@@ -46,10 +50,9 @@ public:
 
 	bool CleanUp();
 
-	Collider* AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
-	Collider* AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner);
-
-	Collider* RegisterPrototypeInstance(Collider& prototype, ICollidable * owner);
+	Collider* AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner);
+	Collider* AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner);
+	Collider* RegisterPrototypeInstance(const Collider & prototype, ICollidable& owner);
 
 
 private:
@@ -58,8 +61,10 @@ private:
 	std::list<Collider*> prototypes;
 	bool debug = false;
 
+	
+
 private:
-	Collider * CreateCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable* owner) const;
+	Collider * CreateCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner) const;
 
 	void DoCollisionDetection();
 	void DoDebug();

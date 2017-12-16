@@ -34,7 +34,7 @@ Ovni::~Ovni()
 
 void Ovni::Init(map<string, void*> values)
 {
-	collider = App->collision->RegisterPrototypeInstance(*collider, this);
+	collider = App->collision->RegisterPrototypeInstance(*collider, *this);
 }
 
 void Ovni::Update()
@@ -60,7 +60,7 @@ void Ovni::Update()
 
 void Ovni::OnCollision(const Collider& own, const Collider& other)
 {
-	assert(&own == collider);
+	assert(&own == static_cast<const Collider*>(collider));
 	if (other.colliderType == ColliderType::PlayerParticle) {
 		MarkAsDeleted();
 	}

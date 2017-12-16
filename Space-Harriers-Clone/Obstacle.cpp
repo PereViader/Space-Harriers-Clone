@@ -35,7 +35,7 @@ Obstacle * Obstacle::Clone() const
 
 void Obstacle::Init(map<string, void*> parameters)
 {
-	collider = App->collision->RegisterPrototypeInstance(*collider, this);
+	collider = App->collision->RegisterPrototypeInstance(*collider, *this);
 }
 
 void Obstacle::Update()

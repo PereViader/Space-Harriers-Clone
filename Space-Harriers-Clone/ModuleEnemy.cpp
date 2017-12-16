@@ -31,7 +31,7 @@ bool ModuleEnemy::Start()
 	const float treeScalingFactor = 3.5f;
 	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false,treeScalingFactor);
 	Size2D treeSize(44 * treeScalingFactor, 163 * treeScalingFactor);
-	tree->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy,treeSize, Pivot2D::BOTTOM_CENTER,tree);
+	tree->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy,treeSize, Pivot2D::BOTTOM_CENTER,*tree);
 	enemyPrototypes["tree"] = tree;
 
 	
@@ -40,7 +40,7 @@ bool ModuleEnemy::Start()
 	const float rockScalingFactor = 3;
 	Obstacle * rock = new Obstacle(rock_bush, rockAnimation, true, rockScalingFactor);
 	Size2D rockSize(59 * rockScalingFactor, 37 * rockScalingFactor);
-	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, rock);
+	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, *rock);
 	enemyPrototypes["rock"] = rock;
 
 
@@ -54,7 +54,7 @@ bool ModuleEnemy::Start()
 	set<unsigned int> particleSpawns;
 	particleSpawns.insert(1);
 	Ovni * ovni = new Ovni(startOvni, 700, rock_bush, rockAnimation, path, particleSpawns, rockScalingFactor);
-	ovni->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, ovni);
+	ovni->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, *ovni);
 	enemyPrototypes["ovni"] = ovni;
 
 	return true;

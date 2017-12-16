@@ -23,13 +23,13 @@ bool ModuleParticles::Start()
 	Particle* playerParticlePrototype = new Particle();
 	playerParticlePrototype->anim.frames.push_back({ 3,2,87,56 });
 	playerParticlePrototype->sfxId = App->audio->LoadFx("rtype/Laser1.wav");
-	playerParticlePrototype->collider = App->collision->AddPrototypeCollider(ColliderType::PlayerParticle,Size2D(87,56),Pivot2D::MIDDLE_CENTER,playerParticlePrototype);
+	playerParticlePrototype->collider = App->collision->AddPrototypeCollider(ColliderType::PlayerParticle, Size2D(87,56), Pivot2D::MIDDLE_CENTER, *playerParticlePrototype);
 	particlePrototypes["player"] = playerParticlePrototype;
 
 	Particle* ovniParticlePrototype = new Particle();
 	ovniParticlePrototype->anim.frames.push_back({ 3,2,87,56 });
 	ovniParticlePrototype->sfxId = App->audio->LoadFx("rtype/Laser1.wav");
-	ovniParticlePrototype->collider = App->collision->AddPrototypeCollider(ColliderType::EnemyParticle, Size2D(87, 56), Pivot2D::MIDDLE_CENTER, ovniParticlePrototype);
+	ovniParticlePrototype->collider = App->collision->AddPrototypeCollider(ColliderType::EnemyParticle, Size2D(87, 56), Pivot2D::MIDDLE_CENTER, *ovniParticlePrototype);
 	particlePrototypes["ovni"] = ovniParticlePrototype;
 
 	return true;
@@ -99,7 +99,7 @@ void ModuleParticles::AddParticleByName(const string & name, const Vector3 & pos
 	Particle * instance = prototype->Clone();
 	instance->transform.SetScreenPosition(position);
 	instance->velocity = velocity;
-	instance->collider = App->collision->RegisterPrototypeInstance(*instance->collider, instance);
+	instance->collider = App->collision->RegisterPrototypeInstance(*instance->collider, *instance);
 	this->active.push_back(instance);
 }
 
