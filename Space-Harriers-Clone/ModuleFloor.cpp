@@ -14,7 +14,7 @@
 
 using namespace std; 
 
-const float ModuleFloor::HORIZONTAL_SPEED_MAX = 2.0f;
+const float ModuleFloor::HORIZONTAL_SPEED_MAX = 0.2f;
 const float ModuleFloor::SEGMENT_REDUCTION = 0.60f;
 const float ModuleFloor::HORIZONTAL_LINES_SPEED = 2.0f;
 
@@ -47,10 +47,6 @@ bool ModuleFloor::Init()
 	}
 
 	firstQuadIndex = 0;
-
-	positionPercentage = 0.0f;
-	objectQuadIndex = nHorizonQuads -1;
-
 
 	return true;
 }
@@ -122,6 +118,11 @@ float ModuleFloor::GetRenderHOfHorizontalStripe(int index) const
 int ModuleFloor::GetFurtherHorizontalStripeIndex() const
 {
 	return (firstQuadIndex-1) < 0 ? (nHorizonQuads-1) : (firstQuadIndex - 1);
+}
+
+int ModuleFloor::GetCurrentSegmentCount() const
+{
+	return segmentCount;
 }
 
 void ModuleFloor::RenderFloor() {

@@ -1,5 +1,10 @@
 #pragma once
+
 #include "Module.h"
+
+#include "json.hpp"
+using json = nlohmann::json;
+
 class ModuleStage :
 	public Module
 {
@@ -11,7 +16,11 @@ public:
 	update_status Update() override;
 
 private:
-	float currentTime;
+	int currentStage;
+	int previousSegmentCount;
+	json stageData;
 
+private:
+	void LoadNextStage();
 };
 

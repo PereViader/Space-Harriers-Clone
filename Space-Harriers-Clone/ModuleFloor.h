@@ -31,6 +31,8 @@ public:
 
 	int GetFurtherHorizontalStripeIndex() const;
 
+	int GetCurrentSegmentCount() const;
+
 public:
 	//Horizon
 	static const int HORIZON_MAX_HEIGHT = SCREEN_HEIGHT / 2;
@@ -68,10 +70,6 @@ private:
 
 	HorizontalSegmentContainer horizontalSegments[nHorizonQuads];
 	int segmentCount;
-
-	//temp
-	float positionPercentage;
-	int objectQuadIndex;
 
 private:
 	void RenderFloor();

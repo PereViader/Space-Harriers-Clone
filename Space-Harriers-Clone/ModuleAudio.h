@@ -2,13 +2,19 @@
 #define __MODULEAUDIO_H__
 
 #include <vector>
+#include <string>
+
 #include "Module.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
+using namespace std;
+
 struct _Mix_Music;
 struct Mix_Chunk;
 typedef struct _Mix_Music Mix_Music;
+
+
 
 class ModuleAudio : public Module
 {
@@ -21,10 +27,10 @@ public:
 	bool CleanUp();
 
 	// Play a music file
-	bool PlayMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
+	bool PlayMusic(const string& path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
 
 	// Load a WAV in memory
-	unsigned int LoadFx(const char* path);
+	unsigned int LoadFx(const string& path);
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);

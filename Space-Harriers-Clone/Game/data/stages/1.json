@@ -1,0 +1,62 @@
+{
+	"backgroundMusicPath" : "data/main_theme.wav",
+	"startingImagePath" : "data/...",
+	"enemies" : [
+		{
+			"name" : "tree",
+			"spawnId" : 1,
+			"position" : [-500,0]
+		},
+		{
+			"name" : "tree",
+			"spawnId" : 1,
+			"position" : [30,0]
+		},
+		{
+			"name" : "tree",
+			"spawnId" : 2,
+			"position" : [300,0]
+		},
+		{
+			"name" : "tree",
+			"spawnId" : 5,
+			"position" : [-300,0]
+		},
+		{
+			"name" : "tree",
+			"spawnId" : 10,
+			"position" : [-700,0]
+		},
+		{
+			"name" : "tree",
+			"spawnId" : 15,
+			"position" : [400,0]
+		},
+		{
+			"name" : "rock",
+			"spawnId" : 16,
+			"position" : [0,500]
+		},
+		{
+			"name" : "rock",
+			"spawnId" : 17,
+			"position" : [200,500]
+		},
+		{
+			"name" : "rock",
+			"spawnId" : 17,
+			"position" : [-200,500]
+		},
+		{
+			"name" : "rock",
+			"spawnId" : 17,
+			"position" : [400,500]
+		},
+		
+		{
+			"name" : "rock",
+			"spawnId" : 20,
+			"position" : [0,500]
+		}
+	]
+}
