@@ -23,7 +23,7 @@ ModuleShadow::~ModuleShadow()
 
 bool ModuleShadow::Start()
 {
-	shadow = App->textures->Load("rtype/Character_full.png");
+	shadow = App->textures->Load("data/Character_full.png");
 	assert(shadow.GetTexture() != nullptr);
 	shadow.UpdateTexture({ 197,76,43,20 });
 	return true;

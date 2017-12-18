@@ -18,17 +18,17 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("rtype/bullets.png");
+	graphics = App->textures->Load("data/bullets.png");
 
 	Particle* playerParticlePrototype = new Particle();
 	playerParticlePrototype->anim.frames.push_back({ 3,2,87,56 });
-	playerParticlePrototype->sfxId = App->audio->LoadFx("rtype/Laser1.wav");
+	playerParticlePrototype->sfxId = App->audio->LoadFx("data/Laser1.wav");
 	playerParticlePrototype->collider = App->collision->AddPrototypeCollider(ColliderType::PlayerParticle, Size2D(87,56), Pivot2D::MIDDLE_CENTER, *playerParticlePrototype);
 	particlePrototypes["player"] = playerParticlePrototype;
 
 	Particle* ovniParticlePrototype = new Particle();
 	ovniParticlePrototype->anim.frames.push_back({ 3,2,87,56 });
-	ovniParticlePrototype->sfxId = App->audio->LoadFx("rtype/Laser1.wav");
+	ovniParticlePrototype->sfxId = App->audio->LoadFx("data/Laser1.wav");
 	ovniParticlePrototype->collider = App->collision->AddPrototypeCollider(ColliderType::EnemyParticle, Size2D(87, 56), Pivot2D::MIDDLE_CENTER, *ovniParticlePrototype);
 	particlePrototypes["ovni"] = ovniParticlePrototype;
 

@@ -26,7 +26,7 @@ bool ModuleStage::Start()
 	App->background->Enable();
 	App->floor->Enable();
 	App->enemies->Enable();
-	App->audio->PlayMusic("rtype/main_theme.wav");
+	App->audio->PlayMusic("data/main_theme.wav");
 	App->enemies->InstantiateEnemyByName("ovni", map<string, void*>());
 	return true;
 }

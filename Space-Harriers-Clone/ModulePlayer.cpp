@@ -65,7 +65,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	graphics = App->textures->Load("rtype/player.png");
+	graphics = App->textures->Load("data/player.png");
 
 	Size2D playerColliderSize(80, 186);
 	collider = App->collision->AddCollider(ColliderType::Player,playerColliderSize, Pivot2D::BOTTOM_CENTER,*this);

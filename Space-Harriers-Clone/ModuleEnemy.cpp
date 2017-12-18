@@ -23,8 +23,8 @@ ModuleEnemy::~ModuleEnemy()
 bool ModuleEnemy::Start()
 {
 	//TODO finish method
-	treeGraphic = App->textures->Load("rtype/tree.png");
-	rock_bush = App->textures->Load("rtype/rock_bush.png");
+	treeGraphic = App->textures->Load("data/tree.png");
+	rock_bush = App->textures->Load("data/rock_bush.png");
 
 	Animation treeAnimation;
 	treeAnimation.frames.push_back({ 206,48,44,163 });
