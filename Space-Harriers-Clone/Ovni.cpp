@@ -13,9 +13,9 @@
 #include "ModulePlayer.h"
 #include "FloorBasedTransform.h"
 
-Ovni::Ovni(const Vector3 startingPosition, float speed, float particleSpeed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor) :
-	Enemy(new FloorBasedTransform(startingPosition),true),
-	collider(nullptr),
+Ovni::Ovni(float speed, float particleSpeed, const Texture& texture, const Animation& animation, const Size2D& size, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor) :
+	Enemy(new FloorBasedTransform(),true),
+	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::BOTTOM_CENTER, *this)),
 	speed(speed),
 	particleSpeed(particleSpeed),
 	graphics(texture),

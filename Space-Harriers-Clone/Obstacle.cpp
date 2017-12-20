@@ -6,11 +6,11 @@
 
 #include <assert.h>
 
-Obstacle::Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, float scalingFactor) :
+Obstacle::Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, const Size2D& size, float scalingFactor) :
 	Enemy(new FloorAnchoredTransform(0,0,0), hasShadow),
 	graphics(graphics),
 	animation(animation),
-	collider(nullptr),
+	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::BOTTOM_CENTER, *this)),
 	scalingFactor(scalingFactor)
 {
 }
@@ -23,13 +23,14 @@ Obstacle::~Obstacle()
 Obstacle * Obstacle::Clone() const
 {
 	Obstacle* o = new Obstacle(*this);
+	o->collider = App->collision->RegisterPrototypeInstance(*o->collider, *o);
+
 	static_cast<FloorAnchoredTransform&>(o->GetTransform()).ResetPositionToTheHorizon();
 	return o;
 }
 
 void Obstacle::Init(map<string, void*> parameters)
 {
-	collider = App->collision->RegisterPrototypeInstance(*collider, *this);
 }
 
 void Obstacle::Update()

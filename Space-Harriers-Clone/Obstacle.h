@@ -6,13 +6,15 @@
 #include "Animation.h"
 #include "Texture.h"
 
+
 class Collider;
+class Size2D;
 
 class Obstacle :
 	public Enemy
 {
 public:
-	Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, float scalingFactor=1);
+	Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, const Size2D& size, float scalingFactor);
 	~Obstacle();
 
 	virtual Obstacle* Clone() const override;
@@ -23,11 +25,9 @@ public:
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
 	virtual void Render() override;
 
-public:
+private:
 	Texture graphics;
 	Animation animation;
 	Collider* collider;
-
-private:
 	float scalingFactor;
 };

@@ -10,13 +10,15 @@
 #include <map>
 #include <set>
 
+class Size2D;
+
 using namespace std;
 
 class Ovni :
 	public Enemy
 {
 public:
-	Ovni(const Vector3 startingPosition, float speed, float particleSpeed, const Texture& texture, const Animation& animation, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor = 1);
+	Ovni(float speed, float particleSpeed, const Texture& texture, const Animation& animation, const Size2D& size, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor);
 	~Ovni();
 
 	virtual void Init(map<string, void*> values) override;
@@ -26,14 +28,13 @@ public:
 	virtual Ovni* Clone() const override;
 	virtual void Render() override;
 
-public:
-	Collider* collider;
-
 private:
 
 	Texture graphics;
 	Animation animation;
 	float scalingFactor;
+
+	Collider* collider;
 
 	int currentTarget;
 	vector<Vector3> path;
