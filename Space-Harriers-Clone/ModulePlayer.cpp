@@ -1,6 +1,8 @@
 #include "ModulePlayer.h"
 
-#include "Globals.h"
+#include <iostream>
+#include <algorithm>
+
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
@@ -9,14 +11,9 @@
 #include "ModuleTime.h"
 #include "ModuleCollision.h"
 #include "Collider.h"
-
 #include "Vector3.h"
 
 
-#include <iostream>
-#include <algorithm>
-
-// Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 const float ModulePlayer::PLAYER_SPEED = 800;
 //const float ModulePlayer::PLAYER_RECOVER_SPEED = 700;
@@ -102,6 +99,14 @@ void ModulePlayer::UpdateAnimation()
 	}
 }
 
+Vector2 ModulePlayer::GetInputMovement() const
+{
+	Vector2 movement;
+	movement.x = App->input->GetAxis(Axis::Horizontal)*PLAYER_SPEED*App->time->GetDeltaTime();
+	movement.y = App->input->GetAxis(Axis::Vertical)*PLAYER_SPEED*App->time->GetDeltaTime();
+	return movement;
+}
+
 void ModulePlayer::ShootLaser()
 {
 	Vector3 screen = transform.GetScreenPositionAndDepth();
@@ -115,10 +120,7 @@ void ModulePlayer::ShootLaser()
 
 void ModulePlayer::MovePlayer()
 {
-	Vector2 movement;
-	movement.x = App->input->GetAxis(Axis::Horizontal)*PLAYER_SPEED*App->time->GetDeltaTime();
-	movement.y = App->input->GetAxis(Axis::Vertical)*PLAYER_SPEED*App->time->GetDeltaTime();
-
+	Vector2 movement = GetInputMovement();
 	Vector2 position = transform.GetScreenPositionAndDepth();
 	
 	//Return to center when not moving

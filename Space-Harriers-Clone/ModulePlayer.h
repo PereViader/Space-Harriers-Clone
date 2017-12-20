@@ -70,6 +70,7 @@ private:
 	Collider* collider;
 
 private:
+	Vector2 GetInputMovement() const;
 	void ShootLaser();
 	void MovePlayer();
 	void UpdateAnimation();
