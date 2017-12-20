@@ -8,7 +8,6 @@
 #include "ModuleCollision.h"
 
 class Transform;
-enum class ColliderType;
 class ICollidable;
 
 class Collider :
