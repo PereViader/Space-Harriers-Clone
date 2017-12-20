@@ -27,6 +27,8 @@ Ovni::Ovni(float speed, float particleSpeed, const Texture& texture, const Anima
 {
 }
 
+//TODO copy constructor
+
 Ovni::~Ovni()
 {
 	collider->MarkAsDeleted();

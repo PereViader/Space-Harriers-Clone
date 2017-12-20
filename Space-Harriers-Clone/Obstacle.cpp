@@ -15,6 +15,9 @@ Obstacle::Obstacle(const Texture& graphics, const Animation& animation, bool has
 {
 }
 
+
+//TODO copy constructor
+
 Obstacle::~Obstacle()
 {
 	collider->MarkAsDeleted();
