@@ -20,6 +20,10 @@ public:
 
 	virtual Transform & GetTransform() const { return *transform; }
 
+protected:
+	template <typename T>
+	T& GetTransformTypped() const { return static_cast<T&>(*transform); }
+
 private:
 	Transform * transform;
 };
