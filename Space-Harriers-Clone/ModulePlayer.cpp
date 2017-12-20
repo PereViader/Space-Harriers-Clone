@@ -36,10 +36,11 @@ const Vector3 ModulePlayer::PLAYER_PARTICLE_VELOCITY(0, 90, 1000);
 
 ModulePlayer::ModulePlayer(bool active) : 
 	Module(active),
+	GameEntity(new ScreenBoundTransform()),
 	destroyed(false),
 	currentAnimation(&hover_center)
 {
-	transform.SetScreenPosition(Vector2((SCREEN_WIDTH / 2.0f), SCREEN_HEIGHT));
+	GetTransform().SetScreenPosition(Vector2((SCREEN_WIDTH / 2.0f), SCREEN_HEIGHT));
 
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
 	ground_running.frames.push_back({ 25, 4, 20, 47 });
@@ -99,6 +100,12 @@ void ModulePlayer::UpdateAnimation()
 	}
 }
 
+ModulePlayer* ModulePlayer::Clone() const
+{
+	assert(false);
+	return nullptr;
+}
+
 Vector2 ModulePlayer::GetInputMovement() const
 {
 	Vector2 movement;
@@ -109,7 +116,7 @@ Vector2 ModulePlayer::GetInputMovement() const
 
 void ModulePlayer::ShootLaser()
 {
-	Vector3 screen = transform.GetScreenPositionAndDepth();
+	Vector3 screen = GetTransform().GetScreenPositionAndDepth();
 
 	// correct position to shoot from the gun
 	screen.x += 15;
@@ -121,7 +128,7 @@ void ModulePlayer::ShootLaser()
 void ModulePlayer::MovePlayer()
 {
 	Vector2 movement = GetInputMovement();
-	Vector2 position = transform.GetScreenPositionAndDepth();
+	Vector2 position = GetTransform().GetScreenPositionAndDepth();
 	
 	//Return to center when not moving
 	/*if (movement.x == 0.0f)
@@ -141,13 +148,13 @@ void ModulePlayer::MovePlayer()
 	else if (position.y == MAX_VERTICAL_POSITION && movement.y > 0 || position.y > MAX_VERTICAL_POSITION)
 		movement.y = MAX_VERTICAL_POSITION - position.y;
 
-	transform.Move(movement);
+	GetTransform().Move(movement);
 }
 
 void ModulePlayer::Render()
 {
 	if (!destroyed) {
-		Vector3 screen = transform.GetScreenPositionAndDepth();
+		Vector3 screen = GetTransform().GetScreenPositionAndDepth();
 		currentAnimation->UpdateFrame();
 		graphics.UpdateTexture(*currentAnimation);
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, RENDER_SCALE, Pivot2D::BOTTOM_CENTER, screen);
@@ -156,7 +163,7 @@ void ModulePlayer::Render()
 
 Vector2 ModulePlayer::GetNormalizedPosition() const
 {
-	Vector2 position = transform.GetScreenPositionAndDepth();
+	Vector2 position = GetTransform().GetScreenPositionAndDepth();
 	position.x = (((position.x - MIN_HORIZONTAL_POSITION) / (MAX_HORIZONTAL_POSITION-MIN_HORIZONTAL_POSITION)) - 0.5f ) * 2.0f;
 	position.y = (((position.y - MIN_VERTICAL_POSITION) / (MAX_VERTICAL_POSITION- MIN_VERTICAL_POSITION)) - 0.5f) * 2.0f;
 	return position;
@@ -164,7 +171,7 @@ Vector2 ModulePlayer::GetNormalizedPosition() const
 
 Vector3 ModulePlayer::GetChestPosition() const
 {
-	return transform.GetScreenPositionAndDepth() + Vector3(0,-93);
+	return GetTransform().GetScreenPositionAndDepth() + Vector3(0,-93);
 }
 
 void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
@@ -176,7 +183,6 @@ void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
 update_status ModulePlayer::Update()
 {
 	MovePlayer();
-	collider->UpdateValues(transform);
 	UpdateAnimation();
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)

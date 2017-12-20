@@ -45,7 +45,6 @@ void Particle::Update()
 
 	MoveParticle();
 
-	collider->UpdateValues(GetTransform());
 	float depth = GetTransform().GetScreenPositionAndDepth().z;
 	SetDeleted(depth > Z_MAX || depth < 0);
 }

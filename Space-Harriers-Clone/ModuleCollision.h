@@ -13,6 +13,7 @@ class Size2D;
 class Pivot2D;
 class Transform;
 class ICollidable;
+class GameEntity;
 
 class Collider;
 
@@ -50,9 +51,9 @@ public:
 
 	bool CleanUp();
 
-	Collider* AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner);
-	Collider* AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner);
-	Collider* RegisterPrototypeInstance(const Collider & prototype, ICollidable& owner);
+	Collider* AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, GameEntity& owner);
+	Collider* AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, GameEntity& owner);
+	Collider* RegisterPrototypeInstance(const Collider & prototype, GameEntity& owner);
 
 
 private:
@@ -64,7 +65,7 @@ private:
 	
 
 private:
-	Collider * CreateCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner) const;
+	Collider * CreateCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, GameEntity& owner) const;
 
 	void DoCollisionDetection();
 	void DoDebug();

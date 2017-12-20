@@ -2,8 +2,7 @@
 #define __ModulePlayer_H__
 
 #include "Module.h"
-#include "IRenderable.h"
-#include "ICollidable.h"
+#include "GameEntity.h"
 
 #include "Texture.h"
 #include "Animation.h"
@@ -13,7 +12,7 @@
 
 class Collider;
 
-class ModulePlayer : public Module, public ICollidable, public IRenderable
+class ModulePlayer : public Module, public GameEntity
 {
 public:
 	ModulePlayer(bool active = true);
@@ -26,7 +25,8 @@ public:
 	virtual void Render() override;
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
 
-	Transform& GetTransform() { return transform; }
+	virtual ScreenBoundTransform& GetTransform() const override { return static_cast<ScreenBoundTransform&>(GameEntity::GetTransform()); }
+
 	Vector2 GetNormalizedPosition() const;
 	Vector3 GetChestPosition() const;
 
@@ -51,9 +51,6 @@ private:
 
 	static const Vector3 PLAYER_PARTICLE_VELOCITY;
 
-
-	ScreenBoundTransform transform;
-
 	Texture graphics;
 
 	Animation * currentAnimation;
@@ -74,6 +71,8 @@ private:
 	void ShootLaser();
 	void MovePlayer();
 	void UpdateAnimation();
+
+	virtual ModulePlayer* Clone() const override;
 };
 
 #endif

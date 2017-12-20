@@ -6,6 +6,7 @@
 #include "ModuleRender.h"
 #include "Collider.h"
 #include "ICollidable.h"
+#include "GameEntity.h"
 
 #include <assert.h>
 
@@ -39,6 +40,10 @@ update_status ModuleCollision::PreUpdate()
 
 update_status ModuleCollision::Update()
 {
+	for (Collider* collider : colliders) {
+		collider->Update();
+	}
+
 	DoCollisionDetection();
 	DoDebug();
 
@@ -50,7 +55,7 @@ void ModuleCollision::DoDebug()
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
-	if (debug == true)
+	if (debug)
 		DebugDraw();
 }
 
@@ -96,7 +101,7 @@ bool ModuleCollision::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner)
+Collider* ModuleCollision::AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, GameEntity& owner)
 {
 	Collider* ret = CreateCollider(colliderType,size,pivot, owner);
 
@@ -105,7 +110,7 @@ Collider* ModuleCollision::AddCollider(const ColliderType& colliderType, const S
 	return ret;
 }
 
-Collider * ModuleCollision::AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner)
+Collider * ModuleCollision::AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, GameEntity& owner)
 {
 	Collider* ret = CreateCollider(colliderType, size, pivot, owner);
 
@@ -114,11 +119,11 @@ Collider * ModuleCollision::AddPrototypeCollider(const ColliderType& colliderTyp
 	return ret;
 }
 
-Collider * ModuleCollision::CreateCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner) const {
+Collider * ModuleCollision::CreateCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, GameEntity& owner) const {
 	return new Collider(colliderType,size,pivot, owner);
 }
 
-Collider * ModuleCollision::RegisterPrototypeInstance(const Collider & prototype, ICollidable& owner)
+Collider * ModuleCollision::RegisterPrototypeInstance(const Collider & prototype, GameEntity& owner)
 {
 	Collider* ret = new Collider(prototype);
 	ret->owner = &owner;

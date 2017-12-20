@@ -5,26 +5,35 @@
 #include "Pivot2D.h"
 #include "Vector3.h"
 #include "Transform.h"
+#include "GameEntity.h"
 
-Collider::Collider(const ColliderType& colliderType, const Size2D & size, const Pivot2D & pivot, ICollidable & owner) :
+Collider::Collider(const ColliderType& colliderType, const Size2D & size, const Pivot2D & pivot, GameEntity& owner) :
 	colliderType(colliderType),
 	size(size),
 	pivot(pivot),
 	rect({ 0,0,static_cast<int>(size.width),static_cast<int>(size.height) }),
-	owner(&owner),
-	position(-1, -1, -1)
+	owner(&owner)
 {
 }
-
+/*
 void Collider::UpdateValues(const Transform & transform)
 {
-	position = transform.GetScreenPositionAndDepth();
 	float scale = transform.GetRenderingScale();
+	Size2D currentSize(size.width*scale, size.height*scale);
+	rect = GetRectInPositionWithPivot(position, currentSize, pivot);
+}*/
+
+void Collider::Update()
+{
+	Vector3 position = owner->GetTransform().GetScreenPositionAndDepth();
+	float scale = owner->GetTransform().GetRenderingScale();
 	Size2D currentSize(size.width*scale, size.height*scale);
 	rect = GetRectInPositionWithPivot(position, currentSize, pivot);
 }
 
 bool Collider::CheckCollision(const Collider& r) const
 {
-	return DoColliderLayersCollide(colliderType, r.colliderType) && abs(position.z - r.position.z) <= 28 && SDL_HasIntersection(&this->rect, &r.rect);
+	float thisZ = owner->GetTransform().GetScreenPositionAndDepth().z;
+	float otherZ = r.owner->GetTransform().GetScreenPositionAndDepth().z;
+	return DoColliderLayersCollide(colliderType, r.colliderType) && abs(thisZ - otherZ) <= 28 && SDL_HasIntersection(&this->rect, &r.rect);
 }

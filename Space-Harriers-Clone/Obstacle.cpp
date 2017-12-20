@@ -41,9 +41,6 @@ void Obstacle::Update()
 	//Move Obstacle
 	Vector3 movement(App->floor->GetCurrentFloorMovement(), 0, 0);
 	GetTransform().Move(movement);
-
-	//Update collider
-	collider->UpdateValues(GetTransform());
 	
 	if (GetTransform().GetFloorPositionAndDepth().z <= 0) {
 		MarkAsDeleted();

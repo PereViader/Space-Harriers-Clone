@@ -46,7 +46,6 @@ void Ovni::Update()
 	FloorBasedTransform& transform = static_cast<FloorBasedTransform&>(GetTransform());
 	Vector3 newPosition = MoveTowards(transform.GetPosition(), path[currentTarget], speed*deltaTime);
 	transform.SetPosition(newPosition);
-	collider->UpdateValues(GetTransform());
 
 	if (newPosition == path[currentTarget]) {
 		if (particleSpawnsIndex.count(currentTarget)) {

@@ -8,23 +8,26 @@
 #include "ModuleCollision.h"
 
 class Transform;
-class ICollidable;
+class GameEntity;
 
 class Collider :
 	public IDeletable
 {
+	friend ModuleCollision;
 public:
-	Collider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, ICollidable& owner);
+	Collider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, GameEntity& owner);
 
-	void UpdateValues(const Transform& transform);
+	void Update();
+
 
 	bool CheckCollision(const Collider& r) const;
 
 public:
+	GameEntity * owner;
+
 	ColliderType colliderType;
 	Size2D size;
 	Pivot2D pivot;
-	Vector3 position;
-	ICollidable* owner;
+
 	SDL_Rect rect;
 };
