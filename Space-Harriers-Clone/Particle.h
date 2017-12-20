@@ -14,7 +14,7 @@ class Collider;
 class Size2D;
 
 class Particle :
-	public GameEntity, public ICollidable
+	public GameEntity
 {
 public:
 	Particle(const ColliderType& particleType, const Animation& animation, const Size2D & size, const SFX& sfx, const Texture& texture);

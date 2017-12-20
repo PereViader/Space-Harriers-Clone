@@ -14,7 +14,7 @@
 using namespace std;
 
 class Enemy :
-	public GameEntity, public ICollidable
+	public GameEntity
 {
 public:
 	Enemy(FloorRelatedTransform * transform, bool hasShadow) :

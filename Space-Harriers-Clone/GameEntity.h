@@ -3,10 +3,11 @@
 #include "IRenderable.h"
 #include "IClonable.h"
 #include "IDeletable.h"
+#include "ICollidable.h"
 #include "Transform.h"
 
 class GameEntity : 
-	public IRenderable, public IClonable<GameEntity*>, public IDeletable {
+	public IRenderable, public ICollidable, public IClonable<GameEntity*>, public IDeletable {
 protected:
 	GameEntity(Transform * transform) : transform(transform) {}
 	GameEntity(const GameEntity& other) : transform(other.transform->Clone()) {};
