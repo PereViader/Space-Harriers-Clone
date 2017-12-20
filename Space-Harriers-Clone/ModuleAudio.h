@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Module.h"
+#include "SFX.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -30,10 +31,10 @@ public:
 	bool PlayMusic(const string& path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
 
 	// Load a WAV in memory
-	unsigned int LoadFx(const string& path);
+	SFX LoadFx(const string& path);
 
 	// Play a previously loaded WAV
-	bool PlayFx(unsigned int fx, int repeat = 0);
+	bool PlayFx(const SFX& sfx, int repeat = 0);
 
 private:
 

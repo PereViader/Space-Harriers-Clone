@@ -20,16 +20,18 @@ bool ModuleParticles::Start()
 	LOG("Loading particles");
 	graphics = App->textures->Load("data/bullets.png");
 
-	Particle* playerParticlePrototype = new Particle();
-	playerParticlePrototype->anim.frames.push_back({ 3,2,87,56 });
-	playerParticlePrototype->sfxId = App->audio->LoadFx("data/Laser1.wav");
-	playerParticlePrototype->collider = App->collision->AddPrototypeCollider(ColliderType::PlayerParticle, Size2D(87,56), Pivot2D::MIDDLE_CENTER, *playerParticlePrototype);
+	Animation playerParticleAnimation;
+	playerParticleAnimation.frames.push_back({ 3,2,87,56 });
+	SFX playerSFX = App->audio->LoadFx("data/Laser1.wav");
+	Size2D size(87, 56);
+	Particle* playerParticlePrototype = new Particle(ColliderType::PlayerParticle,playerParticleAnimation,size,playerSFX,graphics);
 	particlePrototypes["player"] = playerParticlePrototype;
 
-	Particle* ovniParticlePrototype = new Particle();
-	ovniParticlePrototype->anim.frames.push_back({ 3,2,87,56 });
-	ovniParticlePrototype->sfxId = App->audio->LoadFx("data/Laser1.wav");
-	ovniParticlePrototype->collider = App->collision->AddPrototypeCollider(ColliderType::EnemyParticle, Size2D(87, 56), Pivot2D::MIDDLE_CENTER, *ovniParticlePrototype);
+	Animation ovniParticleAnimation;
+	ovniParticleAnimation.frames.push_back({ 3,2,87,56 });
+	SFX ovniSFX = App->audio->LoadFx("data/Laser1.wav");
+	Size2D ovniSize(87, 56);
+	Particle* ovniParticlePrototype = new Particle(ColliderType::EnemyParticle,ovniParticleAnimation,ovniSize,ovniSFX,graphics);
 	particlePrototypes["ovni"] = ovniParticlePrototype;
 
 	return true;
@@ -71,22 +73,12 @@ update_status ModuleParticles::PreUpdate()
 // Update all particle logic and draw them
 update_status ModuleParticles::Update()
 {
-	for (list<Particle*>::iterator it = active.begin(); it != active.end(); ++it)
-	{
-		Particle* p = *it;
+	for (Particle* particle : active) {
+		particle->Update();
+	}
 
-		p->Update();
-		Vector3 screenPosition = p->transform.GetScreenPositionAndDepth();
-
-		float scale = p->transform.GetRenderingScale();
-		p->anim.UpdateFrame();
-		graphics.UpdateTexture(p->anim);
-		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::MIDDLE_CENTER, screenPosition);
-		if (p->isFirstFrame)
-		{
-			App->audio->PlayFx(p->sfxId);
-			p->isFirstFrame = false;
-		}
+	for (Particle* particle : active) {
+		particle->Render();
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -97,9 +89,8 @@ void ModuleParticles::AddParticleByName(const string & name, const Vector3 & pos
 	const Particle * prototype = GetParticlePrototypeByName(name);
 	assert(prototype != nullptr);
 	Particle * instance = prototype->Clone();
-	instance->transform.SetScreenPosition(position);
-	instance->velocity = velocity;
-	instance->collider = App->collision->RegisterPrototypeInstance(*instance->collider, *instance);
+	instance->GetTransform().SetScreenPosition(position);
+	instance->SetVelocity(velocity);
 	this->active.push_back(instance);
 }
 

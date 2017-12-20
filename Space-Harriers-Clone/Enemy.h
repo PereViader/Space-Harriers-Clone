@@ -1,9 +1,7 @@
 #pragma once
 
 #include "ICollidable.h"
-#include "IClonable.h"
-#include "IRenderable.h"
-#include "IDeletable.h"
+#include "GameEntity.h"
 
 #include "Application.h"
 #include "ModuleShadow.h"
@@ -16,37 +14,35 @@
 using namespace std;
 
 class Enemy :
-	public ICollidable, public IClonable<Enemy*>, public IRenderable, public IDeletable
+	public GameEntity, public ICollidable
 {
 public:
 	Enemy(FloorRelatedTransform * transform, bool hasShadow) :
-		transform(transform),
+		GameEntity(transform),
 		hasShadow(hasShadow)
 	{}
 
 	Enemy(const Enemy& other) :
-		IDeletable(other),
-		transform(other.transform->Clone()),
+		GameEntity(other),
 		hasShadow(other.hasShadow)
-	{
-		
-	}
+	{}
 
-	virtual ~Enemy() {
-		delete transform;
-	};
+	virtual ~Enemy() {};
 
 	virtual void Init(map<string, void*> values) = 0;
 	virtual void Update() = 0;
 	
 	virtual void Render() override {
 		if (!ToDelete() && hasShadow)
-			App->shadow->DrawShadow(*transform);
+			App->shadow->DrawShadow(GetTransform());
 	}
 
-	FloorRelatedTransform& GetTransform() const { return *transform; }
+	virtual FloorRelatedTransform& GetTransform() const override { 
+		return static_cast<FloorRelatedTransform&>(GameEntity::GetTransform()); 
+	}
+
+	virtual Enemy * Clone() const override = 0;
 
 private:
-	FloorRelatedTransform * transform;
 	bool hasShadow;
 };

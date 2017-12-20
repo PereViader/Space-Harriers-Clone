@@ -32,6 +32,9 @@
     <Filter Include="Game Modules\Collision">
       <UniqueIdentifier>{9ded952c-6e27-41a5-be78-2fa16b7621de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core Modules\Audio">
+      <UniqueIdentifier>{d0e89f8b-2205-41d6-9379-41ac728e8032}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -52,9 +55,6 @@
     <ClInclude Include="Globals.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleAudio.h">
-      <Filter>Core Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleFadeToBlack.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
@@ -72,9 +72,6 @@
     </ClInclude>
     <ClInclude Include="MemLeaks.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneIntro.h">
-      <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Unity Like</Filter>
@@ -168,6 +165,12 @@
     <ClInclude Include="json_serializer.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Core Modules\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="SFX.h">
+      <Filter>Core Modules\Audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -185,9 +188,6 @@
     <ClCompile Include="ModuleWindow.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleAudio.cpp">
-      <Filter>Core Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleFadeToBlack.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
@@ -199,9 +199,6 @@
     </ClCompile>
     <ClCompile Include="ModuleInput.cpp">
       <Filter>Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneIntro.cpp">
-      <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Unity Like</Filter>
@@ -265,6 +262,12 @@
     </ClCompile>
     <ClCompile Include="FloorBasedTransform.cpp">
       <Filter>Utils\Transforms</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEntity.h">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Core Modules\Audio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

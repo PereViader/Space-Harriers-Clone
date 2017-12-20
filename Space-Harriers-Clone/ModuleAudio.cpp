@@ -1,10 +1,12 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleAudio.h"
+#include "SFX.h"
 #include "SDL/include/SDL.h"
 
 #include "SDL_mixer/include/SDL_mixer.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
+
 
 using namespace std;
 
@@ -120,9 +122,9 @@ bool ModuleAudio::PlayMusic(const string& path, float fade_time)
 }
 
 // Load WAV
-unsigned int ModuleAudio::LoadFx(const string& path)
+SFX ModuleAudio::LoadFx(const string& path)
 {
-	unsigned int ret = 0;
+	unsigned int id = 0;
 	Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
 
 	if(chunk == nullptr)
@@ -132,20 +134,20 @@ unsigned int ModuleAudio::LoadFx(const string& path)
 	else
 	{
 		fx.push_back(chunk);
-		ret = fx.size() - 1;
+		id = fx.size() - 1;
 	}
 
-	return ret;
+	return SFX(id);
 }
 
 // Play WAV
-bool ModuleAudio::PlayFx(unsigned int id, int repeat)
+bool ModuleAudio::PlayFx(const SFX& sfx, int repeat)
 {
 	bool ret = false;
 
-	if(id < fx.size())
+	if(sfx.GetId() < fx.size())
 	{
-		Mix_PlayChannel(-1, fx[id], repeat);
+		Mix_PlayChannel(-1, fx[sfx.GetId()], repeat);
 		ret = true;
 	}
 
