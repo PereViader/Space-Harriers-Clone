@@ -5,13 +5,19 @@
 
 #include "Texture.h"
 
+#include "json.hpp"
+using json = nlohmann::json;
+
 #include <map>
 #include <string>
 #include <list>
 
+
 struct SDL_Texture;
 
 using namespace std;
+
+
 
 class Enemy;
 
@@ -30,12 +36,15 @@ public:
 
 	Enemy* InstantiateEnemyByName(const string& name, map<string, void*> parameters);
 private:
-	const Enemy* GetEnemyPrototypeByName(const string& name);
-
-	map<string, Enemy*> enemyPrototypes;
-
-	Texture treeGraphic;
-	Texture rock_bush;
-	
 	list<Enemy*> enemies;
+	map<string, Enemy*> enemyPrototypes;
+	
+	typedef Enemy*(ModuleEnemy::*PrototypeCreationFunction)(const json&) const;
+	map<string, PrototypeCreationFunction> prototypeCreationFunctionMap;
+	
+	
+private:
+	Enemy * CreateEnemyPrototype(string type, const json& enemyData) const;
+	Enemy * CreateObstaclePrototype(const json&) const;
+	Enemy * CreateOvniPrototype(const json&) const;
 };

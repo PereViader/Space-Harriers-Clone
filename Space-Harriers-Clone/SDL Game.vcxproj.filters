@@ -165,6 +165,9 @@
     <ClInclude Include="FloorBasedTransform.h">
       <Filter>Utils\Transforms</Filter>
     </ClInclude>
+    <ClInclude Include="json_serializer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

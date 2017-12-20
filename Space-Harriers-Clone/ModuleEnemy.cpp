@@ -7,62 +7,41 @@
 #include "ModuleTextures.h"
 #include "ModuleCollision.h"
 
+#include <fstream>
 #include <assert.h>
+
+#include "json.hpp"
+#include "json_serializer.h"
 
 ModuleEnemy::ModuleEnemy(bool enabled) :
 	Module(enabled)
 {
-	//TODO finish method
-
+	prototypeCreationFunctionMap["ovni"] = &ModuleEnemy::CreateOvniPrototype;
+	prototypeCreationFunctionMap["obstacle"] = &ModuleEnemy::CreateObstaclePrototype;
 }
 
 ModuleEnemy::~ModuleEnemy()
 {
 }
 
+
+#include <iostream>
 bool ModuleEnemy::Start()
 {
-	//TODO finish method
-	treeGraphic = App->textures->Load("data/tree.png");
-	rock_bush = App->textures->Load("data/rock_bush.png");
+	ifstream enemyPrototypeJsonFile("data/enemyPrototypes.json");
+	json enemyPrototypesData;
+	enemyPrototypeJsonFile >> enemyPrototypesData;
 
-	Animation treeAnimation;
-	treeAnimation.frames.push_back({ 206,48,44,163 });
-	const float treeScalingFactor = 3.5f;
-	Obstacle * tree = new Obstacle(treeGraphic, treeAnimation, false,treeScalingFactor);
-	Size2D treeSize(44 * treeScalingFactor, 163 * treeScalingFactor);
-	tree->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy,treeSize, Pivot2D::BOTTOM_CENTER,*tree);
-	enemyPrototypes["tree"] = tree;
-
-	
-	Animation rockAnimation;
-	rockAnimation.frames.push_back({192,72,59,37});
-	const float rockScalingFactor = 3;
-	Obstacle * rock = new Obstacle(rock_bush, rockAnimation, true, rockScalingFactor);
-	Size2D rockSize(59 * rockScalingFactor, 37 * rockScalingFactor);
-	rock->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, rockSize, Pivot2D::BOTTOM_CENTER, *rock);
-	enemyPrototypes["rock"] = rock;
-
-
-	Vector3 startOvni(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
-
-	vector<Vector3> path;
-	path.push_back(Vector3(SCREEN_WIDTH / 2.0f, 200, 700));
-	path.push_back(Vector3(SCREEN_WIDTH / 2.0f, 200, 0));
-	path.push_back(Vector3(0, 50, 25));
-
-	set<unsigned int> particleSpawns;
-	particleSpawns.insert(1);
-
-	Animation ovniAnimation;
-	ovniAnimation.frames.push_back({ 198,127,46,30 });
-	const float ovniScalingFactor = 3;
-	Size2D ovniSize(46 * ovniScalingFactor, 30 * ovniScalingFactor);
-	Ovni * ovni = new Ovni(startOvni, 700, 500, rock_bush, ovniAnimation, path, particleSpawns, ovniScalingFactor);
-	ovni->collider = App->collision->AddPrototypeCollider(ColliderType::Enemy, ovniSize, Pivot2D::BOTTOM_CENTER, *ovni);
-	enemyPrototypes["ovni"] = ovni;
+	for (auto prototype : enemyPrototypesData["prototypes"]) {
+		enemyPrototypes[prototype["name"]] = CreateEnemyPrototype(prototype["type"], prototype["data"]);
+	}
 
 	return true;
+}
+
+Enemy* ModuleEnemy::CreateEnemyPrototype(string type, const nlohmann::json& enemyData) const {
+	PrototypeCreationFunction prototypeCreationFunction = prototypeCreationFunctionMap.at(type);
+	return invoke(prototypeCreationFunction,*this,enemyData);
 }
 
 update_status ModuleEnemy::PreUpdate()
@@ -105,17 +84,12 @@ bool ModuleEnemy::CleanUp()
 		RELEASE(it->second);
 
 	enemyPrototypes.clear();
-
-	App->textures->Unload(treeGraphic);
-	App->textures->Unload(rock_bush);
-
 	return true;
 }
 
 Enemy * ModuleEnemy::InstantiateEnemyByName(const string& name, map<string, void*> parameters)
 {
-	const Enemy* prototype = GetEnemyPrototypeByName(name);
-	assert(prototype != nullptr);
+	const Enemy* prototype = enemyPrototypes.at(name);
 	
 	Enemy* instance = prototype->Clone();
 	instance->Init(parameters);
@@ -124,8 +98,29 @@ Enemy * ModuleEnemy::InstantiateEnemyByName(const string& name, map<string, void
 	return instance;
 }
 
-const Enemy* ModuleEnemy::GetEnemyPrototypeByName(const string& name)
+Enemy * ModuleEnemy::CreateObstaclePrototype(const json & data) const
 {
-	map<string, Enemy*>::const_iterator it = enemyPrototypes.find(name);
-	return (it != enemyPrototypes.cend()) ? it->second : nullptr;
+	Texture graphics = App->textures->Load(data["graphicsPath"]);
+	Animation animation = data["animation"];
+	float scalingFactor = data["scalingFactor"];
+	Size2D size = data["size"];
+	bool hasShadow = data["hasShadow"];
+
+	return new Obstacle(graphics, animation, hasShadow, size, scalingFactor);
 }
+
+Enemy * ModuleEnemy::CreateOvniPrototype(const json & data) const
+{
+	Texture graphics = App->textures->Load(data["graphicsPath"]);
+	Animation animation = data["animation"];
+	float scalingFactor = data["scalingFactor"];
+	Size2D size = data["size"];
+
+	vector<Vector3> path = data["path"];
+	set<unsigned int> particleSpawns = data["particleSpawns"];
+	float speed = data["speed"];
+	float particleSpeed = data["particleSpeed"];
+
+	return new Ovni(speed, particleSpeed, graphics, animation, size, path, particleSpawns, scalingFactor);
+}
+
