@@ -53,7 +53,6 @@ bool ModuleParticles::CleanUp()
 	return true;
 }
 
-// PreUpdate to clear up all dirty particles
 update_status ModuleParticles::PreUpdate()
 {
 	for (list<Particle*>::iterator it = active.begin(); it != active.end();)
