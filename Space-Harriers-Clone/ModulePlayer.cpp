@@ -179,7 +179,6 @@ void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
 	LOG("%s", "collided player");
 }
 
-
 update_status ModulePlayer::Update()
 {
 	MovePlayer();

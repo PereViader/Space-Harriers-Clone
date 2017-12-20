@@ -25,7 +25,7 @@ public:
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
 	virtual Particle* Clone() const override;
 	virtual void Render() override;
-	virtual ScreenBoundTransform& GetTransform() const override { return static_cast<ScreenBoundTransform&>(GameEntity::GetTransform()); }
+	virtual ScreenBoundTransform& GetTransform() const override { return GetTransformTypped<ScreenBoundTransform>(); }
 
 	void SetVelocity(const Vector3& velocity);
 private:

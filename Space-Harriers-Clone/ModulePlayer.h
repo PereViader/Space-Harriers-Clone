@@ -25,13 +25,9 @@ public:
 	virtual void Render() override;
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
 
-	virtual ScreenBoundTransform& GetTransform() const override { return static_cast<ScreenBoundTransform&>(GameEntity::GetTransform()); }
-
+	virtual ScreenBoundTransform& GetTransform() const override { return GetTransformTypped<ScreenBoundTransform>(); }
 	Vector2 GetNormalizedPosition() const;
 	Vector3 GetChestPosition() const;
-
-public:
-	bool destroyed = false;
 
 private:
 	static const float PLAYER_SPEED;
@@ -65,6 +61,8 @@ private:
 	Animation tripOverHazzard; 
 
 	Collider* collider;
+
+	bool destroyed;
 
 private:
 	Vector2 GetInputMovement() const;

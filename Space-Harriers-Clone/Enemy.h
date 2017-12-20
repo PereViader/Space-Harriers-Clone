@@ -38,7 +38,7 @@ public:
 	}
 
 	virtual FloorRelatedTransform& GetTransform() const override { 
-		return static_cast<FloorRelatedTransform&>(GameEntity::GetTransform()); 
+		return GetTransformTypped<FloorRelatedTransform>();
 	}
 
 	virtual Enemy * Clone() const override = 0;
