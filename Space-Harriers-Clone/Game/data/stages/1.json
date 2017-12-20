@@ -3,6 +3,11 @@
 	"startingImagePath" : "data/...",
 	"enemies" : [
 		{
+			"name" : "ovni",
+			"spawnId" : 1,
+			"position" : [0,0]
+		},
+		{
 			"name" : "tree",
 			"spawnId" : 1,
 			"position" : [-500,0]
@@ -52,7 +57,7 @@
 			"spawnId" : 17,
 			"position" : [400,500]
 		},
-		
+
 		{
 			"name" : "rock",
 			"spawnId" : 20,
