@@ -5,6 +5,7 @@
 #include "ModuleAudio.h"
 #include "ModuleCollision.h"
 #include "ModuleFloor.h"
+#include "ModuleShadow.h"
 
 #include "Collider.h"
 #include "Vector3.h"
@@ -68,6 +69,7 @@ void Particle::Render()
 	animation.UpdateFrame();
 	graphics.UpdateTexture(animation);
 	App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::MIDDLE_CENTER, screenPosition);
+	//App->shadow->DrawShadow(GetTransform());
 }
 
 void Particle::SetVelocity(const Vector3 & velocity)
