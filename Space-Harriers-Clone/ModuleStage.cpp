@@ -21,6 +21,7 @@ ModuleStage::ModuleStage(bool enabled) :
 	previousSegmentCount(-1)
 {
 	LoadNextStage();
+	json a;
 }
 
 
@@ -41,15 +42,6 @@ bool ModuleStage::Start()
 
 update_status ModuleStage::Update()
 {
-	/*currentTime += App->time->GetDeltaTime();
-
-	if (currentTime > 0.5) {
-		Enemy * enemy = App->enemies->InstantiateEnemyByName("rock", map<string, void*>());
-		Vector3 startingPositionDelta((float)(rand() % 800 - 500), (float)(rand() % 300 + 300));
-		enemy->transform->Move(startingPositionDelta);
-		currentTime = 0.0f;
-	}*/
-
 	int currentSegmentCount = App->floor->GetCurrentSegmentCount();
 	if (currentSegmentCount != previousSegmentCount) {
 		previousSegmentCount = currentSegmentCount;
@@ -81,5 +73,4 @@ void ModuleStage::LoadNextStage()
 	ifstream jsonFile(CreateStageJsonFilePath(currentStage));
 	stageData.clear();
 	jsonFile >> stageData;
-	std::cout << std::setw(4) << stageData << endl;
 }
