@@ -6,13 +6,14 @@
 #include "ModuleCollision.h"
 #include "ModuleFloor.h"
 #include "ModuleShadow.h"
+#include "ScreenBoundFloorProjectedTransform.h"
 
 #include "Collider.h"
 #include "Vector3.h"
 
 
 Particle::Particle(const ColliderType& particleType, const Animation& animation, const Size2D & size, const SFX& sfx, const Texture& graphics) :
-	GameEntity(new ScreenBoundTransform()),
+	GameEntity(new ScreenBoundFloorProjectedTransform()),
 	graphics(graphics),
 	sfx(sfx),
 	animation(animation),
@@ -69,7 +70,7 @@ void Particle::Render()
 	animation.UpdateFrame();
 	graphics.UpdateTexture(animation);
 	App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::MIDDLE_CENTER, screenPosition);
-	//App->shadow->DrawShadow(GetTransform());
+	App->shadow->DrawShadow(GetTransform());
 }
 
 void Particle::SetVelocity(const Vector3 & velocity)

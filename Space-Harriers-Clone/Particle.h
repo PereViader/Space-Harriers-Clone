@@ -5,10 +5,10 @@
 
 #include "Animation.h"
 #include "Vector3.h"
-#include "ScreenBoundTransform.h"
 #include "Texture.h"
 #include "SFX.h"
 #include "ModuleCollision.h"
+#include "ScreenBoundFloorProjectedTransform.h"
 
 class Collider;
 class Size2D;
@@ -25,7 +25,7 @@ public:
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
 	virtual Particle* Clone() const override;
 	virtual void Render() override;
-	virtual ScreenBoundTransform& GetTransform() const override { return GetTransformTypped<ScreenBoundTransform>(); }
+	virtual ScreenBoundFloorProjectedTransform& GetTransform() const override { return GetTransformTypped<ScreenBoundFloorProjectedTransform>(); }
 
 	void SetVelocity(const Vector3& velocity);
 private:

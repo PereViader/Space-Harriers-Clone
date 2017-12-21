@@ -6,6 +6,7 @@
 #include "ModuleRender.h"
 #include "Particle.h"
 #include "Collider.h"
+#include "ScreenBoundFloorProjectedTransform.h"
 
 #include <math.h>
 
@@ -88,7 +89,7 @@ void ModuleParticles::AddParticleByName(const string & name, const Vector3 & pos
 	const Particle * prototype = GetParticlePrototypeByName(name);
 	assert(prototype != nullptr);
 	Particle * instance = prototype->Clone();
-	instance->GetTransform().SetScreenPosition(position);
+	instance->GetTransform().SetPosition(position);
 	instance->SetVelocity(velocity);
 	this->active.push_back(instance);
 }
