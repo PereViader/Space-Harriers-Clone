@@ -15,8 +15,14 @@ Obstacle::Obstacle(const Texture& graphics, const Animation& animation, bool has
 {
 }
 
-
-//TODO copy constructor
+Obstacle::Obstacle(const Obstacle & o) :
+	Enemy(o),
+	graphics(o.graphics),
+	animation(o.animation),
+	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
+	scalingFactor(o.scalingFactor)
+{
+}
 
 Obstacle::~Obstacle()
 {
@@ -25,22 +31,17 @@ Obstacle::~Obstacle()
 
 Obstacle * Obstacle::Clone() const
 {
-	Obstacle* o = new Obstacle(*this);
-	o->collider = App->collision->RegisterPrototypeInstance(*o->collider, *o);
-
-	static_cast<FloorAnchoredTransform&>(o->GetTransform()).ResetPositionToTheHorizon();
-	return o;
+	return new Obstacle(*this);
 }
 
 void Obstacle::Init(map<string, void*> parameters)
 {
+	GetTransformTypped<FloorAnchoredTransform>().ResetPositionToTheHorizon();
 }
 
 void Obstacle::Update()
 {
-	//Move Obstacle
-	Vector3 movement(App->floor->GetCurrentFloorMovement(), 0, 0);
-	GetTransform().Move(movement);
+	GetTransform().Move(GetMovement());
 	
 	if (GetTransform().GetFloorPositionAndDepth().z <= 0) {
 		MarkAsDeleted();
@@ -66,4 +67,9 @@ void Obstacle::Render()
 		graphics.UpdateTexture(animation);
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::BOTTOM_CENTER, screen);
 	}
+}
+
+Vector3 Obstacle::GetMovement() const
+{
+	return Vector3(App->floor->GetCurrentFloorMovement(), 0, 0);
 }

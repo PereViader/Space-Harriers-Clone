@@ -19,6 +19,7 @@ class Ovni :
 {
 public:
 	Ovni(float speed, float particleSpeed, const Texture& texture, const Animation& animation, const Size2D& size, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor);
+	Ovni(const Ovni&);
 	~Ovni();
 
 	virtual void Init(map<string, void*> values) override;

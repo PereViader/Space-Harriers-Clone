@@ -15,6 +15,7 @@ class Obstacle :
 {
 public:
 	Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, const Size2D& size, float scalingFactor);
+	Obstacle(const Obstacle&);
 	~Obstacle();
 
 	virtual Obstacle* Clone() const override;
@@ -30,4 +31,8 @@ private:
 	Animation animation;
 	Collider* collider;
 	float scalingFactor;
+
+private:
+	Vector3 GetMovement() const;
+
 };

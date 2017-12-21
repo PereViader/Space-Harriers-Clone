@@ -27,7 +27,19 @@ Ovni::Ovni(float speed, float particleSpeed, const Texture& texture, const Anima
 {
 }
 
-//TODO copy constructor
+Ovni::Ovni(const Ovni & o) :
+	Enemy(o),
+	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
+	speed(o.speed),
+	particleSpeed(o.particleSpeed),
+	graphics(o.graphics),
+	animation(o.animation),
+	scalingFactor(o.scalingFactor),
+	currentTarget(o.currentTarget),
+	path(o.path),
+	particleSpawnsIndex(o.particleSpawnsIndex)
+{
+}
 
 Ovni::~Ovni()
 {
@@ -36,7 +48,7 @@ Ovni::~Ovni()
 
 void Ovni::Init(map<string, void*> values)
 {
-	collider = App->collision->RegisterPrototypeInstance(*collider, *this);
+	//collider = App->collision->RegisterPrototypeInstance(*collider, *this);
 }
 
 void Ovni::Update()
