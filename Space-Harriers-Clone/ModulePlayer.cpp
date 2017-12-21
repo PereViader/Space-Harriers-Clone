@@ -8,6 +8,7 @@
 #include "ModuleInput.h"
 #include "ModuleParticles.h"
 #include "ModuleRender.h"
+#include "ModuleShadow.h"
 #include "ModuleTime.h"
 #include "ModuleCollision.h"
 #include "Collider.h"
@@ -36,11 +37,11 @@ const Vector3 ModulePlayer::PLAYER_PARTICLE_VELOCITY(0, 90, 1000);
 
 ModulePlayer::ModulePlayer(bool active) : 
 	Module(active),
-	GameEntity(new ScreenBoundTransform()),
+	GameEntity(new FloorBasedTransform()),
 	destroyed(false),
 	currentAnimation(&hover_center)
 {
-	GetTransform().SetScreenPosition(Vector2((SCREEN_WIDTH / 2.0f), SCREEN_HEIGHT));
+	GetTransform().SetPosition(Vector3((SCREEN_WIDTH / 2.0f), 0, 0));
 
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
 	ground_running.frames.push_back({ 25, 4, 20, 47 });
@@ -110,7 +111,7 @@ Vector2 ModulePlayer::GetInputMovement() const
 {
 	Vector2 movement;
 	movement.x = App->input->GetAxis(Axis::Horizontal)*PLAYER_SPEED*App->time->GetDeltaTime();
-	movement.y = App->input->GetAxis(Axis::Vertical)*PLAYER_SPEED*App->time->GetDeltaTime();
+	movement.y = -App->input->GetAxis(Axis::Vertical)*PLAYER_SPEED*App->time->GetDeltaTime();
 	return movement;
 }
 
@@ -138,15 +139,24 @@ void ModulePlayer::MovePlayer()
 		movement.y = -position.y*PLAYER_RECOVER_SPEED*App->time->GetDeltaTime();*/
 
 	//Clamp position inside the screen
-	if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION)
-		movement.x = MIN_HORIZONTAL_POSITION - position.x;
-	else if (position.x == MAX_HORIZONTAL_POSITION && movement.x > 0 || position.x > MAX_HORIZONTAL_POSITION)
-		movement.x = MAX_HORIZONTAL_POSITION - position.x;
-	
+	/*	
 	if (position.y == MIN_VERTICAL_POSITION && movement.y < 0 || position.y < MIN_VERTICAL_POSITION)
 		movement.y = MIN_VERTICAL_POSITION - position.y;
 	else if (position.y == MAX_VERTICAL_POSITION && movement.y > 0 || position.y > MAX_VERTICAL_POSITION)
 		movement.y = MAX_VERTICAL_POSITION - position.y;
+	*/
+
+	if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION) {
+		movement.x = MIN_HORIZONTAL_POSITION - position.x;
+	}
+	else if (position.x == MAX_HORIZONTAL_POSITION && movement.x > 0 || position.x > MAX_HORIZONTAL_POSITION) {
+		movement.x = MAX_HORIZONTAL_POSITION - position.x;
+	}
+
+	if (position.y == MAX_VERTICAL_POSITION && movement.y < 0 || position.y > MAX_VERTICAL_POSITION)
+		movement.y = position.y - MAX_VERTICAL_POSITION;
+	else if (position.y == MIN_VERTICAL_POSITION && movement.y > 0 || position.y < MIN_VERTICAL_POSITION)
+		movement.y = position.y - MIN_VERTICAL_POSITION;
 
 	GetTransform().Move(movement);
 }
@@ -158,6 +168,7 @@ void ModulePlayer::Render()
 		currentAnimation->UpdateFrame();
 		graphics.UpdateTexture(*currentAnimation);
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, RENDER_SCALE, Pivot2D::BOTTOM_CENTER, screen);
+		App->shadow->DrawShadow(GetTransform());
 	}
 }
 

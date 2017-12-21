@@ -7,7 +7,7 @@
 #include "Texture.h"
 #include "Animation.h"
 
-#include "ScreenBoundTransform.h"
+#include "FloorBasedTransform.h"
 #include "Vector2.h"
 
 class Collider;
@@ -25,7 +25,7 @@ public:
 	virtual void Render() override;
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
 
-	virtual ScreenBoundTransform& GetTransform() const override { return GetTransformTypped<ScreenBoundTransform>(); }
+	virtual FloorBasedTransform& GetTransform() const override { return GetTransformTypped<FloorBasedTransform>(); }
 	Vector2 GetNormalizedPosition() const;
 	Vector3 GetChestPosition() const;
 
