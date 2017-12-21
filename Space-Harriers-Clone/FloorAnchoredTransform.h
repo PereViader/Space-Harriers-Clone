@@ -5,6 +5,8 @@
 #include "Application.h"
 #include "ModuleFloor.h"
 
+#include "Vector2.h"
+
 class FloorAnchoredTransform :
 	public FloorRelatedTransform
 {
@@ -29,8 +31,7 @@ private:
 	int renderingFloorId;
 	int renderingFloorSegmentCount;
 	float percentageInsideSegment;
-	float xPositionOffset;
-	float yOffset;
+	Vector2 position;
 
 private:
 	bool IsBoundSegmentPresentOnScreen() const;
