@@ -22,7 +22,7 @@ public:
 
 protected:
 	template <typename T>
-	T& GetTransformTypped() const { return static_cast<T&>(*transform); }
+	inline T& GetTransformTypped() const { return static_cast<T&>(*transform); }
 
 private:
 	Transform * transform;
