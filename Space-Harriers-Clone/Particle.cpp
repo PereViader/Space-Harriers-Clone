@@ -11,6 +11,7 @@
 #include "Collider.h"
 #include "Vector3.h"
 
+const float Particle::MINIMUM_HEIGHT_FOR_SHADOW = SCREEN_HEIGHT - 150;
 
 Particle::Particle(const ColliderType& particleType, const Animation& animation, const Size2D & size, const SFX& sfx, const Texture& graphics) :
 	GameEntity(new ScreenBoundFloorProjectedTransform()),
@@ -70,7 +71,10 @@ void Particle::Render()
 	animation.UpdateFrame();
 	graphics.UpdateTexture(animation);
 	App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::MIDDLE_CENTER, screenPosition);
-	App->shadow->DrawShadow(GetTransform());
+	
+	if (screenPosition.y < MINIMUM_HEIGHT_FOR_SHADOW) {
+		App->shadow->DrawShadow(GetTransform());
+	}
 }
 
 void Particle::SetVelocity(const Vector3 & velocity)
