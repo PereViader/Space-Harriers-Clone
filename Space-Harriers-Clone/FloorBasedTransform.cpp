@@ -29,9 +29,6 @@ Vector3 FloorBasedTransform::GetScreenPositionAndDepth() const
 
 void FloorBasedTransform::Move(const Vector3 & movement)
 {
-	/*position.x += movement.x;
-	position.z += movement.z;
-	position.y -= movement.y;*/
 	position = position + movement;
 }
 
