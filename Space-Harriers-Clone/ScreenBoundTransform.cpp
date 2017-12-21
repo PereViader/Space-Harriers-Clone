@@ -52,5 +52,5 @@ float ScreenBoundTransform::GetRenderingScale() const
 
 void ScreenBoundTransform::Move(const Vector3& movement)
 {
-	position = position + movement;
+	position += movement;
 }
