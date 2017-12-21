@@ -33,7 +33,7 @@ void Collider::Update()
 
 bool Collider::CheckCollision(const Collider& r) const
 {
-	float thisZ = owner->GetTransform().GetScreenPositionAndDepth().z;
-	float otherZ = r.owner->GetTransform().GetScreenPositionAndDepth().z;
+	float thisZ = owner->GetTransform().GetDepth();
+	float otherZ = r.owner->GetTransform().GetDepth();
 	return DoColliderLayersCollide(colliderType, r.colliderType) && abs(thisZ - otherZ) <= 28 && SDL_HasIntersection(&this->rect, &r.rect);
 }

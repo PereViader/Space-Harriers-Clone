@@ -13,6 +13,7 @@ public:
 	virtual ~ScreenBoundTransform();
 
 	virtual Vector3 GetScreenPositionAndDepth() const override;
+	virtual float GetDepth() const override;
 
 	virtual void Move(const Vector3& movement) override;
 

@@ -16,6 +16,7 @@ public:
 	~FloorAnchoredTransform();
 
 	virtual Vector3 GetScreenPositionAndDepth() const override;
+	virtual float GetDepth() const override;
 	virtual Vector3 GetFloorPositionAndDepth() const override;
 	virtual void Move(const Vector3& movement) override;
 

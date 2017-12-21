@@ -44,6 +44,11 @@ Vector3 FloorAnchoredTransform::GetScreenPositionAndDepth() const
 	return position_scale;
 }
 
+float FloorAnchoredTransform::GetDepth() const
+{
+	return GetFloorPositionAndDepth().z;
+}
+
 inline Vector3 FloorAnchoredTransform::GetFloorPositionAndDepth() const
 {
 	Vector3 position_scale;

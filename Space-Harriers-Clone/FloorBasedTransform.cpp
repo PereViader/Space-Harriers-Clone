@@ -40,6 +40,11 @@ Vector3 FloorBasedTransform::GetFloorPositionAndDepth() const
 	return Vector3(position.x, App->floor->GetHorizonPositionForDepth(position.z), position.z);
 }
 
+float FloorBasedTransform::GetDepth() const
+{
+	return position.z;
+}
+
 float FloorBasedTransform::GetRenderingScale() const
 {
 	return CalculatePercentageOfPositionInFloor(position.z);

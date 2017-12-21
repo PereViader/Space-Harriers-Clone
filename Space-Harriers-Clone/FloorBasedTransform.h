@@ -15,6 +15,7 @@ public:
 	virtual Vector3 GetScreenPositionAndDepth() const override;
 	virtual void Move(const Vector3 & movement) override;
 	virtual Vector3 GetFloorPositionAndDepth() const override;
+	virtual float GetDepth() const override;
 	virtual float GetRenderingScale() const override;
 
 	void SetPosition(const Vector3&);

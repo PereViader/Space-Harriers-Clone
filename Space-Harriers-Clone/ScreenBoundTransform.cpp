@@ -30,6 +30,11 @@ Vector3 ScreenBoundTransform::GetScreenPositionAndDepth() const
 	return position;
 }
 
+float ScreenBoundTransform::GetDepth() const
+{
+	return position.z;
+}
+
 ScreenBoundTransform* ScreenBoundTransform::Clone() const
 {
 	return new ScreenBoundTransform(*this);
