@@ -40,6 +40,7 @@ public:
 
 
 private:
+	static const float HORIZON_MOVEMENT_SMOOTHING;
 	float horizonRenderHeight;
 
 	//vertical lines

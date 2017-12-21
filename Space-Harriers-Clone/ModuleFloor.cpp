@@ -18,6 +18,8 @@ const float ModuleFloor::HORIZONTAL_SPEED_MAX = 0.2f;
 const float ModuleFloor::SEGMENT_REDUCTION = 0.60f;
 const float ModuleFloor::HORIZONTAL_LINES_SPEED = 2.0f;
 
+const float  ModuleFloor::HORIZON_MOVEMENT_SMOOTHING = 0.8;
+
 ModuleFloor::ModuleFloor(bool enabled) :
 	Module(enabled),
 	horizontalSpeedForOutsideUse(0)
@@ -60,7 +62,8 @@ update_status ModuleFloor::Update()
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
 	horizontalSpeedForOutsideUse = -horizontalSpeed * (SCREEN_WIDTH) * 1.2f;
 
-	horizonRenderHeight = HORIZON_MAX_HEIGHT + static_cast<float>(HORIZON_MIN_HEIGHT - HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f);
+	float desiredHorizonRenderHeight = HORIZON_MAX_HEIGHT + static_cast<float>(HORIZON_MIN_HEIGHT - HORIZON_MAX_HEIGHT) * ((playerPosition.y + 1.0f) / 2.0f);
+	horizonRenderHeight = horizonRenderHeight + (desiredHorizonRenderHeight - horizonRenderHeight) * HORIZON_MOVEMENT_SMOOTHING * App->time->GetDeltaTime();
 
 	RenderFloor();
 	return update_status::UPDATE_CONTINUE;
