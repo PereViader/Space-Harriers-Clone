@@ -9,6 +9,14 @@ class Vector3;
 
 using namespace std;
 
+Vector2& operator+=(Vector2& lhs, const Vector2& rhs);
+Vector2& operator-=(Vector2& lhs, const Vector2& rhs);
+Vector2& operator/=(Vector2& lhs, float value);
+Vector2& operator*=(Vector2& lhs, float value);
+
+bool operator==(const Vector2& lhs, const Vector2& rhs);
+bool operator!=(const Vector2& lhs, const Vector2& rhs);
+
 Vector2 operator*(float d, const Vector2& v);
 Vector2 operator*(const Vector2& v, float d);
 
@@ -62,6 +70,30 @@ public:
 		return operator/(*this, Magnitude());
 	}
 };
+
+inline Vector2& operator+=(Vector2& lhs, const Vector2& rhs) {
+	lhs.x += rhs.x;
+	lhs.y += rhs.y;
+	return lhs;
+}
+
+inline Vector2& operator-=(Vector2& lhs, const Vector2& rhs) {
+	lhs.x -= rhs.x;
+	lhs.y -= rhs.y;
+	return lhs;
+}
+
+inline Vector2& operator*=(Vector2& lhs, float value) {
+	lhs.x *= value;
+	lhs.y *= value;
+	return lhs;
+}
+
+inline Vector2& operator/=(Vector2& lhs, float value) {
+	lhs.x /= value;
+	lhs.y /= value;
+	return lhs;
+}
 
 inline bool operator==(const Vector2& lhs, const Vector2& rhs) {
 	return lhs.x == rhs.x && lhs.y == rhs.y;

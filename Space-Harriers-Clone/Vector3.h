@@ -9,6 +9,14 @@ class Vector2;
 
 using namespace std;
 
+Vector3& operator+=(Vector3& lhs, const Vector3& rhs);
+Vector3& operator-=(Vector3& lhs, const Vector3& rhs);
+Vector3& operator*=(Vector3& lhs, float value);
+Vector3& operator/=(Vector3& lhs, float value);
+
+bool operator==(const Vector3& lhs, const Vector3& rhs);
+bool operator!=(const Vector3& lhs, const Vector3& rhs);
+
 Vector3 operator*(float d, const Vector3& v);
 Vector3 operator*(const Vector3& v, float d);
 
@@ -68,6 +76,34 @@ public:
 
 	
 };
+
+inline Vector3& operator+=(Vector3& lhs, const Vector3& rhs) {
+	lhs.x += rhs.x;
+	lhs.y += rhs.y;
+	lhs.z += rhs.z;
+	return lhs;
+}
+
+inline Vector3& operator-=(Vector3& lhs, const Vector3& rhs) {
+	lhs.x -= rhs.x;
+	lhs.y -= rhs.y;
+	lhs.z -= rhs.z;
+	return lhs;
+}
+
+inline Vector3& operator*=(Vector3& lhs, float value) {
+	lhs.x *= value;
+	lhs.y *= value;
+	lhs.z *= value;
+	return lhs;
+}
+
+inline Vector3& operator/=(Vector3& lhs, float value) {
+	lhs.x /= value;
+	lhs.y /= value;
+	lhs.z /= value;
+	return lhs;
+}
 
 inline bool operator==(const Vector3& lhs, const Vector3& rhs) {
 	return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
