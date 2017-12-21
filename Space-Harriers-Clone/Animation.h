@@ -9,16 +9,20 @@ using namespace std;
 class Animation
 {
 public:
-	bool loop = true;
-	float speed = 1.0f;
+	bool loop;
+	float speed;
 	vector<SDL_Rect> frames;
 
 private:
-	float current_frame = 0.0f;
-	int loops = 0;
+	float current_frame;
+	int loops;
 
 public:
-	Animation()
+	Animation() : 
+		loop(true),
+		speed(1.0f),
+		current_frame(0.0f),
+		loops(0)
 	{}
 
 	Animation(const Animation& anim) : loop(anim.loop), speed(anim.speed), frames(anim.frames)
