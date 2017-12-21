@@ -129,34 +129,23 @@ void ModulePlayer::ShootLaser()
 void ModulePlayer::MovePlayer()
 {
 	Vector2 movement = GetInputMovement();
-	Vector2 position = GetTransform().GetScreenPositionAndDepth();
-	
-	//Return to center when not moving
-	/*if (movement.x == 0.0f)
-		movement.x = -position.x*PLAYER_RECOVER_SPEED*App->time->GetDeltaTime();
 
-	if (movement.y == 0.0f)
-		movement.y = -position.y*PLAYER_RECOVER_SPEED*App->time->GetDeltaTime();*/
+	//Clamp movement to not leave the screen
+	{
+		Vector2 position = GetTransform().GetScreenPositionAndDepth();
 
-	//Clamp position inside the screen
-	/*	
-	if (position.y == MIN_VERTICAL_POSITION && movement.y < 0 || position.y < MIN_VERTICAL_POSITION)
-		movement.y = MIN_VERTICAL_POSITION - position.y;
-	else if (position.y == MAX_VERTICAL_POSITION && movement.y > 0 || position.y > MAX_VERTICAL_POSITION)
-		movement.y = MAX_VERTICAL_POSITION - position.y;
-	*/
+		if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION) {
+			movement.x = MIN_HORIZONTAL_POSITION - position.x;
+		}
+		else if (position.x == MAX_HORIZONTAL_POSITION && movement.x > 0 || position.x > MAX_HORIZONTAL_POSITION) {
+			movement.x = MAX_HORIZONTAL_POSITION - position.x;
+		}
 
-	if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION) {
-		movement.x = MIN_HORIZONTAL_POSITION - position.x;
+		if (position.y == MAX_VERTICAL_POSITION && movement.y < 0 || position.y > MAX_VERTICAL_POSITION)
+			movement.y = position.y - MAX_VERTICAL_POSITION;
+		else if (position.y == MIN_VERTICAL_POSITION && movement.y > 0 || position.y < MIN_VERTICAL_POSITION)
+			movement.y = position.y - MIN_VERTICAL_POSITION;
 	}
-	else if (position.x == MAX_HORIZONTAL_POSITION && movement.x > 0 || position.x > MAX_HORIZONTAL_POSITION) {
-		movement.x = MAX_HORIZONTAL_POSITION - position.x;
-	}
-
-	if (position.y == MAX_VERTICAL_POSITION && movement.y < 0 || position.y > MAX_VERTICAL_POSITION)
-		movement.y = position.y - MAX_VERTICAL_POSITION;
-	else if (position.y == MIN_VERTICAL_POSITION && movement.y > 0 || position.y < MIN_VERTICAL_POSITION)
-		movement.y = position.y - MIN_VERTICAL_POSITION;
 
 	GetTransform().Move(movement);
 }
