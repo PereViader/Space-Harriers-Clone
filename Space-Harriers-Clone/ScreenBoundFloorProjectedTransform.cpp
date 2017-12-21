@@ -6,6 +6,10 @@ ScreenBoundFloorProjectedTransform::ScreenBoundFloorProjectedTransform()
 {
 }
 
+ScreenBoundFloorProjectedTransform::ScreenBoundFloorProjectedTransform(const Vector3 & position) :
+	position(position)
+{
+}
 
 ScreenBoundFloorProjectedTransform::~ScreenBoundFloorProjectedTransform()
 {

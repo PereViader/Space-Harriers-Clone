@@ -9,6 +9,7 @@ class ScreenBoundFloorProjectedTransform :
 {
 public:
 	ScreenBoundFloorProjectedTransform();
+	ScreenBoundFloorProjectedTransform(const Vector3&);
 	virtual ~ScreenBoundFloorProjectedTransform();
 
 	virtual Vector3 GetScreenPositionAndDepth() const override;
