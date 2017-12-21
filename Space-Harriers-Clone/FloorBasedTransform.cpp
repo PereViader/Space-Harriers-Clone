@@ -29,7 +29,7 @@ Vector3 FloorBasedTransform::GetScreenPositionAndDepth() const
 
 void FloorBasedTransform::Move(const Vector3 & movement)
 {
-	position = position + movement;
+	position += movement;
 }
 
 Vector3 FloorBasedTransform::GetFloorPositionAndDepth() const
