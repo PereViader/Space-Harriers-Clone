@@ -18,7 +18,7 @@ const float ModuleFloor::HORIZONTAL_SPEED_MAX = 0.2f;
 const float ModuleFloor::SEGMENT_REDUCTION = 0.60f;
 const float ModuleFloor::HORIZONTAL_LINES_SPEED = 2.0f;
 
-const float  ModuleFloor::HORIZON_MOVEMENT_SMOOTHING = 0.8;
+const float  ModuleFloor::HORIZON_MOVEMENT_SMOOTHING = 0.8f;
 
 ModuleFloor::ModuleFloor(bool enabled) :
 	Module(enabled),
@@ -52,8 +52,6 @@ bool ModuleFloor::Init()
 
 	return true;
 }
-
-#include <iostream>
 
 update_status ModuleFloor::Update()
 {
