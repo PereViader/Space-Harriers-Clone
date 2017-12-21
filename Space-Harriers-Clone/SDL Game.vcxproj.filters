@@ -171,6 +171,9 @@
     <ClInclude Include="SFX.h">
       <Filter>Core Modules\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="ScreenBoundFloorProjectedTransform.h">
+      <Filter>Utils\Transforms</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -268,6 +271,9 @@
     </ClCompile>
     <ClCompile Include="ModuleAudio.cpp">
       <Filter>Core Modules\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenBoundFloorProjectedTransform.cpp">
+      <Filter>Utils\Transforms</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

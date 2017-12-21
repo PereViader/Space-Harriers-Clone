@@ -113,6 +113,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="ScreenBoundFloorProjectedTransform.h" />
     <ClInclude Include="ScreenBoundTransform.h" />
     <ClInclude Include="SFX.h" />
     <ClInclude Include="Size2D.h" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Ovni.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Pivot2D.cpp" />
+    <ClCompile Include="ScreenBoundFloorProjectedTransform.cpp" />
     <ClCompile Include="ScreenBoundTransform.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
