@@ -44,3 +44,8 @@ ScreenBoundFloorProjectedTransform * ScreenBoundFloorProjectedTransform::Clone()
 {
 	return new ScreenBoundFloorProjectedTransform(*this);
 }
+
+void ScreenBoundFloorProjectedTransform::SetPosition(const Vector3 & position)
+{
+	this->position = position;
+}

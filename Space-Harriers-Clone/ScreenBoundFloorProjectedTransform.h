@@ -19,6 +19,8 @@ public:
 	virtual Vector3 GetFloorPositionAndDepth() const override;
 	virtual ScreenBoundFloorProjectedTransform * Clone() const override;
 
+	void SetPosition(const Vector3&);
+
 private:
 	Vector3 position;
 };
