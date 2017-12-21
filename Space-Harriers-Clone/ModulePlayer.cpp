@@ -154,9 +154,10 @@ void ModulePlayer::Render()
 {
 	if (!destroyed) {
 		Vector3 screen = GetTransform().GetScreenPositionAndDepth();
+		float scale = GetTransform().GetRenderingScale() * RENDER_SCALE;
 		currentAnimation->UpdateFrame();
 		graphics.UpdateTexture(*currentAnimation);
-		App->renderer->BlitWithPivotScaledZBuffer(graphics, RENDER_SCALE, Pivot2D::BOTTOM_CENTER, screen);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::BOTTOM_CENTER, screen);
 		App->shadow->DrawShadow(GetTransform());
 	}
 }
