@@ -74,7 +74,10 @@ public:
 		return operator/(*this, Magnitude());
 	}
 
-	
+	static const Vector3 UP;
+	static const Vector3 FORWARD;
+	static const Vector3 RIGHT;
+
 };
 
 inline Vector3& operator+=(Vector3& lhs, const Vector3& rhs) {

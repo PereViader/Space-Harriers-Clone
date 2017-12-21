@@ -69,6 +69,9 @@ public:
 	Vector2 Normalized() const {
 		return operator/(*this, Magnitude());
 	}
+
+	static const Vector2 UP;
+	static const Vector2 RIGHT;
 };
 
 inline Vector2& operator+=(Vector2& lhs, const Vector2& rhs) {
