@@ -38,10 +38,6 @@ private:
 	Texture graphics;
 	list<Particle*> active;
 	map<string, Particle*> particlePrototypes;
-
-private:
-	const Particle * GetParticlePrototypeByName(const string& name) const;
-
 };
 
 #endif // __MODULEPARTICLES_H__

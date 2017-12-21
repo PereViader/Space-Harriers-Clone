@@ -70,7 +70,6 @@ update_status ModuleParticles::PreUpdate()
 	return update_status::UPDATE_CONTINUE;
 }
 
-// Update all particle logic and draw them
 update_status ModuleParticles::Update()
 {
 	for (Particle* particle : active) {
@@ -86,16 +85,8 @@ update_status ModuleParticles::Update()
 
 void ModuleParticles::AddParticleByName(const string & name, const Vector3 & position, const Vector3& velocity)
 {
-	const Particle * prototype = GetParticlePrototypeByName(name);
-	assert(prototype != nullptr);
-	Particle * instance = prototype->Clone();
+	Particle * instance = particlePrototypes.at(name)->Clone();
 	instance->GetTransform().SetPosition(position);
 	instance->SetVelocity(velocity);
 	this->active.push_back(instance);
-}
-
-const Particle * ModuleParticles::GetParticlePrototypeByName(const string & name) const
-{
-	map<string, Particle*>::const_iterator it = particlePrototypes.find(name);
-	return (it != particlePrototypes.cend()) ? it->second : nullptr;
 }
