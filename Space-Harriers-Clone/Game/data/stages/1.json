@@ -6,6 +6,11 @@
 			"name" : "ovni",
 			"spawnId" : 1,
 			"position" : [0,0]
+		}, 
+		{
+			"name" : "shieldedOvniBrain",
+			"spawnId" : 3,
+			"position" : [0,0]
 		},
 		{
 			"name" : "tree",
