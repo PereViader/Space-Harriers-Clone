@@ -116,6 +116,8 @@
     <ClInclude Include="ScreenBoundFloorProjectedTransform.h" />
     <ClInclude Include="ScreenBoundTransform.h" />
     <ClInclude Include="SFX.h" />
+    <ClInclude Include="ShieldedOvni.h" />
+    <ClInclude Include="ShieldedOvniBrain.h" />
     <ClInclude Include="Size2D.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
@@ -154,6 +156,8 @@
     <ClCompile Include="Pivot2D.cpp" />
     <ClCompile Include="ScreenBoundFloorProjectedTransform.cpp" />
     <ClCompile Include="ScreenBoundTransform.cpp" />
+    <ClCompile Include="ShieldedOvni.cpp" />
+    <ClCompile Include="ShieldedOvniBrain.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>

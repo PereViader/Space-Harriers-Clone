@@ -16,7 +16,7 @@
         "particleSpeed" : 500,
         "path" : [
           { "x":576, "y":200, "z": 700 },
-          { "x":576, "y":200, "z": 0 },
+          { "x":576, "y":200, "z": 10 },
           { "x":0, "y":50, "z": 25 }
         ],
         "particleSpawns" : [1,2]
@@ -50,6 +50,21 @@
         "scalingFactor" : 3,
         "size" : { "width":177, "height":111 },
         "hasShadow" : true
+      }
+    },
+	{
+      "type" : "shieldedOvniBrain",
+      "name" : "shieldedOvniBrain",
+      "data" : {
+	  	"speed" : 300,
+        "graphicsPath" : "data/shieldedOvni.png",
+        "animation" : {
+          "frames" : [[3,2,44,44],[53,2,46,46],[104,2,46,46],[1,53,56,56],[64,53,56,56],[1,116,64,68],[78,116,74,78]],
+          "loop" : false,
+          "speed" : 1
+        },
+        "scalingFactor" : 3,
+        "size" : { "width":177, "height":111 }
       }
     }
   ]
