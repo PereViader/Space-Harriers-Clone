@@ -47,4 +47,5 @@ private:
 	Enemy * CreateEnemyPrototype(string type, const json& enemyData) const;
 	Enemy * CreateObstaclePrototype(const json&) const;
 	Enemy * CreateOvniPrototype(const json&) const;
+	Enemy * CreateShieldedOvniBrainPrototype(const json&) const;
 };

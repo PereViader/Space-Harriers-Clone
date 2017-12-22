@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Obstacle.h"
 #include "Ovni.h"
+#include "ShieldedOvniBrain.h"
 
 #include "ModuleTextures.h"
 #include "ModuleCollision.h"
@@ -17,6 +18,7 @@ ModuleEnemy::ModuleEnemy(bool enabled) :
 	Module(enabled)
 {
 	prototypeCreationFunctionMap["ovni"] = &ModuleEnemy::CreateOvniPrototype;
+	prototypeCreationFunctionMap["shieldedOvniBrain"] = &ModuleEnemy::CreateShieldedOvniBrainPrototype;
 	prototypeCreationFunctionMap["obstacle"] = &ModuleEnemy::CreateObstaclePrototype;
 }
 
@@ -124,3 +126,13 @@ Enemy * ModuleEnemy::CreateOvniPrototype(const json & data) const
 	return new Ovni(speed, particleSpeed, graphics, animation, size, path, particleSpawns, scalingFactor);
 }
 
+Enemy * ModuleEnemy::CreateShieldedOvniBrainPrototype(const json & data) const
+{
+	float speed = data["speed"];
+	Texture graphics = App->textures->Load(data["graphicsPath"]);
+	Animation animation = data["animation"];
+	Size2D size = data["size"];
+	float scalingFactor = data["scalingFactor"];
+
+	return new ShieldedOvniBrain(speed, graphics, animation, size, scalingFactor);
+}
