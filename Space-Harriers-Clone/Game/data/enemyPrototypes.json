@@ -52,41 +52,42 @@
         "hasShadow" : true
       }
     },
-	{
-      "type" : "shieldedOvni",
-      "name" : "shieldedOvni",
-      "data" : {
-	  	"speed" : 300,
-        "graphicsPath" : "data/shieldedOvni.png",
-        "animation" : {
-          "frames" : [[3,2,44,44],[53,2,46,46],[104,2,46,46],[1,53,56,56],[64,53,56,56],[1,116,64,68],[78,116,74,78]],
-          "loop" : false,
-          "speed" : -7
-        },
-        "scalingFactor" : 3,
-        "size" : { "width":177, "height":111 }
-      }
-    },
     {
-      "type" : "shieldedOvniBrain",
-      "name" : "shieldedOvniBrain",
-      "data" : {
-          "topPath" : [
-            { "x":576, "y":500, "z": 700 },
-            { "x":576, "y":500, "z": 300 },
-            { "x":576, "y":800, "z": 300 }
-          ],
-          "leftPath" : [
-            { "x":576, "y":500, "z": 700 },
-            { "x":576, "y":500, "z": 300 },
-            { "x":300, "y":500, "z": 300 }
-          ],
-          "rightPath" : [
-            { "x":576, "y":500, "z": 700 },
-            { "x":576, "y":500, "z": 300 },
-            { "x":852, "y":500, "z": 300 }
-          ]
+        "type" : "shieldedOvni",
+        "name" : "shieldedOvni",
+        "data" : {
+          "speed" : 300,
+          "projectileSpeed" : 500,
+          "graphicsPath" : "data/shieldedOvni.png",
+          "animation" : {
+            "frames" : [[3,2,44,44],[53,2,46,46],[104,2,46,46],[1,53,56,56],[64,53,56,56],[1,116,64,68],[78,116,74,78]],
+            "loop" : false,
+            "speed" : -7
+          },
+          "scalingFactor" : 3,
+          "size" : { "width":177, "height":111 }
+        }
+      },
+      {
+        "type" : "shieldedOvniBrain",
+        "name" : "shieldedOvniBrain",
+        "data" : {
+            "topPath" : [
+              { "x":576, "y":500, "z": 700 },
+              { "x":576, "y":500, "z": 300 },
+              { "x":576, "y":800, "z": 300 }
+            ],
+            "leftPath" : [
+              { "x":576, "y":500, "z": 700 },
+              { "x":576, "y":500, "z": 300 },
+              { "x":300, "y":500, "z": 300 }
+            ],
+            "rightPath" : [
+              { "x":576, "y":500, "z": 700 },
+              { "x":576, "y":500, "z": 300 },
+              { "x":852, "y":500, "z": 300 }
+            ]
+        }
       }
-    }
   ]
 }
