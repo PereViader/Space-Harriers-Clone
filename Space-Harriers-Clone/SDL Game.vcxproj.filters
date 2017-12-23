@@ -177,7 +177,9 @@
     <ClInclude Include="ShieldedOvni.h">
       <Filter>Game Modules\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="ShieldedOvniBrain.h" />
+    <ClInclude Include="ShieldedOvniBrain.h">
+      <Filter>Game Modules\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -283,7 +285,10 @@
       <Filter>Game Modules\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="ShieldedOvniBrain.cpp">
-      <Filter>Main</Filter>
+      <Filter>Game Modules\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
