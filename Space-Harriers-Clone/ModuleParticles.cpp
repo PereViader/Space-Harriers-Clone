@@ -21,15 +21,24 @@ bool ModuleParticles::Start()
 	LOG("Loading particles");
 	graphics = App->textures->Load("data/bullets.png");
 
+	// ---------- Player
 	Animation playerParticleAnimation;
 	playerParticleAnimation.frames.push_back({ 3,2,87,56 });
+	playerParticleAnimation.speed = 0;
+	playerParticleAnimation.loop = true;
+
 	SFX playerSFX = App->audio->LoadFx("data/Laser1.wav");
 	Size2D size(87, 56);
 	Particle* playerParticlePrototype = new Particle(ColliderType::PlayerParticle,playerParticleAnimation,size,playerSFX,graphics);
 	particlePrototypes["player"] = playerParticlePrototype;
 
+
+	// ---------- Ovni
 	Animation ovniParticleAnimation;
 	ovniParticleAnimation.frames.push_back({ 3,2,87,56 });
+	ovniParticleAnimation.speed = 0;
+	ovniParticleAnimation.loop = true;
+
 	SFX ovniSFX = App->audio->LoadFx("data/Laser1.wav");
 	Size2D ovniSize(87, 56);
 	Particle* ovniParticlePrototype = new Particle(ColliderType::EnemyParticle,ovniParticleAnimation,ovniSize,ovniSFX,graphics);
