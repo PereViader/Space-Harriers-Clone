@@ -50,7 +50,6 @@ void Obstacle::Update()
 void Obstacle::OnCollision(const Collider& own, const Collider& other)
 {
 	assert(&own == collider);
-	LOG("%s", "enemy collided");
 	if (other.colliderType == ColliderType::PlayerParticle) {
 		OnObstacleDied();
 	}
