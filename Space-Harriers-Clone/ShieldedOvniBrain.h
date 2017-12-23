@@ -25,6 +25,9 @@ public:
 	virtual void Init(map<string, void*> values) override;
 	virtual void Update() override;
 	virtual Enemy * Clone() const override;
+
+	void OnShieldedOvniDied(const ShieldedOvni&);
+
 private:
 	vector<ShieldedOvni*> ovnis;
 
@@ -43,5 +46,8 @@ private:
 	list<Vector3> leftPath;
 	list<Vector3> rightPath;
 
+private:
+
+	void OnShieldedOvniBrainDied();
 };
 

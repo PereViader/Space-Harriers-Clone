@@ -6,16 +6,21 @@
 #include "ModuleTime.h"
 #include "Collider.h"
 #include "ModuleRender.h"
+#include "ModulePlayer.h"
+#include "ModuleParticles.h"
+#include "ShieldedOvniBrain.h"
 
 
-ShieldedOvni::ShieldedOvni(float speed, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor) :
+ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor) :
 	Enemy(new FloorBasedTransform(),true),
 	graphics(graphics),
 	animationOpenClose(animation),
 	scalingFactor(scalingFactor),
 	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::MIDDLE_CENTER, *this)),
 	isOpen(false),
-	speed(speed)
+	speed(speed),
+	projectileSpeed(projectileSpeed),
+	owner(nullptr)
 {
 }
 
@@ -27,19 +32,20 @@ ShieldedOvni::ShieldedOvni(const ShieldedOvni & o) :
 	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
 	isOpen(o.isOpen),
 	path(o.path),
-	speed(o.speed)
+	speed(o.speed),
+	projectileSpeed(o.projectileSpeed),
+	owner(o.owner)
 {
 }
 
 ShieldedOvni::~ShieldedOvni()
-{
-	collider->MarkAsDeleted();
+{ 
 }
 
 void ShieldedOvni::OnCollision(const Collider & own, const Collider & other)
 {
 	if (isOpen) {
-  		MarkAsDeleted();
+		OnShieldedOvniDied();
 	}
 }
 
@@ -83,16 +89,40 @@ void ShieldedOvni::SetOpen(bool state)
 		animationOpenClose.speed *= -1;
 		isOpen = state;
 	}
+
+	if (isOpen) {
+		ShootPlayer();
+	}
 }
-
-
-#include <iostream>
 
 void ShieldedOvni::SetPath(const list<Vector3>& path)
 {
 	using namespace std;
 	this->path = path;
-	cout << path.front().x << "," << path.front().y << "," << path.front().z << endl;
 	GetTransform().SetPosition(path.front());
 	this->path.pop_front();
+}
+
+void ShieldedOvni::SetShieldedOvniBrain(ShieldedOvniBrain & shieldedOvniBrain)
+{
+	owner = &shieldedOvniBrain;
+}
+
+void ShieldedOvni::ShootPlayer()
+{
+	Vector3 playerPosition = App->player->GetChestPosition();
+	Vector3 ownPosition = GetTransform().GetScreenPositionAndDepth();
+	Vector3 direction = playerPosition - ownPosition;
+	Vector3 velocity = direction.Normalized() * projectileSpeed;
+
+	App->particles->AddParticleByName("ovni", ownPosition, velocity);
+}
+
+void ShieldedOvni::OnShieldedOvniDied()
+{
+	MarkAsDeleted();
+	collider->MarkAsDeleted();
+
+	if (owner)
+		owner->OnShieldedOvniDied(*this);
 }

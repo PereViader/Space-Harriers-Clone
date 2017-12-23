@@ -10,12 +10,13 @@
 
 class Size2D;
 class Collider;
+class ShieldedOvniBrain;
 
 class ShieldedOvni :
 	public Enemy
 {
 public:
-	ShieldedOvni(float speed, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor);
+	ShieldedOvni(float speed, float projectileSpeed, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor);
 	ShieldedOvni(const ShieldedOvni&);
 	virtual ~ShieldedOvni();
 	
@@ -30,6 +31,7 @@ public:
 
 	void SetOpen(bool);
 	void SetPath(const list<Vector3>&);
+	void SetShieldedOvniBrain(ShieldedOvniBrain&);
 
 private:
 	Texture graphics;
@@ -41,5 +43,12 @@ private:
 
 	float speed;
 	list<Vector3> path;
+
+	float projectileSpeed;
+
+	ShieldedOvniBrain* owner;
+private:
+	void ShootPlayer();
+	void OnShieldedOvniDied();
 };
 

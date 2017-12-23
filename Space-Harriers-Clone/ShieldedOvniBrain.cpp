@@ -56,10 +56,13 @@ void ShieldedOvniBrain::Init(map<string, void*> values)
 	ovnis.push_back(leftOvni);
 	ovnis.push_back(rightOvni);
 
-
 	topOvni->SetPath(topPath);
 	leftOvni->SetPath(leftPath);
 	rightOvni->SetPath(rightPath);
+
+	topOvni->SetShieldedOvniBrain(*this);
+	leftOvni->SetShieldedOvniBrain(*this);
+	rightOvni->SetShieldedOvniBrain(*this);
 }
 
 void ShieldedOvniBrain::Update()
@@ -80,4 +83,19 @@ void ShieldedOvniBrain::Update()
 Enemy * ShieldedOvniBrain::Clone() const
 {
 	return new ShieldedOvniBrain(*this);
+}
+
+void ShieldedOvniBrain::OnShieldedOvniDied(const ShieldedOvni & shieldedOvni)
+{
+	for (auto it = ovnis.begin(); it != ovnis.end(); ++it) {
+		if (*it == &shieldedOvni) {
+			ovnis.erase(it);
+			break;
+		}
+	}
+}
+
+void ShieldedOvniBrain::OnShieldedOvniBrainDied()
+{
+	MarkAsDeleted();
 }
