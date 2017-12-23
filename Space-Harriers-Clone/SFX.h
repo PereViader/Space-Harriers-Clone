@@ -4,6 +4,7 @@
 class SFX
 {
 public:
+	SFX() : SFX(-1) {}
 	SFX(unsigned int id) : sfxid(id) {}
 
 	unsigned int GetId() const { return sfxid; }
