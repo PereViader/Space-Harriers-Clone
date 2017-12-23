@@ -43,12 +43,10 @@ Ovni::Ovni(const Ovni & o) :
 
 Ovni::~Ovni()
 {
-	collider->MarkAsDeleted();
 }
 
 void Ovni::Init(map<string, void*> values)
 {
-	//collider = App->collision->RegisterPrototypeInstance(*collider, *this);
 }
 
 void Ovni::Update()
@@ -67,8 +65,7 @@ void Ovni::Update()
 		}
 		currentTarget += 1;
 		if (currentTarget == path.size()) {
-			//MarkAsDeleted();
-			currentTarget = 0;
+			OnOvniDied();
 		}
 	}
 }
@@ -77,7 +74,7 @@ void Ovni::OnCollision(const Collider& own, const Collider& other)
 {
 	assert(&own == static_cast<const Collider*>(collider));
 	if (other.colliderType == ColliderType::PlayerParticle) {
-		MarkAsDeleted();
+		OnOvniDied();
 	}
 }
 
@@ -96,4 +93,10 @@ void Ovni::Render()
 		graphics.UpdateTexture(animation);
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::BOTTOM_CENTER, screen);
 	}
+}
+
+void Ovni::OnOvniDied()
+{
+	MarkAsDeleted();
+	collider->MarkAsDeleted();
 }

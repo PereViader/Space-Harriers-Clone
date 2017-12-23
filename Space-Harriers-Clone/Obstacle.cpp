@@ -26,7 +26,6 @@ Obstacle::Obstacle(const Obstacle & o) :
 
 Obstacle::~Obstacle()
 {
-	collider->MarkAsDeleted();
 }
 
 Obstacle * Obstacle::Clone() const
@@ -44,7 +43,7 @@ void Obstacle::Update()
 	GetTransform().Move(GetMovement());
 	
 	if (GetTransform().GetFloorPositionAndDepth().z <= 0) {
-		MarkAsDeleted();
+		OnObstacleDied();
 	}
 }
 
@@ -53,7 +52,7 @@ void Obstacle::OnCollision(const Collider& own, const Collider& other)
 	assert(&own == collider);
 	LOG("%s", "enemy collided");
 	if (other.colliderType == ColliderType::PlayerParticle) {
-		MarkAsDeleted();
+		OnObstacleDied();
 	}
 }
 
@@ -72,4 +71,10 @@ void Obstacle::Render()
 Vector3 Obstacle::GetMovement() const
 {
 	return Vector3(App->floor->GetCurrentFloorMovement(), 0, 0);
+}
+
+void Obstacle::OnObstacleDied()
+{
+	collider->MarkAsDeleted();
+	MarkAsDeleted();
 }

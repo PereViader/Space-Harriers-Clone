@@ -39,6 +39,8 @@ private:
 	Vector3 velocity;
 
 	static const float MINIMUM_HEIGHT_FOR_SHADOW;
+
 private:
 	void MoveParticle();
+	void OnParticleDied();
 };

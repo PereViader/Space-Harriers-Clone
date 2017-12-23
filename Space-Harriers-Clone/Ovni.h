@@ -29,6 +29,8 @@ public:
 	virtual Ovni* Clone() const override;
 	virtual void Render() override;
 
+	void OnOvniDied();
+
 private:
 
 	Texture graphics;

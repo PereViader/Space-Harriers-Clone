@@ -35,7 +35,6 @@ Particle::Particle(const Particle& p) :
 
 Particle::~Particle()
 {
-	collider->MarkAsDeleted();
 }
 
 void Particle::Update()
@@ -49,7 +48,8 @@ void Particle::Update()
 	MoveParticle();
 
 	float depth = GetTransform().GetDepth();
-	SetDeleted(depth > Z_MAX || depth < 0);
+	if (depth > Z_MAX || depth < 0)
+		OnParticleDied();
 }
 
 void Particle::MoveParticle()
@@ -57,6 +57,12 @@ void Particle::MoveParticle()
 	float deltaTime = App->time->GetDeltaTime();
 
 	GetTransform().Move(velocity * deltaTime);
+}
+
+void Particle::OnParticleDied()
+{
+	collider->MarkAsDeleted();
+	MarkAsDeleted();
 }
 
 Particle* Particle::Clone() const
@@ -84,5 +90,5 @@ void Particle::SetVelocity(const Vector3 & velocity)
 
 void Particle::OnCollision(const Collider& own, const Collider& other)
 {
-	MarkAsDeleted();
+	OnParticleDied();
 }

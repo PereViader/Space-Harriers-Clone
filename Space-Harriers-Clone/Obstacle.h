@@ -34,5 +34,6 @@ private:
 
 private:
 	Vector3 GetMovement() const;
+	void OnObstacleDied();
 
 };
