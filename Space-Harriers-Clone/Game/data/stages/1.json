@@ -6,7 +6,7 @@
 		  "name" : "ovni",
 		  "spawnId" : 1,
 		  "position" : [0,0]
-		}, 
+		},
 		{
 		  "name" : "shieldedOvniBrain",
 		  "spawnId" : 3,
@@ -15,6 +15,26 @@
 		{
 			"name" : "tree",
 			"spawnId" : 1,
+			"position" : [-500,0]
+		},
+		{
+			"name" : "bush",
+			"spawnId" : 1,
+			"position" : [-100,0]
+		},
+		{
+			"name" : "bush",
+			"spawnId" : 5,
+			"position" : [300,0]
+		},
+		{
+			"name" : "bush",
+			"spawnId" : 6,
+			"position" : [600,0]
+		},
+		{
+			"name" : "bush",
+			"spawnId" : 7,
 			"position" : [-500,0]
 		},
 		{
