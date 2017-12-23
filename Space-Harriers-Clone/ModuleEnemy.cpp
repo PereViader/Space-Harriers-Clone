@@ -28,8 +28,6 @@ ModuleEnemy::~ModuleEnemy()
 {
 }
 
-
-#include <iostream>
 bool ModuleEnemy::Start()
 {
 	ifstream enemyPrototypeJsonFile("data/enemyPrototypes.json");
@@ -78,16 +76,17 @@ update_status ModuleEnemy::Update()
 
 bool ModuleEnemy::CleanUp()
 {
-	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it)
-		RELEASE(*it);
-
+	for (Enemy* enemy : enemies) {
+		delete enemy;
+	}
 	enemies.clear();
-
 	
-	for (map<string, Enemy*>::iterator it = enemyPrototypes.begin(); it != enemyPrototypes.end(); ++it)
-		RELEASE(it->second);
-
+	for (auto enemyPrototypePair : enemyPrototypes) {
+		Enemy* enemyPrototype = enemyPrototypePair.second;
+		delete enemyPrototype;
+	}
 	enemyPrototypes.clear();
+
 	return true;
 }
 
@@ -140,12 +139,13 @@ Enemy * ModuleEnemy::CreateShieldedOvniBrainPrototype(const json & data) const
 Enemy * ModuleEnemy::CreateShieldedOvni(const json & data) const
 {
 	float speed = data["speed"];
+	float projectileSpeed = data["projectileSpeed"];
 	Texture graphics = App->textures->Load(data["graphicsPath"]);
 	Animation animation = data["animation"];
 	Size2D size = data["size"];
 	float scalingFactor = data["scalingFactor"];
 
-	return new ShieldedOvni(speed, graphics, animation, size, scalingFactor);
+	return new ShieldedOvni(speed, projectileSpeed, graphics, animation, size, scalingFactor);
 }
 
 
