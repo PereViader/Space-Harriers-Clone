@@ -62,16 +62,15 @@ void ModuleCollision::DoDebug()
 void ModuleCollision::DoCollisionDetection()
 {
 	for (list<Collider*>::const_iterator it0 = colliders.cbegin(), end = colliders.cend(); it0 != end; ++it0) {
-		for (list<Collider*>::const_iterator it1 = next(it0, 1); it1 != end; ++it1) {
-			Collider& c0 = **it0;
-			Collider& c1 = **it1;
+		Collider& c0 = **it0;
+		if (!c0.ToDelete()) {
+			for (list<Collider*>::const_iterator it1 = next(it0, 1); it1 != end; ++it1) {
+				Collider& c1 = **it1;
 
-			assert(!c0.ToDelete());
-			assert(!c1.ToDelete());
-
-			if (c0.CheckCollision(c1)) {
-				c0.owner->OnCollision(c0, c1);
-				c1.owner->OnCollision(c1, c0);
+				if (!c1.ToDelete() && c0.CheckCollision(c1)) {
+					c0.owner->OnCollision(c0, c1);
+					c1.owner->OnCollision(c1, c0);
+				}
 			}
 		}
 	}
