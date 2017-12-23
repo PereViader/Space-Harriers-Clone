@@ -17,7 +17,6 @@
 
 
 const float ModulePlayer::PLAYER_SPEED = 800;
-//const float ModulePlayer::PLAYER_RECOVER_SPEED = 700;
 
 const int ModulePlayer::MAX_HORIZONTAL_POSITION = SCREEN_WIDTH - 50;
 const int ModulePlayer::MIN_HORIZONTAL_POSITION = 50;
