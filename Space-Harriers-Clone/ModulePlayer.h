@@ -9,6 +9,7 @@
 
 #include "FloorBasedTransform.h"
 #include "Vector2.h"
+#include "SFX.h"
 
 class Collider;
 
@@ -62,6 +63,8 @@ private:
 	Collider* collider;
 
 	bool destroyed;
+
+	SFX ouchSFX;
 
 private:
 	Vector2 GetInputMovement() const;

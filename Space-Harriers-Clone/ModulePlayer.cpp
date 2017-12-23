@@ -10,7 +10,9 @@
 #include "ModuleRender.h"
 #include "ModuleShadow.h"
 #include "ModuleTime.h"
+#include "ModuleAudio.h"
 #include "ModuleCollision.h"
+
 #include "Collider.h"
 #include "Vector3.h"
 
@@ -40,7 +42,7 @@ ModulePlayer::ModulePlayer(bool active) :
 	destroyed(false),
 	currentAnimation(&hover_center)
 {
-	GetTransform().SetPosition(Vector3((SCREEN_WIDTH / 2.0f), 0, 0));
+	GetTransform().SetPosition(Vector3((SCREEN_WIDTH / 2.0f), 0, 10));
 
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
 	ground_running.frames.push_back({ 25, 4, 20, 47 });
@@ -82,6 +84,8 @@ bool ModulePlayer::Start()
 
 	Size2D playerColliderSize(80, 186);
 	collider = App->collision->AddCollider(ColliderType::Player,playerColliderSize, Pivot2D::BOTTOM_CENTER,*this);
+
+	ouchSFX = App->audio->LoadFx("data/sfx/ouch.wav");
 
 	return true;
 }
@@ -191,7 +195,12 @@ Vector3 ModulePlayer::GetChestPosition() const
 
 void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
 {
-	LOG("%s", "collided player");
+	if (other.colliderType == ColliderType::NonDamagingEnemy) {
+		App->audio->PlayFx(ouchSFX);
+	}
+	else { // collided enemy or enemy particle
+
+	}
 }
 
 update_status ModulePlayer::Update()
