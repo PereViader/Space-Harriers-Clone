@@ -10,7 +10,6 @@ Vector3::Vector3(const Vector2 & v) : Vector3(v.x, v.y)
 {
 }
 
-#include <iostream>
 Vector3 MoveTowards(const Vector3& current, const Vector3& target, float maxDistanceDelta) {
 	Vector3 ret;
 	if (current == target) {
