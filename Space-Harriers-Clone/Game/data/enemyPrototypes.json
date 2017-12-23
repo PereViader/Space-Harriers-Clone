@@ -8,7 +8,7 @@
         "animation" : {
           "frames" : [[198,127,46,30]],
           "loop" : false,
-          "speed" : 1
+          "speed" : 0
         },
         "scalingFactor" : 3,
         "size" : { "width":138, "height":90 },
@@ -30,7 +30,7 @@
         "animation" : {
           "frames" : [[206,48,44,163]],
           "loop" : false,
-          "speed" : 1
+          "speed" : 0
         },
         "scalingFactor" : 3.5,
         "size" : { "width":154, "height":570.5 },
@@ -45,7 +45,7 @@
         "animation" : {
           "frames" : [[192,72,59,37]],
           "loop" : false,
-          "speed" : 1
+          "speed" : 0
         },
         "scalingFactor" : 3,
         "size" : { "width":177, "height":111 },
@@ -53,18 +53,39 @@
       }
     },
 	{
-      "type" : "shieldedOvniBrain",
-      "name" : "shieldedOvniBrain",
+      "type" : "shieldedOvni",
+      "name" : "shieldedOvni",
       "data" : {
 	  	"speed" : 300,
         "graphicsPath" : "data/shieldedOvni.png",
         "animation" : {
           "frames" : [[3,2,44,44],[53,2,46,46],[104,2,46,46],[1,53,56,56],[64,53,56,56],[1,116,64,68],[78,116,74,78]],
           "loop" : false,
-          "speed" : 1
+          "speed" : -7
         },
         "scalingFactor" : 3,
         "size" : { "width":177, "height":111 }
+      }
+    },
+    {
+      "type" : "shieldedOvniBrain",
+      "name" : "shieldedOvniBrain",
+      "data" : {
+          "topPath" : [
+            { "x":576, "y":500, "z": 700 },
+            { "x":576, "y":500, "z": 300 },
+            { "x":576, "y":800, "z": 300 }
+          ],
+          "leftPath" : [
+            { "x":576, "y":500, "z": 700 },
+            { "x":576, "y":500, "z": 300 },
+            { "x":300, "y":500, "z": 300 }
+          ],
+          "rightPath" : [
+            { "x":576, "y":500, "z": 700 },
+            { "x":576, "y":500, "z": 300 },
+            { "x":852, "y":500, "z": 300 }
+          ]
       }
     }
   ]

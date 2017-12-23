@@ -8,14 +8,13 @@
 #include "ModuleRender.h"
 
 
-ShieldedOvni::ShieldedOvni(const list<Vector3>& path, float speed, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor) :
+ShieldedOvni::ShieldedOvni(float speed, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor) :
 	Enemy(new FloorBasedTransform(),true),
 	graphics(graphics),
 	animationOpenClose(animation),
 	scalingFactor(scalingFactor),
-	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::BOTTOM_CENTER, *this)),
+	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::MIDDLE_CENTER, *this)),
 	isOpen(false),
-	path(path),
 	speed(speed)
 {
 }
@@ -40,7 +39,7 @@ ShieldedOvni::~ShieldedOvni()
 void ShieldedOvni::OnCollision(const Collider & own, const Collider & other)
 {
 	if (isOpen) {
-		MarkAsDeleted();
+  		MarkAsDeleted();
 	}
 }
 
@@ -84,4 +83,16 @@ void ShieldedOvni::SetOpen(bool state)
 		animationOpenClose.speed *= -1;
 		isOpen = state;
 	}
+}
+
+
+#include <iostream>
+
+void ShieldedOvni::SetPath(const list<Vector3>& path)
+{
+	using namespace std;
+	this->path = path;
+	cout << path.front().x << "," << path.front().y << "," << path.front().z << endl;
+	GetTransform().SetPosition(path.front());
+	this->path.pop_front();
 }

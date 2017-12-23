@@ -1,9 +1,11 @@
 #pragma once
 #include "Enemy.h"
 
-#include <vector>
+#include <list>
 
 #include "Vector3.h"
+
+using namespace std;
 
 class ShieldedOvni;
 class Size2D;
@@ -15,6 +17,7 @@ class ShieldedOvniBrain :
 {
 public:
 	ShieldedOvniBrain(float speed, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor);
+	ShieldedOvniBrain(const list<Vector3>& leftPath, const list<Vector3>& rightPath, const list<Vector3>& topPath);
 	ShieldedOvniBrain(const ShieldedOvniBrain&);
 	virtual ~ShieldedOvniBrain();
 
@@ -35,5 +38,10 @@ private:
 	static const Vector3 OVNI_LEFT;
 	static const Vector3 OVNI_RIGHT;
 	static const Vector3 OVNI_TOP;
+
+	list<Vector3> topPath;
+	list<Vector3> leftPath;
+	list<Vector3> rightPath;
+
 };
 

@@ -4,6 +4,7 @@
 #include "Obstacle.h"
 #include "Ovni.h"
 #include "ShieldedOvniBrain.h"
+#include "ShieldedOvni.h"
 
 #include "ModuleTextures.h"
 #include "ModuleCollision.h"
@@ -19,6 +20,7 @@ ModuleEnemy::ModuleEnemy(bool enabled) :
 {
 	prototypeCreationFunctionMap["ovni"] = &ModuleEnemy::CreateOvniPrototype;
 	prototypeCreationFunctionMap["shieldedOvniBrain"] = &ModuleEnemy::CreateShieldedOvniBrainPrototype;
+	prototypeCreationFunctionMap["shieldedOvni"] = &ModuleEnemy::CreateShieldedOvni;
 	prototypeCreationFunctionMap["obstacle"] = &ModuleEnemy::CreateObstaclePrototype;
 }
 
@@ -128,11 +130,22 @@ Enemy * ModuleEnemy::CreateOvniPrototype(const json & data) const
 
 Enemy * ModuleEnemy::CreateShieldedOvniBrainPrototype(const json & data) const
 {
+	list<Vector3> topPath = data["topPath"];
+	list<Vector3> leftPath = data["leftPath"];
+	list<Vector3> rightPath = data["rightPath"];
+
+	return new ShieldedOvniBrain(leftPath, rightPath, topPath);
+}
+
+Enemy * ModuleEnemy::CreateShieldedOvni(const json & data) const
+{
 	float speed = data["speed"];
 	Texture graphics = App->textures->Load(data["graphicsPath"]);
 	Animation animation = data["animation"];
 	Size2D size = data["size"];
 	float scalingFactor = data["scalingFactor"];
 
-	return new ShieldedOvniBrain(speed, graphics, animation, size, scalingFactor);
+	return new ShieldedOvni(speed, graphics, animation, size, scalingFactor);
 }
+
+
