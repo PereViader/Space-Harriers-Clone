@@ -18,19 +18,20 @@ class GameEntity;
 class Collider;
 
 enum class ColliderType {
-	Enemy = 0,
-	Player = 1,
-	EnemyParticle = 2,
-	PlayerParticle = 3,
-	
+	Enemy,
+	NonDamagingEnemy,
+	Player,
+	EnemyParticle,
+	PlayerParticle,
 };
 
-static const bool COLLISION_MATRIX[4][4] =
+static const bool COLLISION_MATRIX[5][5] =
 {
-	{ 0,1,0,1 },
-	{ 1,0,1,0 },
-	{ 0,1,0,0 },
-	{ 1,0,0,0 }
+	{ 0,0,1,0,1 },
+	{ 0,0,1,0,1 },
+	{ 1,1,0,1,0 },
+	{ 0,0,1,0,0 },
+	{ 1,1,0,0,0 }
 };
 
 inline bool DoColliderLayersCollide(const ColliderType& a, const ColliderType& b) {
