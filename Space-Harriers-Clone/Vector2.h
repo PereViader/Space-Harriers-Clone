@@ -72,6 +72,7 @@ public:
 
 	static const Vector2 UP;
 	static const Vector2 RIGHT;
+	static const Vector2 ZERO;
 };
 
 inline Vector2& operator+=(Vector2& lhs, const Vector2& rhs) {
