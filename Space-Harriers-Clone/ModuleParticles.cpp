@@ -27,7 +27,7 @@ bool ModuleParticles::Start()
 	playerParticleAnimation.speed = 0;
 	playerParticleAnimation.loop = true;
 
-	SFX playerSFX = App->audio->LoadFx("data/sfx/laser1.wav");
+	SFX playerSFX = App->audio->LoadFx("data/sfx/playerBullet.wav");
 	Size2D size(87, 56);
 	Particle* playerParticlePrototype = new Particle(ColliderType::PlayerParticle,playerParticleAnimation,size,playerSFX,graphics);
 	particlePrototypes["player"] = playerParticlePrototype;
