@@ -108,8 +108,9 @@ Enemy * ModuleEnemy::CreateObstaclePrototype(const json & data) const
 	float scalingFactor = data["scalingFactor"];
 	Size2D size = data["size"];
 	bool hasShadow = data["hasShadow"];
+	bool isNonDamaging = data["isNonDamaging"];
 
-	return new Obstacle(graphics, animation, hasShadow, size, scalingFactor);
+	return new Obstacle(graphics, animation, hasShadow, size, scalingFactor, isNonDamaging);
 }
 
 Enemy * ModuleEnemy::CreateOvniPrototype(const json & data) const

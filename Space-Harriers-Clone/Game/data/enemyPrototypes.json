@@ -34,7 +34,8 @@
         },
         "scalingFactor" : 3.5,
         "size" : { "width":154, "height":570.5 },
-        "hasShadow" : false
+        "hasShadow" : false,
+        "isNonDamaging" : false
       }
     },
     {
@@ -49,7 +50,24 @@
         },
         "scalingFactor" : 3,
         "size" : { "width":177, "height":111 },
-        "hasShadow" : true
+        "hasShadow" : true,
+        "isNonDamaging" : false
+      }
+    },
+    {
+      "type" : "obstacle",
+      "name" : "bush",
+      "data" : {
+        "graphicsPath" : "data/rock_bush.png",
+        "animation" : {
+          "frames" : [[192,8,59,41]],
+          "loop" : false,
+          "speed" : 0
+        },
+        "scalingFactor" : 3,
+        "size" : { "width":177, "height":111 },
+        "hasShadow" : true,
+        "isNonDamaging" : true
       }
     },
     {

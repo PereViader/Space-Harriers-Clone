@@ -6,11 +6,11 @@
 
 #include <assert.h>
 
-Obstacle::Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, const Size2D& size, float scalingFactor) :
+Obstacle::Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, const Size2D& size, float scalingFactor, bool isNonDamaging) :
 	Enemy(new FloorAnchoredTransform(0,0,0), hasShadow),
 	graphics(graphics),
 	animation(animation),
-	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::BOTTOM_CENTER, *this)),
+	collider(App->collision->AddPrototypeCollider(isNonDamaging? ColliderType::NonDamagingEnemy : ColliderType::Enemy, size, Pivot2D::BOTTOM_CENTER, *this)),
 	scalingFactor(scalingFactor)
 {
 }
