@@ -180,6 +180,7 @@
     <ClInclude Include="ShieldedOvniBrain.h">
       <Filter>Game Modules\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleUserInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -289,6 +290,9 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleUserInterface.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
