@@ -30,6 +30,8 @@ public:
 	Vector2 GetNormalizedPosition() const;
 	Vector3 GetChestPosition() const;
 
+	int GetHealthPoints() const;
+
 private:
 	static const float PLAYER_SPEED;
 
@@ -71,9 +73,11 @@ private:
 	bool isFallingToTheFloor;
 	static const float FALL_SPEED;
 
+	static const int STARTING_HEALTH_POINTS;
+	int healthPoints;
+
 	SFX ouchSFX;
 	SFX aaaaarghSFX;
-
 private:
 	Vector2 GetInputMovement() const;
 	void ShootLaser();

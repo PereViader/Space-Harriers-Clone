@@ -39,6 +39,8 @@ const float ModulePlayer::INVINCIBLE_TIME_AFTER_INTERACTION = 2.0f;
 
 const float ModulePlayer::FALL_SPEED = 600.0f;
 
+const int ModulePlayer::STARTING_HP = 3;
+
 
 ModulePlayer::ModulePlayer(bool active) : 
 	Module(active),
@@ -47,7 +49,8 @@ ModulePlayer::ModulePlayer(bool active) :
 	currentAnimation(&hover_center),
 	invincibleTime(0),
 	isInvincible(false),
-	isFallingToTheFloor(false)
+	isFallingToTheFloor(false),
+	hp(STARTING_HP)
 {
 	GetTransform().SetPosition(Vector3((SCREEN_WIDTH / 2.0f), 0, 0));
 
@@ -241,6 +244,11 @@ Vector2 ModulePlayer::GetNormalizedPosition() const
 Vector3 ModulePlayer::GetChestPosition() const
 {
 	return GetTransform().GetScreenPositionAndDepth() + Vector3(0,-93);
+}
+
+int ModulePlayer::GetHP() const
+{
+	return hp;
 }
 
 void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
