@@ -42,7 +42,7 @@ ModulePlayer::ModulePlayer(bool active) :
 	destroyed(false),
 	currentAnimation(&hover_center)
 {
-	GetTransform().SetPosition(Vector3((SCREEN_WIDTH / 2.0f), 0, 10));
+	GetTransform().SetPosition(Vector3((SCREEN_WIDTH / 2.0f), 0, 0));
 
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
 	ground_running.frames.push_back({ 25, 4, 20, 47 });
