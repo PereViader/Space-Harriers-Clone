@@ -26,7 +26,8 @@ void Animation::UpdateFrame() {
 	if (current_frame < 0 || current_frame > maxFrameIndex) {
 		if (loop) {
 			float newFrame = fmod(current_frame, maxFrameIndex);
-			if (newFrame != current_frame) loops++;
+			if (newFrame != current_frame) 
+				loops++;
 			current_frame = newFrame;
 			assert(current_frame >= 0 && current_frame <= maxFrameIndex);
 
@@ -55,7 +56,7 @@ const SDL_Rect& Animation::UpdateAndGetFrame()
 
 bool Animation::Finished() const
 {
-	return loops > 0;
+	return loop ? loops > 0 : current_frame == frames.size() - 1.0f;
 }
 
 void Animation::Reset()
