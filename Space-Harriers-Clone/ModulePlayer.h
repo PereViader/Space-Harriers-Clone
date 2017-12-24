@@ -63,14 +63,23 @@ private:
 	Collider* collider;
 
 	bool destroyed;
+	
+	static const float INVINCIBLE_TIME_AFTER_INTERACTION;
+	float invincibleTime;
+	bool isInvincible;
+
+	bool isFallingToTheFloor;
+	static const float FALL_SPEED;
 
 	SFX ouchSFX;
+	SFX aaaaarghSFX;
 
 private:
 	Vector2 GetInputMovement() const;
 	void ShootLaser();
 	void MovePlayer();
 	void UpdateAnimation();
+	void UpdateInvincibility();
 
 	virtual ModulePlayer* Clone() const override;
 };

@@ -35,12 +35,19 @@ const float ModulePlayer::RENDER_SCALE = 4.0f;
 
 const Vector3 ModulePlayer::PLAYER_PARTICLE_VELOCITY(0, 90, 1000);
 
+const float ModulePlayer::INVINCIBLE_TIME_AFTER_INTERACTION = 2.0f;
+
+const float ModulePlayer::FALL_SPEED = 600.0f;
+
 
 ModulePlayer::ModulePlayer(bool active) : 
 	Module(active),
 	GameEntity(new FloorBasedTransform()),
 	destroyed(false),
-	currentAnimation(&hover_center)
+	currentAnimation(&hover_center),
+	invincibleTime(0),
+	isInvincible(false),
+	isFallingToTheFloor(false)
 {
 	GetTransform().SetPosition(Vector3((SCREEN_WIDTH / 2.0f), 0, 0));
 
@@ -70,6 +77,20 @@ ModulePlayer::ModulePlayer(bool active) :
 	hover_right_most.frames.push_back({ 197,3,20,48 });
 	hover_right_most.speed = 0;
 	hover_right_most.loop = false;
+
+	tripOverHazzard.frames.push_back({ 6,118,22,38 });
+	tripOverHazzard.frames.push_back({ 45,120,22,33 });
+	tripOverHazzard.frames.push_back({ 83,123,24,28 });
+	tripOverHazzard.speed = 5;
+	tripOverHazzard.loop = false;
+
+	takeDamage.frames.push_back({ 6,61,22,39 });
+	takeDamage.frames.push_back({ 34,61,26,40 });
+	takeDamage.frames.push_back({ 73,70,26,22 });
+	takeDamage.frames.push_back({ 113,74,27,20 });
+	//takeDamage.frames.push_back({ 158,65,27,31 }); // this frame is useful only if you make a delay on the previous frame and proceding to the next
+	takeDamage.loop = false;
+	takeDamage.speed = 5;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -86,6 +107,7 @@ bool ModulePlayer::Start()
 	collider = App->collision->AddCollider(ColliderType::Player,playerColliderSize, Pivot2D::BOTTOM_CENTER,*this);
 
 	ouchSFX = App->audio->LoadFx("data/sfx/ouch.wav");
+	aaaaarghSFX = App->audio->LoadFx("data/sfx/aaaaargh.wav");
 
 	return true;
 }
@@ -102,7 +124,18 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::UpdateAnimation()
 {
+	if (currentAnimation == &tripOverHazzard) {
+		if (!tripOverHazzard.Finished())
+			return;
+	}
+
 	Vector2 position = GetNormalizedPosition();
+
+	if (currentAnimation == &takeDamage) {
+		if (!takeDamage.Finished() || isInvincible)
+			return;
+	}
+
 	if (position.y == 1)
 		currentAnimation = &ground_running;
 	else {
@@ -116,6 +149,17 @@ void ModulePlayer::UpdateAnimation()
 			currentAnimation = &hover_right_most;
 		else
 			currentAnimation = &hover_center;
+	}
+}
+
+void ModulePlayer::UpdateInvincibility()
+{
+	if (isInvincible) {
+		invincibleTime += App->time->GetDeltaTime();
+		if (invincibleTime >= INVINCIBLE_TIME_AFTER_INTERACTION) {
+			invincibleTime = 0;
+			isInvincible = false;
+		}
 	}
 }
 
@@ -146,12 +190,10 @@ void ModulePlayer::ShootLaser()
 
 void ModulePlayer::MovePlayer()
 {
-	Vector2 movement = GetInputMovement();
-
 	//Clamp movement to not leave the screen
-	{
-		Vector2 position = GetTransform().GetScreenPositionAndDepth();
-
+	if (!isFallingToTheFloor) {
+		Vector3 position = GetTransform().GetScreenPositionAndDepth();
+		Vector2 movement = GetInputMovement();
 		if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION) {
 			movement.x = MIN_HORIZONTAL_POSITION - position.x;
 		}
@@ -163,9 +205,17 @@ void ModulePlayer::MovePlayer()
 			movement.y = position.y - MAX_VERTICAL_POSITION;
 		else if (position.y == MIN_VERTICAL_POSITION && movement.y > 0 || position.y < MIN_VERTICAL_POSITION)
 			movement.y = position.y - MIN_VERTICAL_POSITION;
+		
+		GetTransform().Move(movement);
 	}
+	else {
+		Vector3 position = GetTransform().GetPosition();
+		Vector3 floor(position.x, 0, position.z);
+		Vector3 newPosition = MoveTowards(position, floor, FALL_SPEED*App->time->GetDeltaTime());
 
-	GetTransform().Move(movement);
+		GetTransform().SetPosition(newPosition);
+		isFallingToTheFloor = GetTransform().GetPosition().y != 0 || isInvincible;
+	}
 }
 
 void ModulePlayer::Render()
@@ -195,20 +245,29 @@ Vector3 ModulePlayer::GetChestPosition() const
 
 void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
 {
-	if (other.colliderType == ColliderType::NonDamagingEnemy) {
-		App->audio->PlayFx(ouchSFX);
-	}
-	else { // collided enemy or enemy particle
-
+	if (!isInvincible) {
+		if (other.colliderType == ColliderType::NonDamagingEnemy) {
+			App->audio->PlayFx(ouchSFX);
+			tripOverHazzard.Reset();
+			currentAnimation = &tripOverHazzard;
+		}
+		else { // collided enemy or enemy particle
+			App->audio->PlayFx(aaaaarghSFX);
+			takeDamage.Reset();
+			currentAnimation = &takeDamage;
+			isInvincible = true;
+			isFallingToTheFloor = true;
+		}
 	}
 }
 
 update_status ModulePlayer::Update()
 {
+	UpdateInvincibility();
 	MovePlayer();
 	UpdateAnimation();
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isFallingToTheFloor)
 	{
 		ShootLaser();
 	}
