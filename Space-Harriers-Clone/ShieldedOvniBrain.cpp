@@ -93,6 +93,10 @@ void ShieldedOvniBrain::OnShieldedOvniDied(const ShieldedOvni & shieldedOvni)
 			break;
 		}
 	}
+
+	if (ovnis.size() == 0) {
+		OnShieldedOvniBrainDied();
+	}
 }
 
 void ShieldedOvniBrain::OnShieldedOvniBrainDied()

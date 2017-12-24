@@ -16,7 +16,6 @@ class ShieldedOvniBrain :
 	public Enemy
 {
 public:
-	ShieldedOvniBrain(float speed, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor);
 	ShieldedOvniBrain(const list<Vector3>& leftPath, const list<Vector3>& rightPath, const list<Vector3>& topPath);
 	ShieldedOvniBrain(const ShieldedOvniBrain&);
 	virtual ~ShieldedOvniBrain();
