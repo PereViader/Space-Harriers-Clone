@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <algorithm>
+#include <string>
 
 class Vector2;
 class Vector3;
@@ -129,7 +130,6 @@ inline Vector2 operator/(const Vector2& v, float d) {
 	return operator/(d, v);
 }
 
-
 inline float Dot(const Vector2& a, const Vector2& b) {
 	return a.x*b.x + a.y*b.y;
 }
@@ -142,5 +142,8 @@ inline Vector2 Lerp(const Vector2& a, const Vector2& b, float t) {
 inline Vector2 LerpUnclamped(const Vector2& a, const Vector2& b, float t) {
 	return a*(1.0f - t) + b*t;
 }
+
+std::ostream & operator<<(std::ostream & os, const Vector2 & v);
+string to_string(const Vector2 & v);
 
 #endif // !_VECTOR2_H

@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <algorithm>
+#include <string>
 
 class Vector3;
 class Vector2;
@@ -154,5 +155,8 @@ inline Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
 inline Vector3 LerpUnclamped(const Vector3& a, const Vector3& b, float t) {
 	return a*(1.0f - t) + b*t;
 }
+
+std::ostream& operator<<(std::ostream& os, const Vector3& x);
+string to_string(const Vector3& v);
 
 #endif // !_VECTOR3_H

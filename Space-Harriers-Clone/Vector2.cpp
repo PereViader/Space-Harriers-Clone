@@ -1,6 +1,8 @@
 #include "Vector2.h"
 #include "Vector3.h"
 
+#include <sstream>
+
 const Vector2 Vector2::UP(0, 1);
 const Vector2 Vector2::RIGHT(1, 0);
 const Vector2 Vector2::ZERO(0,0);
@@ -22,4 +24,18 @@ Vector2 MoveTowards(const Vector2& current, const Vector2& target, float maxDist
 		ret = current + unitMovementVector * clampedDistance;
 	}
 	return ret;
+}
+
+std::ostream & operator<<(std::ostream & os, const Vector2 & v)
+{
+	os << "x:" << v.x << ",";
+	os << "y:" << v.y;
+	return os;
+}
+
+string to_string(const Vector2 & v)
+{
+	std::ostringstream ss;
+	ss << v;
+	return ss.str();
 }

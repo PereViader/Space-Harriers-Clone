@@ -1,6 +1,8 @@
 #include "Vector3.h"
 #include "Vector2.h"
 
+#include <sstream>
+
 const Vector3 Vector3::UP(0, 1, 0);
 const Vector3 Vector3::FORWARD(0, 0, 1);
 const Vector3 Vector3::RIGHT(1, 0, 0);
@@ -25,4 +27,18 @@ Vector3 MoveTowards(const Vector3& current, const Vector3& target, float maxDist
 	return ret;
 }
 
+std::ostream & operator<<(std::ostream & os, const Vector3 & v)
+{
+	// TODO: insertar una instrucción return aquí
+	os << "x:" << v.x << ",";
+	os << "y:" << v.y << ",";
+	os << "z:" << v.z;
+	return os;
+}
 
+string to_string(const Vector3 & v)
+{
+	std::ostringstream ss;
+	ss << v;
+	return ss.str();
+}
