@@ -148,5 +148,3 @@ Enemy * ModuleEnemy::CreateShieldedOvni(const json & data) const
 
 	return new ShieldedOvni(speed, projectileSpeed, graphics, animation, size, scalingFactor);
 }
-
-
