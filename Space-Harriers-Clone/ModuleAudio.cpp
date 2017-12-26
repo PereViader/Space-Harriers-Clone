@@ -1,6 +1,9 @@
-#include "Globals.h"
-#include "Application.h"
 #include "ModuleAudio.h"
+#include "Globals.h"
+
+#include <assert.h>
+
+#include "Application.h"
 #include "SFX.h"
 #include "SDL/include/SDL.h"
 
@@ -135,11 +138,21 @@ SFX ModuleAudio::LoadFx(const string& path)
 	}
 	else
 	{
+		id = fx.size();
 		fx.push_back(chunk);
-		id = fx.size() - 1;
 	}
 
 	return SFX(id);
+}
+
+void ModuleAudio::UnloadFx(const SFX sfx)
+{
+	assert(sfx.GetId() > 0 && sfx.GetId() < fx.size());
+	
+	vector<Mix_Chunk*>::iterator it = fx.begin();
+	advance(it, sfx.GetId());
+	Mix_FreeChunk(*it);
+	fx.erase(it);
 }
 
 // Play WAV

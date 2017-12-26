@@ -32,6 +32,7 @@ public:
 
 	// Load a WAV in memory
 	SFX LoadFx(const string& path);
+	void UnloadFx(const SFX sfx);
 
 	// Play a previously loaded WAV
 	bool PlayFx(const SFX& sfx, int repeat = 0);
