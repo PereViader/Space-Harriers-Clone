@@ -2,7 +2,7 @@
 #define __MODULEAUDIO_H__
 
 #include <vector>
-#include <string>
+#include <set>
 
 #include "Module.h"
 #include "SFX.h"
@@ -14,8 +14,6 @@ using namespace std;
 struct _Mix_Music;
 struct Mix_Chunk;
 typedef struct _Mix_Music Mix_Music;
-
-
 
 class ModuleAudio : public Module
 {
@@ -40,7 +38,7 @@ public:
 private:
 
 	Mix_Music*	music = nullptr;
-	std::vector<Mix_Chunk*>	fx;
+	std::set<Mix_Chunk*> fx;
 };
 
 #endif // __MODULEAUDIO_H__

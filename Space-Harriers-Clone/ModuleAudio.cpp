@@ -63,10 +63,10 @@ bool ModuleAudio::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	for(vector<Mix_Chunk*>::iterator it = fx.begin(); it != fx.end(); ++it)
+	for(auto it = fx.begin(); it != fx.end(); ++it)
 		Mix_FreeChunk(*it);
-
 	fx.clear();
+
 	Mix_CloseAudio();
 	while (Mix_Init(0)) {
 		Mix_Quit();
@@ -129,7 +129,6 @@ bool ModuleAudio::PlayMusic(const string& path, float fade_time)
 // Load WAV
 SFX ModuleAudio::LoadFx(const string& path)
 {
-	unsigned int id = 0;
 	Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
 
 	if(chunk == nullptr)
@@ -138,21 +137,19 @@ SFX ModuleAudio::LoadFx(const string& path)
 	}
 	else
 	{
-		id = fx.size();
-		fx.push_back(chunk);
+		fx.insert(chunk);
 	}
 
-	return SFX(id);
+	return SFX(chunk);
 }
 
 void ModuleAudio::UnloadFx(const SFX sfx)
 {
-	assert(sfx.GetId() > 0 && sfx.GetId() < fx.size());
+	assert(sfx.GetSfx() != nullptr);
 	
-	vector<Mix_Chunk*>::iterator it = fx.begin();
-	advance(it, sfx.GetId());
-	Mix_FreeChunk(*it);
+	auto it = fx.find(sfx.GetSfx());
 	fx.erase(it);
+	Mix_FreeChunk(sfx.GetSfx());
 }
 
 // Play WAV
@@ -160,9 +157,12 @@ bool ModuleAudio::PlayFx(const SFX& sfx, int repeat)
 {
 	bool ret = false;
 
-	if(sfx.GetId() < fx.size())
+	Mix_Chunk * chunk = sfx.GetSfx();
+	assert(chunk);
+
+	if(chunk)
 	{
-		Mix_PlayChannel(-1, fx[sfx.GetId()], repeat);
+		Mix_PlayChannel(-1, chunk, repeat);
 		ret = true;
 	}
 
