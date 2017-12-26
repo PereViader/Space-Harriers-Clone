@@ -109,7 +109,7 @@ bool ModulePlayer::Start()
 	Size2D playerColliderSize(80, 186);
 	collider = App->collision->AddCollider(ColliderType::Player,playerColliderSize, Pivot2D::BOTTOM_CENTER,*this);
 
-	ouchSFX = App->audio->LoadFx("data/sfx/ouch.wav");
+	ouchSFX = App->audio->LoadFx("data/audio/sfx/ouch.wav");
 	aaaaarghSFX = App->audio->LoadFx("data/audio/sfx/aaaaargh.wav");
 
 	return true;
