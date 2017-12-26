@@ -79,6 +79,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Explosion.h" />
     <ClInclude Include="FloorAnchoredTransform.h" />
     <ClInclude Include="FloorBasedTransform.h" />
     <ClInclude Include="FloorRelatedTransform.h" />
@@ -130,6 +131,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="FloorAnchoredTransform.cpp" />
     <ClCompile Include="FloorBasedTransform.cpp" />
     <ClCompile Include="GameEntity.h" />
