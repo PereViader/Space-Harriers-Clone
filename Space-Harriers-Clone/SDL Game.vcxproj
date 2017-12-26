@@ -122,6 +122,7 @@
     <ClInclude Include="Size2D.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UI_HealthPoints.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClCompile Include="ShieldedOvni.cpp" />
     <ClCompile Include="ShieldedOvniBrain.cpp" />
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="UI_HealthPoints.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
