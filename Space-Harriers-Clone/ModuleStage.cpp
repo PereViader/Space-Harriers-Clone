@@ -7,6 +7,8 @@
 #include "ModuleFloor.h"
 #include "ModuleEnemy.h"
 #include "ModuleUserInterface.h"
+#include "ModuleParticles.h"
+#include "ModuleCollision.h"
 
 #include "Enemy.h"
 #include "Transform.h"
@@ -33,12 +35,7 @@ ModuleStage::~ModuleStage()
 
 bool ModuleStage::Start()
 {
-	App->player->Enable();
-	App->background->Enable();
-	App->floor->Enable();
-	App->enemies->Enable();
-	App->userInterface->Enable();
-	App->audio->PlayMusic(stageData["backgroundMusicPath"]);
+	StartGame();
 	return true;
 }
 
@@ -55,6 +52,11 @@ update_status ModuleStage::Update()
 				enemy->GetTransform().Move(startingPositionDelta);
 			}
 		}
+	}
+
+	if (App->player->GetHealthPoints() == 0) {
+		LoseGame();
+		StartGame();
 	}
 	
 	return update_status::UPDATE_CONTINUE;
@@ -75,4 +77,25 @@ void ModuleStage::LoadNextStage()
 	ifstream jsonFile(CreateStageJsonFilePath(currentStage));
 	stageData.clear();
 	jsonFile >> stageData;
+}
+
+void ModuleStage::StartGame()
+{
+	App->player->Enable();
+	App->background->Enable();
+	App->floor->Enable();
+	App->enemies->Enable();
+	App->userInterface->Enable();
+	App->particles->Enable();
+	App->audio->PlayMusic(stageData["backgroundMusicPath"]);
+}
+
+void ModuleStage::LoseGame()
+{
+	App->particles->Disable();
+	App->userInterface->Disable();
+	App->enemies->Disable();
+	App->floor->Disable();
+	App->background->Disable();
+	App->player->Disable();
 }

@@ -40,6 +40,7 @@ ShieldedOvni::ShieldedOvni(const ShieldedOvni & o) :
 
 ShieldedOvni::~ShieldedOvni()
 { 
+	collider->MarkAsDeleted();
 }
 
 void ShieldedOvni::OnCollision(const Collider & own, const Collider & other)
@@ -121,7 +122,6 @@ void ShieldedOvni::ShootPlayer()
 void ShieldedOvni::OnShieldedOvniDied()
 {
 	MarkAsDeleted();
-	collider->MarkAsDeleted();
 
 	if (owner)
 		owner->OnShieldedOvniDied(*this);

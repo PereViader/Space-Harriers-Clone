@@ -14,12 +14,14 @@
 
 using namespace std;
 
-ModuleCollision::ModuleCollision()
+ModuleCollision::ModuleCollision() :
+	Module(true)
 {
 }
 
 ModuleCollision::~ModuleCollision()
-{}
+{
+}
 
 update_status ModuleCollision::PreUpdate()
 {
@@ -35,13 +37,26 @@ update_status ModuleCollision::PreUpdate()
 			++it;
 	}
 
+	for (list<Collider*>::iterator it = prototypes.begin(); it != prototypes.end();)
+	{
+		if ((*it)->ToDelete())
+		{
+			RELEASE(*it);
+			it = prototypes.erase(it);
+		}
+		else
+			++it;
+	}
+
 	return update_status::UPDATE_CONTINUE;
 }
 
 update_status ModuleCollision::Update()
 {
 	for (Collider* collider : colliders) {
-		collider->Update();
+		if (!collider->ToDelete()) {
+			collider->Update();
+		}
 	}
 
 	DoCollisionDetection();
@@ -83,6 +98,8 @@ void ModuleCollision::DebugDraw()
 			App->renderer->DrawQuad(c->rect, 255, 0, 0, 80);
 		}
 	}
+
+	
 }
 
 bool ModuleCollision::CleanUp()

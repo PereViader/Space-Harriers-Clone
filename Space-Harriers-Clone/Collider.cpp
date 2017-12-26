@@ -25,7 +25,8 @@ void Collider::UpdateValues(const Transform & transform)
 
 void Collider::Update()
 {
-	Vector3 position = owner->GetTransform().GetScreenPositionAndDepth();
+	assert(!ToDelete());
+  	Vector3 position = owner->GetTransform().GetScreenPositionAndDepth();
 	float scale = owner->GetTransform().GetRenderingScale();
 	Size2D currentSize(size.width*scale, size.height*scale);
 	rect = GetRectInPositionWithPivot(position, currentSize, pivot);

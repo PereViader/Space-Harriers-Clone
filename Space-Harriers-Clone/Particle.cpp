@@ -35,6 +35,7 @@ Particle::Particle(const Particle& p) :
 
 Particle::~Particle()
 {
+	collider->MarkAsDeleted();
 }
 
 void Particle::Update()
@@ -61,7 +62,6 @@ void Particle::MoveParticle()
 
 void Particle::OnParticleDied()
 {
-	collider->MarkAsDeleted();
 	MarkAsDeleted();
 }
 

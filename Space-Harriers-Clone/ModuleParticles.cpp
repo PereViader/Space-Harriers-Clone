@@ -10,8 +10,10 @@
 
 #include <math.h>
 
-ModuleParticles::ModuleParticles()
-{}
+ModuleParticles::ModuleParticles(bool enabled) :
+	Module(enabled)
+{
+}
 
 ModuleParticles::~ModuleParticles()
 {}
@@ -22,13 +24,15 @@ bool ModuleParticles::Start()
 	graphics = App->textures->Load("data/sprites/bullets.png");
 	assert(graphics != Texture());
 
+
+	assert(particlePrototypes.size() == 0);
 	// ---------- Player
 	Animation playerParticleAnimation;
 	playerParticleAnimation.frames.push_back({ 3,2,87,56 });
 	playerParticleAnimation.speed = 0;
 	playerParticleAnimation.loop = true;
 
-	SFX playerSFX = App->audio->LoadFx("data/sfx/playerBullet.wav");
+	SFX playerSFX = App->audio->LoadFx("data/audio/sfx/playerBullet.wav");
 	Size2D size(87, 56);
 	Particle* playerParticlePrototype = new Particle(ColliderType::PlayerParticle,playerParticleAnimation,size,playerSFX,graphics);
 	particlePrototypes["player"] = playerParticlePrototype;
@@ -60,6 +64,7 @@ bool ModuleParticles::CleanUp()
 
 	for (map<string, Particle*>::iterator it = particlePrototypes.begin(); it != particlePrototypes.end(); ++it)
 		RELEASE(it->second);
+	particlePrototypes.clear();
 
 	return true;
 }

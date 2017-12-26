@@ -26,6 +26,7 @@ Obstacle::Obstacle(const Obstacle & o) :
 
 Obstacle::~Obstacle()
 {
+	collider->MarkAsDeleted();
 }
 
 Obstacle * Obstacle::Clone() const
@@ -74,6 +75,5 @@ Vector3 Obstacle::GetMovement() const
 
 void Obstacle::OnObstacleDied()
 {
-	collider->MarkAsDeleted();
 	MarkAsDeleted();
 }

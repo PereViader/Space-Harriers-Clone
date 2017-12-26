@@ -43,14 +43,14 @@ class ModuleCollision : public Module
 public:
 
 	ModuleCollision();
-	~ModuleCollision();
+	virtual ~ModuleCollision();
 
-	update_status PreUpdate();
-	update_status Update();
+	virtual update_status PreUpdate() override;
+	virtual update_status Update() override;
 
 	
 
-	bool CleanUp();
+	virtual bool CleanUp() override;
 
 	Collider* AddCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, GameEntity& owner);
 	Collider* AddPrototypeCollider(const ColliderType& colliderType, const Size2D& size, const Pivot2D& pivot, GameEntity& owner);

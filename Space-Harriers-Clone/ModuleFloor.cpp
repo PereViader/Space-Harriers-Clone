@@ -33,7 +33,7 @@ ModuleFloor::~ModuleFloor()
 
 
 
-bool ModuleFloor::Init()
+bool ModuleFloor::Start()
 {
 	segmentCount = 0;
 	floor = App->textures->Load("data/sprites/floor.bmp");

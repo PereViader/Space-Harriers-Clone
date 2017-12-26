@@ -24,7 +24,7 @@ using namespace std;
 class ModuleParticles : public Module
 {
 public:
-	ModuleParticles();
+	ModuleParticles(bool enabled);
 	~ModuleParticles();
 
 	bool Start();

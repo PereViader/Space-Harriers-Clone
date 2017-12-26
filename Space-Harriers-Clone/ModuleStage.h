@@ -22,5 +22,7 @@ private:
 
 private:
 	void LoadNextStage();
+	void StartGame();
+	void LoseGame();
 };
 

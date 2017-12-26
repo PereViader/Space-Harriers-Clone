@@ -43,6 +43,7 @@ Ovni::Ovni(const Ovni & o) :
 
 Ovni::~Ovni()
 {
+	collider->MarkAsDeleted();
 }
 
 void Ovni::Init(map<string, void*> values)
@@ -98,5 +99,4 @@ void Ovni::Render()
 void Ovni::OnOvniDied()
 {
 	MarkAsDeleted();
-	collider->MarkAsDeleted();
 }

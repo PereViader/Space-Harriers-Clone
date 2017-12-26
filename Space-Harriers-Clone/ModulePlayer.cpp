@@ -52,8 +52,13 @@ ModulePlayer::ModulePlayer(bool active) :
 	isFallingToTheFloor(false),
 	healthPoints(STARTING_HEALTH_POINTS)
 {
-	GetTransform().SetPosition(Vector3((SCREEN_WIDTH / 2.0f), 0, 0));
+}
 
+ModulePlayer::~ModulePlayer()
+{}
+
+bool ModulePlayer::Init()
+{
 	ground_running.frames.push_back({ 4, 4, 20, 47 });
 	ground_running.frames.push_back({ 25, 4, 20, 47 });
 	ground_running.frames.push_back({ 49, 2, 25, 49 });
@@ -94,10 +99,12 @@ ModulePlayer::ModulePlayer(bool active) :
 	//takeDamage.frames.push_back({ 158,65,27,31 }); // this frame is useful only if you make a delay on the previous frame and proceding to the next
 	takeDamage.loop = false;
 	takeDamage.speed = 5;
-}
 
-ModulePlayer::~ModulePlayer()
-{}
+	ouchSFX = App->audio->LoadFx("data/audio/sfx/ouch.wav");
+	aaaaarghSFX = App->audio->LoadFx("data/audio/sfx/aaaaargh.wav");
+
+	return true;
+}
 
 // Load assets
 bool ModulePlayer::Start()
@@ -109,8 +116,14 @@ bool ModulePlayer::Start()
 	Size2D playerColliderSize(80, 186);
 	collider = App->collision->AddCollider(ColliderType::Player,playerColliderSize, Pivot2D::BOTTOM_CENTER,*this);
 
-	ouchSFX = App->audio->LoadFx("data/audio/sfx/ouch.wav");
-	aaaaarghSFX = App->audio->LoadFx("data/audio/sfx/aaaaargh.wav");
+	destroyed = false;
+	currentAnimation = &hover_center;
+	invincibleTime = 0;
+	isInvincible = false;
+	isFallingToTheFloor = false;
+	healthPoints = STARTING_HEALTH_POINTS;
+
+	GetTransform().SetPosition(Vector3((SCREEN_WIDTH / 2.0f), 0, 0));
 
 	return true;
 }
@@ -265,6 +278,7 @@ void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
 			currentAnimation = &takeDamage;
 			isInvincible = true;
 			isFallingToTheFloor = true;
+			healthPoints--;
 		}
 	}
 }
@@ -279,6 +293,9 @@ update_status ModulePlayer::Update()
 	{
 		ShootLaser();
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		healthPoints = 0;
 
 	Render();
 	
