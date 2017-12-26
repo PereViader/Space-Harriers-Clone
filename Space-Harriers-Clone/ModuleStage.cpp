@@ -6,8 +6,11 @@
 #include "ModuleBackground.h"
 #include "ModuleFloor.h"
 #include "ModuleEnemy.h"
+#include "ModuleUserInterface.h"
+
 #include "Enemy.h"
 #include "Transform.h"
+
 
 #include <fstream>
 #include <cstdlib>
@@ -21,7 +24,6 @@ ModuleStage::ModuleStage(bool enabled) :
 	previousSegmentCount(-1)
 {
 	LoadNextStage();
-	json a;
 }
 
 
@@ -35,8 +37,8 @@ bool ModuleStage::Start()
 	App->background->Enable();
 	App->floor->Enable();
 	App->enemies->Enable();
+	App->userInterface->Enable();
 	App->audio->PlayMusic(stageData["backgroundMusicPath"]);
-	//App->enemies->InstantiateEnemyByName("ovni", map<string, void*>());
 	return true;
 }
 
