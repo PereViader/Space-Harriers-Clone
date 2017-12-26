@@ -86,7 +86,7 @@ bool ModuleRender::BlitZBuffer(const Texture& texture, SDL_Rect * screen, float 
 }
 
 bool ModuleRender::BlitWithPivotScaledZBuffer(const Texture& texture, float scale, const Pivot2D& pivot, const Vector3& position)
-{
+{	
 	assert(texture != Texture());
 	Size2D size(scale * texture.GetSection().w, scale * texture.GetSection().h);
 	SDL_Rect rectForPivot = GetRectInPositionWithPivot(position,size,pivot);
