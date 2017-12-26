@@ -1,30 +1,36 @@
 #include "ModuleUserInterface.h"
 
-#include "Application.h"
-#include "ModulePlayer.h"
 #include "ModuleRender.h"
 
+#include "UI_HealthPoints.h"
 
-ModuleUserInterface::ModuleUserInterface(bool enabled)
+ModuleUserInterface::ModuleUserInterface(bool enabled) :
+	Module(enabled)
 {
 }
 
 ModuleUserInterface::~ModuleUserInterface()
 {
+	for (IRenderable* uiElement : uiElements)
+		delete uiElement;
+	uiElements.clear();
 }
 
 bool ModuleUserInterface::Start()
 {
-	return false;
+	uiElements.push_back(new UI_HealthPoints());
+	return true;
 }
 
 update_status ModuleUserInterface::Update()
 {
+	Render();
 	return update_status::UPDATE_CONTINUE;
 }
 
-void ModuleUserInterface::RenderPlayerHealthPoints()
+void ModuleUserInterface::Render()
 {
-	int currentHP = App->player->GetHealthPoints();
-	LOG("%i", currentHP);
+	for (IRenderable* uiElement : uiElements) {
+		uiElement->Render();
+	}
 }

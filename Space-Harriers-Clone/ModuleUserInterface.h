@@ -1,7 +1,11 @@
 #pragma once
 #include "Module.h"
+#include "IRenderable.h"
+
+#include <list>
+
 class ModuleUserInterface :
-	public Module
+	public Module, public IRenderable
 {
 public:
 	ModuleUserInterface(bool enabled);
@@ -10,10 +14,9 @@ public:
 	virtual bool Start() override;
 	virtual update_status Update() override;
 
-private:
+	virtual void Render() override;
 
-
 private:
-	void RenderPlayerHealthPoints();
+	std::list<IRenderable*> uiElements;
 };
 
