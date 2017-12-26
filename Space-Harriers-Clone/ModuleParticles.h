@@ -12,6 +12,7 @@
 #include "Point.h"
 #include "ModuleCollision.h"
 #include "Texture.h"
+#include "SFX.h"
 
 #include<list>
 #include <map>
@@ -38,6 +39,9 @@ private:
 	Texture graphics;
 	list<Particle*> active;
 	map<string, Particle*> particlePrototypes;
+
+	SFX ovniSFX;
+	SFX playerSFX;
 };
 
 #endif // __MODULEPARTICLES_H__

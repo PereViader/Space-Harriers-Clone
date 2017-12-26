@@ -32,7 +32,7 @@ bool ModuleParticles::Start()
 	playerParticleAnimation.speed = 0;
 	playerParticleAnimation.loop = true;
 
-	SFX playerSFX = App->audio->LoadFx("data/audio/sfx/playerBullet.wav");
+	playerSFX = App->audio->LoadFx("data/audio/sfx/playerBullet.wav");
 	Size2D size(87, 56);
 	Particle* playerParticlePrototype = new Particle(ColliderType::PlayerParticle,playerParticleAnimation,size,playerSFX,graphics);
 	particlePrototypes["player"] = playerParticlePrototype;
@@ -44,7 +44,7 @@ bool ModuleParticles::Start()
 	ovniParticleAnimation.speed = 0;
 	ovniParticleAnimation.loop = true;
 
-	SFX ovniSFX = App->audio->LoadFx("data/audio/sfx/laser1.wav");
+	ovniSFX = App->audio->LoadFx("data/audio/sfx/laser1.wav");
 	Size2D ovniSize(87, 56);
 	Particle* ovniParticlePrototype = new Particle(ColliderType::EnemyParticle,ovniParticleAnimation,ovniSize,ovniSFX,graphics);
 	particlePrototypes["ovni"] = ovniParticlePrototype;
@@ -65,6 +65,10 @@ bool ModuleParticles::CleanUp()
 	for (map<string, Particle*>::iterator it = particlePrototypes.begin(); it != particlePrototypes.end(); ++it)
 		RELEASE(it->second);
 	particlePrototypes.clear();
+
+
+	App->audio->UnloadFx(playerSFX);
+	App->audio->UnloadFx(ovniSFX);
 
 	return true;
 }
