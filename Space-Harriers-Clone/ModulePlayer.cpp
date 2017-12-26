@@ -100,9 +100,6 @@ bool ModulePlayer::Init()
 	takeDamage.loop = false;
 	takeDamage.speed = 5;
 
-	ouchSFX = App->audio->LoadFx("data/audio/sfx/ouch.wav");
-	aaaaarghSFX = App->audio->LoadFx("data/audio/sfx/aaaaargh.wav");
-
 	return true;
 }
 
@@ -112,6 +109,9 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("data/sprites/player.png");
+
+	ouchSFX = App->audio->LoadFx("data/audio/sfx/ouch.wav");
+	aaaaarghSFX = App->audio->LoadFx("data/audio/sfx/aaaaargh.wav");
 
 	Size2D playerColliderSize(80, 186);
 	collider = App->collision->AddCollider(ColliderType::Player,playerColliderSize, Pivot2D::BOTTOM_CENTER,*this);
@@ -134,6 +134,9 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading player");
 
 	App->textures->Unload(graphics);
+
+	App->audio->UnloadFx(aaaaarghSFX);
+	App->audio->UnloadFx(ouchSFX);
 
 	return true;
 }
