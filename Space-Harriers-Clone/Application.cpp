@@ -11,6 +11,7 @@
 #include "ModuleStage.h"
 #include "ModuleFloor.h"
 #include "ModuleEnemy.h"
+#include "ModuleUserInterface.h"
 
 #include "ModulePlayer.h"
 #include "ModuleBackground.h"
@@ -44,6 +45,7 @@ Application::Application()
 	modules.push_back(collision = new ModuleCollision());
 
 	modules.push_back(fade = new ModuleFadeToBlack());
+	modules.push_back(userInterface = new ModuleUserInterface(false));
 }
 
 Application::~Application()

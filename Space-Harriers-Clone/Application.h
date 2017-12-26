@@ -19,6 +19,7 @@ class ModuleBackground;
 class ModuleTime;
 class ModuleEnemy;
 class ModuleShadow;
+class ModuleUserInterface;
 
 // Game modules ---
 class ModulePlayer;
@@ -52,6 +53,7 @@ public:
 	ModuleBackground* background;
 	ModuleFloor* floor;
 	ModuleEnemy* enemies;
+	ModuleUserInterface* userInterface;
 
 private:
 
