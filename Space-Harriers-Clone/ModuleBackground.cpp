@@ -34,14 +34,17 @@ bool ModuleBackground::Start()
 	//Initialize textures
 	std::string path;
 	for (int i = 0; i < NUMBER_OF_LEVELS; i++) {
-		path = "data/horizonDecal";
+		path = "data/sprites/horizonDecal";
 		path.append(std::to_string(i));
 		path.append(".png");
 		horizonDecal[i] = App->textures->Load(path.c_str());
-		path = "data/background";
+		assert(horizonDecal[i] != Texture());
+		path = "data/sprites/background";
 		path.append(std::to_string(i));
 		path.append(".png");
 		background[i] = App->textures->Load(path.c_str());
+		assert(background[i] != Texture());
+
 	}
 
 	SetLevel(0);

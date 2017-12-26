@@ -1,5 +1,5 @@
 {
-	"backgroundMusicPath" : "data/main_theme.wav",
+	"backgroundMusicPath" : "data/audio/music/main_theme.wav",
 	"startingImagePath" : "data/...",
 	"enemies" : [
 		{
@@ -16,6 +16,11 @@
 			"name" : "tree",
 			"spawnId" : 1,
 			"position" : [-500,0]
+		},
+		{
+			"name" : "tree",
+			"spawnId" : 3,
+			"position" : [-800,0]
 		},
 		{
 			"name" : "bush",

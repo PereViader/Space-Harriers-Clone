@@ -104,13 +104,13 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	graphics = App->textures->Load("data/player.png");
+	graphics = App->textures->Load("data/sprites/player.png");
 
 	Size2D playerColliderSize(80, 186);
 	collider = App->collision->AddCollider(ColliderType::Player,playerColliderSize, Pivot2D::BOTTOM_CENTER,*this);
 
 	ouchSFX = App->audio->LoadFx("data/sfx/ouch.wav");
-	aaaaarghSFX = App->audio->LoadFx("data/sfx/aaaaargh.wav");
+	aaaaarghSFX = App->audio->LoadFx("data/audio/sfx/aaaaargh.wav");
 
 	return true;
 }

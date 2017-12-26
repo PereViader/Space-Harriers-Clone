@@ -4,7 +4,7 @@
       "type" : "ovni",
       "name" : "ovni",
       "data" : {
-        "graphicsPath" : "data/rock_bush.png",
+        "graphicsPath" : "data/sprites/rock_bush.png",
         "animation" : {
           "frames" : [[198,127,46,30]],
           "loop" : false,
@@ -26,7 +26,7 @@
       "type" : "obstacle",
       "name" : "tree",
       "data" : {
-        "graphicsPath" : "data/tree.png",
+        "graphicsPath" : "data/sprites/tree.png",
         "animation" : {
           "frames" : [[206,48,44,163]],
           "loop" : false,
@@ -42,7 +42,7 @@
       "type" : "obstacle",
       "name" : "rock",
       "data" : {
-        "graphicsPath" : "data/rock_bush.png",
+        "graphicsPath" : "data/sprites/rock_bush.png",
         "animation" : {
           "frames" : [[192,72,59,37]],
           "loop" : false,
@@ -58,7 +58,7 @@
       "type" : "obstacle",
       "name" : "bush",
       "data" : {
-        "graphicsPath" : "data/rock_bush.png",
+        "graphicsPath" : "data/sprites/rock_bush.png",
         "animation" : {
           "frames" : [[192,8,59,41]],
           "loop" : false,
@@ -76,7 +76,7 @@
         "data" : {
           "speed" : 300,
           "projectileSpeed" : 500,
-          "graphicsPath" : "data/shieldedOvni.png",
+          "graphicsPath" : "data/sprites/shieldedOvni.png",
           "animation" : {
             "frames" : [[3,2,44,44],[53,2,46,46],[104,2,46,46],[1,53,56,56],[64,53,56,56],[1,116,64,68],[78,116,74,78]],
             "loop" : false,

@@ -19,7 +19,8 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("data/bullets.png");
+	graphics = App->textures->Load("data/sprites/bullets.png");
+	assert(graphics != Texture());
 
 	// ---------- Player
 	Animation playerParticleAnimation;
@@ -39,7 +40,7 @@ bool ModuleParticles::Start()
 	ovniParticleAnimation.speed = 0;
 	ovniParticleAnimation.loop = true;
 
-	SFX ovniSFX = App->audio->LoadFx("data/sfx/laser1.wav");
+	SFX ovniSFX = App->audio->LoadFx("data/audio/sfx/laser1.wav");
 	Size2D ovniSize(87, 56);
 	Particle* ovniParticlePrototype = new Particle(ColliderType::EnemyParticle,ovniParticleAnimation,ovniSize,ovniSFX,graphics);
 	particlePrototypes["ovni"] = ovniParticlePrototype;

@@ -36,7 +36,7 @@ ModuleFloor::~ModuleFloor()
 bool ModuleFloor::Init()
 {
 	segmentCount = 0;
-	floor = App->textures->Load("data/floor.bmp");
+	floor = App->textures->Load("data/sprites/floor.bmp");
 	//vertical lines
 	horizonRenderHeight = HORIZON_MIN_HEIGHT;
 	horizontalSpeed = 0;
