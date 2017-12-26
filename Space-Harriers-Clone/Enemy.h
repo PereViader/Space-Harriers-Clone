@@ -22,11 +22,6 @@ public:
 		hasShadow(hasShadow)
 	{}
 
-	Enemy(const Enemy& other) :
-		GameEntity(other),
-		hasShadow(other.hasShadow)
-	{}
-
 	virtual ~Enemy() {};
 
 	virtual void Init(map<string, void*> values) = 0;
