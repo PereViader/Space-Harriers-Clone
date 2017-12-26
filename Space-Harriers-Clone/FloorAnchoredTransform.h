@@ -11,6 +11,7 @@ class FloorAnchoredTransform :
 	public FloorRelatedTransform
 {
 public:
+	FloorAnchoredTransform();
 	FloorAnchoredTransform(float startingXPositionOffset, float yOffset, float percentageInsideSegment);
 	FloorAnchoredTransform(const FloorAnchoredTransform&);
 	FloorAnchoredTransform(const Transform&);
@@ -27,6 +28,7 @@ public:
 	virtual FloorAnchoredTransform * Clone() const override;
 
 	void ResetPositionToTheHorizon();
+	void SetPosition(const Vector3&);
 private:
 	int renderingFloorId;
 	int renderingFloorSegmentCount;

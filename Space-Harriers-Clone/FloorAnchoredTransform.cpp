@@ -2,6 +2,14 @@
 
 #include <assert.h>
 
+FloorAnchoredTransform::FloorAnchoredTransform() :
+	position(0,0),
+	percentageInsideSegment(0),
+	renderingFloorId(-1),
+	renderingFloorSegmentCount(-1)
+{
+}
+
 FloorAnchoredTransform::FloorAnchoredTransform(float startingXPositionOffset, float yOffset, float percentageInsideSegment) :
 	position(startingXPositionOffset,yOffset),
 	percentageInsideSegment(percentageInsideSegment),
@@ -20,7 +28,7 @@ FloorAnchoredTransform::FloorAnchoredTransform(const FloorAnchoredTransform & o)
 
 FloorAnchoredTransform::FloorAnchoredTransform(const Transform& t)
 {
-	assert(false); //TODO
+	SetPosition(t.GetScreenPositionAndDepth());
 }
 
 FloorAnchoredTransform::~FloorAnchoredTransform()
@@ -76,6 +84,11 @@ void FloorAnchoredTransform::ResetPositionToTheHorizon()
 	renderingFloorSegmentCount = App->floor->segmentCount;
 }
 
+void FloorAnchoredTransform::SetPosition(const Vector3 &)
+{
+	assert(false); //TODO
+}
+
 bool FloorAnchoredTransform::IsBoundSegmentPresentOnScreen() const
 {
 	return renderingFloorSegmentCount + App->floor->nHorizonQuads > App->floor->segmentCount;
@@ -93,8 +106,5 @@ float FloorAnchoredTransform::GetRenderingScale() const
 
 void FloorAnchoredTransform::Move(const Vector3& movement)
 {
-	/*xPositionOffset += movement.x;
-	yOffset += movement.y;*/
-
 	position += movement;
 }
