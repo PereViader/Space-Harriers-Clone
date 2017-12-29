@@ -46,7 +46,7 @@ private:
 	list<Vector3> rightPath;
 
 private:
-
 	void OnShieldedOvniBrainDied();
+
 };
 
