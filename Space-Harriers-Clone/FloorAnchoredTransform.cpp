@@ -89,6 +89,14 @@ void FloorAnchoredTransform::SetPosition(const Vector3 &)
 	assert(false); //TODO
 }
 
+void FloorAnchoredTransform::SetPosition(const FloorAnchoredTransform & other)
+{
+	this->renderingFloorId = other.renderingFloorId;
+	this->renderingFloorSegmentCount = other.renderingFloorSegmentCount;
+	this->percentageInsideSegment = other.percentageInsideSegment;
+	this->position = other.position;
+}
+
 bool FloorAnchoredTransform::IsBoundSegmentPresentOnScreen() const
 {
 	return renderingFloorSegmentCount + App->floor->nHorizonQuads > App->floor->segmentCount;

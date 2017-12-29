@@ -29,6 +29,7 @@ public:
 
 	void ResetPositionToTheHorizon();
 	void SetPosition(const Vector3&);
+	void SetPosition(const FloorAnchoredTransform&);
 private:
 	int renderingFloorId;
 	int renderingFloorSegmentCount;
