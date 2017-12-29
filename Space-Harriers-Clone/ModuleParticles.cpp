@@ -44,7 +44,7 @@ bool ModuleParticles::Start()
 	ovniParticleAnimation.speed = 0;
 	ovniParticleAnimation.loop = true;
 
-	ovniSFX = App->audio->LoadFx("data/audio/sfx/laser1.wav");
+	ovniSFX = App->audio->LoadFx("data/audio/sfx/enemyParticle.wav");
 	Size2D ovniSize(87, 56);
 	Particle* ovniParticlePrototype = new Particle(ColliderType::EnemyParticle,ovniParticleAnimation,ovniSize,ovniSFX,graphics);
 	particlePrototypes["ovni"] = ovniParticlePrototype;
