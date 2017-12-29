@@ -29,8 +29,6 @@ public:
 	virtual Ovni* Clone() const override;
 	virtual void Render() override;
 
-	void OnOvniDied();
-
 private:
 
 	Texture graphics;
@@ -45,5 +43,8 @@ private:
 
 	float speed;
 	float particleSpeed;
+
+private:
+	void OnOvniDied();
 };
 
