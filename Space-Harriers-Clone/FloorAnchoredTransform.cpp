@@ -28,7 +28,7 @@ FloorAnchoredTransform::FloorAnchoredTransform(const FloorAnchoredTransform & o)
 
 FloorAnchoredTransform::FloorAnchoredTransform(const Transform& t)
 {
-	SetPosition(t.GetScreenPositionAndDepth());
+	SetPosition(t);
 }
 
 FloorAnchoredTransform::~FloorAnchoredTransform()
@@ -84,9 +84,33 @@ void FloorAnchoredTransform::ResetPositionToTheHorizon()
 	renderingFloorSegmentCount = App->floor->segmentCount;
 }
 
-void FloorAnchoredTransform::SetPosition(const Vector3 &)
+void FloorAnchoredTransform::SetPosition(const Transform& other)
 {
-	assert(false); //TODO
+	Vector3 screenPosition = other.GetScreenPositionAndDepth();
+	// Find Base Y 
+	float yForCurrentZ = App->floor->GetHorizonPositionForDepth(screenPosition.z);
+
+	// Find rendering floor id that has yForCurrentZ 
+	int newRenderingFloorId = App->floor->NUMBER_OF_HORIZON_QUADS - 1;
+	for (int i = 1; i < App->floor->NUMBER_OF_HORIZON_QUADS; ++i) {
+		if (App->floor->horizontalSegments[i].y < yForCurrentZ) {
+			newRenderingFloorId = i-1;
+			break;
+		}
+	}
+
+	auto horizontalSemgent = App->floor->horizontalSegments[newRenderingFloorId];
+	float newPercentageInsideSegment = (yForCurrentZ - horizontalSemgent.y) / horizontalSemgent.h;
+	int newRenderingFloorSegmentCount = App->floor->segmentCount;
+
+	Vector2 newPosition;
+	newPosition.x = (screenPosition.x - SCREEN_WIDTH / 2.0f) / CalculatePercentageOfPositionInFloor(screenPosition.z);
+	newPosition.y = yForCurrentZ - screenPosition.y;
+
+	this->renderingFloorId = newRenderingFloorId;
+	this->percentageInsideSegment = newPercentageInsideSegment;
+	this->renderingFloorSegmentCount = newRenderingFloorSegmentCount;
+	this->position = newPosition;
 }
 
 void FloorAnchoredTransform::SetPosition(const FloorAnchoredTransform & other)
@@ -99,7 +123,7 @@ void FloorAnchoredTransform::SetPosition(const FloorAnchoredTransform & other)
 
 bool FloorAnchoredTransform::IsBoundSegmentPresentOnScreen() const
 {
-	return renderingFloorSegmentCount + App->floor->nHorizonQuads > App->floor->segmentCount;
+	return renderingFloorSegmentCount + App->floor->NUMBER_OF_HORIZON_QUADS > App->floor->segmentCount;
 }
 
 float FloorAnchoredTransform::GetRenderingScale() const

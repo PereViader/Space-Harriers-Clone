@@ -28,12 +28,19 @@ public:
 	virtual FloorAnchoredTransform * Clone() const override;
 
 	void ResetPositionToTheHorizon();
-	void SetPosition(const Vector3&);
+	void SetPosition(const Transform& other);
 	void SetPosition(const FloorAnchoredTransform&);
 private:
+	//Index in ModuleFloor of the horizontal stripe
 	int renderingFloorId;
-	int renderingFloorSegmentCount;
+
+	// Percentual position of segment height
 	float percentageInsideSegment;
+
+	//Spawn ModuleFloor segment count
+	int renderingFloorSegmentCount;
+
+	//Horizontal and vertical offsets from the floor position
 	Vector2 position;
 
 private:
