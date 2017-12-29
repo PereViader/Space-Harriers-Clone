@@ -105,7 +105,7 @@ void FloorAnchoredTransform::SetPosition(const Transform& other)
 
 	Vector2 newPosition;
 	newPosition.x = (screenPosition.x - SCREEN_WIDTH / 2.0f) / CalculatePercentageOfPositionInFloor(screenPosition.z);
-	newPosition.y = yForCurrentZ - screenPosition.y;
+	newPosition.y = (yForCurrentZ - screenPosition.y) / CalculatePercentageOfPositionInFloor(screenPosition.z);
 
 	this->renderingFloorId = newRenderingFloorId;
 	this->percentageInsideSegment = newPercentageInsideSegment;
