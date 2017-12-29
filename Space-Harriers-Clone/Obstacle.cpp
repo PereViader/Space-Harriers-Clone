@@ -3,6 +3,8 @@
 #include "ModuleRender.h"
 #include "Collider.h"
 #include "FloorAnchoredTransform.h"
+#include "ModuleEnemy.h"
+#include "Explosion.h"
 
 #include <assert.h>
 
@@ -43,7 +45,7 @@ void Obstacle::Update()
 {
 	GetTransform().Move(GetMovement());
 	
-	if (GetTransform().GetFloorPositionAndDepth().z <= 0) {
+	if (GetTransform().GetDepth() <= 0) {
 		OnObstacleDied();
 	}
 }
@@ -76,4 +78,7 @@ Vector3 Obstacle::GetMovement() const
 void Obstacle::OnObstacleDied()
 {
 	MarkAsDeleted();
+
+	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", map<string, void*>()));
+	explosion->GetTransform().SetPosition(GetTransform());
 }

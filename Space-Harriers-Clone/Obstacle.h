@@ -5,7 +5,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "Texture.h"
-
+#include "FloorAnchoredTransform.h"
 
 class Collider;
 class Size2D;
@@ -25,6 +25,7 @@ public:
 
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
 	virtual void Render() override;
+	virtual FloorAnchoredTransform& GetTransform() { return GetTransformTypped<FloorAnchoredTransform>(); }
 
 private:
 	Texture graphics;
