@@ -59,9 +59,9 @@ private:
 	static const float SEGMENT_REDUCTION;
 	static const float HORIZONTAL_LINES_SPEED;
 
-	static const int nHorizonQuads = 11;
+	static const int NUMBER_OF_HORIZON_QUADS = 11;
 	int firstQuadIndex;
-	SDL_Rect horizontalQuads[nHorizonQuads];
+	SDL_Rect horizontalQuads[NUMBER_OF_HORIZON_QUADS];
 
 
 	struct HorizontalSegmentContainer {
@@ -69,7 +69,7 @@ private:
 		float h;
 	};
 
-	HorizontalSegmentContainer horizontalSegments[nHorizonQuads];
+	HorizontalSegmentContainer horizontalSegments[NUMBER_OF_HORIZON_QUADS];
 	int segmentCount;
 
 private:

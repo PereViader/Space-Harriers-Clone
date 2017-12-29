@@ -43,7 +43,7 @@ bool ModuleFloor::Start()
 	previousHorizontalMovePercentage = 0.0f;
 	firstSegmentPositionPercentage = 0.0f;
 
-	for (int i = 0; i < nHorizonQuads; i++) {
+	for (int i = 0; i < NUMBER_OF_HORIZON_QUADS; i++) {
 		horizontalQuads[i].x = 0;
 		horizontalQuads[i].w = SCREEN_WIDTH;
 	}
@@ -118,7 +118,7 @@ float ModuleFloor::GetRenderHOfHorizontalStripe(int index) const
 
 int ModuleFloor::GetFurtherHorizontalStripeIndex() const
 {
-	return (firstQuadIndex-1) < 0 ? (nHorizonQuads-1) : (firstQuadIndex - 1);
+	return (firstQuadIndex-1) < 0 ? (NUMBER_OF_HORIZON_QUADS-1) : (firstQuadIndex - 1);
 }
 
 int ModuleFloor::GetCurrentSegmentCount() const
@@ -203,15 +203,15 @@ void ModuleFloor::RenderHorizontalLines()
 		currentSegmentHeight = currentSegmentHeight * SEGMENT_REDUCTION;
 		currentRenderingPosition -= currentSegmentHeight;
 
-		currentQuad = (currentQuad + 1) % nHorizonQuads;
+		currentQuad = (currentQuad + 1) % NUMBER_OF_HORIZON_QUADS;
 		hasLoopedArray = currentQuad == firstQuadIndex;
 	} while (!hasLoopedArray);
 
-	App->renderer->DrawQuads(horizontalQuads, nHorizonQuads, 0, 0, 0, 50);
+	App->renderer->DrawQuads(horizontalQuads, NUMBER_OF_HORIZON_QUADS, 0, 0, 0, 50);
 
 	float nextfirstSegmentPositionPercentage = fmod(firstSegmentPositionPercentage + HORIZONTAL_LINES_SPEED*App->time->GetDeltaTime(), 1.0f);
 	if (nextfirstSegmentPositionPercentage < firstSegmentPositionPercentage) {
-		firstQuadIndex = (firstQuadIndex + 1) % nHorizonQuads;
+		firstQuadIndex = (firstQuadIndex + 1) % NUMBER_OF_HORIZON_QUADS;
 		segmentCount++;
 	}
 	firstSegmentPositionPercentage = nextfirstSegmentPositionPercentage;
