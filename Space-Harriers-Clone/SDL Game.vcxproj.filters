@@ -189,7 +189,9 @@
     <ClInclude Include="UI_HealthPoints.h">
       <Filter>Game Modules\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="Explosion.h">
+      <Filter>Game Modules\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -307,7 +309,7 @@
       <Filter>Game Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="Explosion.cpp">
-      <Filter>Main</Filter>
+      <Filter>Game Modules\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
