@@ -49,4 +49,5 @@ private:
 	Enemy * CreateOvniPrototype(const json&) const;
 	Enemy * CreateShieldedOvniBrainPrototype(const json&) const;
 	Enemy * CreateShieldedOvni(const json&) const;
+	Enemy * CreateExplosion(const json&) const;
 };

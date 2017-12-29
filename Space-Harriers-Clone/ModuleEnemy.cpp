@@ -5,6 +5,7 @@
 #include "Ovni.h"
 #include "ShieldedOvniBrain.h"
 #include "ShieldedOvni.h"
+#include "Explosion.h"
 
 #include "ModuleTextures.h"
 #include "ModuleCollision.h"
@@ -22,6 +23,7 @@ ModuleEnemy::ModuleEnemy(bool enabled) :
 	prototypeCreationFunctionMap["shieldedOvniBrain"] = &ModuleEnemy::CreateShieldedOvniBrainPrototype;
 	prototypeCreationFunctionMap["shieldedOvni"] = &ModuleEnemy::CreateShieldedOvni;
 	prototypeCreationFunctionMap["obstacle"] = &ModuleEnemy::CreateObstaclePrototype;
+	prototypeCreationFunctionMap["explosion"] = &ModuleEnemy::CreateExplosion;
 }
 
 ModuleEnemy::~ModuleEnemy()
@@ -147,4 +149,13 @@ Enemy * ModuleEnemy::CreateShieldedOvni(const json & data) const
 	float scalingFactor = data["scalingFactor"];
 
 	return new ShieldedOvni(speed, projectileSpeed, graphics, animation, size, scalingFactor);
+}
+
+Enemy * ModuleEnemy::CreateExplosion(const json & data) const
+{
+	Texture graphics = App->textures->Load(data["graphicsPath"]);
+	Animation animation = data["animation"];
+	float scalingFactor = data["scalingFactor"];
+
+	return new Explosion(graphics, animation, scalingFactor);
 }
