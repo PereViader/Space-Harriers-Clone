@@ -9,6 +9,8 @@
 
 #include "ModuleTextures.h"
 #include "ModuleCollision.h"
+#include "ModuleAudio.h"
+#include "SFX.h"
 
 #include <fstream>
 #include <assert.h>
@@ -156,6 +158,7 @@ Enemy * ModuleEnemy::CreateExplosion(const json & data) const
 	Texture graphics = App->textures->Load(data["graphicsPath"]);
 	Animation animation = data["animation"];
 	float scalingFactor = data["scalingFactor"];
+	SFX explosionSoundPath = App->audio->LoadFx(data["explosionSoundPath"]);
 
-	return new Explosion(graphics, animation, scalingFactor);
+	return new Explosion(graphics, animation, scalingFactor, explosionSoundPath);
 }
