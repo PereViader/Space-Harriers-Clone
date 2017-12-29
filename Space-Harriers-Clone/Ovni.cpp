@@ -12,6 +12,9 @@
 #include "Transform.h"
 #include "ModulePlayer.h"
 #include "FloorBasedTransform.h"
+#include "Application.h"
+#include "ModuleEnemy.h"
+#include "Explosion.h"
 
 Ovni::Ovni(float speed, float particleSpeed, const Texture& texture, const Animation& animation, const Size2D& size, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor) :
 	Enemy(new FloorBasedTransform(),true),
@@ -99,4 +102,7 @@ void Ovni::Render()
 void Ovni::OnOvniDied()
 {
 	MarkAsDeleted();
+
+	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", map<string, void*>()));
+	explosion->GetTransform().SetPosition(GetTransform());
 }

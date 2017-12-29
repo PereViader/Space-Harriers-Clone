@@ -9,6 +9,8 @@
 #include "ModulePlayer.h"
 #include "ModuleParticles.h"
 #include "ShieldedOvniBrain.h"
+#include "Explosion.h"
+#include "ModuleEnemy.h"
 
 
 ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor) :
@@ -125,4 +127,7 @@ void ShieldedOvni::OnShieldedOvniDied()
 
 	if (owner)
 		owner->OnShieldedOvniDied(*this);
+
+	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", map<string, void*>()));
+	explosion->GetTransform().SetPosition(GetTransform());
 }
