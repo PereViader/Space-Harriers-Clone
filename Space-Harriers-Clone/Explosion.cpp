@@ -4,12 +4,15 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "Pivot2D.h"
+#include "ModuleAudio.h"
 
-Explosion::Explosion(const Texture& graphics, const Animation& animation, float scalingFactor) :
+Explosion::Explosion(const Texture& graphics, const Animation& animation, float scalingFactor, const SFX& explosionSound) :
 	Enemy(new FloorAnchoredTransform(), false),
 	graphics(graphics),
 	animation(animation),
-	scalingFactor(scalingFactor)
+	scalingFactor(scalingFactor),
+	explosionSound(explosionSound),
+	isFirstFrame(true)
 {
 }
 
@@ -32,6 +35,9 @@ void Explosion::Update()
 {
 	if (GetTransform().GetDepth() <= 0 || animation.Finished()) {
 		OnExplosionDied();
+	} else if (isFirstFrame) {
+		App->audio->PlayFx(explosionSound);
+		isFirstFrame = false;
 	}
 }
 

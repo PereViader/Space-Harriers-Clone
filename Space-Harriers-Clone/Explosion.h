@@ -5,12 +5,13 @@
 
 #include "Texture.h"
 #include "Animation.h"
+#include "SFX.h"
 
 class Explosion :
 	public Enemy
 {
 public:
-	Explosion(const Texture& graphics, const Animation& animation, float scalingFactor);
+	Explosion(const Texture& graphics, const Animation& animation, float scalingFactor, const SFX& explosionSound);
 	virtual ~Explosion();
 
 	virtual void OnCollision(const Collider & own, const Collider & other) override;
@@ -24,6 +25,9 @@ private:
 	Texture graphics;
 	Animation animation;
 	float scalingFactor;
+
+	SFX explosionSound;
+	bool isFirstFrame;
 
 private:
 	void OnExplosionDied();
