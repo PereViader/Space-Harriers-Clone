@@ -19,7 +19,10 @@ void to_json(json & j, const Vector3 & v) {
 void from_json(const json & j, Vector3 & v) {
 	v.x = j.at("x").get<float>();
 	v.y = j.at("y").get<float>();
-	v.z = j.at("z").get<float>();
+	
+	auto z = j.find("z");
+	if (z != j.end())
+		v.z = z.value().get<float>();
 }
 
 void to_json(json & j, const Vector2 & v) {
