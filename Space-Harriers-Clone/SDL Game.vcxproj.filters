@@ -311,5 +311,8 @@
     <ClCompile Include="Explosion.cpp">
       <Filter>Game Modules\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="json_serializer.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -136,6 +136,7 @@
     <ClCompile Include="FloorBasedTransform.cpp" />
     <ClCompile Include="GameEntity.h" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="json_serializer.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
