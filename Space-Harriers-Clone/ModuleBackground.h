@@ -37,8 +37,8 @@ private:
 	int currentLevelHorizonDecalTextureHeight;
 
 
-	int backgroundTextureOffset;
-	int decalTextureOffset;
+	float backgroundTextureOffset;
+	float decalTextureOffset;
 private:
 
 	void DrawBackground();
