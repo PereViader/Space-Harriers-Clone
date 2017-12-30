@@ -1,8 +1,7 @@
 #ifndef __MODULEAUDIO_H__
 #define __MODULEAUDIO_H__
 
-#include <vector>
-#include <set>
+#include <map>
 
 #include "Module.h"
 #include "SFX.h"
@@ -22,15 +21,17 @@ public:
 	ModuleAudio(bool start_enabled = true);
 	~ModuleAudio();
 
-	bool Init();
-	bool CleanUp();
+	virtual bool Init() override;
+	virtual bool CleanUp() override;
 
 	// Play a music file
 	bool PlayMusic(const string& path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
 
 	// Load a WAV in memory
 	SFX LoadFx(const string& path);
-	void UnloadFx(const SFX sfx);
+	void UnloadFx(SFX & sfx);
+
+	void RegisterFxUsage(const SFX&);
 
 	// Play a previously loaded WAV
 	bool PlayFx(const SFX& sfx, int repeat = 0);
@@ -38,7 +39,9 @@ public:
 private:
 
 	Mix_Music*	music = nullptr;
-	std::set<Mix_Chunk*> fx;
+
+	map<string, Mix_Chunk*> sfxs;
+	map<Mix_Chunk*, unsigned int> sfxUsage;
 };
 
 #endif // __MODULEAUDIO_H__
