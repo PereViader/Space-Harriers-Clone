@@ -49,8 +49,10 @@ Ovni::~Ovni()
 	collider->MarkAsDeleted();
 }
 
-void Ovni::Init(map<string, void*> values)
+void Ovni::Init(const json& parameters)
 {
+	Vector3 position = parameters["position"];
+	GetTransform().Move(position);
 }
 
 void Ovni::Update()
@@ -69,7 +71,7 @@ void Ovni::Update()
 		}
 		currentTarget += 1;
 		if (currentTarget == path.size()) {
-			OnOvniDied();
+			MarkAsDeleted();
 		}
 	}
 }
@@ -103,6 +105,6 @@ void Ovni::OnOvniDied()
 {
 	MarkAsDeleted();
 
-	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", map<string, void*>()));
+	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
 	explosion->GetTransform().SetPosition(GetTransform());
 }

@@ -26,7 +26,7 @@ void Explosion::OnCollision(const Collider & own, const Collider & other)
 	// has no collision
 }
 
-void Explosion::Init(map<string, void*> values)
+void Explosion::Init(const json& parameters)
 {
 	// nothing to init
 }

@@ -52,8 +52,10 @@ void ShieldedOvni::OnCollision(const Collider & own, const Collider & other)
 	}
 }
 
-void ShieldedOvni::Init(map<string, void*> values)
+void ShieldedOvni::Init(const json& parameters)
 {
+	Vector3 position = parameters["position"];
+	GetTransform().Move(position);
 }
 
 void ShieldedOvni::Update()
@@ -128,6 +130,6 @@ void ShieldedOvni::OnShieldedOvniDied()
 	if (owner)
 		owner->OnShieldedOvniDied(*this);
 
-	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", map<string, void*>()));
+	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
 	explosion->GetTransform().SetPosition(GetTransform());
 }

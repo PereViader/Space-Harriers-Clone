@@ -45,12 +45,12 @@ void ShieldedOvniBrain::OnCollision(const Collider & own, const Collider & other
 	//Has no collision
 }
 
-void ShieldedOvniBrain::Init(map<string, void*> values)
+void ShieldedOvniBrain::Init(const json& parameters)
 {
 	ShieldedOvni *topOvni, *leftOvni, *rightOvni;
-	topOvni = static_cast<ShieldedOvni*>(App->enemies->InstantiateEnemyByName("shieldedOvni", map<string, void*>()));
-	leftOvni = static_cast<ShieldedOvni*>(App->enemies->InstantiateEnemyByName("shieldedOvni", map<string, void*>()));
-	rightOvni = static_cast<ShieldedOvni*>(App->enemies->InstantiateEnemyByName("shieldedOvni", map<string, void*>()));
+	topOvni = static_cast<ShieldedOvni*>(App->enemies->InstantiateEnemyByName("shieldedOvni", parameters));
+	leftOvni = static_cast<ShieldedOvni*>(App->enemies->InstantiateEnemyByName("shieldedOvni", parameters));
+	rightOvni = static_cast<ShieldedOvni*>(App->enemies->InstantiateEnemyByName("shieldedOvni", parameters));
 
 	ovnis.push_back(topOvni);
 	ovnis.push_back(leftOvni);

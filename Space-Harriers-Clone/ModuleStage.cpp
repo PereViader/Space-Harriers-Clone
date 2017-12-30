@@ -47,9 +47,7 @@ update_status ModuleStage::Update()
 
 		for (auto jsonEnemy : stageData["enemies"]) {
 			if (jsonEnemy["spawnId"] == currentSegmentCount) {
-				Enemy * enemy = App->enemies->InstantiateEnemyByName(jsonEnemy["name"], map<string, void*>());
-				Vector3 startingPositionDelta(jsonEnemy["position"].at(0), jsonEnemy["position"].at(1));
-				enemy->GetTransform().Move(startingPositionDelta);
+				Enemy * enemy = App->enemies->InstantiateEnemyByName(jsonEnemy["name"], jsonEnemy);
 			}
 		}
 	}

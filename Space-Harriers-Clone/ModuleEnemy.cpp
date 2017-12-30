@@ -94,7 +94,7 @@ bool ModuleEnemy::CleanUp()
 	return true;
 }
 
-Enemy * ModuleEnemy::InstantiateEnemyByName(const string& name, map<string, void*> parameters)
+Enemy * ModuleEnemy::InstantiateEnemyByName(const string& name, const json& parameters)
 {
 	const Enemy* prototype = enemyPrototypes.at(name);
 	

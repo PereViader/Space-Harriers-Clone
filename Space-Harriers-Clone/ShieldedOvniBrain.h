@@ -21,7 +21,7 @@ public:
 	virtual ~ShieldedOvniBrain();
 
 	virtual void OnCollision(const Collider & own, const Collider & other) override;
-	virtual void Init(map<string, void*> values) override;
+	virtual void Init(const json& parameters) override;
 	virtual void Update() override;
 	virtual Enemy * Clone() const override;
 
