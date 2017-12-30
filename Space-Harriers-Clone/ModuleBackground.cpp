@@ -102,14 +102,14 @@ void ModuleBackground::DrawDecal() {
 
 void ModuleBackground::MoveBackground()
 {
-	backgroundTextureOffset +=  fmod(App->player->GetNormalizedPosition().x * BACKGROUND_HORIZONTAL_SPEED,currentLevelBackgroundTextureWidth);
+	backgroundTextureOffset = fmod(backgroundTextureOffset + App->player->GetNormalizedPosition().x * BACKGROUND_HORIZONTAL_SPEED,currentLevelBackgroundTextureWidth);
 	if (backgroundTextureOffset < 0)
 		backgroundTextureOffset = currentLevelBackgroundTextureWidth - backgroundTextureOffset - 1;
 }
 
 void ModuleBackground::MoveDecal()
 {
-	decalTextureOffset += fmod(App->player->GetNormalizedPosition().x * HORIZON_DECAL_HORIZONTAL_SPEED, currentLevelHorizonDecalTextureWidth);
+	decalTextureOffset = fmod(decalTextureOffset + App->player->GetNormalizedPosition().x * HORIZON_DECAL_HORIZONTAL_SPEED, currentLevelHorizonDecalTextureWidth);
 	if (decalTextureOffset < 0)
 		decalTextureOffset = currentLevelHorizonDecalTextureWidth - decalTextureOffset - 1;
 }
