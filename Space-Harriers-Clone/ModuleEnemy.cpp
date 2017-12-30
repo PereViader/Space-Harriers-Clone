@@ -124,12 +124,11 @@ Enemy * ModuleEnemy::CreateOvniPrototype(const json & data) const
 	float scalingFactor = data["scalingFactor"];
 	Size2D size = data["size"];
 
-	vector<Vector3> path = data["path"];
-	set<unsigned int> particleSpawns = data["particleSpawns"];
 	float speed = data["speed"];
 	float particleSpeed = data["particleSpeed"];
+	SFX sfx = App->audio->LoadFx(data["sfxPath"]);
 
-	return new Ovni(speed, particleSpeed, graphics, animation, size, path, particleSpawns, scalingFactor);
+	return new Ovni(speed, particleSpeed, graphics, animation, size, sfx, scalingFactor);
 }
 
 Enemy * ModuleEnemy::CreateShieldedOvniBrainPrototype(const json & data) const

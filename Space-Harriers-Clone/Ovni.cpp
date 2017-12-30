@@ -3,6 +3,7 @@
 #include "ScreenBoundTransform.h"
 #include "Application.h"
 #include "ModuleTime.h"
+#include "ModuleAudio.h"
 #include "ModuleRender.h"
 #include "Pivot2D.h"
 #include "ModuleShadow.h"
@@ -16,7 +17,7 @@
 #include "ModuleEnemy.h"
 #include "Explosion.h"
 
-Ovni::Ovni(float speed, float particleSpeed, const Texture& texture, const Animation& animation, const Size2D& size, const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex, float scalingFactor) :
+Ovni::Ovni(float speed, float particleSpeed, const Texture& texture, const Animation& animation, const Size2D& size, const SFX& sfx, float scalingFactor) :
 	Enemy(new FloorBasedTransform(),true),
 	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::BOTTOM_CENTER, *this)),
 	speed(speed),
@@ -25,8 +26,8 @@ Ovni::Ovni(float speed, float particleSpeed, const Texture& texture, const Anima
 	animation(animation),
 	scalingFactor(scalingFactor),
 	currentTarget(0),
-	path(path),
-	particleSpawnsIndex(particleSpawnsIndex)
+	sfx(sfx),
+	isFirstFrame(true)
 {
 }
 
@@ -40,12 +41,16 @@ Ovni::Ovni(const Ovni & o) :
 	scalingFactor(o.scalingFactor),
 	currentTarget(o.currentTarget),
 	path(o.path),
-	particleSpawnsIndex(o.particleSpawnsIndex)
+	particleSpawnsIndex(o.particleSpawnsIndex),
+	sfx(o.sfx),
+	isFirstFrame(o.isFirstFrame)
 {
+	App->audio->RegisterFxUsage(sfx);
 }
 
 Ovni::~Ovni()
 {
+	App->audio->UnloadFx(sfx);
 	collider->MarkAsDeleted();
 }
 
@@ -53,10 +58,19 @@ void Ovni::Init(const json& parameters)
 {
 	Vector3 position = parameters["position"];
 	GetTransform().Move(position);
+
+	vector<Vector3> path = parameters["path"];
+	set<unsigned int> particleSpawns = parameters["particleSpawns"];
+	SetPathAndBullets(path, particleSpawns);
 }
 
 void Ovni::Update()
 {
+	if (isFirstFrame) {
+		App->audio->PlayFx(sfx);
+		isFirstFrame = false;
+	}
+
 	float deltaTime = App->time->GetDeltaTime();
 
 	FloorBasedTransform& transform = static_cast<FloorBasedTransform&>(GetTransform());
@@ -99,6 +113,12 @@ void Ovni::Render()
 		graphics.UpdateTexture(animation);
 		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::BOTTOM_CENTER, screen);
 	}
+}
+
+void Ovni::SetPathAndBullets(const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex)
+{
+	this->path = path;
+	this->particleSpawnsIndex = particleSpawnsIndex;
 }
 
 void Ovni::OnOvniDied()
