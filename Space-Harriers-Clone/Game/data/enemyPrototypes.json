@@ -5,6 +5,7 @@
       "name" : "ovni",
       "data" : {
         "graphicsPath" : "data/sprites/rock_bush.png",
+        "sfxPath" : "data/audio/sfx/ovni.wav",
         "animation" : {
           "frames" : [[198,127,46,30]],
           "loop" : false,
@@ -111,7 +112,7 @@
 		"type" : "explosion",
 		"name" : "explosion",
 		"data" : {
-			"scalingFactor" : 5,
+			"scalingFactor" : 4,
 			"graphicsPath" : "data/sprites/particle_models.png",
 			"explosionSoundPath" : "data/audio/sfx/explosion.wav",
 			"animation" : {
