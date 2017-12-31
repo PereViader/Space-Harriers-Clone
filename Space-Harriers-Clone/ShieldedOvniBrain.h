@@ -35,12 +35,6 @@ private:
 	static const float TIME_CLOSED;
 	static const float TIME_OPEN;
 
-	static const Vector3 HORIZON_START;
-	static const Vector3 HORIZON_CLOSER;
-	static const Vector3 OVNI_LEFT;
-	static const Vector3 OVNI_RIGHT;
-	static const Vector3 OVNI_TOP;
-
 	list<Vector3> topPath;
 	list<Vector3> leftPath;
 	list<Vector3> rightPath;

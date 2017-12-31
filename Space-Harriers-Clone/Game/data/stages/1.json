@@ -633,6 +633,422 @@
 				}
 			],
 			"particleSpawns" : [1]
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 37,
+		  "position" : {
+				"x" : 0,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 37,
+		  "position" : {
+				"x" : 400,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 38,
+		  "position" : {
+				"x" : 200,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 38,
+		  "position" : {
+				"x" : 600,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 38,
+		  "position" : {
+				"x" : 400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 38,
+		  "position" : {
+				"x" : -100,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 39,
+		  "position" : {
+				"x" : -400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 40,
+		  "position" : {
+				"x" : 600,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 40,
+		  "position" : {
+				"x" : 600,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 41,
+		  "position" : {
+				"x" : -500,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 41,
+		  "position" : {
+				"x" : -450,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 42,
+		  "position" : {
+				"x" : -600,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 43,
+		  "position" : {
+				"x" : -600,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 44,
+		  "position" : {
+				"x" : 100,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 45,
+		  "position" : {
+				"x" : 500,
+				"y" : 0
+			}
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 45,
+			"position" : {
+				"x" : 0,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 0,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 1100,
+					"y" : 200,
+					"z" : 400
+				},
+				{
+					"x" : 700,
+					"y" : 200,
+					"z" : 700
+				}
+			],
+			"particleSpawns" : [1]
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 45,
+			"position" : {
+				"x" : -100,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 0,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 1100,
+					"y" : 200,
+					"z" : 400
+				},
+				{
+					"x" : 700,
+					"y" : 200,
+					"z" : 700
+				}
+			],
+			"particleSpawns" : [1]
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 45,
+			"position" : {
+				"x" : -200,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 0,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 1100,
+					"y" : 200,
+					"z" : 400
+				},
+				{
+					"x" : 700,
+					"y" : 200,
+					"z" : 700
+				}
+			],
+			"particleSpawns" : [1]
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 45,
+			"position" : {
+				"x" : -300,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 0,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 1100,
+					"y" : 200,
+					"z" : 400
+				},
+				{
+					"x" : 700,
+					"y" : 200,
+					"z" : 700
+				}
+			],
+			"particleSpawns" : [1]
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 48,
+			"position" : {
+				"x" : 1150,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 1150,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 50,
+					"y" : 200,
+					"z" : 400
+				},
+				{
+					"x" : 450,
+					"y" : 200,
+					"z" : 700
+				}
+			],
+			"particleSpawns" : [1]
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 48,
+			"position" : {
+				"x" : 1150,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 1250,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 50,
+					"y" : 200,
+					"z" : 400
+				},
+				{
+					"x" : 450,
+					"y" : 200,
+					"z" : 700
+				}
+			],
+			"particleSpawns" : [1]
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 48,
+			"position" : {
+				"x" : 1150,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 1350,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 50,
+					"y" : 200,
+					"z" : 400
+				},
+				{
+					"x" : 450,
+					"y" : 200,
+					"z" : 700
+				}
+			],
+			"particleSpawns" : [1]
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 48,
+			"position" : {
+				"x" : 1150,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 1450,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 50,
+					"y" : 200,
+					"z" : 400
+				},
+				{
+					"x" : 450,
+					"y" : 200,
+					"z" : 700
+				}
+			],
+			"particleSpawns" : [1]
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 48,
+		  "position" : {
+				"x" : -300,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 48,
+		  "position" : {
+				"x" : -400,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 49,
+		  "position" : {
+				"x" : -500,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 49,
+		  "position" : {
+				"x" : -500,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 50,
+		  "position" : {
+				"x" : 0,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 51,
+		  "position" : {
+				"x" : -400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 52,
+		  "position" : {
+				"x" : 500,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 53,
+		  "position" : {
+				"x" : 100,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 55,
+		  "position" : {
+				"x" : 300,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "shieldedOvniBrain",
+		  "spawnId" : 1,
+		  "position" : {
+				"x" : 0,
+				"y" : 0
+			}
 		}
 	]
 }

@@ -10,12 +10,6 @@
 const float ShieldedOvniBrain::TIME_CLOSED = 5.0f;
 const float ShieldedOvniBrain::TIME_OPEN = 6.0f;
 
-const Vector3 ShieldedOvniBrain::HORIZON_START(SCREEN_WIDTH/2.0f, 500, Z_MAX);
-const Vector3 ShieldedOvniBrain::HORIZON_CLOSER(SCREEN_WIDTH / 2.0f, 500, Z_MAX - 400);
-const Vector3 ShieldedOvniBrain::OVNI_LEFT(300, 500, Z_MAX-400);
-const Vector3 ShieldedOvniBrain::OVNI_RIGHT(SCREEN_WIDTH - 300, 500, Z_MAX - 400);
-const Vector3 ShieldedOvniBrain::OVNI_TOP(SCREEN_WIDTH / 2.0f, 800, Z_MAX - 400);
-
 ShieldedOvniBrain::ShieldedOvniBrain(const list<Vector3>& leftPath, const list<Vector3>& rightPath, const list<Vector3>& topPath) :
 	Enemy(new FloorBasedTransform(), false),
 	areOpen(false),
