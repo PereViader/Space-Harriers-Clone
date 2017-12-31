@@ -133,9 +133,9 @@ Enemy * ModuleEnemy::CreateOvniPrototype(const json & data) const
 
 Enemy * ModuleEnemy::CreateShieldedOvniBrainPrototype(const json & data) const
 {
-	list<Vector3> topPath = data["topPath"];
-	list<Vector3> leftPath = data["leftPath"];
-	list<Vector3> rightPath = data["rightPath"];
+	vector<Vector3> topPath = data["topPath"];
+	vector<Vector3> leftPath = data["leftPath"];
+	vector<Vector3> rightPath = data["rightPath"];
 
 	return new ShieldedOvniBrain(leftPath, rightPath, topPath);
 }
@@ -148,8 +148,11 @@ Enemy * ModuleEnemy::CreateShieldedOvni(const json & data) const
 	Animation animation = data["animation"];
 	Size2D size = data["size"];
 	float scalingFactor = data["scalingFactor"];
+	float timeOpen = data["timeOpen"];
+	float timeClosed = data["timeClosed"];
+	int stateSwitchesToLeave = data["stateSwitchesToLeave"];
 
-	return new ShieldedOvni(speed, projectileSpeed, graphics, animation, size, scalingFactor);
+	return new ShieldedOvni(speed, projectileSpeed, graphics, animation, size, scalingFactor, timeOpen, timeClosed, stateSwitchesToLeave);
 }
 
 Enemy * ModuleEnemy::CreateExplosion(const json & data) const

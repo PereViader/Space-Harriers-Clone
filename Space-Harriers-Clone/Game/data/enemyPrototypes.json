@@ -84,7 +84,10 @@
             "speed" : -7
           },
           "scalingFactor" : 3,
-          "size" : { "width":177, "height":111 }
+          "size" : { "width":177, "height":111 },
+          "timeOpen" : 4,
+          "timeClosed" : 2,
+          "stateSwitchesToLeave" : 6
         }
       },
       {

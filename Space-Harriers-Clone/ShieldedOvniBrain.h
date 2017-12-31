@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 
-#include <list>
+#include <vector>
 
 #include "Vector3.h"
 
@@ -16,7 +16,7 @@ class ShieldedOvniBrain :
 	public Enemy
 {
 public:
-	ShieldedOvniBrain(const list<Vector3>& leftPath, const list<Vector3>& rightPath, const list<Vector3>& topPath);
+	ShieldedOvniBrain(const vector<Vector3>& leftPath, const vector<Vector3>& rightPath, const vector<Vector3>& topPath);
 	ShieldedOvniBrain(const ShieldedOvniBrain&);
 	virtual ~ShieldedOvniBrain();
 
@@ -25,22 +25,9 @@ public:
 	virtual void Update() override;
 	virtual Enemy * Clone() const override;
 
-	void OnShieldedOvniDied(const ShieldedOvni&);
-
 private:
-	vector<ShieldedOvni*> ovnis;
-
-	bool areOpen;
-	float currentTime;
-	static const float TIME_CLOSED;
-	static const float TIME_OPEN;
-
-	list<Vector3> topPath;
-	list<Vector3> leftPath;
-	list<Vector3> rightPath;
-
-private:
-	void OnShieldedOvniBrainDied();
-
+	vector<Vector3> topPath;
+	vector<Vector3> leftPath;
+	vector<Vector3> rightPath;
 };
 

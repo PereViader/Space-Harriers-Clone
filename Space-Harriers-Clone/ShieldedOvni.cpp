@@ -8,35 +8,45 @@
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
 #include "ModuleParticles.h"
-#include "ShieldedOvniBrain.h"
 #include "Explosion.h"
 #include "ModuleEnemy.h"
 
-
-ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor) :
+ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave) :
 	Enemy(new FloorBasedTransform(),true),
+	state(behaviour_state::In),
 	graphics(graphics),
 	animationOpenClose(animation),
 	scalingFactor(scalingFactor),
 	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::MIDDLE_CENTER, *this)),
 	isOpen(false),
+	stateSwitchesToLeave(stateSwitchesToLeave),
+	nStateSwitches(0),
+	currentTime(0),
+	timeOpen(timeOpen),
+	timeClosed(timeClosed),
 	speed(speed),
-	projectileSpeed(projectileSpeed),
-	owner(nullptr)
+	nextPositionIndex(-1),
+	projectileSpeed(projectileSpeed)
 {
 }
 
 ShieldedOvni::ShieldedOvni(const ShieldedOvni & o) :
 	Enemy(o),
+	state(o.state),
 	graphics(o.graphics),
 	animationOpenClose(o.animationOpenClose),
 	scalingFactor(o.scalingFactor),
 	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
 	isOpen(o.isOpen),
+	stateSwitchesToLeave(o.stateSwitchesToLeave),
+	nStateSwitches(o.nStateSwitches),
+	currentTime(o.currentTime),
+	timeOpen(o.timeOpen),
+	timeClosed(o.timeClosed),
 	path(o.path),
+	nextPositionIndex(o.nextPositionIndex),
 	speed(o.speed),
-	projectileSpeed(o.projectileSpeed),
-	owner(o.owner)
+	projectileSpeed(o.projectileSpeed)
 {
 }
 
@@ -60,13 +70,58 @@ void ShieldedOvni::Init(const json& parameters)
 
 void ShieldedOvni::Update()
 {
-	if (path.size() > 0) {
-		Vector3 position = GetTransform().GetPosition();
-		Vector3 newPosition = MoveTowards(position, path.front(), speed * App->time->GetDeltaTime());
-		GetTransform().SetPosition(newPosition);
-		if (newPosition == path.front()) {
-			path.pop_front();
+	switch (state)
+	{
+	case behaviour_state::In: {
+		if (nextPositionIndex < path.size()) {
+			const Vector3& position = GetTransform().GetPosition();
+			const Vector3& destination = path.at(nextPositionIndex);
+			Vector3 newPosition = MoveTowards(position, destination, speed * App->time->GetDeltaTime());
+			GetTransform().SetPosition(newPosition);
+			if (newPosition == destination) {
+				nextPositionIndex++;
+			}
 		}
+		else {
+			SwitchState();
+			state = behaviour_state::Shoot;
+			nextPositionIndex--;
+		}
+		break;
+	}
+		
+	case behaviour_state::Shoot: {
+		currentTime += App->time->GetDeltaTime();
+
+		float TIME_CHECK = isOpen ? timeOpen : timeClosed;
+
+		if (currentTime >= TIME_CHECK) {
+			currentTime -= TIME_CHECK;
+			SwitchState();
+		}
+
+		if (nStateSwitches >= stateSwitchesToLeave) {
+			state = behaviour_state::Out;
+		}
+		break;
+	}
+		
+	case behaviour_state::Out: {
+		const Vector3& position = GetTransform().GetPosition();
+		const Vector3& destination = path.at(nextPositionIndex);
+		Vector3 newPosition = MoveTowards(position, destination, speed * App->time->GetDeltaTime());
+		GetTransform().SetPosition(newPosition);
+		if (newPosition == destination) {
+			if (nextPositionIndex == 0) {
+				MarkAsDeleted();
+			}
+			else {
+				nextPositionIndex--;
+			}
+		}
+		break;
+	}
+		
 	}
 }
 
@@ -88,29 +143,23 @@ void ShieldedOvni::Render()
 	App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::MIDDLE_CENTER, position);
 }
 
-void ShieldedOvni::SetOpen(bool state)
+void ShieldedOvni::SwitchState()
 {
-	if (state != isOpen) {
-		animationOpenClose.speed *= -1;
-		isOpen = state;
-	}
+	isOpen = !isOpen;
+	animationOpenClose.speed *= -1;
 
 	if (isOpen) {
 		ShootPlayer();
 	}
+
+	nStateSwitches++;
 }
 
-void ShieldedOvni::SetPath(const list<Vector3>& path)
+void ShieldedOvni::SetPath(const vector<Vector3>& path)
 {
-	using namespace std;
 	this->path = path;
 	GetTransform().SetPosition(path.front());
-	this->path.pop_front();
-}
-
-void ShieldedOvni::SetShieldedOvniBrain(ShieldedOvniBrain & shieldedOvniBrain)
-{
-	owner = &shieldedOvniBrain;
+	nextPositionIndex = 1;
 }
 
 void ShieldedOvni::ShootPlayer()
@@ -126,9 +175,6 @@ void ShieldedOvni::ShootPlayer()
 void ShieldedOvni::OnShieldedOvniDied()
 {
 	MarkAsDeleted();
-
-	if (owner)
-		owner->OnShieldedOvniDied(*this);
 
 	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
 	explosion->GetTransform().SetPosition(GetTransform());
