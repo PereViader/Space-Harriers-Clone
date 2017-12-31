@@ -32,6 +32,7 @@ bool ModuleShadow::Start()
 void ModuleShadow::DrawShadow(const FloorRelatedTransform & t)
 {
 	Vector3 screen = t.GetFloorPositionAndDepth();
+	screen.z += 0.001;
 	float scale = SHADOW_SCALE_FACTOR * t.GetRenderingScale();
 	App->renderer->BlitWithPivotScaledZBuffer(shadow, scale, Pivot2D::MIDDLE_CENTER, screen );
 }

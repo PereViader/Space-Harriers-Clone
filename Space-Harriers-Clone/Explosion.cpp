@@ -19,6 +19,7 @@ Explosion::Explosion(const Texture& graphics, const Animation& animation, float 
 
 Explosion::~Explosion()
 {
+	App->audio->UnloadFx(explosionSound);
 }
 
 void Explosion::OnCollision(const Collider & own, const Collider & other)
@@ -26,8 +27,9 @@ void Explosion::OnCollision(const Collider & own, const Collider & other)
 	// has no collision
 }
 
-void Explosion::Init(map<string, void*> values)
+void Explosion::Init(const json& parameters)
 {
+	App->audio->RegisterFxUsage(explosionSound);
 	// nothing to init
 }
 

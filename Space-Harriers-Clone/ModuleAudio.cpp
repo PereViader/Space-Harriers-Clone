@@ -63,9 +63,12 @@ bool ModuleAudio::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	for(auto it = fx.begin(); it != fx.end(); ++it)
-		Mix_FreeChunk(*it);
-	fx.clear();
+	for (auto it = sfxs.begin(); it != sfxs.end(); ++it) {
+		Mix_Chunk* chunk = it->second;
+		Mix_FreeChunk(chunk);
+	}
+	sfxs.clear();
+	sfxUsage.clear();
 
 	Mix_CloseAudio();
 	while (Mix_Init(0)) {
@@ -129,27 +132,62 @@ bool ModuleAudio::PlayMusic(const string& path, float fade_time)
 // Load WAV
 SFX ModuleAudio::LoadFx(const string& path)
 {
-	Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
-
-	if(chunk == nullptr)
-	{
-		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
+	Mix_Chunk* chunk = nullptr;
+	
+	auto existingChunkIt = sfxs.find(path);
+	if (existingChunkIt != sfxs.end()) {
+		chunk = existingChunkIt->second;
+		sfxUsage[chunk] += 1;
 	}
-	else
-	{
-		fx.insert(chunk);
+	else {
+		chunk = Mix_LoadWAV(path.c_str());
+		if (chunk == nullptr)
+		{
+			LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
+		}
+		else
+		{
+			sfxs[path] = chunk;
+			sfxUsage[chunk] = 1;
+		}
 	}
-
+	
 	return SFX(chunk);
 }
 
-void ModuleAudio::UnloadFx(const SFX sfx)
+
+void ModuleAudio::UnloadFx(SFX & sfx)
 {
 	assert(sfx.GetSfx() != nullptr);
-	
-	auto it = fx.find(sfx.GetSfx());
-	fx.erase(it);
-	Mix_FreeChunk(sfx.GetSfx());
+	auto it0 = sfxUsage.find(sfx.GetSfx());
+	if (it0 != sfxUsage.end()) {
+		it0->second -= 1;
+		if (it0->second == 0) {
+			// remove sfx from the path to texture map
+			for (auto it1 = sfxs.begin(); it1 != sfxs.end(); it1++) {
+				if (it1->second == it0->first)
+				{
+					sfxs.erase(it1);
+					break;
+				}
+			}
+
+			// remove texture from the usage map
+			sfxUsage.erase(it0);
+			Mix_FreeChunk(sfx.GetSfx());
+		}
+		sfx = SFX();
+	}
+}
+
+void ModuleAudio::RegisterFxUsage(const SFX & sfx)
+{
+	assert(sfx.GetSfx());
+	auto it = sfxUsage.find(sfx.GetSfx());
+	assert(it != sfxUsage.end());
+	if (it != sfxUsage.end()) {
+		it->second += 1;
+	}
 }
 
 // Play WAV

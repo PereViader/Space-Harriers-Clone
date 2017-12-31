@@ -36,9 +36,12 @@ Obstacle * Obstacle::Clone() const
 	return new Obstacle(*this);
 }
 
-void Obstacle::Init(map<string, void*> parameters)
+void Obstacle::Init(const json& parameters)
 {
 	GetTransformTypped<FloorAnchoredTransform>().ResetPositionToTheHorizon();
+
+	Vector3 horizontalPosition = parameters["position"];
+	GetTransform().Move(horizontalPosition);
 }
 
 void Obstacle::Update()
@@ -79,6 +82,6 @@ void Obstacle::OnObstacleDied()
 {
 	MarkAsDeleted();
 
-	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", map<string, void*>()));
+	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
 	explosion->GetTransform().SetPosition(GetTransform());
 }

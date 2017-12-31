@@ -139,4 +139,5 @@ float FloorAnchoredTransform::GetRenderingScale() const
 void FloorAnchoredTransform::Move(const Vector3& movement)
 {
 	position += movement;
+	percentageInsideSegment += movement.z;
 }

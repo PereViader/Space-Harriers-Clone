@@ -34,7 +34,7 @@ public:
 	update_status Update() override;
 	bool CleanUp() override;
 
-	Enemy* InstantiateEnemyByName(const string& name, map<string, void*> parameters);
+	Enemy* InstantiateEnemyByName(const string& name, const json& parameters);
 private:
 	list<Enemy*> enemies;
 	map<string, Enemy*> enemyPrototypes;

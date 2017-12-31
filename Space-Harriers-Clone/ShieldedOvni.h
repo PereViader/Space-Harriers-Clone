@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 
-#include <list>
+#include <vector>
 
 #include "Texture.h"
 #include "Animation.h"
@@ -10,17 +10,18 @@
 
 class Size2D;
 class Collider;
-class ShieldedOvniBrain;
+
+using namespace std;
 
 class ShieldedOvni :
 	public Enemy
 {
 public:
-	ShieldedOvni(float speed, float projectileSpeed, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor);
+	ShieldedOvni(float speed, float projectileSpeed, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave);
 	ShieldedOvni(const ShieldedOvni&);
 	virtual ~ShieldedOvni();
 	
-	virtual void Init(map<string, void*> values) override;
+	virtual void Init(const json& parameters) override;
 	virtual void Update() override;
 
 
@@ -29,24 +30,36 @@ public:
 	virtual FloorBasedTransform& GetTransform() { return GetTransformTypped<FloorBasedTransform>(); }
 	virtual void Render() override;
 
-	void SetOpen(bool);
-	void SetPath(const list<Vector3>&);
-	void SetShieldedOvniBrain(ShieldedOvniBrain&);
+	void SwitchState();
+	void SetPath(const vector<Vector3>&);
 
 private:
+	enum class behaviour_state {
+		In,
+		Shoot,
+		Out
+	};
+
+	behaviour_state state;
+
 	Texture graphics;
 	Animation animationOpenClose;
 	float scalingFactor;
 
 	Collider * collider;
 	bool isOpen;
+	int stateSwitchesToLeave;
+	int nStateSwitches;
+	float currentTime;
+	float timeOpen;
+	float timeClosed;
 
 	float speed;
-	list<Vector3> path;
+	vector<Vector3> path;
+	size_t nextPositionIndex;
 
 	float projectileSpeed;
 
-	ShieldedOvniBrain* owner;
 private:
 	void ShootPlayer();
 	void OnShieldedOvniDied();

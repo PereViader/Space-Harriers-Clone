@@ -5,6 +5,7 @@
       "name" : "ovni",
       "data" : {
         "graphicsPath" : "data/sprites/rock_bush.png",
+        "sfxPath" : "data/audio/sfx/ovni.wav",
         "animation" : {
           "frames" : [[198,127,46,30]],
           "loop" : false,
@@ -83,35 +84,38 @@
             "speed" : -7
           },
           "scalingFactor" : 3,
-          "size" : { "width":177, "height":111 }
+          "size" : { "width":177, "height":111 },
+          "timeOpen" : 4,
+          "timeClosed" : 2,
+          "stateSwitchesToLeave" : 6
         }
       },
       {
         "type" : "shieldedOvniBrain",
         "name" : "shieldedOvniBrain",
         "data" : {
-            "topPath" : [
-              { "x":576, "y":500, "z": 700 },
-              { "x":576, "y":500, "z": 300 },
-              { "x":576, "y":800, "z": 300 }
-            ],
-            "leftPath" : [
-              { "x":576, "y":500, "z": 700 },
-              { "x":576, "y":500, "z": 300 },
-              { "x":300, "y":500, "z": 300 }
-            ],
-            "rightPath" : [
-              { "x":576, "y":500, "z": 700 },
-              { "x":576, "y":500, "z": 300 },
-              { "x":852, "y":500, "z": 300 }
-            ]
-        }
-      },
+          "topPath" : [
+            { "x":576, "y":500, "z": 700 },
+            { "x":576, "y":500, "z": 300 },
+            { "x":576, "y":800, "z": 300 }
+          ],
+          "leftPath" : [
+            { "x":576, "y":500, "z": 700 },
+            { "x":576, "y":500, "z": 300 },
+            { "x":300, "y":500, "z": 300 }
+          ],
+          "rightPath" : [
+            { "x":576, "y":500, "z": 700 },
+            { "x":576, "y":500, "z": 300 },
+            { "x":852, "y":500, "z": 300 }
+          ]
+      }
+    },
 	  {
 		"type" : "explosion",
 		"name" : "explosion",
 		"data" : {
-			"scalingFactor" : 5,
+			"scalingFactor" : 4,
 			"graphicsPath" : "data/sprites/particle_models.png",
 			"explosionSoundPath" : "data/audio/sfx/explosion.wav",
 			"animation" : {

@@ -10,6 +10,10 @@
 #include <string>
 #include <map>
 
+#include "json.hpp"
+#include "json_serializer.h"
+
+using nlohmann::json;
 
 using namespace std;
 
@@ -24,7 +28,7 @@ public:
 
 	virtual ~Enemy() {};
 
-	virtual void Init(map<string, void*> values) = 0;
+	virtual void Init(const json& parameters) = 0;
 	virtual void Update() = 0;
 	
 	virtual void Render() override {
