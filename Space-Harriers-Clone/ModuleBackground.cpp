@@ -102,14 +102,14 @@ void ModuleBackground::DrawDecal() {
 
 void ModuleBackground::MoveBackground()
 {
-	backgroundTextureOffset = fmod(backgroundTextureOffset + App->player->GetNormalizedPosition().x * BACKGROUND_HORIZONTAL_SPEED,currentLevelBackgroundTextureWidth);
+	backgroundTextureOffset = fmodf(backgroundTextureOffset + App->player->GetNormalizedPosition().x * BACKGROUND_HORIZONTAL_SPEED,currentLevelBackgroundTextureWidth);
 	if (backgroundTextureOffset < 0)
 		backgroundTextureOffset = currentLevelBackgroundTextureWidth - backgroundTextureOffset - 1;
 }
 
 void ModuleBackground::MoveDecal()
 {
-	decalTextureOffset = fmod(decalTextureOffset + App->player->GetNormalizedPosition().x * HORIZON_DECAL_HORIZONTAL_SPEED, currentLevelHorizonDecalTextureWidth);
+	decalTextureOffset = fmodf(decalTextureOffset + App->player->GetNormalizedPosition().x * HORIZON_DECAL_HORIZONTAL_SPEED, currentLevelHorizonDecalTextureWidth);
 	if (decalTextureOffset < 0)
 		decalTextureOffset = currentLevelHorizonDecalTextureWidth - decalTextureOffset - 1;
 }
@@ -124,11 +124,11 @@ void ModuleBackground::SetLevel(int level)
 {
 	assert(level >= 0 && level < NUMBER_OF_LEVELS);
 	currentLevel = level;
-	currentLevelHorizonDecalTextureWidth = horizonDecal[currentLevel].GetSection().w;
-	currentLevelHorizonDecalTextureHeight = horizonDecal[currentLevel].GetSection().h;
+	currentLevelHorizonDecalTextureWidth = static_cast<float>(horizonDecal[currentLevel].GetSection().w);
+	currentLevelHorizonDecalTextureHeight = static_cast<float>(horizonDecal[currentLevel].GetSection().h);
 
-	currentLevelBackgroundTextureWidth = background[currentLevel].GetSection().w;
-	currentLevelBackgroundTextureHeight = background[currentLevel].GetSection().h;
+	currentLevelBackgroundTextureWidth = static_cast<float>(background[currentLevel].GetSection().w);
+	currentLevelBackgroundTextureHeight = static_cast<float>(background[currentLevel].GetSection().h);
 	//SDL_QueryTexture(horizonDecal[currentLevel].GetTexture(), NULL, NULL, &currentLevelHorizonDecalTextureWidth, &currentLevelHorizonDecalTextureHeight);
 	//SDL_QueryTexture(background[currentLevel].GetTexture(), NULL, NULL, &currentLevelBackgroundTextureWidth, &currentLevelBackgroundTextureHeight);
 }

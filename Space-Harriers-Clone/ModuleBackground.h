@@ -30,11 +30,11 @@ private:
 	Texture background[NUMBER_OF_LEVELS];
 
 	int currentLevel;
-	int currentLevelBackgroundTextureWidth;
-	int currentLevelBackgroundTextureHeight;
+	float currentLevelBackgroundTextureWidth;
+	float currentLevelBackgroundTextureHeight;
 
-	int currentLevelHorizonDecalTextureWidth;
-	int currentLevelHorizonDecalTextureHeight;
+	float currentLevelHorizonDecalTextureWidth;
+	float currentLevelHorizonDecalTextureHeight;
 
 
 	float backgroundTextureOffset;
