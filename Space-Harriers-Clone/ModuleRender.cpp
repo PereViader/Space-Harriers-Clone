@@ -135,7 +135,7 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	return ret;
 }
 
-bool ModuleRender::DrawQuads(const SDL_Rect rects[], int count, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+bool ModuleRender::DrawQuads(const SDL_Rect *rects, int count, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 	bool ret = true;
 

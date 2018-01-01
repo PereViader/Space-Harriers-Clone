@@ -36,7 +36,7 @@ public:
 	bool DirectBlit(const Texture& texture, SDL_Rect* destiny);
 
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = SDL_ALPHA_OPAQUE);
-	bool DrawQuads(const SDL_Rect rect[], int size, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+	bool DrawQuads(const SDL_Rect *rects, int size, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
 	bool DrawPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	bool DrawSegment(const Vector2& start, const Vector2& end, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
