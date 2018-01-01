@@ -78,6 +78,7 @@
           "speed" : 300,
           "projectileSpeed" : 500,
           "graphicsPath" : "data/sprites/shieldedOvni.png",
+		  "sfxPath" : "data/audio/sfx/shieldedOvni.wav",
           "animation" : {
             "frames" : [[3,2,44,44],[53,2,46,46],[104,2,46,46],[1,53,56,56],[64,53,56,56],[1,116,64,68],[78,116,74,78]],
             "loop" : false,

@@ -10,8 +10,9 @@
 #include "ModuleParticles.h"
 #include "Explosion.h"
 #include "ModuleEnemy.h"
+#include "ModuleAudio.h"
 
-ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave) :
+ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave) :
 	Enemy(new FloorBasedTransform(),true),
 	state(behaviour_state::In),
 	graphics(graphics),
@@ -26,7 +27,9 @@ ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const Texture & g
 	timeClosed(timeClosed),
 	speed(speed),
 	nextPositionIndex(-1),
-	projectileSpeed(projectileSpeed)
+	projectileSpeed(projectileSpeed),
+	sfx(sfx),
+	isFirstFrame(true)
 {
 }
 
@@ -46,12 +49,15 @@ ShieldedOvni::ShieldedOvni(const ShieldedOvni & o) :
 	path(o.path),
 	nextPositionIndex(o.nextPositionIndex),
 	speed(o.speed),
-	projectileSpeed(o.projectileSpeed)
+	projectileSpeed(o.projectileSpeed),
+	sfx(o.sfx),
+	isFirstFrame(o.isFirstFrame)
 {
 }
 
 ShieldedOvni::~ShieldedOvni()
 { 
+	App->audio->UnloadFx(sfx);
 	collider->MarkAsDeleted();
 }
 
@@ -64,12 +70,19 @@ void ShieldedOvni::OnCollision(const Collider & own, const Collider & other)
 
 void ShieldedOvni::Init(const json& parameters)
 {
+	App->audio->RegisterFxUsage(sfx);
+
 	Vector3 position = parameters["position"];
 	GetTransform().Move(position);
 }
 
 void ShieldedOvni::Update()
 {
+	if (isFirstFrame) {
+ 		App->audio->PlayFx(sfx);
+		isFirstFrame = false;
+	}
+
 	switch (state)
 	{
 	case behaviour_state::In: {
