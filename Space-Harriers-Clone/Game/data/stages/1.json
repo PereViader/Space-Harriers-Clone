@@ -1044,11 +1044,588 @@
 		},
 		{
 		  "name" : "shieldedOvniBrain",
-		  "spawnId" : 1,
+		  "spawnId" : 55,
 		  "position" : {
 				"x" : 0,
 				"y" : 0
 			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 55,
+		  "position" : {
+				"x" : -100,
+				"y" : 500
+			}
+		},
+		{
+			"name" : "rock",
+			"spawnId" : 55,
+			"position" : {
+				"x" : 600,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 56,
+		  "position" : {
+				"x" : -100,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 56,
+		  "position" : {
+				"x" : 500,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 56,
+		  "position" : {
+				"x" : 300,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 57,
+		  "position" : {
+				"x" : -50,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 57,
+		  "position" : {
+				"x" : 100,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 57,
+		  "position" : {
+				"x" : -400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 57,
+		  "position" : {
+				"x" : 600,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 58,
+		  "position" : {
+				"x" : -600,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 58,
+		  "position" : {
+				"x" : 400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 59,
+		  "position" : {
+				"x" : 200,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 60,
+		  "position" : {
+				"x" : -200,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 60,
+		  "position" : {
+				"x" : -200,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 60,
+		  "position" : {
+				"x" : -400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 60,
+		  "position" : {
+				"x" : 600,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 60,
+		  "position" : {
+				"x" : 500,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 61,
+		  "position" : {
+				"x" : 500,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 62,
+		  "position" : {
+				"x" : 500,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 62,
+		  "position" : {
+				"x" : 300,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 63,
+		  "position" : {
+				"x" : 500,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 63,
+		  "position" : {
+				"x" : 100,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 64,
+		  "position" : {
+				"x" : -400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 65,
+		  "position" : {
+				"x" : -600,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 65,
+		  "position" : {
+				"x" : -600,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 65,
+		  "position" : {
+				"x" : -400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 66,
+		  "position" : {
+				"x" : 200,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 66,
+		  "position" : {
+				"x" : 600,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 67,
+		  "position" : {
+				"x" : 500,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 68,
+		  "position" : {
+				"x" : -300,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 69,
+		  "position" : {
+				"x" : 200,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 69,
+		  "position" : {
+				"x" : 600,
+				"y" : 0
+			}
+		},
+
+		{
+		  "name" : "tree",
+		  "spawnId" : 70,
+		  "position" : {
+				"x" : 800,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 70,
+		  "position" : {
+				"x" : 200,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 71,
+		  "position" : {
+				"x" : 500,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 71,
+		  "position" : {
+				"x" : 700,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 71,
+		  "position" : {
+				"x" : 200,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "rock",
+		  "spawnId" : 73,
+		  "position" : {
+				"x" : -400,
+				"y" : 500
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 74,
+		  "position" : {
+				"x" : -400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 74,
+		  "position" : {
+				"x" : -800,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 74,
+		  "position" : {
+				"x" : -400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 75,
+		  "position" : {
+				"x" : -200,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 75,
+		  "position" : {
+				"x" : 0,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 76,
+		  "position" : {
+				"x" : 200,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 77,
+		  "position" : {
+				"x" : -100,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 78,
+		  "position" : {
+				"x" : 400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 79,
+		  "position" : {
+				"x" : 100,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 80,
+		  "position" : {
+				"x" : 600,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 80,
+		  "position" : {
+				"x" : 800,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 81,
+		  "position" : {
+				"x" : 700,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 82,
+		  "position" : {
+				"x" : 400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 82,
+		  "position" : {
+				"x" : 100,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "tree",
+		  "spawnId" : 82,
+		  "position" : {
+				"x" : -400,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 83,
+		  "position" : {
+				"x" : -200,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 83,
+		  "position" : {
+				"x" : 100,
+				"y" : 0
+			}
+		},
+		{
+		  "name" : "bush",
+		  "spawnId" : 84,
+		  "position" : {
+				"x" : 300,
+				"y" : 0
+			}
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 84,
+			"position" : {
+				"x" : 0,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 0,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 575,
+					"y" : 575,
+					"z" : 400
+				},
+				{
+					"x" : 287.5,
+					"y" : 1000,
+					"z" : 600
+				},
+				{
+					"x" : 575,
+					"y" : 250,
+					"z" : 0
+				}
+			],
+			"particleSpawns" : []
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 84,
+			"position" : {
+				"x" : -100,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 0,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 575,
+					"y" : 575,
+					"z" : 400
+				},
+				{
+					"x" : 287.5,
+					"y" : 1000,
+					"z" : 600
+				},
+				{
+					"x" : 575,
+					"y" : 250,
+					"z" : 0
+				}
+			],
+			"particleSpawns" : []
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 84,
+			"position" : {
+				"x" : -200,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 0,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 575,
+					"y" : 575,
+					"z" : 400
+				},
+				{
+					"x" : 287.5,
+					"y" : 1000,
+					"z" : 600
+				},
+				{
+					"x" : 575,
+					"y" : 250,
+					"z" : 0
+				}
+			],
+			"particleSpawns" : []
+		},
+		{
+			"name" : "ovni",
+			"spawnId" : 84,
+			"position" : {
+				"x" : -300,
+				"y" : 200,
+				"z" : 26
+			},
+			"path" : [
+				{
+					"x" : 0,
+					"y" : 200,
+					"z" : 26
+				},
+				{
+					"x" : 575,
+					"y" : 575,
+					"z" : 400
+				},
+				{
+					"x" : 287.5,
+					"y" : 1000,
+					"z" : 600
+				},
+				{
+					"x" : 575,
+					"y" : 250,
+					"z" : 0
+				}
+			],
+			"particleSpawns" : []
 		}
 	]
 }

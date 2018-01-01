@@ -86,7 +86,7 @@
           },
           "scalingFactor" : 3,
           "size" : { "width":177, "height":111 },
-          "timeOpen" : 4,
+          "timeOpen" : 2,
           "timeClosed" : 2,
           "stateSwitchesToLeave" : 6
         }
