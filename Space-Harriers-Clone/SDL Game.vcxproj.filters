@@ -38,6 +38,9 @@
     <Filter Include="Game Modules\UI">
       <UniqueIdentifier>{32ca4a58-70cf-49a6-94eb-8f1a1720c3fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Modules\Enemies\Dragon">
+      <UniqueIdentifier>{fc7f5586-c991-4b57-8c17-660327286c8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -192,6 +195,15 @@
     <ClInclude Include="Explosion.h">
       <Filter>Game Modules\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Boss_Dragon_Body.h">
+      <Filter>Game Modules\Enemies\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss_Dragon_Tail.h">
+      <Filter>Game Modules\Enemies\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss_Dragon_Head.h">
+      <Filter>Game Modules\Enemies\Dragon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -313,6 +325,15 @@
     </ClCompile>
     <ClCompile Include="json_serializer.cpp">
       <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss_Dragon_Body.cpp">
+      <Filter>Game Modules\Enemies\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss_Dragon_Head.cpp">
+      <Filter>Game Modules\Enemies\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss_Dragon_Tail.cpp">
+      <Filter>Game Modules\Enemies\Dragon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
