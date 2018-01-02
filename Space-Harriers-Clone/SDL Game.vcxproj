@@ -80,13 +80,11 @@
     <ClInclude Include="Boss_Dragon_Head.h" />
     <ClInclude Include="Boss_Dragon_Tail.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="Component.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="FloorAnchoredTransform.h" />
     <ClInclude Include="FloorBasedTransform.h" />
     <ClInclude Include="FloorRelatedTransform.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="IClonable.h" />
     <ClInclude Include="ICollidable.h" />
@@ -115,7 +113,6 @@
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleTime.h" />
     <ClInclude Include="ModuleWindow.h" />
-    <ClInclude Include="Object.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="ScreenBoundFloorProjectedTransform.h" />
@@ -136,12 +133,10 @@
     <ClCompile Include="Boss_Dragon_Head.cpp" />
     <ClCompile Include="Boss_Dragon_Tail.cpp" />
     <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="FloorAnchoredTransform.cpp" />
     <ClCompile Include="FloorBasedTransform.cpp" />
     <ClCompile Include="GameEntity.h" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="json_serializer.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -161,7 +156,6 @@
     <ClCompile Include="ModuleTime.cpp" />
     <ClCompile Include="ModuleUserInterface.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Ovni.cpp" />
     <ClCompile Include="Particle.cpp" />
