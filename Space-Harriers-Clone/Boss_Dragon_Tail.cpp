@@ -3,8 +3,7 @@
 #include "Application.h"
 #include "ModuleCollision.h"
 #include "ModuleAudio.h"
-
-#include "Pivot2D.h"
+#include "Collider.h"
 
 Boss_Dragon_Tail::Boss_Dragon_Tail(const Texture& graphics, const Animation& animation, const SFX& sfx, const Size2D& size) :
 	Enemy(new FloorBasedTransform(), true),
@@ -17,6 +16,8 @@ Boss_Dragon_Tail::Boss_Dragon_Tail(const Texture& graphics, const Animation& ani
 
 Boss_Dragon_Tail::~Boss_Dragon_Tail()
 {
+	App->audio->UnloadFx(sfx);
+	collider->MarkAsDeleted();
 }
 
 void Boss_Dragon_Tail::OnCollision(const Collider & own, const Collider & other)
@@ -26,6 +27,8 @@ void Boss_Dragon_Tail::OnCollision(const Collider & own, const Collider & other)
 
 void Boss_Dragon_Tail::Init(const json & parameters)
 {
+	App->audio->RegisterFxUsage(sfx);
+
 }
 
 void Boss_Dragon_Tail::Update()

@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Boss_Dragon.h" />
     <ClInclude Include="Boss_Dragon_Body.h" />
     <ClInclude Include="Boss_Dragon_Head.h" />
     <ClInclude Include="Boss_Dragon_Tail.h" />
@@ -129,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Boss_Dragon.cpp" />
     <ClCompile Include="Boss_Dragon_Body.cpp" />
     <ClCompile Include="Boss_Dragon_Head.cpp" />
     <ClCompile Include="Boss_Dragon_Tail.cpp" />

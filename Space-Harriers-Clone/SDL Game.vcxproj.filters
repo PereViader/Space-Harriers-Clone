@@ -199,6 +199,9 @@
     <ClInclude Include="ModuleTextures.h">
       <Filter>Core Modules\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="Boss_Dragon.h">
+      <Filter>Game Modules\Enemies\Dragon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -320,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="ModuleTextures.cpp">
       <Filter>Core Modules\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss_Dragon.cpp">
+      <Filter>Game Modules\Enemies\Dragon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

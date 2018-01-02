@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _BOSS_DRAGON_TAIL_H
+#define _BOSS_DRAGON_H_
+
 #include "Enemy.h"
 
 #include "FloorBasedTransform.h"
@@ -24,11 +26,16 @@ public:
 
 	virtual void OnCollision(const Collider & own, const Collider & other) override;
 
+	virtual FloorBasedTransform& GetTransform() const override { return GetTransformTypped<FloorBasedTransform>(); }
+
+
 private:
 	Texture graphics;
 	Animation animation;
 	SFX sfx;
 
 	Collider * collider;
+
 };
 
+#endif // !_BOSS_DRAGON_TAIL_H
