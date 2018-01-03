@@ -79,7 +79,6 @@
     <ClInclude Include="Boss_Dragon.h" />
     <ClInclude Include="Boss_Dragon_Body.h" />
     <ClInclude Include="Boss_Dragon_Head.h" />
-    <ClInclude Include="Boss_Dragon_Tail.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Explosion.h" />
@@ -133,7 +132,6 @@
     <ClCompile Include="Boss_Dragon.cpp" />
     <ClCompile Include="Boss_Dragon_Body.cpp" />
     <ClCompile Include="Boss_Dragon_Head.cpp" />
-    <ClCompile Include="Boss_Dragon_Tail.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="FloorAnchoredTransform.cpp" />

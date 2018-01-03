@@ -184,9 +184,6 @@
     <ClInclude Include="Boss_Dragon_Body.h">
       <Filter>Game Modules\Enemies\Dragon</Filter>
     </ClInclude>
-    <ClInclude Include="Boss_Dragon_Tail.h">
-      <Filter>Game Modules\Enemies\Dragon</Filter>
-    </ClInclude>
     <ClInclude Include="Boss_Dragon_Head.h">
       <Filter>Game Modules\Enemies\Dragon</Filter>
     </ClInclude>
@@ -316,9 +313,6 @@
       <Filter>Game Modules\Enemies\Dragon</Filter>
     </ClCompile>
     <ClCompile Include="Boss_Dragon_Head.cpp">
-      <Filter>Game Modules\Enemies\Dragon</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss_Dragon_Tail.cpp">
       <Filter>Game Modules\Enemies\Dragon</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTextures.cpp">
