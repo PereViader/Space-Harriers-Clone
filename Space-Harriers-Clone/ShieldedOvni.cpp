@@ -16,7 +16,7 @@ ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, c
 	Enemy(new FloorBasedTransform(),true),
 	state(behaviour_state::In),
 	graphics(graphics),
-	animationOpenClose(animation),
+	animation(animation),
 	scalingFactor(scalingFactor),
 	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::MIDDLE_CENTER, *this)),
 	isOpen(false),
@@ -37,7 +37,7 @@ ShieldedOvni::ShieldedOvni(const ShieldedOvni & o) :
 	Enemy(o),
 	state(o.state),
 	graphics(o.graphics),
-	animationOpenClose(o.animationOpenClose),
+	animation(o.animation),
 	scalingFactor(o.scalingFactor),
 	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
 	isOpen(o.isOpen),
@@ -147,8 +147,8 @@ void ShieldedOvni::Render()
 {
 	Enemy::Render();
 
-	animationOpenClose.UpdateFrame();
-	graphics.UpdateTexture(animationOpenClose);
+	animation.UpdateFrame();
+	graphics.UpdateTexture(animation);
 
 	Vector3 position = GetTransform().GetScreenPositionAndDepth();
 	float scale = GetTransform().GetRenderingScale() * scalingFactor;
@@ -159,7 +159,7 @@ void ShieldedOvni::Render()
 void ShieldedOvni::SwitchState()
 {
 	isOpen = !isOpen;
-	animationOpenClose.speed *= -1;
+	animation.speed *= -1;
 
 	if (isOpen) {
 		ShootPlayer();

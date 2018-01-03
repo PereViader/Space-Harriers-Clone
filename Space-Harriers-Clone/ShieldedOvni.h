@@ -44,7 +44,7 @@ private:
 	behaviour_state state;
 
 	Texture graphics;
-	Animation animationOpenClose;
+	Animation animation;
 	float scalingFactor;
 
 	Collider * collider;
