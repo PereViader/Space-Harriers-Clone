@@ -50,4 +50,7 @@ private:
 	Enemy * CreateShieldedOvniBrainPrototype(const json&) const;
 	Enemy * CreateShieldedOvni(const json&) const;
 	Enemy * CreateExplosion(const json&) const;
+	Enemy * CreateBossDragon(const json&) const;
+	Enemy * CreateBossDragonHead(const json&) const;
+	Enemy * CreateBossDragonBody(const json&) const;
 };

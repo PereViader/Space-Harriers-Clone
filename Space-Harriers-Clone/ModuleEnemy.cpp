@@ -12,6 +12,10 @@
 #include "ModuleAudio.h"
 #include "SFX.h"
 
+#include "Boss_Dragon.h"
+#include "Boss_Dragon_Head.h"
+#include "Boss_Dragon_Body.h"
+
 #include <fstream>
 #include <assert.h>
 
@@ -26,6 +30,10 @@ ModuleEnemy::ModuleEnemy(bool enabled) :
 	prototypeCreationFunctionMap["shieldedOvni"] = &ModuleEnemy::CreateShieldedOvni;
 	prototypeCreationFunctionMap["obstacle"] = &ModuleEnemy::CreateObstaclePrototype;
 	prototypeCreationFunctionMap["explosion"] = &ModuleEnemy::CreateExplosion;
+	prototypeCreationFunctionMap["bossDragon"] = &ModuleEnemy::CreateBossDragon;
+	prototypeCreationFunctionMap["bossDragonHead"] = &ModuleEnemy::CreateBossDragonHead;
+	prototypeCreationFunctionMap["bossDragonBody"] = &ModuleEnemy::CreateBossDragonBody;
+
 }
 
 ModuleEnemy::~ModuleEnemy()
@@ -164,4 +172,31 @@ Enemy * ModuleEnemy::CreateExplosion(const json & data) const
 	SFX explosionSoundPath = App->audio->LoadFx(data["explosionSoundPath"]);
 
 	return new Explosion(graphics, animation, scalingFactor, explosionSoundPath);
+}
+
+Enemy * ModuleEnemy::CreateBossDragon(const json & data) const
+{
+	return new Boss_Dragon();
+}
+
+Enemy * ModuleEnemy::CreateBossDragonHead(const json & data) const
+{
+	Texture graphics = App->textures->Load(data["graphicsPath"]);
+	Animation animation = data["animation"];
+	float scalingFactor = data["scalingFactor"];
+	SFX sfx = App->audio->LoadFx(data["sfx"]);
+	Size2D size = data["size"];
+
+	return new Boss_Dragon_Head(graphics,animation,sfx,size,scalingFactor);
+}
+
+Enemy * ModuleEnemy::CreateBossDragonBody(const json & data) const
+{
+	Texture graphics = App->textures->Load(data["graphicsPath"]);
+	Animation animation = data["animation"];
+	float scalingFactor = data["scalingFactor"];
+	SFX sfx = App->audio->LoadFx(data["sfx"]);
+	Size2D size = data["size"];
+
+	return new Boss_Dragon_Head(graphics, animation, sfx, size, scalingFactor);
 }
