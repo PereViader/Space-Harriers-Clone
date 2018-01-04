@@ -93,7 +93,7 @@ bool ModuleEnemy::CleanUp()
 	}
 	enemies.clear();
 	
-	for (auto enemyPrototypePair : enemyPrototypes) {
+	for (auto& enemyPrototypePair : enemyPrototypes) {
 		Enemy* enemyPrototype = enemyPrototypePair.second;
 		delete enemyPrototype;
 	}
@@ -198,5 +198,5 @@ Enemy * ModuleEnemy::CreateBossDragonBody(const json & data) const
 	SFX sfx = App->audio->LoadFx(data["sfx"]);
 	Size2D size = data["size"];
 
-	return new Boss_Dragon_Head(graphics, animation, sfx, size, scalingFactor);
+	return new Boss_Dragon_Body(graphics, animation, sfx, size, scalingFactor);
 }
