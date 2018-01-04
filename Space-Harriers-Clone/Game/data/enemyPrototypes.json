@@ -113,18 +113,68 @@
       }
     },
 	  {
-		"type" : "explosion",
-		"name" : "explosion",
-		"data" : {
-			"scalingFactor" : 4,
-			"graphicsPath" : "data/sprites/particle_models.png",
-			"explosionSoundPath" : "data/audio/sfx/explosion.wav",
-			"animation" : {
-				"frames" : [[400,5,90,65],[493,6,90,65],[594,6,91,70],[690,5,97,75],[794,9,93,69],[895,13,93,65],[895,13,93,65]],
-				"loop" : false,
-				"speed" : 12
-			}
-		}
+  		"type" : "explosion",
+  		"name" : "explosion",
+  		"data" : {
+  			"scalingFactor" : 4,
+  			"graphicsPath" : "data/sprites/particle_models.png",
+  			"explosionSoundPath" : "data/audio/sfx/explosion.wav",
+  			"animation" : {
+  				"frames" : [[400,5,90,65],[493,6,90,65],[594,6,91,70],[690,5,97,75],[794,9,93,69],[895,13,93,65],[895,13,93,65]],
+  				"loop" : false,
+  				"speed" : 12
+  			}
+  		}
+	  },
+    {
+  		"type" : "bossDragon",
+  		"name" : "bossDragon",
+  		"data" : {}
+		},
+    {
+  		"type" : "bossDragonHead",
+  		"name" : "bossDragonHead",
+  		"data" : {
+  			"scalingFactor" : 4,
+  			"graphicsPath" : "data/sprites/dragon.png",
+  			"sfx" : "data/audio/sfx/bossDragonHit.wav",
+  			"animation" : {
+  				"frames" : [[80,8,65,104]],
+  				"loop" : false,
+  				"speed" : 0
+  			},
+        "size" : { "width":260, "height":416 }
+  		}
+	  },
+    {
+  		"type" : "bossDragonBody",
+  		"name" : "bossDragonBody",
+  		"data" : {
+  			"scalingFactor" : 4,
+  			"graphicsPath" : "data/sprites/dragon.png",
+  			"sfx" : "data/audio/sfx/bossDragonHit.wav",
+  			"animation" : {
+  				"frames" : [[162,26,112,72]],
+  				"loop" : false,
+  				"speed" : 0
+  			},
+        "size" : { "width":260, "height":416 }
+  		}
+	  },
+    {
+  		"type" : "bossDragonBody",
+  		"name" : "bossDragonTail",
+  		"data" : {
+  			"scalingFactor" : 4,
+  			"graphicsPath" : "data/sprites/dragon.png",
+  			"sfx" : "data/audio/sfx/bossDragonHit.wav",
+  			"animation" : {
+  				"frames" : [[285,19,94,89]],
+  				"loop" : false,
+  				"speed" : 0
+  			},
+        "size" : { "width":260, "height":416 }
+  		}
 	  }
   ]
 }
