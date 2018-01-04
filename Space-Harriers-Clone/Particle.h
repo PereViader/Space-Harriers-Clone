@@ -41,6 +41,8 @@ private:
 	static const float MINIMUM_HEIGHT_FOR_SHADOW;
 
 private:
+	bool IsInsideGameBounds();
+
 	void MoveParticle();
 	void OnParticleDied();
 };

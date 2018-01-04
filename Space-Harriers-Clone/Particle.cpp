@@ -48,9 +48,14 @@ void Particle::Update()
 
 	MoveParticle();
 
-	float depth = GetTransform().GetDepth();
-	if (depth > Z_MAX || depth < 0)
+	if (!IsInsideGameBounds())
 		OnParticleDied();
+}
+
+bool Particle::IsInsideGameBounds()
+{
+	Vector3 position = GetTransform().GetScreenPositionAndDepth();
+	return position.z >= 0 && position.z <= Z_MAX && position.x >= 0 && position.x <= SCREEN_WIDTH && position.y >= 0 && position.y <= SCREEN_HEIGHT;
 }
 
 void Particle::MoveParticle()
