@@ -17,7 +17,8 @@ Boss_Dragon_Body::Boss_Dragon_Body(const Texture & graphics, const Animation & a
 	sfx(sfx),
 	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::MIDDLE_CENTER, *this)),
 	nextPart(nullptr),
-	previousPart(nullptr)
+	previousPart(nullptr),
+	delta()
 {
 }
 
@@ -29,7 +30,8 @@ Boss_Dragon_Body::Boss_Dragon_Body(const Boss_Dragon_Body & o) :
 	sfx(o.sfx),
 	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
 	nextPart(o.nextPart),
-	previousPart(o.previousPart)
+	previousPart(o.previousPart),
+	delta(o.delta)
 {
 }
 
@@ -54,6 +56,15 @@ void Boss_Dragon_Body::DragonDied()
 		previousPart->DragonDied();
 }
 
+void Boss_Dragon_Body::SetCurrentDelta(const Vector3 & delta)
+{
+	if (previousPart) {
+		previousPart->SetCurrentDelta(this->delta);
+	}
+
+	this->delta = delta;
+}
+
 void Boss_Dragon_Body::OnBossDragonBodyDied()
 {
 	MarkAsDeleted();
@@ -69,22 +80,15 @@ void Boss_Dragon_Body::Init(const json & parameters)
 
 void Boss_Dragon_Body::Update()
 {
-	assert(nextPart);
-	/*Vector3 currentNextPartPosition = nextPart->GetTransform().GetScreenPositionAndDepth();
-	if (currentNextPartPosition != oldNextPartPosition) {
-		float nextPartMovementMagnitude = (oldNextPartPosition - currentNextPartPosition).Magnitude();
-		Vector3 movementDirection = oldNextPartPosition - GetTransform().GetScreenPositionAndDepth();
-		movementDirection.Normalize();
-		GetTransform().Move(movementDirection*nextPartMovementMagnitude);
-		oldNextPartPosition = currentNextPartPosition;
-	}*/
-	float speed = 50;
+	/*assert(nextPart);
+	float speed = 200;
 	Vector3 currentPosition = GetTransform().GetScreenPositionAndDepth();
 	Vector3 newPosition = MoveTowards(currentPosition, oldNextPartPosition, speed*App->time->GetDeltaTime());
-	if (currentPosition == newPosition) {
+	if (newPosition == oldNextPartPosition) {
 		oldNextPartPosition = nextPart->GetTransform().GetScreenPositionAndDepth();
 	}
-	GetTransform().SetPosition(newPosition);
+	GetTransform().SetPosition(newPosition);*/
+	GetTransform().Move(delta);
 }
 
 void Boss_Dragon_Body::Render()

@@ -33,6 +33,7 @@ public:
 	virtual ScreenBoundFloorProjectedTransform& GetTransform() const override { return GetTransformTypped<ScreenBoundFloorProjectedTransform>(); }
 	
 	void DragonDied();
+	void SetCurrentDelta(const Vector3&);
 
 private:
 	Texture graphics;
@@ -46,6 +47,8 @@ private:
 
 	Enemy *nextPart;
 	Boss_Dragon_Body *previousPart;
+
+	Vector3 delta;
 
 private:
 	void OnBossDragonBodyDied();

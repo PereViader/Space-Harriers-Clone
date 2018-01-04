@@ -8,7 +8,17 @@
 #include "Collider.h"
 #include "Explosion.h"
 
+#include <math.h>
+
 #include "Boss_Dragon_Body.h"
+
+const int Boss_Dragon_Head::MIN_HEIGHT = 200;
+const int Boss_Dragon_Head::MAX_HEIGHT = SCREEN_HEIGHT - 400;
+const int Boss_Dragon_Head::MIN_WIDTH = 200;
+const int Boss_Dragon_Head::MAX_WIDTH = SCREEN_WIDTH - 200;
+const int Boss_Dragon_Head::MIN_DEPTH = 100;
+const int Boss_Dragon_Head::MAX_DEPTH = Z_MAX - 50;
+
 
 Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const Animation & animation, const SFX & sfx, const Size2D & size, float scalingFactor) :
 	Enemy(new ScreenBoundFloorProjectedTransform(), true),
@@ -19,7 +29,8 @@ Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const Animation & a
 	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::MIDDLE_CENTER, *this)),
 	previousPart(nullptr),
 	healthPoints(4),
-	isGoingForward(true)
+	forward(1),
+	speed(0.4,1.4,-50)
 {
 }
 
@@ -32,7 +43,8 @@ Boss_Dragon_Head::Boss_Dragon_Head(const Boss_Dragon_Head & o) :
 	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
 	previousPart(o.previousPart),
 	healthPoints(o.healthPoints),
-	isGoingForward(o.isGoingForward)
+	forward(o.forward),
+	speed(o.speed)
 {
 }
 
@@ -69,18 +81,34 @@ void Boss_Dragon_Head::Init(const json & parameters)
 	App->audio->RegisterFxUsage(sfx);
 }
 
+
+#include <iostream>
+
 void Boss_Dragon_Head::Update()
 {
-	if (isGoingForward) {
-		Vector3 movement(0, 0, -50);
-		GetTransform().Move(movement*App->time->GetDeltaTime());
-		isGoingForward = GetTransform().GetDepth() > 50;
+	positionAngle.x = fmod(positionAngle.x + speed.x * App->time->GetDeltaTime(), M_PI);
+	positionAngle.y = fmod(positionAngle.y + speed.y * App->time->GetDeltaTime(), M_PI);
+	//std::cout << positionAngle.y << std::endl;
+
+	float depth = GetTransform().GetDepth() + forward * speed.z * App->time->GetDeltaTime();
+
+	Vector3 newPosition;
+	newPosition.x = MIN_WIDTH + (MAX_WIDTH - MIN_WIDTH) * sin(positionAngle.x);
+	newPosition.y = MIN_HEIGHT + (MAX_HEIGHT - MIN_HEIGHT) * sin(positionAngle.y);
+	newPosition.z = depth;
+
+	Vector3 delta = newPosition - GetTransform().GetScreenPositionAndDepth();
+	GetTransform().SetPosition(newPosition);
+
+
+	if (forward == 1) { // is Going Forward
+		forward = GetTransform().GetDepth() <= MIN_DEPTH ? -1 : 1;
 	}
-	else {
-		Vector3 movement(0, 0, 50);
-		GetTransform().Move(movement*App->time->GetDeltaTime());
-		isGoingForward = GetTransform().GetDepth() > 650;
+	else { // forward == -1 
+		forward = GetTransform().GetDepth() >= MAX_DEPTH ? 1 : -1;
 	}
+
+	previousPart->SetCurrentDelta(delta);
 }
 
 void Boss_Dragon_Head::Render()

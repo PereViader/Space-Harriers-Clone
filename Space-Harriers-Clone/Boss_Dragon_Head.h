@@ -7,6 +7,8 @@
 #include "Texture.h"
 #include "Animation.h"
 #include "SFX.h"
+#include "Vector2.h"
+#include "Vector3.h"
 
 class Collider;
 class Size2D;
@@ -46,10 +48,21 @@ private:
 
 	Boss_Dragon_Body *previousPart;
 
-	bool isGoingForward;
+	int forward;
+
+	Vector3 speed;
+	Vector2 positionAngle;
 	
 private:
 	void OnBossDragonHeadDied();
+
+	static const int MIN_HEIGHT;
+	static const int MAX_HEIGHT;
+	static const int MIN_WIDTH;
+	static const int MAX_WIDTH;
+	static const int MIN_DEPTH;
+	static const int MAX_DEPTH;
+
 
 };
 
