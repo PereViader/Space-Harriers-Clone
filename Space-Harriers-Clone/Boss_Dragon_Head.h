@@ -20,6 +20,8 @@ class Boss_Dragon_Head :
 
 public:
 	Boss_Dragon_Head(const Texture& graphics, const Animation& animation, const SFX& sfx, const Size2D& size, float scalingFactor);
+	Boss_Dragon_Head(const Boss_Dragon_Head&);
+
 	virtual ~Boss_Dragon_Head();
 	virtual Boss_Dragon_Head * Clone() const override;
 
@@ -43,6 +45,8 @@ private:
 	int healthPoints;
 
 	Boss_Dragon_Body *previousPart;
+
+	bool isGoingForward;
 	
 private:
 	void OnBossDragonHeadDied();

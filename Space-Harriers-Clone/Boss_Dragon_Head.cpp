@@ -17,7 +17,22 @@ Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const Animation & a
 	animation(animation),
 	sfx(sfx),
 	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::MIDDLE_CENTER, *this)),
-	previousPart(nullptr)
+	previousPart(nullptr),
+	healthPoints(4),
+	isGoingForward(true)
+{
+}
+
+Boss_Dragon_Head::Boss_Dragon_Head(const Boss_Dragon_Head & o) :
+	Enemy(o),
+	graphics(o.graphics),
+	scalingFactor(o.scalingFactor),
+	animation(o.animation),
+	sfx(o.sfx),
+	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
+	previousPart(o.previousPart),
+	healthPoints(o.healthPoints),
+	isGoingForward(o.isGoingForward)
 {
 }
 
@@ -56,6 +71,16 @@ void Boss_Dragon_Head::Init(const json & parameters)
 
 void Boss_Dragon_Head::Update()
 {
+	if (isGoingForward) {
+		Vector3 movement(0, 0, -50);
+		GetTransform().Move(movement*App->time->GetDeltaTime());
+		isGoingForward = GetTransform().GetDepth() > 50;
+	}
+	else {
+		Vector3 movement(0, 0, 50);
+		GetTransform().Move(movement*App->time->GetDeltaTime());
+		isGoingForward = GetTransform().GetDepth() > 650;
+	}
 }
 
 void Boss_Dragon_Head::Render()

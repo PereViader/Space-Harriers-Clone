@@ -19,6 +19,7 @@ class Boss_Dragon_Body :
 
 public:
 	Boss_Dragon_Body(const Texture& graphics, const Animation& animation, const SFX& sfx, const Size2D& size, float scalingFactor);
+	Boss_Dragon_Body(const Boss_Dragon_Body&);
 	virtual ~Boss_Dragon_Body();
 	virtual Boss_Dragon_Body * Clone() const override;
 

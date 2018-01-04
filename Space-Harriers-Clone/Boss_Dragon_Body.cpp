@@ -21,6 +21,18 @@ Boss_Dragon_Body::Boss_Dragon_Body(const Texture & graphics, const Animation & a
 {
 }
 
+Boss_Dragon_Body::Boss_Dragon_Body(const Boss_Dragon_Body & o) :
+	Enemy(o),
+	graphics(o.graphics),
+	scalingFactor(o.scalingFactor),
+	animation(o.animation),
+	sfx(o.sfx),
+	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
+	nextPart(o.nextPart),
+	previousPart(o.previousPart)
+{
+}
+
 Boss_Dragon_Body::~Boss_Dragon_Body()
 {
 	App->audio->UnloadFx(sfx);
@@ -60,9 +72,10 @@ void Boss_Dragon_Body::Update()
 	assert(nextPart);
 	Vector3 currentNextPartPosition = nextPart->GetTransform().GetScreenPositionAndDepth();
 	if (currentNextPartPosition != oldNextPartPosition) {
-		Vector3 currentOwnPosition = GetTransform().GetScreenPositionAndDepth();
-		Vector3 delta = oldNextPartPosition - currentOwnPosition;
-		GetTransform().Move(delta);
+		float nextPartMovementMagnitude = (oldNextPartPosition - currentNextPartPosition).Magnitude();
+		Vector3 movementDirection = oldNextPartPosition - GetTransform().GetScreenPositionAndDepth();
+		movementDirection.Normalize();
+		GetTransform().Move(movementDirection*nextPartMovementMagnitude);
 		oldNextPartPosition = currentNextPartPosition;
 	}
 }
