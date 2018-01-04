@@ -2,6 +2,14 @@
 	"backgroundMusicPath" : "data/audio/music/main_theme.wav",
 	"enemies" : [
 		{
+			"name" : "bossDragon",
+			"spawnId" : 1,
+			"position" : {
+				"x" : 500,
+				"y" : 0
+			}
+		},
+		{
 		  "name" : "bush",
 		  "spawnId" : 1,
 		  "position" : {

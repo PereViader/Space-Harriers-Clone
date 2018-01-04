@@ -70,14 +70,21 @@ void Boss_Dragon_Body::Init(const json & parameters)
 void Boss_Dragon_Body::Update()
 {
 	assert(nextPart);
-	Vector3 currentNextPartPosition = nextPart->GetTransform().GetScreenPositionAndDepth();
+	/*Vector3 currentNextPartPosition = nextPart->GetTransform().GetScreenPositionAndDepth();
 	if (currentNextPartPosition != oldNextPartPosition) {
 		float nextPartMovementMagnitude = (oldNextPartPosition - currentNextPartPosition).Magnitude();
 		Vector3 movementDirection = oldNextPartPosition - GetTransform().GetScreenPositionAndDepth();
 		movementDirection.Normalize();
 		GetTransform().Move(movementDirection*nextPartMovementMagnitude);
 		oldNextPartPosition = currentNextPartPosition;
+	}*/
+	float speed = 50;
+	Vector3 currentPosition = GetTransform().GetScreenPositionAndDepth();
+	Vector3 newPosition = MoveTowards(currentPosition, oldNextPartPosition, speed*App->time->GetDeltaTime());
+	if (currentPosition == newPosition) {
+		oldNextPartPosition = nextPart->GetTransform().GetScreenPositionAndDepth();
 	}
+	GetTransform().SetPosition(newPosition);
 }
 
 void Boss_Dragon_Body::Render()

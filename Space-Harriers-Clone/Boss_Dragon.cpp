@@ -45,7 +45,7 @@ void Boss_Dragon::Init(const json & parameters)
 
 	//Set starting position
 	Vector3 startingPosition(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 700);
-	Vector3 startingDelta(0, 0, -30);
+	Vector3 startingDelta(0, 0, -50);
 
 	for (int i = NUMBER_OF_BODY_PARTS; i >= 0; --i) {
 		dragonBody[i]->GetTransform().SetPosition(startingPosition);
