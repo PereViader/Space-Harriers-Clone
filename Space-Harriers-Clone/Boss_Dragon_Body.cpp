@@ -17,8 +17,7 @@ Boss_Dragon_Body::Boss_Dragon_Body(const Texture & graphics, const Animation & a
 	sfx(sfx),
 	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::MIDDLE_CENTER, *this)),
 	nextPart(nullptr),
-	previousPart(nullptr),
-	delta()
+	previousPart(nullptr)
 {
 }
 
@@ -30,8 +29,7 @@ Boss_Dragon_Body::Boss_Dragon_Body(const Boss_Dragon_Body & o) :
 	sfx(o.sfx),
 	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
 	nextPart(o.nextPart),
-	previousPart(o.previousPart),
-	delta(o.delta)
+	previousPart(o.previousPart)
 {
 }
 
@@ -56,15 +54,6 @@ void Boss_Dragon_Body::DragonDied()
 		previousPart->DragonDied();
 }
 
-void Boss_Dragon_Body::SetCurrentDelta(const Vector3 & delta)
-{
-	if (previousPart) {
-		previousPart->SetCurrentDelta(this->delta);
-	}
-
-	this->delta = delta;
-}
-
 void Boss_Dragon_Body::OnBossDragonBodyDied()
 {
 	MarkAsDeleted();
@@ -80,15 +69,35 @@ void Boss_Dragon_Body::Init(const json & parameters)
 
 void Boss_Dragon_Body::Update()
 {
-	/*assert(nextPart);
-	float speed = 200;
-	Vector3 currentPosition = GetTransform().GetScreenPositionAndDepth();
-	Vector3 newPosition = MoveTowards(currentPosition, oldNextPartPosition, speed*App->time->GetDeltaTime());
-	if (newPosition == oldNextPartPosition) {
-		oldNextPartPosition = nextPart->GetTransform().GetScreenPositionAndDepth();
+	assert(nextPart);
+
+	const float distanceBetweenBodyParts = 40;
+	Vector3 currentOwnPosition = GetTransform().GetScreenPositionAndDepth();
+	Vector3 currentNextPartPosition = nextPart->GetTransform().GetScreenPositionAndDepth();
+
+	Vector3 currentNextPartToOldNextPart = oldNextPartPosition - currentNextPartPosition;
+	float distanceNextPartAndOldNextPart = currentNextPartToOldNextPart.Magnitude();
+
+	Vector3 oldNextPartToOwn =  currentOwnPosition - oldNextPartPosition;
+	float distanceOldNextPartAndOwn = oldNextPartToOwn.Magnitude();
+
+	Vector3 newDesiredPosition;
+	if (distanceNextPartAndOldNextPart >= distanceBetweenBodyParts) {
+		float percentageOfPosition = distanceBetweenBodyParts / distanceNextPartAndOldNextPart;
+		newDesiredPosition = currentNextPartPosition + currentNextPartToOldNextPart * percentageOfPosition;
 	}
-	GetTransform().SetPosition(newPosition);*/
-	GetTransform().Move(delta);
+	else {
+		float remainingDistance = distanceBetweenBodyParts - distanceNextPartAndOldNextPart;
+		float percentageOfPosition = remainingDistance / distanceOldNextPartAndOwn;
+		newDesiredPosition = oldNextPartPosition + oldNextPartToOwn * percentageOfPosition;
+	}
+
+	Vector3 deltaNewPosition = newDesiredPosition - currentOwnPosition;
+	const float smoothingFactor = 0.5;
+
+	GetTransform().Move(deltaNewPosition*smoothingFactor);
+
+	oldNextPartPosition = currentNextPartPosition;
 }
 
 void Boss_Dragon_Body::Render()

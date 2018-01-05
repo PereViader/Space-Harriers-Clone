@@ -30,7 +30,8 @@ Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const Animation & a
 	previousPart(nullptr),
 	healthPoints(4),
 	forward(1),
-	speed(0.4,1.4,-50)
+	speed(0.4f,1.4f,-50),
+	positionAngle(static_cast<float>(M_PI/4.0f), static_cast<float>(M_PI/2.0f))
 {
 }
 
@@ -44,7 +45,8 @@ Boss_Dragon_Head::Boss_Dragon_Head(const Boss_Dragon_Head & o) :
 	previousPart(o.previousPart),
 	healthPoints(o.healthPoints),
 	forward(o.forward),
-	speed(o.speed)
+	speed(o.speed),
+	positionAngle(o.positionAngle)
 {
 }
 
@@ -86,8 +88,8 @@ void Boss_Dragon_Head::Init(const json & parameters)
 
 void Boss_Dragon_Head::Update()
 {
-	positionAngle.x = fmod(positionAngle.x + speed.x * App->time->GetDeltaTime(), M_PI);
-	positionAngle.y = fmod(positionAngle.y + speed.y * App->time->GetDeltaTime(), M_PI);
+	positionAngle.x = fmod(positionAngle.x + speed.x * App->time->GetDeltaTime(), static_cast<float>(M_PI));
+	positionAngle.y = fmod(positionAngle.y + speed.y * App->time->GetDeltaTime(), static_cast<float>(M_PI));
 	//std::cout << positionAngle.y << std::endl;
 
 	float depth = GetTransform().GetDepth() + forward * speed.z * App->time->GetDeltaTime();
@@ -107,8 +109,6 @@ void Boss_Dragon_Head::Update()
 	else { // forward == -1 
 		forward = GetTransform().GetDepth() >= MAX_DEPTH ? 1 : -1;
 	}
-
-	previousPart->SetCurrentDelta(delta);
 }
 
 void Boss_Dragon_Head::Render()
