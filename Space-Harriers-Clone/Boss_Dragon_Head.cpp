@@ -3,10 +3,13 @@
 #include "Application.h"
 #include "ModuleAudio.h"
 #include "ModuleCollision.h"
+#include "ModulePlayer.h"
+#include "ModuleParticles.h"
 #include "ModuleRender.h"
 #include "ModuleEnemy.h"
 #include "Collider.h"
 #include "Explosion.h"
+#include "ModuleStage.h"
 
 #include <math.h>
 
@@ -20,7 +23,7 @@ const int Boss_Dragon_Head::MIN_DEPTH = 100;
 const int Boss_Dragon_Head::MAX_DEPTH = Z_MAX - 50;
 
 
-Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const vector<Animation>& forwardAnimations, const vector<Animation>& backwardAnimations, int healthPoints, const SFX & sfx, const Size2D & size, float scalingFactor, const Vector3& speed) :
+Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const vector<Animation>& forwardAnimations, const vector<Animation>& backwardAnimations, int healthPoints, const SFX & sfx, const Size2D & size, float scalingFactor, const Vector3& speed, float timeBetweenRounds, float timeBetweenBullets, int bulletsForRound, float bulletSpeed) :
 	Enemy(new ScreenBoundFloorProjectedTransform(), true),
 	graphics(graphics),
 	scalingFactor(scalingFactor),
@@ -32,7 +35,12 @@ Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const vector<Animat
 	healthPoints(healthPoints),
 	forward(1),
 	speed(speed),
-	positionAngle(static_cast<float>(M_PI/4.0f), static_cast<float>(M_PI/2.0f))
+	positionAngle(static_cast<float>(M_PI/4.0f), static_cast<float>(M_PI/2.0f)),
+	TIME_BETWEEN_ROUNDS(timeBetweenRounds),
+	TIME_BETWEEN_BULLETS(timeBetweenBullets),
+	BULLETS_FOR_ROUND(bulletsForRound),
+	bulletsFired(0),
+	fireballSpeed(bulletSpeed)
 {
 	assert(forwardAnimations.size() == healthPoints);
 	assert(backwardAnimations.size() == healthPoints);
@@ -50,7 +58,12 @@ Boss_Dragon_Head::Boss_Dragon_Head(const Boss_Dragon_Head & o) :
 	healthPoints(o.healthPoints),
 	forward(o.forward),
 	speed(o.speed),
-	positionAngle(o.positionAngle)
+	positionAngle(o.positionAngle),
+	TIME_BETWEEN_ROUNDS(o.TIME_BETWEEN_ROUNDS),
+	TIME_BETWEEN_BULLETS(o.TIME_BETWEEN_BULLETS),
+	BULLETS_FOR_ROUND(o.BULLETS_FOR_ROUND),
+	bulletsFired(o.bulletsFired),
+	fireballSpeed(o.fireballSpeed)
 {
 }
 
@@ -71,9 +84,42 @@ void Boss_Dragon_Head::OnCollision(const Collider & own, const Collider & other)
 	}
 }
 
+void Boss_Dragon_Head::ShootPlayer()
+{
+	if (forward == 1) {
+		roundTimer -= App->time->GetDeltaTime();
+		if (roundTimer < 0) {
+			bulletTimer -= App->time->GetDeltaTime();
+			if (bulletTimer < 0) {
+				++bulletsFired;
+				bulletTimer += TIME_BETWEEN_BULLETS;
+				ShootFireballToPlayer();
+				if (bulletsFired == BULLETS_FOR_ROUND) {
+					roundTimer = TIME_BETWEEN_ROUNDS;
+					bulletTimer = TIME_BETWEEN_BULLETS;
+					bulletsFired = 0;
+				}
+			}
+		}
+	}
+}
+
+void Boss_Dragon_Head::ShootFireballToPlayer()
+{
+	fireballSpeed = 300;
+	Vector3 player = App->player->GetChestPosition();
+	Vector3 own = GetTransform().GetScreenPositionAndDepth();
+	Vector3 directionalVector = player - own;
+	Vector3 velocity = directionalVector.Normalized() * fireballSpeed;
+
+	App->particles->AddParticleByName("ovni", own, velocity);
+}
+
 void Boss_Dragon_Head::OnBossDragonHeadDied()
 {
 	MarkAsDeleted();
+
+	App->moduleStage->OnStageBossDied();
 
 	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
 	explosion->GetTransform().SetPosition(GetTransform());
@@ -93,6 +139,12 @@ void Boss_Dragon_Head::Init(const json & parameters)
 }
 
 void Boss_Dragon_Head::Update()
+{
+	UpdatePosition();
+	ShootPlayer();
+}
+
+void Boss_Dragon_Head::UpdatePosition()
 {
 	//move angular position
 	positionAngle.x = fmod(positionAngle.x + speed.x * App->time->GetDeltaTime(), static_cast<float>(M_PI));

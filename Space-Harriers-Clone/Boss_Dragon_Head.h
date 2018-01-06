@@ -22,7 +22,7 @@ class Boss_Dragon_Head :
 	friend Boss_Dragon_Body;
 
 public:
-	Boss_Dragon_Head(const Texture & graphics, const vector<Animation>& forwardAnimations, const vector<Animation>& backwardAnimations, int healthPoints, const SFX & sfx, const Size2D & size, float scalingFactor, const Vector3& speed);
+	Boss_Dragon_Head(const Texture & graphics, const vector<Animation>& forwardAnimations, const vector<Animation>& backwardAnimations, int healthPoints, const SFX & sfx, const Size2D & size, float scalingFactor, const Vector3& speed, float timeBetweenRounds, float timeBetweenBullets, int bulletsForRound, float bulletSpeed);
 	Boss_Dragon_Head(const Boss_Dragon_Head&);
 
 	virtual ~Boss_Dragon_Head();
@@ -30,6 +30,7 @@ public:
 
 	virtual void Init(const json & parameters) override;
 	virtual void Update() override;
+
 
 	virtual void Render() override;
 
@@ -54,10 +55,26 @@ private:
 
 	Vector3 speed;
 	Vector2 positionAngle;
+
+
+	const float TIME_BETWEEN_ROUNDS;
+	const float TIME_BETWEEN_BULLETS;
+
+	float roundTimer;
+	float bulletTimer;
+	const int BULLETS_FOR_ROUND;
+	int bulletsFired;
+
+	float fireballSpeed;
 	
 private:
+	void UpdatePosition();
+	void ShootPlayer();
+	void ShootFireballToPlayer();
+
 	void OnBossDragonHeadDied();
 	bool IsAlive() const;
+
 
 	static const int MIN_HEIGHT;
 	static const int MAX_HEIGHT;
