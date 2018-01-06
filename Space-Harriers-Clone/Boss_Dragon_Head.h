@@ -19,9 +19,10 @@ class Boss_Dragon_Head :
 	public Enemy
 {
 	friend Boss_Dragon;
+	friend Boss_Dragon_Body;
 
 public:
-	Boss_Dragon_Head(const Texture & graphics, const vector<Animation> forwardAnimations, const vector<Animation> backwardAnimations, int healthPoints, const SFX & sfx, const Size2D & size, float scalingFactor, const Vector3& speed);
+	Boss_Dragon_Head(const Texture & graphics, const vector<Animation>& forwardAnimations, const vector<Animation>& backwardAnimations, int healthPoints, const SFX & sfx, const Size2D & size, float scalingFactor, const Vector3& speed);
 	Boss_Dragon_Head(const Boss_Dragon_Head&);
 
 	virtual ~Boss_Dragon_Head();

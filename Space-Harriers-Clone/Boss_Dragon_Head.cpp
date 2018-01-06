@@ -20,7 +20,7 @@ const int Boss_Dragon_Head::MIN_DEPTH = 100;
 const int Boss_Dragon_Head::MAX_DEPTH = Z_MAX - 50;
 
 
-Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const vector<Animation> forwardAnimations, const vector<Animation> backwardAnimations, int healthPoints, const SFX & sfx, const Size2D & size, float scalingFactor, const Vector3& speed) :
+Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const vector<Animation>& forwardAnimations, const vector<Animation>& backwardAnimations, int healthPoints, const SFX & sfx, const Size2D & size, float scalingFactor, const Vector3& speed) :
 	Enemy(new ScreenBoundFloorProjectedTransform(), true),
 	graphics(graphics),
 	scalingFactor(scalingFactor),
