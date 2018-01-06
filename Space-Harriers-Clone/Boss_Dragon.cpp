@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "ModuleEnemy.h"
+#include "ModuleAudio.h"
 
 #include "Boss_Dragon_Head.h"
 #include "Boss_Dragon_Body.h"
@@ -10,8 +11,9 @@
 
 const int Boss_Dragon::NUMBER_OF_BODY_PARTS = 4;
 
-Boss_Dragon::Boss_Dragon() :
-	Enemy(new FloorBasedTransform(), false)
+Boss_Dragon::Boss_Dragon(string& bossTheme) :
+	Enemy(new FloorBasedTransform(), false),
+	bossTheme(bossTheme)
 {
 }
 
@@ -23,6 +25,8 @@ Boss_Dragon::~Boss_Dragon()
 
 void Boss_Dragon::Init(const json & parameters)
 {
+	App->audio->PlayMusic(bossTheme,5);
+
 	Boss_Dragon_Head * dragonHead;
 	Boss_Dragon_Body * dragonBody[NUMBER_OF_BODY_PARTS+1]; // n body + 1 tail
 
