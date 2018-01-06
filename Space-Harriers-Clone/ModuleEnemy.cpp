@@ -197,10 +197,10 @@ Enemy * ModuleEnemy::CreateBossDragonHead(const json & data) const
 Enemy * ModuleEnemy::CreateBossDragonBody(const json & data) const
 {
 	Texture graphics = App->textures->Load(data["graphicsPath"]);
-	Animation animation = data["animation"];
+	vector<Animation> animations = data["animations"];
 	float scalingFactor = data["scalingFactor"];
 	SFX sfx = App->audio->LoadFx(data["sfx"]);
 	Size2D size = data["size"];
 
-	return new Boss_Dragon_Body(graphics, animation, sfx, size, scalingFactor);
+	return new Boss_Dragon_Body(graphics, animations, sfx, size, scalingFactor);
 }

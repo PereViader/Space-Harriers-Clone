@@ -1,5 +1,7 @@
 #include "Boss_Dragon_Body.h"
 
+#include "Boss_Dragon_Head.h"
+
 #include "Application.h"
 #include "ModuleCollision.h"
 #include "ModuleRender.h"
@@ -9,15 +11,16 @@
 
 #include "Collider.h"
 
-Boss_Dragon_Body::Boss_Dragon_Body(const Texture & graphics, const Animation & animation, const SFX & sfx, const Size2D & size, float scalingFactor) :
+Boss_Dragon_Body::Boss_Dragon_Body(const Texture & graphics, const vector<Animation> & animations, const SFX & sfx, const Size2D & size, float scalingFactor) :
 	Enemy(new ScreenBoundFloorProjectedTransform(), true),
 	graphics(graphics),
 	scalingFactor(scalingFactor),
-	animation(animation),
+	animations(animations),
 	sfx(sfx),
 	collider(App->collision->AddPrototypeCollider(ColliderType::Enemy, size, Pivot2D::MIDDLE_CENTER, *this)),
 	nextPart(nullptr),
-	previousPart(nullptr)
+	previousPart(nullptr),
+	head(nullptr)
 {
 }
 
@@ -25,11 +28,12 @@ Boss_Dragon_Body::Boss_Dragon_Body(const Boss_Dragon_Body & o) :
 	Enemy(o),
 	graphics(o.graphics),
 	scalingFactor(o.scalingFactor),
-	animation(o.animation),
+	animations(o.animations),
 	sfx(o.sfx),
 	collider(App->collision->RegisterPrototypeInstance(*o.collider, *this)),
 	nextPart(o.nextPart),
-	previousPart(o.previousPart)
+	previousPart(o.previousPart),
+	head(o.head)
 {
 }
 
@@ -102,15 +106,19 @@ void Boss_Dragon_Body::Update()
 
 void Boss_Dragon_Body::Render()
 {
-	Enemy::Render();
+	assert(head);
+	if (head->IsAlive()) {
+		Enemy::Render();
 
-	animation.UpdateFrame();
-	graphics.UpdateTexture(animation);
+		Animation& currentAnimation = animations.at(head->healthPoints-1);
+		currentAnimation.UpdateFrame();
+		graphics.UpdateTexture(currentAnimation);
 
-	Vector3 position = GetTransform().GetScreenPositionAndDepth();
-	float scale = GetTransform().GetRenderingScale() * scalingFactor;
+		Vector3 position = GetTransform().GetScreenPositionAndDepth();
+		float scale = GetTransform().GetRenderingScale() * scalingFactor;
 
-	App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::MIDDLE_CENTER, position);
+		App->renderer->BlitWithPivotScaledZBuffer(graphics, scale, Pivot2D::MIDDLE_CENTER, position);
+	}
 }
 
 Boss_Dragon_Body * Boss_Dragon_Body::Clone() const

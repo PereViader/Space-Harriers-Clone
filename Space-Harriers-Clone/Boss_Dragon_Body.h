@@ -11,6 +11,7 @@
 class Size2D;
 class Collider;
 class Boss_Dragon;
+class Boss_Dragon_Head;
 
 class Boss_Dragon_Body :
 	public Enemy
@@ -18,7 +19,7 @@ class Boss_Dragon_Body :
 	friend Boss_Dragon;
 
 public:
-	Boss_Dragon_Body(const Texture& graphics, const Animation& animation, const SFX& sfx, const Size2D& size, float scalingFactor);
+	Boss_Dragon_Body(const Texture& graphics, const vector<Animation> & animations, const SFX& sfx, const Size2D& size, float scalingFactor);
 	Boss_Dragon_Body(const Boss_Dragon_Body&);
 	virtual ~Boss_Dragon_Body();
 	virtual Boss_Dragon_Body * Clone() const override;
@@ -37,7 +38,7 @@ public:
 private:
 	Texture graphics;
 	float scalingFactor;
-	Animation animation;
+	vector<Animation> animations;
 	SFX sfx;
 
 	Collider *collider;
@@ -46,6 +47,7 @@ private:
 
 	Enemy *nextPart;
 	Boss_Dragon_Body *previousPart;
+	Boss_Dragon_Head *head;
 
 private:
 	void OnBossDragonBodyDied();

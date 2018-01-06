@@ -194,12 +194,29 @@
   			"scalingFactor" : 4,
   			"graphicsPath" : "data/sprites/dragon.png",
   			"sfx" : "data/audio/sfx/bossDragonHit.wav",
-  			"animation" : {
-  				"frames" : [[162,26,112,72]],
-  				"loop" : false,
-  				"speed" : 0
-  			},
-        "size" : { "width":260, "height":416 }
+  			"animations" : [
+				{
+					"frames" : [[162,374,112,72]],
+					"loop" : false,
+					"speed" : 0
+				},
+				{
+					"frames" : [[162,258,112,72]],
+					"loop" : false,
+					"speed" : 0
+				},
+				{
+					"frames" : [[162,142,112,72]],
+					"loop" : false,
+					"speed" : 0
+				},
+				{
+					"frames" : [[162,26,112,72]],
+					"loop" : false,
+					"speed" : 0
+				}
+			],
+			"size" : { "width":260, "height":416 }
   		}
 	  },
     {
@@ -209,12 +226,29 @@
   			"scalingFactor" : 4,
   			"graphicsPath" : "data/sprites/dragon.png",
   			"sfx" : "data/audio/sfx/bossDragonHit.wav",
-  			"animation" : {
+  			"animations" : [
+				{
+  				"frames" : [[285,367,94,89]],
+  				"loop" : false,
+  				"speed" : 0
+				},
+				{
+  				"frames" : [[285,251,94,89]],
+  				"loop" : false,
+  				"speed" : 0
+				},
+				{
+  				"frames" : [[285,135,94,89]],
+  				"loop" : false,
+  				"speed" : 0
+				},
+				{
   				"frames" : [[285,19,94,89]],
   				"loop" : false,
   				"speed" : 0
-  			},
-        "size" : { "width":260, "height":416 }
+				}
+			],	
+			"size" : { "width":260, "height":416 }
   		}
 	  }
   ]
