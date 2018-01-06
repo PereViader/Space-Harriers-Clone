@@ -21,7 +21,7 @@ class Boss_Dragon_Head :
 	friend Boss_Dragon;
 
 public:
-	Boss_Dragon_Head(const Texture& graphics, const Animation& animation, const SFX& sfx, const Size2D& size, float scalingFactor);
+	Boss_Dragon_Head(const Texture & graphics, const vector<Animation> forwardAnimations, const vector<Animation> backwardAnimations, int healthPoints, const SFX & sfx, const Size2D & size, float scalingFactor, const Vector3& speed);
 	Boss_Dragon_Head(const Boss_Dragon_Head&);
 
 	virtual ~Boss_Dragon_Head();
@@ -39,7 +39,8 @@ public:
 private:
 	Texture graphics;
 	float scalingFactor;
-	Animation animation;
+	vector<Animation> forwardAnimations;
+	vector<Animation> backwardAnimations;
 	SFX sfx;
 
 	Collider * collider;
@@ -55,6 +56,7 @@ private:
 	
 private:
 	void OnBossDragonHeadDied();
+	bool IsAlive() const;
 
 	static const int MIN_HEIGHT;
 	static const int MAX_HEIGHT;

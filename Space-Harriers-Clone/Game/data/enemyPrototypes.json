@@ -138,12 +138,53 @@
   			"scalingFactor" : 4,
   			"graphicsPath" : "data/sprites/dragon.png",
   			"sfx" : "data/audio/sfx/bossDragonHit.wav",
-  			"animation" : {
-  				"frames" : [[80,8,65,104]],
-  				"loop" : false,
-  				"speed" : 0
-  			},
-        "size" : { "width":260, "height":416 }
+  			"forwardAnimations" : [
+				{
+					"frames" : [[80,356,65,104]],
+					"loop" : false,
+					"speed" : 0
+				},
+				{
+					"frames" : [[80,240,65,104]],
+					"loop" : false,
+					"speed" : 0
+				},
+				{
+					"frames" : [[80,124,65,104]],
+					"loop" : false,
+					"speed" : 0
+				},
+				{
+					"frames" : [[80,8,65,104]],
+					"loop" : false,
+					"speed" : 0
+				}
+			],
+			"backwardAnimations" : [
+				{
+					"frames" : [[0,355,70,108]],
+					"loop" : false,
+					"speed" : 0
+				},
+				{
+					"frames" : [[0,239,70,108]],
+					"loop" : false,
+					"speed" : 0
+				},
+				{
+					"frames" : [[0,123,70,108]],
+					"loop" : false,
+					"speed" : 0
+				},
+				{
+					"frames" : [[0,7,70,108]],
+					"loop" : false,
+					"speed" : 0
+				}
+			],
+			"healthPoints" : 4,
+			"size" : { "width":260, "height":432 },
+			"speed" : { "x":0.4, "y":1.4, "z": -80 }
   		}
 	  },
     {
