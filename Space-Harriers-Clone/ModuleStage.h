@@ -15,14 +15,26 @@ public:
 	bool Start() override;
 	update_status Update() override;
 
+	void EndGame();
+
+
+	void OnStageBossDied();
+
 private:
 	int currentStage;
 	int previousSegmentCount;
 	json stageData;
 
+	bool hasGameEnded;
+	float gameResetTimer;
+	static const float GAME_RESET_TIME;
 private:
 	void LoadNextStage();
 	void StartGame();
-	void LoseGame();
+	void StopGame();
+	void RestartGame();
+
+	void SpawnEnemies();
+
 };
 

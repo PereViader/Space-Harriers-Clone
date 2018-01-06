@@ -20,10 +20,14 @@
 
 using namespace std;
 
+const float ModuleStage::GAME_RESET_TIME = 4.0f;
+
 ModuleStage::ModuleStage(bool enabled) : 
 	Module(enabled),
-	currentStage(0),
-	previousSegmentCount(-1)
+	currentStage(1),
+	previousSegmentCount(-1),
+	hasGameEnded(false),
+	gameResetTimer(GAME_RESET_TIME)
 {
 	LoadNextStage();
 }
@@ -41,6 +45,28 @@ bool ModuleStage::Start()
 
 update_status ModuleStage::Update()
 {
+	SpawnEnemies();
+	EndGame();
+	
+	return update_status::UPDATE_CONTINUE;
+}
+
+void ModuleStage::EndGame()
+{
+	hasGameEnded = hasGameEnded || App->player->GetHealthPoints() == 0;
+
+	if (hasGameEnded) {
+		gameResetTimer -= App->time->GetDeltaTime();
+		if (gameResetTimer <= 0) {
+			gameResetTimer = GAME_RESET_TIME;
+			hasGameEnded = false;
+			RestartGame();
+		}
+	}
+}
+
+void ModuleStage::SpawnEnemies()
+{
 	int currentSegmentCount = App->floor->GetCurrentSegmentCount();
 	if (currentSegmentCount != previousSegmentCount) {
 		previousSegmentCount = currentSegmentCount;
@@ -51,13 +77,17 @@ update_status ModuleStage::Update()
 			}
 		}
 	}
+}
 
-	if (App->player->GetHealthPoints() == 0) {
-		LoseGame();
-		StartGame();
-	}
-	
-	return update_status::UPDATE_CONTINUE;
+void ModuleStage::RestartGame()
+{
+	StopGame();
+	StartGame();
+}
+
+void ModuleStage::OnStageBossDied()
+{
+	hasGameEnded = true;
 }
 
 string CreateStageJsonFilePath(int stage) {
@@ -67,7 +97,6 @@ string CreateStageJsonFilePath(int stage) {
 	return jsonFilePath;
 }
 
-#include <iostream>
 void ModuleStage::LoadNextStage()
 {
 	previousSegmentCount = -1;
@@ -88,7 +117,7 @@ void ModuleStage::StartGame()
 	App->audio->PlayMusic(stageData["backgroundMusicPath"]);
 }
 
-void ModuleStage::LoseGame()
+void ModuleStage::StopGame()
 {
 	App->particles->Disable();
 	App->userInterface->Disable();
