@@ -24,7 +24,7 @@ const float ModuleStage::GAME_RESET_TIME = 4.0f;
 
 ModuleStage::ModuleStage(bool enabled) : 
 	Module(enabled),
-	currentStage(1),
+	currentStage(0),
 	previousSegmentCount(-1),
 	hasGameEnded(false),
 	gameResetTimer(GAME_RESET_TIME)
