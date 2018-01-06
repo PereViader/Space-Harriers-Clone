@@ -25,7 +25,7 @@ Boss_Dragon::~Boss_Dragon()
 
 void Boss_Dragon::Init(const json & parameters)
 {
-	App->audio->PlayMusic(bossTheme,5);
+	App->audio->PlayMusic(bossTheme,0);
 
 	Boss_Dragon_Head * dragonHead;
 	Boss_Dragon_Body * dragonBody[NUMBER_OF_BODY_PARTS+1]; // n body + 1 tail
