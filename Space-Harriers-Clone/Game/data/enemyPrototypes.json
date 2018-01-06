@@ -129,8 +129,10 @@
     {
   		"type" : "bossDragon",
   		"name" : "bossDragon",
-  		"data" : {}
-		},
+  		"data" : {
+			"bossTheme" : "data/audio/music/dragonBoss_theme.ogg"
+		}
+	},
     {
   		"type" : "bossDragonHead",
   		"name" : "bossDragonHead",
@@ -183,6 +185,10 @@
 				}
 			],
 			"healthPoints" : 4,
+			"timeBetweenRounds" : 5,
+			"timeBetweenBullets" : 0.2,
+			"bulletsForRound" : 4,
+			"bulletSpeed" : 500,
 			"size" : { "width":260, "height":432 },
 			"speed" : { "x":0.4, "y":1.4, "z": -80 }
   		}
@@ -247,7 +253,7 @@
   				"loop" : false,
   				"speed" : 0
 				}
-			],	
+			],
 			"size" : { "width":260, "height":416 }
   		}
 	  }

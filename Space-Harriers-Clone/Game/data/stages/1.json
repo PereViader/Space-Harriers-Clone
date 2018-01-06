@@ -1,14 +1,6 @@
 {
-	"backgroundMusicPath" : "data/audio/music/main_theme.wav",
+	"backgroundMusicPath" : "data/audio/music/main_theme.ogg",
 	"enemies" : [
-		{
-			"name" : "bossDragon",
-			"spawnId" : 1,
-			"position" : {
-				"x" : 500,
-				"y" : 0
-			}
-		},
 		{
 		  "name" : "bush",
 		  "spawnId" : 1,
@@ -1634,6 +1626,14 @@
 				}
 			],
 			"particleSpawns" : []
+		},
+		{
+			"name" : "bossDragon",
+			"spawnId" : 96,
+			"position" : {
+				"x" : 500,
+				"y" : 0
+			}
 		}
 	]
 }
