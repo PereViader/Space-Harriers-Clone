@@ -176,7 +176,9 @@ Enemy * ModuleEnemy::CreateExplosion(const json & data) const
 
 Enemy * ModuleEnemy::CreateBossDragon(const json & data) const
 {
-	return new Boss_Dragon();
+	string bossTheme = data["bossTheme"];
+
+	return new Boss_Dragon(bossTheme);
 }
 
 Enemy * ModuleEnemy::CreateBossDragonHead(const json & data) const
@@ -185,13 +187,17 @@ Enemy * ModuleEnemy::CreateBossDragonHead(const json & data) const
 	vector<Animation> forwardAnimations = data["forwardAnimations"];
 	vector<Animation> backwardAnimations = data["backwardAnimations"];
 	int healthPoints = data["healthPoints"];
+	float timeBetweenRounds = data["timeBetweenRounds"];
+	float timeBetweenBullets = data["timeBetweenBullets"];
+	int bulletsForRound = data["bulletsForRound"];
+	float bulletSpeed = data["bulletSpeed"];
 
 	float scalingFactor = data["scalingFactor"];
 	SFX sfx = App->audio->LoadFx(data["sfx"]);
 	Size2D size = data["size"];
 	Vector3 speed = data["speed"];
 
-	return new Boss_Dragon_Head(graphics,forwardAnimations, backwardAnimations, healthPoints, sfx,size,scalingFactor, speed);
+	return new Boss_Dragon_Head(graphics,forwardAnimations, backwardAnimations, healthPoints, sfx,size,scalingFactor, speed, timeBetweenRounds, timeBetweenBullets, bulletsForRound, bulletSpeed);
 }
 
 Enemy * ModuleEnemy::CreateBossDragonBody(const json & data) const
