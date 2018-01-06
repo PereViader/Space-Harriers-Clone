@@ -151,7 +151,7 @@ void ModulePlayer::UpdateAnimation()
 	Vector2 position = GetNormalizedPosition();
 
 	if (currentAnimation == &takeDamage) {
-		if (!takeDamage.Finished() || isInvincible)
+		if (!takeDamage.Finished() || isInvincible || healthPoints==0)
 			return;
 	}
 
@@ -209,31 +209,33 @@ void ModulePlayer::ShootLaser()
 
 void ModulePlayer::MovePlayer()
 {
-	//Clamp movement to not leave the screen
-	if (!isFallingToTheFloor) {
-		Vector3 position = GetTransform().GetScreenPositionAndDepth();
-		Vector2 movement = GetInputMovement();
-		if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION) {
-			movement.x = MIN_HORIZONTAL_POSITION - position.x;
-		}
-		else if (position.x == MAX_HORIZONTAL_POSITION && movement.x > 0 || position.x > MAX_HORIZONTAL_POSITION) {
-			movement.x = MAX_HORIZONTAL_POSITION - position.x;
-		}
+	if (healthPoints > 0) {
+		if (!isFallingToTheFloor) {
+			//Clamp movement to not leave the screen
+			Vector3 position = GetTransform().GetScreenPositionAndDepth();
+			Vector2 movement = GetInputMovement();
+			if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION) {
+				movement.x = MIN_HORIZONTAL_POSITION - position.x;
+			}
+			else if (position.x == MAX_HORIZONTAL_POSITION && movement.x > 0 || position.x > MAX_HORIZONTAL_POSITION) {
+				movement.x = MAX_HORIZONTAL_POSITION - position.x;
+			}
 
-		if (position.y == MAX_VERTICAL_POSITION && movement.y < 0 || position.y > MAX_VERTICAL_POSITION)
-			movement.y = position.y - MAX_VERTICAL_POSITION;
-		else if (position.y == MIN_VERTICAL_POSITION && movement.y > 0 || position.y < MIN_VERTICAL_POSITION)
-			movement.y = position.y - MIN_VERTICAL_POSITION;
-		
-		GetTransform().Move(movement);
-	}
-	else {
-		Vector3 position = GetTransform().GetPosition();
-		Vector3 floor(position.x, 0, position.z);
-		Vector3 newPosition = MoveTowards(position, floor, FALL_SPEED*App->time->GetDeltaTime());
+			if (position.y == MAX_VERTICAL_POSITION && movement.y < 0 || position.y > MAX_VERTICAL_POSITION)
+				movement.y = position.y - MAX_VERTICAL_POSITION;
+			else if (position.y == MIN_VERTICAL_POSITION && movement.y > 0 || position.y < MIN_VERTICAL_POSITION)
+				movement.y = position.y - MIN_VERTICAL_POSITION;
 
-		GetTransform().SetPosition(newPosition);
-		isFallingToTheFloor = GetTransform().GetPosition().y != 0 || isInvincible;
+			GetTransform().Move(movement);
+		}
+		else {
+			Vector3 position = GetTransform().GetPosition();
+			Vector3 floor(position.x, 0, position.z);
+			Vector3 newPosition = MoveTowards(position, floor, FALL_SPEED*App->time->GetDeltaTime());
+
+			GetTransform().SetPosition(newPosition);
+			isFallingToTheFloor = GetTransform().GetPosition().y != 0 || isInvincible;
+		}
 	}
 }
 
