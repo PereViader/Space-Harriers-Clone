@@ -24,43 +24,59 @@ Boss_Dragon::~Boss_Dragon()
 void Boss_Dragon::Init(const json & parameters)
 {
 	Boss_Dragon_Head * dragonHead;
-	Boss_Dragon_Body * dragonBody[NUMBER_OF_BODY_PARTS+1];
+	Boss_Dragon_Body * dragonBody[NUMBER_OF_BODY_PARTS+1]; // n body + 1 tail
 
-	dragonHead = static_cast<Boss_Dragon_Head*>(App->enemies->InstantiateEnemyByName("bossDragonHead", parameters));
+	// Instantiate dragon parts
+	{
+		dragonHead = static_cast<Boss_Dragon_Head*>(App->enemies->InstantiateEnemyByName("bossDragonHead", parameters));
 
-	for (int i = 0; i < NUMBER_OF_BODY_PARTS; ++i) {
-		dragonBody[i] = static_cast<Boss_Dragon_Body*>(App->enemies->InstantiateEnemyByName("bossDragonBody", parameters));
+		for (int i = 0; i < NUMBER_OF_BODY_PARTS; ++i) {
+			dragonBody[i] = static_cast<Boss_Dragon_Body*>(App->enemies->InstantiateEnemyByName("bossDragonBody", parameters));
+		}
+
+		dragonBody[NUMBER_OF_BODY_PARTS] = static_cast<Boss_Dragon_Body*>(App->enemies->InstantiateEnemyByName("bossDragonTail", parameters));
 	}
 
-	dragonBody[NUMBER_OF_BODY_PARTS] = static_cast<Boss_Dragon_Body*>(App->enemies->InstantiateEnemyByName("bossDragonTail", parameters));
+	//Set references to head
+	{
+		for (Boss_Dragon_Body* part : dragonBody) {
+			part->head = dragonHead;
+		}
+	}
+	
 
 	//Set references between dragon parts
-	dragonHead->previousPart = dragonBody[0];
-	dragonBody[0]->nextPart = dragonHead;
+	{
+		dragonHead->previousPart = dragonBody[0];
+		dragonBody[0]->nextPart = dragonHead;
 
-	for (int i = 0; i < NUMBER_OF_BODY_PARTS; ++i) {
-		dragonBody[i]->previousPart = dragonBody[i+1];
-		dragonBody[i+1]->nextPart = dragonBody[i];
+		for (int i = 0; i < NUMBER_OF_BODY_PARTS; ++i) {
+			dragonBody[i]->previousPart = dragonBody[i + 1];
+			dragonBody[i + 1]->nextPart = dragonBody[i];
+		}
 	}
 
 	//Set starting position
-	Vector3 startingPosition(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 700);
-	Vector3 startingDelta(0, 0, -50);
+	{
+		Vector3 startingPosition(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 700);
+		Vector3 startingDelta(0, 0, 50);
 
-	for (int i = NUMBER_OF_BODY_PARTS; i >= 0; --i) {
-		dragonBody[i]->GetTransform().SetPosition(startingPosition);
-		startingPosition += startingDelta;
+		dragonHead->GetTransform().SetPosition(startingPosition);
+
+		for (int i = 0; i < NUMBER_OF_BODY_PARTS + 1; ++i) {
+			startingPosition += startingDelta;
+			dragonBody[i]->GetTransform().SetPosition(startingPosition);
+		}
 	}
 
-	dragonHead->GetTransform().SetPosition(startingPosition);
+	//Set old next part position
+	{
+		dragonBody[0]->oldNextPartPosition = dragonHead->GetTransform().GetScreenPositionAndDepth();
 
-	//Set next part delta
-	dragonBody[0]->oldNextPartPosition = dragonHead->GetTransform().GetScreenPositionAndDepth();
-
-	for (int i = 1; i < NUMBER_OF_BODY_PARTS+1; ++i) {
-		dragonBody[i]->oldNextPartPosition = dragonBody[i - 1]->GetTransform().GetScreenPositionAndDepth();
+		for (int i = 1; i < NUMBER_OF_BODY_PARTS + 1; ++i) {
+			dragonBody[i]->oldNextPartPosition = dragonBody[i - 1]->GetTransform().GetScreenPositionAndDepth();
+		}
 	}
-
 
 	MarkAsDeleted();
 }
