@@ -160,8 +160,9 @@ Enemy * ModuleEnemy::CreateShieldedOvni(const json & data) const
 	float timeClosed = data["timeClosed"];
 	int stateSwitchesToLeave = data["stateSwitchesToLeave"];
 	SFX sfx = App->audio->LoadFx(data["sfxPath"]);
+	SFX hitClosedSFX = App->audio->LoadFx(data["hitClosedSfxPath"]);
 
-	return new ShieldedOvni(speed, projectileSpeed, sfx, graphics, animation, size, scalingFactor, timeOpen, timeClosed, stateSwitchesToLeave);
+	return new ShieldedOvni(speed, projectileSpeed, sfx, hitClosedSFX, graphics, animation, size, scalingFactor, timeOpen, timeClosed, stateSwitchesToLeave);
 }
 
 Enemy * ModuleEnemy::CreateExplosion(const json & data) const

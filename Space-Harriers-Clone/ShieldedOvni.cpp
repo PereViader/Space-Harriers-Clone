@@ -12,7 +12,7 @@
 #include "ModuleEnemy.h"
 #include "ModuleAudio.h"
 
-ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave) :
+ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, const SFX& hitClosedSFX, const Texture & graphics, const Animation & animation, const Size2D & size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave) :
 	Enemy(new FloorBasedTransform(),true),
 	state(behaviour_state::In),
 	graphics(graphics),
@@ -29,6 +29,7 @@ ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, c
 	nextPositionIndex(-1),
 	projectileSpeed(projectileSpeed),
 	sfx(sfx),
+	hitClosedSFX(hitClosedSFX),
 	isFirstFrame(true)
 {
 }
@@ -51,6 +52,7 @@ ShieldedOvni::ShieldedOvni(const ShieldedOvni & o) :
 	speed(o.speed),
 	projectileSpeed(o.projectileSpeed),
 	sfx(o.sfx),
+	hitClosedSFX(o.hitClosedSFX),
 	isFirstFrame(o.isFirstFrame)
 {
 }
@@ -63,14 +65,20 @@ ShieldedOvni::~ShieldedOvni()
 
 void ShieldedOvni::OnCollision(const Collider & own, const Collider & other)
 {
-	if (isOpen) {
-		OnShieldedOvniDied();
+	if (other.colliderType == ColliderType::PlayerParticle) {
+		if (isOpen) {
+			OnShieldedOvniDied();
+		}
+		else {
+			App->audio->PlayFx(hitClosedSFX);
+		}
 	}
 }
 
 void ShieldedOvni::Init(const json& parameters)
 {
 	App->audio->RegisterFxUsage(sfx);
+	App->audio->RegisterFxUsage(hitClosedSFX);
 
 	Vector3 position = parameters["position"];
 	GetTransform().Move(position);

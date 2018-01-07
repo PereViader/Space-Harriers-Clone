@@ -18,7 +18,7 @@ class ShieldedOvni :
 	public Enemy
 {
 public:
-	ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave);
+	ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, const SFX& hitClosedSFX, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave);
 	ShieldedOvni(const ShieldedOvni&);
 	virtual ~ShieldedOvni();
 	
@@ -62,10 +62,10 @@ private:
 	float projectileSpeed;
 
 	SFX sfx;
+	SFX hitClosedSFX;
 	bool isFirstFrame;
 
 private:
 	void ShootPlayer();
 	void OnShieldedOvniDied();
 };
-
