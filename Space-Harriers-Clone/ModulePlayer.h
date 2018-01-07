@@ -32,6 +32,7 @@ public:
 	Vector3 GetChestPosition() const;
 
 	int GetHealthPoints() const;
+	bool IsAlive() const;
 
 private:
 	static const float PLAYER_SPEED;
@@ -49,6 +50,9 @@ private:
 	static const float RENDER_SCALE;
 
 	static const Vector3 PLAYER_PARTICLE_VELOCITY;
+	static const Vector3 PLAYER_GUN_POSITION_DELTA;
+	static const Vector3 PLAYER_CHEST_POSITION_DELTA;
+	
 
 	Texture graphics;
 
@@ -83,6 +87,8 @@ private:
 	Vector2 GetInputMovement() const;
 	void ShootLaser();
 	void MovePlayer();
+	void FallToTheFloorPlayerMovement();
+	void RegularPlayerMovement();
 	void UpdateAnimation();
 	void UpdateInvincibility();
 

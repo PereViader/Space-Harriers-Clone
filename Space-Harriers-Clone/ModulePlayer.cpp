@@ -33,13 +33,16 @@ const float ModulePlayer::TRANSITION_RIGHT = 0.6f;
 
 const float ModulePlayer::RENDER_SCALE = 4.0f;
 
-const Vector3 ModulePlayer::PLAYER_PARTICLE_VELOCITY(0, 90, 1000);
-
 const float ModulePlayer::INVINCIBLE_TIME_AFTER_INTERACTION = 2.0f;
 
 const float ModulePlayer::FALL_SPEED = 600.0f;
 
 const int ModulePlayer::STARTING_HEALTH_POINTS = 3;
+
+const Vector3 ModulePlayer::PLAYER_PARTICLE_VELOCITY(0, 90, 1000);
+
+const Vector3 ModulePlayer::PLAYER_GUN_POSITION_DELTA(15, -120, 0);
+const Vector3 ModulePlayer::PLAYER_CHEST_POSITION_DELTA(0, -93);
 
 
 ModulePlayer::ModulePlayer(bool active) : 
@@ -96,7 +99,7 @@ bool ModulePlayer::Init()
 	takeDamage.frames.push_back({ 34,61,26,40 });
 	takeDamage.frames.push_back({ 73,70,26,22 });
 	takeDamage.frames.push_back({ 113,74,27,20 });
-	//takeDamage.frames.push_back({ 158,65,27,31 }); // this frame is useful only if you make a delay on the previous frame and proceding to the next
+	//takeDamage.frames.push_back({ 158,65,27,31 }); // this frame is useful only if you make a delay on the previous frame before proceding to the next
 	takeDamage.loop = false;
 	takeDamage.speed = 5;
 
@@ -137,6 +140,9 @@ bool ModulePlayer::CleanUp()
 
 	App->audio->UnloadFx(aaaaarghSFX);
 	App->audio->UnloadFx(ouchSFX);
+	
+	collider->MarkAsDeleted();
+	collider = nullptr;
 
 	return true;
 }
@@ -151,7 +157,7 @@ void ModulePlayer::UpdateAnimation()
 	Vector2 position = GetNormalizedPosition();
 
 	if (currentAnimation == &takeDamage) {
-		if (!takeDamage.Finished() || isInvincible || healthPoints==0)
+		if (!takeDamage.Finished() || isInvincible || !IsAlive())
 			return;
 	}
 
@@ -201,8 +207,7 @@ void ModulePlayer::ShootLaser()
 	Vector3 screen = GetTransform().GetScreenPositionAndDepth();
 
 	// correct position to shoot from the gun
-	screen.x += 15;
-	screen.y -= 120;
+	screen += PLAYER_GUN_POSITION_DELTA;
 
 	App->particles->AddParticleByName("player", screen, PLAYER_PARTICLE_VELOCITY);
 }
@@ -210,33 +215,45 @@ void ModulePlayer::ShootLaser()
 void ModulePlayer::MovePlayer()
 {
 	if (!isFallingToTheFloor) {
-		if (healthPoints > 0){
-			//Clamp movement to not leave the screen
-			Vector3 position = GetTransform().GetScreenPositionAndDepth();
-			Vector2 movement = GetInputMovement();
-			if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION) {
-				movement.x = MIN_HORIZONTAL_POSITION - position.x;
-			}
-			else if (position.x == MAX_HORIZONTAL_POSITION && movement.x > 0 || position.x > MAX_HORIZONTAL_POSITION) {
-				movement.x = MAX_HORIZONTAL_POSITION - position.x;
-			}
-
-			if (position.y == MAX_VERTICAL_POSITION && movement.y < 0 || position.y > MAX_VERTICAL_POSITION)
-				movement.y = position.y - MAX_VERTICAL_POSITION;
-			else if (position.y == MIN_VERTICAL_POSITION && movement.y > 0 || position.y < MIN_VERTICAL_POSITION)
-				movement.y = position.y - MIN_VERTICAL_POSITION;
-
-			GetTransform().Move(movement);
+		if (IsAlive()){
+			RegularPlayerMovement();
 		}
 	}
 	else {
-		Vector3 position = GetTransform().GetPosition();
-		Vector3 floor(position.x, 0, position.z);
-		Vector3 newPosition = MoveTowards(position, floor, FALL_SPEED*App->time->GetDeltaTime());
-
-		GetTransform().SetPosition(newPosition);
-		isFallingToTheFloor = GetTransform().GetPosition().y != 0 || isInvincible;
+		FallToTheFloorPlayerMovement();
 	}
+}
+
+void ModulePlayer::FallToTheFloorPlayerMovement()
+{
+	Vector3 position = GetTransform().GetPosition();
+	Vector3 floor(position.x, 0, position.z);
+	Vector3 newPosition = MoveTowards(position, floor, FALL_SPEED*App->time->GetDeltaTime());
+
+	GetTransform().SetPosition(newPosition);
+	isFallingToTheFloor = GetTransform().GetPosition().y != 0 || isInvincible;
+}
+
+void ModulePlayer::RegularPlayerMovement()
+{
+	Vector3 position = GetTransform().GetScreenPositionAndDepth();
+	Vector2 movement = GetInputMovement();
+
+	//Clamp x movement to not leave the screen horizontally
+	if (position.x == MIN_HORIZONTAL_POSITION && movement.x < 0 || position.x < MIN_HORIZONTAL_POSITION) {
+		movement.x = MIN_HORIZONTAL_POSITION - position.x;
+	}
+	else if (position.x == MAX_HORIZONTAL_POSITION && movement.x > 0 || position.x > MAX_HORIZONTAL_POSITION) {
+		movement.x = MAX_HORIZONTAL_POSITION - position.x;
+	}
+
+	//Clamp y movement to not leave the screen vertically
+	if (position.y == MAX_VERTICAL_POSITION && movement.y < 0 || position.y > MAX_VERTICAL_POSITION)
+		movement.y = position.y - MAX_VERTICAL_POSITION;
+	else if (position.y == MIN_VERTICAL_POSITION && movement.y > 0 || position.y < MIN_VERTICAL_POSITION)
+		movement.y = position.y - MIN_VERTICAL_POSITION;
+
+	GetTransform().Move(movement);
 }
 
 void ModulePlayer::Render()
@@ -261,7 +278,7 @@ Vector2 ModulePlayer::GetNormalizedPosition() const
 
 Vector3 ModulePlayer::GetChestPosition() const
 {
-	return GetTransform().GetScreenPositionAndDepth() + Vector3(0,-93);
+	return GetTransform().GetScreenPositionAndDepth() + PLAYER_CHEST_POSITION_DELTA;
 }
 
 int ModulePlayer::GetHealthPoints() const
@@ -269,9 +286,14 @@ int ModulePlayer::GetHealthPoints() const
 	return healthPoints;
 }
 
+bool ModulePlayer::IsAlive() const
+{
+	return healthPoints > 0;
+}
+
 void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
 {
-	if (healthPoints > 0) {
+	if (IsAlive()) {
 		if (!isInvincible) {
 			if (other.colliderType == ColliderType::NonDamagingEnemy) {
 				App->audio->PlayFx(ouchSFX);
@@ -296,7 +318,7 @@ update_status ModulePlayer::Update()
 	MovePlayer();
 	UpdateAnimation();
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isFallingToTheFloor && healthPoints > 0 && currentAnimation != &tripOverHazzard)
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isFallingToTheFloor && IsAlive() && currentAnimation != &tripOverHazzard)
 	{
 		ShootLaser();
 	}
