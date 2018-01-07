@@ -9,8 +9,7 @@ All the assets used in the game where ripped manually or using [Gens KMOD emulat
 
 # Gameplay
 
-[![GamePlay](http://img.youtube.com/vi/C0DPdy98e4c/0.jpg)](http://www.youtube.com/watch?v=C0DPdy98e4c)
-
+<iframe width="1146" height="654" src="https://www.youtube.com/embed/C0DPdy98e4c" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
 ## Download
 
