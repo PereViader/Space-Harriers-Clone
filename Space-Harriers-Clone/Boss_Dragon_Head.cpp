@@ -40,7 +40,9 @@ Boss_Dragon_Head::Boss_Dragon_Head(const Texture & graphics, const vector<Animat
 	TIME_BETWEEN_BULLETS(timeBetweenBullets),
 	BULLETS_FOR_ROUND(bulletsForRound),
 	bulletsFired(0),
-	fireballSpeed(bulletSpeed)
+	fireballSpeed(bulletSpeed),
+	roundTimer(TIME_BETWEEN_ROUNDS),
+	bulletTimer(TIME_BETWEEN_BULLETS)
 {
 	assert(forwardAnimations.size() == healthPoints);
 	assert(backwardAnimations.size() == healthPoints);
@@ -63,7 +65,9 @@ Boss_Dragon_Head::Boss_Dragon_Head(const Boss_Dragon_Head & o) :
 	TIME_BETWEEN_BULLETS(o.TIME_BETWEEN_BULLETS),
 	BULLETS_FOR_ROUND(o.BULLETS_FOR_ROUND),
 	bulletsFired(o.bulletsFired),
-	fireballSpeed(o.fireballSpeed)
+	fireballSpeed(o.fireballSpeed),
+	roundTimer(o.roundTimer),
+	bulletTimer(o.bulletTimer)
 {
 }
 

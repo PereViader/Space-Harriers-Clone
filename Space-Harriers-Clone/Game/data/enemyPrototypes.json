@@ -186,7 +186,7 @@
 				}
 			],
 			"healthPoints" : 4,
-			"timeBetweenRounds" : 5,
+			"timeBetweenRounds" : 3,
 			"timeBetweenBullets" : 0.2,
 			"bulletsForRound" : 4,
 			"bulletSpeed" : 500,
