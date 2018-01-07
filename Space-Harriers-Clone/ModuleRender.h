@@ -40,6 +40,8 @@ public:
 
 	bool DrawPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	bool DrawSegment(const Vector2& start, const Vector2& end, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+
+	void EmptyBuffer();
 public:
 	SDL_Renderer* renderer = nullptr;
 

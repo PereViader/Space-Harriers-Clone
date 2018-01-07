@@ -10,6 +10,7 @@
 #include "ModuleParticles.h"
 #include "ModuleCollision.h"
 #include "ModuleEntity.h"
+#include "ModuleRender.h"
 
 #include "Enemy.h"
 #include "Transform.h"
@@ -128,4 +129,5 @@ void ModuleStage::StopGame()
 	App->background->Disable();
 	App->player->Disable();
 	App->entity->Disable();
+	App->renderer->EmptyBuffer();
 }

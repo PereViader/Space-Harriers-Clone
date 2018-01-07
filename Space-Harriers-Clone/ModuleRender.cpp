@@ -177,3 +177,10 @@ bool ModuleRender::DrawSegment(const Vector2& start, const Vector2& end, Uint8 r
 	}
 	return ret;
 }
+
+void ModuleRender::EmptyBuffer()
+{
+	while (zBuffer.size()) {
+		zBuffer.pop();
+	}
+}
