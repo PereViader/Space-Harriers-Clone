@@ -8,7 +8,7 @@ This is the second project made from the ground up as an assignment for the UPC 
 
 ## Download
 
-Find any of the stable releases here: https://github.com/PereViader/Space-Harriers-Clone/releases
+Find the latest release [here](https://github.com/PereViader/Space-Harriers-Clone/releases/latest)
 
 ## Controls
 
