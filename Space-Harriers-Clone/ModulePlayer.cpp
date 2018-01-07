@@ -271,19 +271,21 @@ int ModulePlayer::GetHealthPoints() const
 
 void ModulePlayer::OnCollision(const Collider& own, const Collider& other)
 {
-	if (!isInvincible) {
-		if (other.colliderType == ColliderType::NonDamagingEnemy) {
-			App->audio->PlayFx(ouchSFX);
-			tripOverHazzard.Reset();
-			currentAnimation = &tripOverHazzard;
-		}
-		else { // collided enemy or enemy particle
-			App->audio->PlayFx(aaaaarghSFX);
-			takeDamage.Reset();
-			currentAnimation = &takeDamage;
-			isInvincible = true;
-			isFallingToTheFloor = true;
-			healthPoints--;
+	if (healthPoints > 0) {
+		if (!isInvincible) {
+			if (other.colliderType == ColliderType::NonDamagingEnemy) {
+				App->audio->PlayFx(ouchSFX);
+				tripOverHazzard.Reset();
+				currentAnimation = &tripOverHazzard;
+			}
+			else { // collided enemy or enemy particle
+				App->audio->PlayFx(aaaaarghSFX);
+				takeDamage.Reset();
+				currentAnimation = &takeDamage;
+				isInvincible = true;
+				isFallingToTheFloor = true;
+				healthPoints--;
+			}
 		}
 	}
 }
