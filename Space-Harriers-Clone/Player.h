@@ -17,7 +17,7 @@ public:
 	~Player();
 
 	virtual Player* Clone() const override;
-	void Update();
+	virtual void Update() override;
 	virtual void Render() override;
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
 

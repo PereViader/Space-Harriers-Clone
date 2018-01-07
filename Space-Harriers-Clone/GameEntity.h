@@ -10,13 +10,22 @@
 class GameEntity :
 	public IRenderable, public ICollidable, public IClonable<GameEntity*>, public IDeletable {
 protected:
-	GameEntity(Transform * transform) : transform(transform) {}
+	GameEntity(Transform * transform) : transform(transform) {
+	}
 	GameEntity(const GameEntity& other) : transform(other.transform->Clone()) {};
 
 public:
 
 	virtual ~GameEntity() {
 		delete transform;
+	}
+
+	virtual void Start() {
+
+	}
+
+	virtual void Update() {
+
 	}
 
 	virtual Transform & GetTransform() const { return *transform; }

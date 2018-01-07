@@ -30,7 +30,6 @@ public:
 	virtual ~Enemy() {};
 
 	virtual void Init(const json& parameters) = 0;
-	virtual void Update() = 0;
 
 	virtual void Render() override {
 		if (!ToDelete() && hasShadow)
