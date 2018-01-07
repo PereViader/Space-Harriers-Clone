@@ -2,23 +2,14 @@
 #define _MODULE_ENEMY_H_
 
 #include "Module.h"
-#include "ICollidable.h"
-
-#include "Texture.h"
 
 #include "json.hpp"
 using json = nlohmann::json;
 
 #include <map>
 #include <string>
-#include <list>
-
-
-struct SDL_Texture;
 
 using namespace std;
-
-
 
 class Enemy;
 
@@ -30,19 +21,14 @@ public:
 	~ModuleEnemy();
 
 	bool Start() override;
-
-	update_status PreUpdate() override;
-	update_status Update() override;
 	bool CleanUp() override;
 
 	Enemy* InstantiateEnemyByName(const string& name, const json& parameters);
 private:
-	list<Enemy*> enemies;
 	map<string, Enemy*> enemyPrototypes;
 
 	typedef Enemy*(ModuleEnemy::*PrototypeCreationFunction)(const json&) const;
 	map<string, PrototypeCreationFunction> prototypeCreationFunctionMap;
-
 
 private:
 	Enemy * CreateEnemyPrototype(string type, const json& enemyData) const;

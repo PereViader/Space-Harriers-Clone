@@ -1,5 +1,7 @@
 #include "ModulePlayer.h"
 
+#include "ModuleEntity.h"
+
 ModulePlayer::ModulePlayer(bool active) : 
 	Module(active)
 {
@@ -9,30 +11,20 @@ ModulePlayer::~ModulePlayer()
 {
 }
 
-bool ModulePlayer::Init()
-{
-	return true;
-}
-
 // Load assets
 bool ModulePlayer::Start()
 {
 	player = new Player();
+	App->entity->AddGameEntity(player);
 	return true;
-}
-
-update_status ModulePlayer::Update()
-{
-	player->Update();
-	player->Render();
-	return update_status::UPDATE_CONTINUE;
 }
 
 // Unload assets
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
-	RELEASE(player);
+	player->MarkAsDeleted();
+	player = nullptr;
 	return true;
 }
 

@@ -9,6 +9,7 @@
 #include "ModuleUserInterface.h"
 #include "ModuleParticles.h"
 #include "ModuleCollision.h"
+#include "ModuleEntity.h"
 
 #include "Enemy.h"
 #include "Transform.h"
@@ -108,6 +109,7 @@ void ModuleStage::LoadNextStage()
 
 void ModuleStage::StartGame()
 {
+	App->entity->Enable();
 	App->player->Enable();
 	App->background->Enable();
 	App->floor->Enable();
@@ -125,4 +127,5 @@ void ModuleStage::StopGame()
 	App->floor->Disable();
 	App->background->Disable();
 	App->player->Disable();
+	App->entity->Disable();
 }

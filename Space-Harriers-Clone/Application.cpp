@@ -7,6 +7,7 @@
 #include "ModuleTime.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleCollision.h"
+#include "ModuleEntity.h"
 #include "ModuleParticles.h"
 #include "ModuleStage.h"
 #include "ModuleFloor.h"
@@ -33,7 +34,7 @@ Application::Application()
 	modules.push_back(time = new ModuleTime());
 	modules.push_back(shadow = new ModuleShadow());
 	modules.push_back(collision = new ModuleCollision());
-
+	modules.push_back(entity = new ModuleEntity());
 
 	// Game Modules
 	modules.push_back(moduleStage = new ModuleStage(false));

@@ -29,12 +29,9 @@ ModuleFloor::ModuleFloor(bool enabled) :
 {
 }
 
-
 ModuleFloor::~ModuleFloor()
 {
 }
-
-
 
 bool ModuleFloor::Start()
 {

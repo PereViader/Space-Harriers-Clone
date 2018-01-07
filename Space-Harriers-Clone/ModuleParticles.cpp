@@ -4,6 +4,9 @@
 #include "ModuleAudio.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
+#include "ModuleEntity.h"
+
+
 #include "Particle.h"
 #include "Collider.h"
 #include "ScreenBoundFloorProjectedTransform.h"
@@ -55,51 +58,16 @@ bool ModuleParticles::Start()
 bool ModuleParticles::CleanUp()
 {
 	LOG("Unloading particles");
-	App->textures->Unload(graphics);
-
-	for (list<Particle*>::iterator it = active.begin(); it != active.end(); ++it)
-		RELEASE(*it);
-
-	active.clear();
-
-	for (map<string, Particle*>::iterator it = particlePrototypes.begin(); it != particlePrototypes.end(); ++it)
-		RELEASE(it->second);
+	for (auto &particleDefinition : particlePrototypes) {
+		RELEASE(particleDefinition.second);
+	}
 	particlePrototypes.clear();
 
-
+	App->textures->Unload(graphics);
 	App->audio->UnloadFx(playerSFX);
 	App->audio->UnloadFx(ovniSFX);
 
 	return true;
-}
-
-update_status ModuleParticles::PreUpdate()
-{
-	for (list<Particle*>::iterator it = active.begin(); it != active.end();)
-	{
-		if ((*it)->ToDelete())
-		{
-			RELEASE(*it);
-			it = active.erase(it);
-		}
-		else
-			++it;
-	}
-
-	return update_status::UPDATE_CONTINUE;
-}
-
-update_status ModuleParticles::Update()
-{
-	for (Particle* particle : active) {
-		particle->Update();
-	}
-
-	for (Particle* particle : active) {
-		particle->Render();
-	}
-
-	return update_status::UPDATE_CONTINUE;
 }
 
 void ModuleParticles::AddParticleByName(const string & name, const Vector3 & position, const Vector3& velocity)
@@ -107,5 +75,5 @@ void ModuleParticles::AddParticleByName(const string & name, const Vector3 & pos
 	Particle * instance = particlePrototypes.at(name)->Clone();
 	instance->GetTransform().SetPosition(position);
 	instance->SetVelocity(velocity);
-	this->active.push_back(instance);
+	App->entity->AddGameEntity(instance);
 }

@@ -12,6 +12,7 @@ class ModuleInput;
 class ModuleAudio;
 class ModuleFadeToBlack;
 class ModuleCollision;
+class ModuleEntity;
 class ModuleParticles;
 class ModuleStage;
 class ModuleFloor;
@@ -44,10 +45,11 @@ public:
 	ModuleTime* time;
 	ModuleFadeToBlack* fade;
 	ModuleCollision* collision;
-	ModuleParticles* particles;
-	ModuleShadow* shadow;
+	ModuleEntity* entity;
 
 	// Game modules ---
+	ModuleParticles* particles;
+	ModuleShadow* shadow;
 	ModuleStage* moduleStage;
 	ModulePlayer* player;
 	ModuleBackground* background;

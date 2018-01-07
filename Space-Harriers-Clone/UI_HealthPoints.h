@@ -22,11 +22,8 @@ private:
 	int previousHealthPoints;
 
 	Texture baseGraphics;
-	//Texture healthPointsCachedGraphic;
 
 private:
-	//Texture BuildTextureForHealthPoints(int healthPoints) const;
-	//void UnloadCachedTexture(Texture& texture);
 	static const Vector3 RENDERING_POSITION;
 
 };

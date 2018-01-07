@@ -17,9 +17,7 @@ public:
 	ModulePlayer(bool active = true);
 	~ModulePlayer();
 
-	virtual bool Init() override;
 	virtual bool Start() override;
-	virtual update_status Update() override;
 	virtual bool CleanUp() override;
 
 	Player& GetPlayer() const;

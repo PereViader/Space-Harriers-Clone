@@ -92,6 +92,7 @@
     <ClInclude Include="IDeletable.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="json_serializer.h" />
+    <ClInclude Include="ModuleEntity.h" />
     <ClInclude Include="ModuleShadow.h" />
     <ClInclude Include="ModuleUserInterface.h" />
     <ClInclude Include="Ovni.h" />
@@ -147,6 +148,7 @@
     <ClCompile Include="ModuleBackground.cpp" />
     <ClCompile Include="ModuleCollision.cpp" />
     <ClCompile Include="ModuleEnemy.cpp" />
+    <ClCompile Include="ModuleEntity.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />
     <ClCompile Include="ModuleFloor.cpp" />
     <ClCompile Include="ModuleInput.cpp" />

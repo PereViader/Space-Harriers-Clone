@@ -29,15 +29,12 @@ public:
 	~ModuleParticles();
 
 	bool Start();
-	update_status PreUpdate(); // clear dirty particles
-	update_status Update(); // draw
 	bool CleanUp();
 
 	void AddParticleByName(const string& name, const Vector3& position, const Vector3& velocity);
 
 private:
 	Texture graphics;
-	list<Particle*> active;
 	map<string, Particle*> particlePrototypes;
 
 	SFX ovniSFX;

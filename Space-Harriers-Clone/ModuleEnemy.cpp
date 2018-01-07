@@ -1,26 +1,29 @@
 #include "ModuleEnemy.h"
 
+#include <fstream>
+#include <assert.h>
+
+#include "json.hpp"
+#include "json_serializer.h"
+
+#include "Application.h"
+#include "ModuleTextures.h"
+#include "ModuleCollision.h"
+#include "ModuleAudio.h"
+#include "ModuleEntity.h"
+
+#include "SFX.h"
+
 #include "Enemy.h"
 #include "Obstacle.h"
 #include "Ovni.h"
 #include "ShieldedOvniBrain.h"
 #include "ShieldedOvni.h"
 #include "Explosion.h"
-
-#include "ModuleTextures.h"
-#include "ModuleCollision.h"
-#include "ModuleAudio.h"
-#include "SFX.h"
-
 #include "Boss_Dragon.h"
 #include "Boss_Dragon_Head.h"
 #include "Boss_Dragon_Body.h"
 
-#include <fstream>
-#include <assert.h>
-
-#include "json.hpp"
-#include "json_serializer.h"
 
 ModuleEnemy::ModuleEnemy(bool enabled) :
 	Module(enabled)
@@ -58,41 +61,8 @@ Enemy* ModuleEnemy::CreateEnemyPrototype(string type, const nlohmann::json& enem
 	return invoke(prototypeCreationFunction,*this,enemyData);
 }
 
-update_status ModuleEnemy::PreUpdate()
-{
-	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end();)
-	{
-		if ((*it)->ToDelete())
-		{
-			RELEASE(*it);
-			it = enemies.erase(it);
-		}
-		else
-			++it;
-	}
-	return update_status::UPDATE_CONTINUE;
-}
-
-update_status ModuleEnemy::Update()
-{
-	for (Enemy* enemy : enemies) {
-		enemy->Update();
-	}
-
-	for (Enemy* enemy : enemies) {
-		enemy->Render();
-	}
-
-	return update_status::UPDATE_CONTINUE;
-}
-
 bool ModuleEnemy::CleanUp()
-{
-	for (Enemy* enemy : enemies) {
-		delete enemy;
-	}
-	enemies.clear();
-	
+{	
 	for (auto& enemyPrototypePair : enemyPrototypes) {
 		Enemy* enemyPrototype = enemyPrototypePair.second;
 		delete enemyPrototype;
@@ -108,7 +78,7 @@ Enemy * ModuleEnemy::InstantiateEnemyByName(const string& name, const json& para
 	
 	Enemy* instance = prototype->Clone();
 	instance->Init(parameters);
-	enemies.push_back(instance);
+	App->entity->AddGameEntity(instance);
 
 	return instance;
 }

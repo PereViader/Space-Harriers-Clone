@@ -211,6 +211,9 @@
     <ClInclude Include="ModuleShadow.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleEntity.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -338,6 +341,9 @@
     </ClCompile>
     <ClCompile Include="ModuleShadow.cpp">
       <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEntity.cpp">
+      <Filter>Core Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
