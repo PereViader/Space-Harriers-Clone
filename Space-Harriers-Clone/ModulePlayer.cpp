@@ -209,8 +209,8 @@ void ModulePlayer::ShootLaser()
 
 void ModulePlayer::MovePlayer()
 {
-	if (healthPoints > 0) {
-		if (!isFallingToTheFloor) {
+	if (!isFallingToTheFloor) {
+		if (healthPoints > 0){
 			//Clamp movement to not leave the screen
 			Vector3 position = GetTransform().GetScreenPositionAndDepth();
 			Vector2 movement = GetInputMovement();
@@ -228,14 +228,14 @@ void ModulePlayer::MovePlayer()
 
 			GetTransform().Move(movement);
 		}
-		else {
-			Vector3 position = GetTransform().GetPosition();
-			Vector3 floor(position.x, 0, position.z);
-			Vector3 newPosition = MoveTowards(position, floor, FALL_SPEED*App->time->GetDeltaTime());
+	}
+	else {
+		Vector3 position = GetTransform().GetPosition();
+		Vector3 floor(position.x, 0, position.z);
+		Vector3 newPosition = MoveTowards(position, floor, FALL_SPEED*App->time->GetDeltaTime());
 
-			GetTransform().SetPosition(newPosition);
-			isFallingToTheFloor = GetTransform().GetPosition().y != 0 || isInvincible;
-		}
+		GetTransform().SetPosition(newPosition);
+		isFallingToTheFloor = GetTransform().GetPosition().y != 0 || isInvincible;
 	}
 }
 
@@ -294,7 +294,7 @@ update_status ModulePlayer::Update()
 	MovePlayer();
 	UpdateAnimation();
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isFallingToTheFloor)
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isFallingToTheFloor && healthPoints > 0 && currentAnimation != &tripOverHazzard)
 	{
 		ShootLaser();
 	}
