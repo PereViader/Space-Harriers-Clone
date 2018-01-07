@@ -42,6 +42,6 @@ inline void RELEASE_ARRAY(T*& x) {
 #define SCREEN_HEIGHT 720
 #define FULLSCREEN false
 #define VSYNC true
-#define TITLE "Super Awesome Game"
+#define TITLE "Space Harriers Clone"
 
 #endif //__GLOBALS_H__
