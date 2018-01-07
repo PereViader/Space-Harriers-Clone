@@ -18,7 +18,7 @@ The controls for the game are the following:
 - Space: Fire projectile
 - Escape: Exit Game
 
-# How to win
+## How to win
 
 Get to the end of the stage where you will find a dragon and defeat him without dying.
 
