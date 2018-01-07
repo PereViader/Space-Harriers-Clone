@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _OBSTACLE_H_
+#define _OBSTACLE_H_
 
 #include "Enemy.h"
 
@@ -38,3 +39,5 @@ private:
 	void OnObstacleDied();
 
 };
+
+#endif // !_OBSTACLE_H_

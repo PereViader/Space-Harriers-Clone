@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _EXPLOSION_H_
+#define _EXPLOSION_H_
+
 #include "Enemy.h"
 
 #include "FloorAnchoredTransform.h"
@@ -33,3 +35,4 @@ private:
 	void OnExplosionDied();
 };
 
+#endif // !_EXPLOSION_H_

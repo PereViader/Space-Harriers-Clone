@@ -1,4 +1,5 @@
-#pragma once
+#ifndef  _MODULE_STAGE_H_
+#define _MODULE_STAGE_H_
 
 #include "Module.h"
 
@@ -38,3 +39,4 @@ private:
 
 };
 
+#endif // ! _MODULE_STAGE_H_

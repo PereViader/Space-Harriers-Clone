@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _COLLIDER_H_
+#define _COLLIDER_H_
 
 #include "IDeletable.h"
 
@@ -31,3 +32,5 @@ public:
 
 	SDL_Rect rect;
 };
+
+#endif // !_COLLIDER_H_

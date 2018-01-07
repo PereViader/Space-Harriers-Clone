@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULE_USER_INTERFACE_H_
+#define _MODULE_USER_INTERFACE_H_
+
 #include "Module.h"
 #include "IRenderable.h"
 
@@ -20,3 +22,4 @@ private:
 	std::list<IRenderable*> uiElements;
 };
 
+#endif // !_MODULE_USER_INTERFACE_H_

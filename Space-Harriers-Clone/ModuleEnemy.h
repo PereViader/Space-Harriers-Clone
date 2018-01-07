@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MODULE_ENEMY_H_
+#define _MODULE_ENEMY_H_
 
 #include "Module.h"
 #include "ICollidable.h"
@@ -38,11 +39,11 @@ public:
 private:
 	list<Enemy*> enemies;
 	map<string, Enemy*> enemyPrototypes;
-	
+
 	typedef Enemy*(ModuleEnemy::*PrototypeCreationFunction)(const json&) const;
 	map<string, PrototypeCreationFunction> prototypeCreationFunctionMap;
-	
-	
+
+
 private:
 	Enemy * CreateEnemyPrototype(string type, const json& enemyData) const;
 	Enemy * CreateObstaclePrototype(const json&) const;
@@ -54,3 +55,5 @@ private:
 	Enemy * CreateBossDragonHead(const json&) const;
 	Enemy * CreateBossDragonBody(const json&) const;
 };
+
+#endif // !_MODULE_ENEMY_H_

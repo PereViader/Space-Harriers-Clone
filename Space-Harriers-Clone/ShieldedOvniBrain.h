@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SHIELDED_OVNI_BRAIN_H_
+#define _SHIELDED_OVNI_BRAIN_H_
+
 #include "Enemy.h"
 
 #include <vector>
@@ -31,3 +33,4 @@ private:
 	vector<Vector3> rightPath;
 };
 
+#endif // !_SHIELDED_OVNI_BRAIN_H_

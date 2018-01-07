@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _FLOOR_BASED_TRANSFORM_H__
+#define _FLOOR_BASED_TRANSFORM_H__
+
 #include "FloorRelatedTransform.h"
 
 #include "Vector3.h"
@@ -25,3 +27,4 @@ private:
 	Vector3 position;
 };
 
+#endif // !_FLOOR_BASED_TRANSFORM_H__

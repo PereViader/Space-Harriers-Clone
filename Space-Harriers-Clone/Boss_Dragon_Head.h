@@ -1,5 +1,5 @@
-#ifndef _BOSS_DRAGON_HEAD_
-#define _BOSS_DRAGON_HEAD_
+#ifndef _BOSS_DRAGON_HEAD_H_
+#define _BOSS_DRAGON_HEAD_H_
 
 #include "Enemy.h"
 
@@ -86,4 +86,4 @@ private:
 
 };
 
-#endif // !_BOSS_DRAGON_HEAD_
+#endif // !_BOSS_DRAGON_HEAD_H_

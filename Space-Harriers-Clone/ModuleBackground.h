@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULE_BACKGROUND_H_
+#define _MODULE_BACKGROUND_H_
+
 #include "Module.h"
 #include "SDL\include\SDL.h"
 #include <list>
@@ -23,3 +25,4 @@ private:
 
 };
 
+#endif // !_MODULE_BACKGROUND_H_

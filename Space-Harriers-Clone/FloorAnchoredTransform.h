@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _FLOOR_ANCHORED_TRANSFORM_H__
+#define _FLOOR_ANCHORED_TRANSFORM_H__
 
 #include "FloorRelatedTransform.h"
 
@@ -47,3 +48,4 @@ private:
 	bool IsBoundSegmentPresentOnScreen() const;
 };
 
+#endif // !_FLOOR_ANCHORED_TRANSFORM_H__

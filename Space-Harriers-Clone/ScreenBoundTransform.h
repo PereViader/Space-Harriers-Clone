@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SCREEN_BOUND_TRANSFORM_H__
+#define _SCREEN_BOUND_TRANSFORM_H__
 
 #include "Transform.h"
 
@@ -26,3 +27,5 @@ public:
 private:
 	Vector3 position;
 };
+
+#endif // !_SCREEN_BOUND_TRANSFORM_H__

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MODULE_SHADOW_H_
+#define _MODULE_SHADOW_H_
 
 #include "Module.h"
 #include "Texture.h"
@@ -21,3 +22,5 @@ private:
 	Texture shadow;
 	SDL_Rect shadowRect;
 };
+
+#endif // !_MODULE_SHADOW_H_

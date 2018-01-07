@@ -1,5 +1,5 @@
-#ifndef _ScreenBoundFloorProjectedTransform_H_
-#define _ScreenBoundFloorProjectedTransform_H_
+#ifndef _SCREEN_BOUND_FLOOR_PROJECTED_TRANSFORM_H__
+#define _SCREEN_BOUND_FLOOR_PROJECTED_TRANSFORM_H__
 
 #include "FloorRelatedTransform.h"
 #include "Vector3.h"
@@ -25,4 +25,4 @@ private:
 	Vector3 position;
 };
 
-#endif // !_ScreenBoundFloorProjectedTransform_H_
+#endif // !_SCREEN_BOUND_FLOOR_PROJECTED_TRANSFORM_H__

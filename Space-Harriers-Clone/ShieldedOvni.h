@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SHIELDED_OVNI_H_
+#define _SHIELDED_OVNI_H_
+
 #include "Enemy.h"
 
 #include <vector>
@@ -21,7 +23,7 @@ public:
 	ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, const SFX& hitClosedSFX, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave);
 	ShieldedOvni(const ShieldedOvni&);
 	virtual ~ShieldedOvni();
-	
+
 	virtual void Init(const json& parameters) override;
 	virtual void Update() override;
 
@@ -69,3 +71,5 @@ private:
 	void ShootPlayer();
 	void OnShieldedOvniDied();
 };
+
+#endif // !_SHIELDED_OVNI_H_

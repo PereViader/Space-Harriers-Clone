@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MODULE_FLOOR_H_
+#define _MODULE_FLOOR_H_
 
 #include "Module.h"
 #include "Texture.h"
@@ -19,7 +20,7 @@ public:
 	bool CleanUp() override;
 
 	float GetHorizonRenderHeight() const;
-	float GetCurrentHorizonPercentage() const;	
+	float GetCurrentHorizonPercentage() const;
 
 	float GetHorizonPercentageOfPosition(float position) const;
 	float GetHorizonDepthForPosition(float position) const;
@@ -81,3 +82,5 @@ private:
 inline float CalculatePercentageOfPositionInFloor(float zPosition) {
 	return 1.0f - zPosition / Z_MAX;
 }
+
+#endif // !_MODULE_FLOOR_H_

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _ENEMY_H_
+#define _ENEMY_H_
 
 #include "ICollidable.h"
 #include "GameEntity.h"
@@ -30,13 +31,13 @@ public:
 
 	virtual void Init(const json& parameters) = 0;
 	virtual void Update() = 0;
-	
+
 	virtual void Render() override {
 		if (!ToDelete() && hasShadow)
 			App->shadow->DrawShadow(GetTransform());
 	}
 
-	virtual FloorRelatedTransform& GetTransform() const override { 
+	virtual FloorRelatedTransform& GetTransform() const override {
 		return GetTransformTypped<FloorRelatedTransform>();
 	}
 
@@ -45,3 +46,5 @@ public:
 private:
 	bool hasShadow;
 };
+
+#endif // !_ENEMY_H_

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _PARTICLE_H_
+#define _PARTICLE_H_
 
 #include "ICollidable.h"
 #include "GameEntity.h"
@@ -46,3 +47,5 @@ private:
 	void MoveParticle();
 	void OnParticleDied();
 };
+
+#endif // !_PARTICLE_H_

@@ -1,3 +1,6 @@
+#ifndef _BACKGROUND_LAYER_H_
+#define _BACKGROUND_LAYER_H_
+
 #include "BackgroundLayer.h"
 
 #include "Application.h"
@@ -49,3 +52,6 @@ void BackgroundLayer::Render()
 		App->renderer->BlitWithPivotScaled(graphics, scalingFactor, pivot, position);
 	}
 }
+
+
+#endif // !_BACKGROUND_LAYER_H_

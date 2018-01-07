@@ -1,5 +1,5 @@
-#ifndef _VECTOR3_H
-#define _VECTOR3_H
+#ifndef _VECTOR3_H__
+#define _VECTOR3_H__
 
 #include <cmath>
 #include <algorithm>
@@ -159,4 +159,4 @@ inline Vector3 LerpUnclamped(const Vector3& a, const Vector3& b, float t) {
 std::ostream& operator<<(std::ostream& os, const Vector3& x);
 string to_string(const Vector3& v);
 
-#endif // !_VECTOR3_H
+#endif // !_VECTOR3_H__

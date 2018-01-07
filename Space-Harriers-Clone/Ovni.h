@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _OVNI_H_
+#define _OVNI_H_
+
 #include "Enemy.h"
 
 #include "Texture.h"
@@ -55,3 +57,4 @@ private:
 	void OnOvniDied();
 };
 
+#endif // !_OVNI_H_

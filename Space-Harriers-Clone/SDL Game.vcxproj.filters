@@ -187,9 +187,6 @@
     <ClInclude Include="Boss_Dragon_Head.h">
       <Filter>Game Modules\Enemies\Dragon</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleShadow.h">
-      <Filter>Core Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Core Modules\Texture</Filter>
     </ClInclude>
@@ -202,11 +199,18 @@
     <ClInclude Include="ModuleBackground.h">
       <Filter>Game Modules\Background</Filter>
     </ClInclude>
-    <ClInclude Include="BackgroundLayer.h" />
     <ClInclude Include="ModulePlayer.h">
       <Filter>Game Modules\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Player.h">
+      <Filter>Game Modules\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundLayer.h">
+      <Filter>Game Modules\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleShadow.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -249,9 +253,6 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleShadow.cpp">
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="Pivot2D.cpp">
@@ -326,14 +327,17 @@
     <ClCompile Include="ModuleBackground.cpp">
       <Filter>Game Modules\Background</Filter>
     </ClCompile>
-    <ClCompile Include="BackgroundLayer.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
     <ClCompile Include="ModulePlayer.cpp">
       <Filter>Game Modules\Player</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Main</Filter>
+      <Filter>Game Modules\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundLayer.cpp">
+      <Filter>Game Modules\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleShadow.cpp">
+      <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

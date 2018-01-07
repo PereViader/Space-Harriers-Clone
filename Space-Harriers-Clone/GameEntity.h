@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GAME_ENTITY_H_
+#define _GAME_ENTITY_H_
 
 #include "IRenderable.h"
 #include "IClonable.h"
@@ -6,7 +7,7 @@
 #include "ICollidable.h"
 #include "Transform.h"
 
-class GameEntity : 
+class GameEntity :
 	public IRenderable, public ICollidable, public IClonable<GameEntity*>, public IDeletable {
 protected:
 	GameEntity(Transform * transform) : transform(transform) {}
@@ -27,3 +28,5 @@ protected:
 private:
 	Transform * transform;
 };
+
+#endif // !_GAME_ENTITY_H_

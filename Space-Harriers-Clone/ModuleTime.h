@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MODULE_TIME_H_
+#define _MODULE_TIME_H_
 
 #include "Module.h"
 
@@ -17,3 +18,5 @@ private:
 	float currentDeltaTime;
 	Uint32 previousTicks;
 };
+
+#endif // !_MODULE_TIME_H_
