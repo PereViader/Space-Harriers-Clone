@@ -106,6 +106,11 @@ void Boss_Dragon_Head::ShootPlayer()
 			}
 		}
 	}
+	else {
+		roundTimer = TIME_BETWEEN_ROUNDS;
+		bulletTimer = TIME_BETWEEN_BULLETS;
+		bulletsFired = 0;
+	}
 }
 
 void Boss_Dragon_Head::ShootFireballToPlayer()
