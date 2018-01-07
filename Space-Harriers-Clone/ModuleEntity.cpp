@@ -66,7 +66,7 @@ bool ModuleEntity::CleanUp()
 	entities.clear();
 	entitiesToBeStarted.clear();
 
-	return false;
+	return true;
 }
 
 void ModuleEntity::AddGameEntity(GameEntity * gameEntity)
