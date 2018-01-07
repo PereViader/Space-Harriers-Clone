@@ -185,7 +185,7 @@ void ShieldedOvni::SetPath(const vector<Vector3>& path)
 
 void ShieldedOvni::ShootPlayer()
 {
-	Vector3 playerPosition = App->player->GetChestPosition();
+	Vector3 playerPosition = App->player->GetPlayer().GetChestPosition();
 	Vector3 ownPosition = GetTransform().GetScreenPositionAndDepth();
 	Vector3 direction = playerPosition - ownPosition;
 	Vector3 velocity = direction.Normalized() * projectileSpeed;

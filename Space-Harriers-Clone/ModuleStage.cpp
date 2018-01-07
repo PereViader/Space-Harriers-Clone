@@ -53,7 +53,7 @@ update_status ModuleStage::Update()
 
 void ModuleStage::EndGame()
 {
-	hasGameEnded = hasGameEnded || App->player->GetHealthPoints() == 0;
+	hasGameEnded = hasGameEnded || App->player->GetPlayer().GetHealthPoints() == 0;
 
 	if (hasGameEnded) {
 		gameResetTimer -= App->time->GetDeltaTime();

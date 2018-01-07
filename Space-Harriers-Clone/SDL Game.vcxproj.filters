@@ -44,6 +44,9 @@
     <Filter Include="Game Modules\Background">
       <UniqueIdentifier>{45311d28-15df-4eff-96f7-b43b49428903}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Modules\Player">
+      <UniqueIdentifier>{64992f5a-e151-416c-9e08-96ab50dbebc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -69,9 +72,6 @@
     </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="ModulePlayer.h">
-      <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleInput.h">
       <Filter>Core Modules</Filter>
@@ -203,6 +203,10 @@
       <Filter>Game Modules\Background</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundLayer.h" />
+    <ClInclude Include="ModulePlayer.h">
+      <Filter>Game Modules\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -222,9 +226,6 @@
     </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="ModulePlayer.cpp">
-      <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleInput.cpp">
       <Filter>Core Modules</Filter>
@@ -326,6 +327,12 @@
       <Filter>Game Modules\Background</Filter>
     </ClCompile>
     <ClCompile Include="BackgroundLayer.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulePlayer.cpp">
+      <Filter>Game Modules\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
       <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>

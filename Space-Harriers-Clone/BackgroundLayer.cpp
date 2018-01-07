@@ -28,7 +28,7 @@ BackgroundLayer::~BackgroundLayer()
 
 void BackgroundLayer::Update()
 {
-	textureOffset = fmodf(textureOffset + App->player->GetNormalizedPosition().x * speed, textureWidth);
+	textureOffset = fmodf(textureOffset + App->player->GetPlayer().GetNormalizedPosition().x * speed, textureWidth);
 	if (textureOffset < 0)
 		textureOffset = textureWidth - textureOffset - 1;
 }

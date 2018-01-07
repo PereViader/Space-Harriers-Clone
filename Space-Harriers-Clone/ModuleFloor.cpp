@@ -1,16 +1,19 @@
 #include "ModuleFloor.h"
+
+#include "SDL\include\SDL.h"
+#include <algorithm>
+#include <cmath>
+
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
-#include "SDL\include\SDL.h"
 #include "ModuleInput.h"
 #include "ModulePlayer.h"
 #include "ModuleBackground.h"
 #include "ModuleAudio.h"
 #include "ModuleTime.h"
 
-#include <algorithm>
-#include <cmath>
+#include "Vector2.h"
 
 using namespace std; 
 
@@ -55,7 +58,7 @@ bool ModuleFloor::Start()
 
 update_status ModuleFloor::Update()
 {
-	Vector2 playerPosition = App->player->GetNormalizedPosition();
+	Vector2 playerPosition = App->player->GetPlayer().GetNormalizedPosition();
 
 	horizontalSpeed = HORIZONTAL_SPEED_MAX * playerPosition.x *App->time->GetDeltaTime();
 	horizontalSpeedForOutsideUse = -horizontalSpeed * (SCREEN_WIDTH) * 1.2f;

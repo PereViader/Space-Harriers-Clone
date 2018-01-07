@@ -116,7 +116,7 @@ void Boss_Dragon_Head::ShootPlayer()
 void Boss_Dragon_Head::ShootFireballToPlayer()
 {
 	fireballSpeed = 300;
-	Vector3 player = App->player->GetChestPosition();
+	Vector3 player = App->player->GetPlayer().GetChestPosition();
 	Vector3 own = GetTransform().GetScreenPositionAndDepth();
 	Vector3 directionalVector = player - own;
 	Vector3 velocity = directionalVector.Normalized() * fireballSpeed;

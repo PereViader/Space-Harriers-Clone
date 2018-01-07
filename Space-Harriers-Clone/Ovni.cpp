@@ -79,7 +79,7 @@ void Ovni::Update()
 
 	if (newPosition == path[currentTarget]) {
 		if (particleSpawnsIndex.count(currentTarget)) {
-			Vector3 velocity = App->player->GetChestPosition() - transform.GetScreenPositionAndDepth();
+			Vector3 velocity = App->player->GetPlayer().GetChestPosition() - transform.GetScreenPositionAndDepth();
 			velocity = velocity.Normalized() * particleSpeed;
 			App->particles->AddParticleByName("ovni", transform.GetScreenPositionAndDepth(), velocity);
 		}
