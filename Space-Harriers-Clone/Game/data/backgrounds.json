@@ -1,0 +1,19 @@
+{
+  "layers" : [
+    {
+      "texturePath" : "data/sprites/background.png",
+      "speed" : 1,
+      "scalingFactor" : 5
+    },
+    {
+      "texturePath" : "data/sprites/mountains.png",
+      "speed" : 1.5,
+      "scalingFactor" : 3
+    },
+    {
+      "texturePath" : "data/sprites/trees.png",
+      "speed" : 2,
+      "scalingFactor" : 3
+    }
+  ]
+}

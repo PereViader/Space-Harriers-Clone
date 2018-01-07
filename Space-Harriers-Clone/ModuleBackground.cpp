@@ -1,29 +1,28 @@
 #include "ModuleBackground.h"
+
+#include <string>
+#include <assert.h>
+#include <fstream>
+
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModuleFloor.h"
 #include "ModulePlayer.h"
 
-
-#include <string>
-#include <assert.h>
-#include <iostream>
-
 #include "Globals.h"
 #include "Pivot2D.h"
 
-const float ModuleBackground::BACKGROUND_HORIZONTAL_SPEED = 1;
-const float ModuleBackground::HORIZON_DECAL_HORIZONTAL_SPEED = 1.5f;
+#include "BackgroundLayer.h"
 
-const float ModuleBackground::BACKGROUND_SCALE = 3.0f;
-const float ModuleBackground::DECAL_SCALE = 1.0f;
+#include "json.hpp"
+#include "json_serializer.h"
+
 
 
 ModuleBackground::ModuleBackground(bool enabled) : Module(enabled)
 {
 }
-
 
 ModuleBackground::~ModuleBackground()
 {
@@ -31,104 +30,38 @@ ModuleBackground::~ModuleBackground()
 
 bool ModuleBackground::Start()
 {
-	//Initialize textures
-	std::string path;
-	for (int i = 0; i < NUMBER_OF_LEVELS; i++) {
-		path = "data/sprites/horizonDecal";
-		path.append(std::to_string(i));
-		path.append(".png");
-		horizonDecal[i] = App->textures->Load(path.c_str());
-		assert(horizonDecal[i] != Texture());
-		path = "data/sprites/background";
-		path.append(std::to_string(i));
-		path.append(".png");
-		background[i] = App->textures->Load(path.c_str());
-		assert(background[i] != Texture());
+	ifstream file("data/backgrounds.json");
+	json backgrounds;
+	file >> backgrounds;
 
+	for (auto layer : backgrounds["layers"]) {
+		Texture texture = App->textures->Load(layer["texturePath"]);
+		float speed = layer["speed"];
+		float scalingFactor = layer["scalingFactor"];
+		backgroundLayers.push_back(new BackgroundLayer(texture, speed, scalingFactor));
 	}
-
-	SetLevel(0);
-
-
-	//Initialize variables
-	backgroundTextureOffset = 0;
-	decalTextureOffset = 0;
 
 	return true;
 }
 
 update_status ModuleBackground::Update()
 {
-	DrawBackground();
-	DrawDecal();
+	for (BackgroundLayer *backgroundLayer : backgroundLayers) {
+		backgroundLayer->Update();
+	}
+
+	for (BackgroundLayer *backgroundLayer : backgroundLayers) {
+		backgroundLayer->Render();
+	}
+
 	return update_status::UPDATE_CONTINUE;
 }
 
-void ModuleBackground::DrawBackground() {
-	MoveBackground();
-
-	Vector2 position;
-	position.y = App->floor->GetHorizonRenderHeight();
-	if (SCREEN_WIDTH > (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE) {
-		position.x = (currentLevelBackgroundTextureWidth - backgroundTextureOffset)*BACKGROUND_SCALE;
-
-		App->renderer->BlitWithPivotScaled(background[currentLevel], BACKGROUND_SCALE, Pivot2D::BOTTOM_LEFT, position);
-		App->renderer->BlitWithPivotScaled(background[currentLevel], BACKGROUND_SCALE, Pivot2D::BOTTOM_RIGHT, position);
-	}
-	else {
-		Pivot2D pivot(backgroundTextureOffset / currentLevelBackgroundTextureWidth, 1);
-
-		App->renderer->BlitWithPivotScaled(background[currentLevel], BACKGROUND_SCALE, pivot, position);
-	}
-}
-
-void ModuleBackground::DrawDecal() {
-	MoveDecal();
-
-	Vector2 position;
-	position.y = App->floor->GetHorizonRenderHeight();
-	if (SCREEN_WIDTH > (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE) {
-		position.x = (currentLevelHorizonDecalTextureWidth - decalTextureOffset)*DECAL_SCALE;
-
-		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], DECAL_SCALE, Pivot2D::BOTTOM_LEFT, position);
-		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], DECAL_SCALE, Pivot2D::BOTTOM_RIGHT, position);
-	}
-	else {
-		Pivot2D pivot(decalTextureOffset / currentLevelHorizonDecalTextureWidth, 1);
-
-		App->renderer->BlitWithPivotScaled(horizonDecal[currentLevel], DECAL_SCALE, pivot, position);
-	}
-}
-
-void ModuleBackground::MoveBackground()
+bool ModuleBackground::CleanUp()
 {
-	backgroundTextureOffset = fmodf(backgroundTextureOffset + App->player->GetNormalizedPosition().x * BACKGROUND_HORIZONTAL_SPEED,currentLevelBackgroundTextureWidth);
-	if (backgroundTextureOffset < 0)
-		backgroundTextureOffset = currentLevelBackgroundTextureWidth - backgroundTextureOffset - 1;
-}
-
-void ModuleBackground::MoveDecal()
-{
-	decalTextureOffset = fmodf(decalTextureOffset + App->player->GetNormalizedPosition().x * HORIZON_DECAL_HORIZONTAL_SPEED, currentLevelHorizonDecalTextureWidth);
-	if (decalTextureOffset < 0)
-		decalTextureOffset = currentLevelHorizonDecalTextureWidth - decalTextureOffset - 1;
-}
-
-void ModuleBackground::NextLevel()
-{
-	int nextLevel = currentLevel + 1;
-	SetLevel(nextLevel);
-}
-
-void ModuleBackground::SetLevel(int level)
-{
-	assert(level >= 0 && level < NUMBER_OF_LEVELS);
-	currentLevel = level;
-	currentLevelHorizonDecalTextureWidth = static_cast<float>(horizonDecal[currentLevel].GetSection().w);
-	currentLevelHorizonDecalTextureHeight = static_cast<float>(horizonDecal[currentLevel].GetSection().h);
-
-	currentLevelBackgroundTextureWidth = static_cast<float>(background[currentLevel].GetSection().w);
-	currentLevelBackgroundTextureHeight = static_cast<float>(background[currentLevel].GetSection().h);
-	//SDL_QueryTexture(horizonDecal[currentLevel].GetTexture(), NULL, NULL, &currentLevelHorizonDecalTextureWidth, &currentLevelHorizonDecalTextureHeight);
-	//SDL_QueryTexture(background[currentLevel].GetTexture(), NULL, NULL, &currentLevelBackgroundTextureWidth, &currentLevelBackgroundTextureHeight);
+	for (BackgroundLayer *backgroundLayer : backgroundLayers) {
+		delete backgroundLayer;
+	}
+	backgroundLayers.clear();
+	return true;
 }

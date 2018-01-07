@@ -41,6 +41,9 @@
     <Filter Include="Core Modules\Collision">
       <UniqueIdentifier>{9ded952c-6e27-41a5-be78-2fa16b7621de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Modules\Background">
+      <UniqueIdentifier>{45311d28-15df-4eff-96f7-b43b49428903}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -77,9 +80,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ModuleFloor.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleBackground.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTime.h">
@@ -199,6 +199,10 @@
     <ClInclude Include="Boss_Dragon.h">
       <Filter>Game Modules\Enemies\Dragon</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleBackground.h">
+      <Filter>Game Modules\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -226,9 +230,6 @@
       <Filter>Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFloor.cpp">
-      <Filter>Game Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleBackground.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTime.cpp">
@@ -320,6 +321,12 @@
     </ClCompile>
     <ClCompile Include="Boss_Dragon.cpp">
       <Filter>Game Modules\Enemies\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleBackground.cpp">
+      <Filter>Game Modules\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundLayer.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

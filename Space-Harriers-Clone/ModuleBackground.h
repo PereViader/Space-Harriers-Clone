@@ -1,50 +1,25 @@
 #pragma once
 #include "Module.h"
 #include "SDL\include\SDL.h"
+#include <list>
 
 #include "Texture.h"
+
+class BackgroundLayer;
 
 class ModuleBackground :
 	public Module
 {
 public:
 	ModuleBackground(bool enabled);
-	~ModuleBackground();
+	virtual ~ModuleBackground();
 
-	bool Start() override;
-	update_status Update() override;
-
-	void NextLevel();
-	void SetLevel(int level);
+	virtual bool Start() override;
+	virtual update_status Update() override;
+	virtual bool CleanUp() override;
 
 private:
-	static const float BACKGROUND_HORIZONTAL_SPEED;
-	static const float HORIZON_DECAL_HORIZONTAL_SPEED;
+	list<BackgroundLayer*> backgroundLayers;
 
-	static const float BACKGROUND_SCALE;
-	static const float DECAL_SCALE;
-
-
-	static const int NUMBER_OF_LEVELS = 1;
-	Texture horizonDecal[NUMBER_OF_LEVELS];
-	Texture background[NUMBER_OF_LEVELS];
-
-	int currentLevel;
-	float currentLevelBackgroundTextureWidth;
-	float currentLevelBackgroundTextureHeight;
-
-	float currentLevelHorizonDecalTextureWidth;
-	float currentLevelHorizonDecalTextureHeight;
-
-
-	float backgroundTextureOffset;
-	float decalTextureOffset;
-private:
-
-	void DrawBackground();
-	void DrawDecal();
-
-	void MoveBackground();
-	void MoveDecal();
 };
 
