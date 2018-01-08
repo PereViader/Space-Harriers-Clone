@@ -11,8 +11,7 @@ Explosion::Explosion(const Texture& graphics, const Animation& animation, float 
 	graphics(graphics),
 	animation(animation),
 	scalingFactor(scalingFactor),
-	explosionSound(explosionSound),
-	isFirstFrame(true)
+	explosionSound(explosionSound)
 {
 }
 
@@ -33,13 +32,15 @@ void Explosion::Init(const json& parameters)
 	// nothing to init
 }
 
+void Explosion::Start()
+{
+	App->audio->PlayFx(explosionSound);
+}
+
 void Explosion::Update()
 {
 	if (GetTransform().GetDepth() <= 0 || animation.Finished()) {
-		OnExplosionDied();
-	} else if (isFirstFrame) {
-		App->audio->PlayFx(explosionSound);
-		isFirstFrame = false;
+		OnExplosionEnded();
 	}
 }
 
@@ -61,7 +62,7 @@ void Explosion::Render()
 	}
 }
 
-void Explosion::OnExplosionDied()
+void Explosion::OnExplosionEnded()
 {
 	MarkAsDeleted();
 }

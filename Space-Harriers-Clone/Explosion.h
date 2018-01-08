@@ -18,6 +18,8 @@ public:
 
 	virtual void OnCollision(const Collider & own, const Collider & other) override;
 	virtual void Init(const json& parameters) override;
+
+	virtual void Start() override;
 	virtual void Update() override;
 	virtual Explosion * Clone() const override;
 	virtual void Render() override;
@@ -29,10 +31,9 @@ private:
 	float scalingFactor;
 
 	SFX explosionSound;
-	bool isFirstFrame;
 
 private:
-	void OnExplosionDied();
+	void OnExplosionEnded();
 };
 
 #endif // !_EXPLOSION_H_
