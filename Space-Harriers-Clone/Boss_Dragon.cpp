@@ -90,11 +90,6 @@ void Boss_Dragon::OnCollision(const Collider & own, const Collider & other)
 	//nothing
 }
 
-void Boss_Dragon::Update()
-{
-	//nothing
-}
-
 Enemy * Boss_Dragon::Clone() const
 {
 	return new Boss_Dragon(*this);

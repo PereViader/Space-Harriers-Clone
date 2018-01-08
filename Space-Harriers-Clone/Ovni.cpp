@@ -26,8 +26,7 @@ Ovni::Ovni(float speed, float particleSpeed, const Texture& texture, const Anima
 	animation(animation),
 	scalingFactor(scalingFactor),
 	currentTarget(0),
-	sfx(sfx),
-	isFirstFrame(true)
+	sfx(sfx)
 {
 }
 
@@ -42,8 +41,7 @@ Ovni::Ovni(const Ovni & o) :
 	currentTarget(o.currentTarget),
 	path(o.path),
 	particleSpawnsIndex(o.particleSpawnsIndex),
-	sfx(o.sfx),
-	isFirstFrame(o.isFirstFrame)
+	sfx(o.sfx)
 {
 	App->audio->RegisterFxUsage(sfx);
 }
@@ -64,13 +62,18 @@ void Ovni::Init(const json& parameters)
 	SetPathAndBullets(path, particleSpawns);
 }
 
+void Ovni::Start()
+{
+	App->audio->PlayFx(sfx);
+}
+
 void Ovni::Update()
 {
-	if (isFirstFrame) {
-		App->audio->PlayFx(sfx);
-		isFirstFrame = false;
-	}
+	FollowPath();
+}
 
+void Ovni::FollowPath()
+{
 	float deltaTime = App->time->GetDeltaTime();
 
 	FloorBasedTransform& transform = static_cast<FloorBasedTransform&>(GetTransform());
@@ -92,7 +95,6 @@ void Ovni::Update()
 
 void Ovni::OnCollision(const Collider& own, const Collider& other)
 {
-	assert(&own == static_cast<const Collider*>(collider));
 	if (other.colliderType == ColliderType::PlayerParticle) {
 		OnOvniDied();
 	}

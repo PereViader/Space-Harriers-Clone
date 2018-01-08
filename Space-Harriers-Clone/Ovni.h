@@ -26,6 +26,7 @@ public:
 	~Ovni();
 
 	virtual void Init(const json& parameters) override;
+	virtual void Start() override;
 	virtual void Update() override;
 
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
@@ -35,7 +36,6 @@ public:
 	void SetPathAndBullets(const vector<Vector3>& path, const set<unsigned int>& particleSpawnsIndex);
 
 private:
-
 	Texture graphics;
 	Animation animation;
 	float scalingFactor;
@@ -51,10 +51,10 @@ private:
 
 	SFX sfx;
 
-	bool isFirstFrame;
-
 private:
 	void OnOvniDied();
+	void FollowPath();
+
 };
 
 #endif // !_OVNI_H_

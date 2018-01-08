@@ -79,12 +79,14 @@ void Boss_Dragon_Body::Update()
 	Vector3 currentOwnPosition = GetTransform().GetScreenPositionAndDepth();
 	Vector3 currentNextPartPosition = nextPart->GetTransform().GetScreenPositionAndDepth();
 
+	// Calculate distances
 	Vector3 currentNextPartToOldNextPart = oldNextPartPosition - currentNextPartPosition;
 	float distanceNextPartAndOldNextPart = currentNextPartToOldNextPart.Magnitude();
 
 	Vector3 oldNextPartToOwn =  currentOwnPosition - oldNextPartPosition;
 	float distanceOldNextPartAndOwn = oldNextPartToOwn.Magnitude();
 
+	// Find the desired position that is distanceBetweenBodyParts distant in between the previous positions
 	Vector3 newDesiredPosition;
 	if (distanceNextPartAndOldNextPart >= distanceBetweenBodyParts) {
 		float percentageOfPosition = distanceBetweenBodyParts / distanceNextPartAndOldNextPart;
@@ -96,6 +98,7 @@ void Boss_Dragon_Body::Update()
 		newDesiredPosition = oldNextPartPosition + oldNextPartToOwn * percentageOfPosition;
 	}
 
+	// Do not go directly there, instead go half way there to smooth movement
 	Vector3 deltaNewPosition = newDesiredPosition - currentOwnPosition;
 	const float smoothingFactor = 0.5;
 

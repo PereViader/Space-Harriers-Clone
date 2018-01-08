@@ -29,8 +29,7 @@ ShieldedOvni::ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, c
 	nextPositionIndex(-1),
 	projectileSpeed(projectileSpeed),
 	sfx(sfx),
-	hitClosedSFX(hitClosedSFX),
-	isFirstFrame(true)
+	hitClosedSFX(hitClosedSFX)
 {
 }
 
@@ -52,8 +51,7 @@ ShieldedOvni::ShieldedOvni(const ShieldedOvni & o) :
 	speed(o.speed),
 	projectileSpeed(o.projectileSpeed),
 	sfx(o.sfx),
-	hitClosedSFX(o.hitClosedSFX),
-	isFirstFrame(o.isFirstFrame)
+	hitClosedSFX(o.hitClosedSFX)
 {
 }
 
@@ -75,6 +73,11 @@ void ShieldedOvni::OnCollision(const Collider & own, const Collider & other)
 	}
 }
 
+void ShieldedOvni::Start()
+{
+	App->audio->PlayFx(sfx);
+}
+
 void ShieldedOvni::Init(const json& parameters)
 {
 	App->audio->RegisterFxUsage(sfx);
@@ -86,63 +89,74 @@ void ShieldedOvni::Init(const json& parameters)
 
 void ShieldedOvni::Update()
 {
-	if (isFirstFrame) {
- 		App->audio->PlayFx(sfx);
-		isFirstFrame = false;
-	}
+	UpdateBehaviour();
+}
 
+void ShieldedOvni::UpdateBehaviour()
+{
 	switch (state)
 	{
-	case behaviour_state::In: {
-		if (nextPositionIndex < path.size()) {
-			const Vector3& position = GetTransform().GetPosition();
-			const Vector3& destination = path.at(nextPositionIndex);
-			Vector3 newPosition = MoveTowards(position, destination, speed * App->time->GetDeltaTime());
-			GetTransform().SetPosition(newPosition);
-			if (newPosition == destination) {
-				nextPositionIndex++;
-			}
+	case behaviour_state::In:
+		Update_In();
+		break;
+
+	case behaviour_state::Shoot:
+		Update_Shoot();
+		break;
+
+	case behaviour_state::Out:
+		Update_Out();
+		break;
+	}
+}
+
+void ShieldedOvni::Update_Out()
+{
+	const Vector3& position = GetTransform().GetPosition();
+	const Vector3& destination = path.at(nextPositionIndex);
+	Vector3 newPosition = MoveTowards(position, destination, speed * App->time->GetDeltaTime());
+	GetTransform().SetPosition(newPosition);
+	if (newPosition == destination) {
+		if (nextPositionIndex == 0) {
+			MarkAsDeleted();
 		}
 		else {
-			SwitchState();
-			state = behaviour_state::Shoot;
 			nextPositionIndex--;
 		}
-		break;
 	}
-		
-	case behaviour_state::Shoot: {
-		currentTime += App->time->GetDeltaTime();
+}
 
-		float TIME_CHECK = isOpen ? timeOpen : timeClosed;
+void ShieldedOvni::Update_Shoot()
+{
+	currentTime += App->time->GetDeltaTime();
 
-		if (currentTime >= TIME_CHECK) {
-			currentTime -= TIME_CHECK;
-			SwitchState();
-		}
+	float TIME_CHECK = isOpen ? timeOpen : timeClosed;
 
-		if (nStateSwitches >= stateSwitchesToLeave) {
-			state = behaviour_state::Out;
-		}
-		break;
+	if (currentTime >= TIME_CHECK) {
+		currentTime -= TIME_CHECK;
+		SwitchState();
 	}
-		
-	case behaviour_state::Out: {
+
+	if (nStateSwitches >= stateSwitchesToLeave) {
+		state = behaviour_state::Out;
+	}
+}
+
+void ShieldedOvni::Update_In()
+{
+	if (nextPositionIndex < path.size()) {
 		const Vector3& position = GetTransform().GetPosition();
 		const Vector3& destination = path.at(nextPositionIndex);
 		Vector3 newPosition = MoveTowards(position, destination, speed * App->time->GetDeltaTime());
 		GetTransform().SetPosition(newPosition);
 		if (newPosition == destination) {
-			if (nextPositionIndex == 0) {
-				MarkAsDeleted();
-			}
-			else {
-				nextPositionIndex--;
-			}
+			nextPositionIndex++;
 		}
-		break;
 	}
-		
+	else {
+		SwitchState();
+		state = behaviour_state::Shoot;
+		nextPositionIndex--;
 	}
 }
 

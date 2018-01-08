@@ -46,10 +46,6 @@ void ShieldedOvniBrain::Init(const json& parameters)
 	MarkAsDeleted();
 }
 
-void ShieldedOvniBrain::Update()
-{
-}
-
 Enemy * ShieldedOvniBrain::Clone() const
 {
 	return new ShieldedOvniBrain(*this);

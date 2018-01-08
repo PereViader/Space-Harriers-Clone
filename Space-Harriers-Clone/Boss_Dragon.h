@@ -16,7 +16,6 @@ public:
 
 
 	virtual void Init(const json& parameters) override;
-	virtual void Update() override;
 
 	virtual FloorBasedTransform& GetTransform() const override { return GetTransformTypped<FloorBasedTransform>(); }
 

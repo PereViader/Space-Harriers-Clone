@@ -23,17 +23,17 @@ public:
 	ShieldedOvni(float speed, float projectileSpeed, const SFX& sfx, const SFX& hitClosedSFX, const Texture& graphics, const Animation& animation, const Size2D& size, float scalingFactor, float timeOpen, float timeClosed, int stateSwitchesToLeave);
 	ShieldedOvni(const ShieldedOvni&);
 	virtual ~ShieldedOvni();
+	virtual Enemy * Clone() const override;
 
 	virtual void Init(const json& parameters) override;
+	virtual void Start() override;
 	virtual void Update() override;
 
-
-	virtual void OnCollision(const Collider & own, const Collider & other) override;
-	virtual Enemy * Clone() const override;
-	virtual FloorBasedTransform& GetTransform() { return GetTransformTypped<FloorBasedTransform>(); }
 	virtual void Render() override;
 
-	void SwitchState();
+	virtual void OnCollision(const Collider & own, const Collider & other) override;
+	virtual FloorBasedTransform& GetTransform() { return GetTransformTypped<FloorBasedTransform>(); }
+
 	void SetPath(const vector<Vector3>&);
 
 private:
@@ -65,11 +65,16 @@ private:
 
 	SFX sfx;
 	SFX hitClosedSFX;
-	bool isFirstFrame;
 
 private:
+	void UpdateBehaviour();
+	void Update_In();
+	void Update_Shoot();
+	void Update_Out();
 	void ShootPlayer();
+	void SwitchState();
 	void OnShieldedOvniDied();
+
 };
 
 #endif // !_SHIELDED_OVNI_H_
