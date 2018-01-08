@@ -21,6 +21,8 @@ public:
 	Particle(const ColliderType& particleType, const Animation& animation, const Size2D & size, const SFX& sfx, const Texture& texture);
 	Particle(const Particle& p);
 	~Particle();
+
+	virtual void Start() override;
 	virtual void Update() override;
 
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
@@ -36,7 +38,6 @@ private:
 
 	Collider* collider;
 
-	bool isFirstFrame;
 	Vector3 velocity;
 
 	static const float MINIMUM_HEIGHT_FOR_SHADOW;

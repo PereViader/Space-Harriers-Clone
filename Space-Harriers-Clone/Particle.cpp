@@ -18,8 +18,7 @@ Particle::Particle(const ColliderType& particleType, const Animation& animation,
 	graphics(graphics),
 	sfx(sfx),
 	animation(animation),
-	collider(App->collision->AddPrototypeCollider(particleType, size, Pivot2D::MIDDLE_CENTER, *this)),
-	isFirstFrame(true)
+	collider(App->collision->AddPrototypeCollider(particleType, size, Pivot2D::MIDDLE_CENTER, *this))
 {}
 
 Particle::Particle(const Particle& p) :
@@ -28,7 +27,6 @@ Particle::Particle(const Particle& p) :
 	sfx(p.sfx),
 	animation(p.animation),
 	collider(App->collision->RegisterPrototypeInstance(*p.collider, *this)),
-	isFirstFrame(p.isFirstFrame),
 	velocity(p.velocity)
 {
 }
@@ -38,14 +36,13 @@ Particle::~Particle()
 	collider->MarkAsDeleted();
 }
 
+void Particle::Start()
+{
+	App->audio->PlayFx(sfx);
+}
+
 void Particle::Update()
 {
-	if (isFirstFrame)
-	{
-		App->audio->PlayFx(sfx);
-		isFirstFrame = false;
-	}
-
 	MoveParticle();
 
 	if (!IsInsideGameBounds())
