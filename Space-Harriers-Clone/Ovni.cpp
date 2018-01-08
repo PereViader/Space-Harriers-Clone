@@ -96,7 +96,7 @@ void Ovni::FollowPath()
 void Ovni::OnCollision(const Collider& own, const Collider& other)
 {
 	if (other.colliderType == ColliderType::PlayerParticle) {
-		OnOvniDied();
+		OnOvniKilled();
 	}
 }
 
@@ -123,7 +123,7 @@ void Ovni::SetPathAndBullets(const vector<Vector3>& path, const set<unsigned int
 	this->particleSpawnsIndex = particleSpawnsIndex;
 }
 
-void Ovni::OnOvniDied()
+void Ovni::OnOvniKilled()
 {
 	MarkAsDeleted();
 

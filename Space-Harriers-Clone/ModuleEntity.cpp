@@ -13,6 +13,13 @@ ModuleEntity::~ModuleEntity()
 
 update_status ModuleEntity::PreUpdate()
 {
+	for (GameEntity* entity : entities) {
+		if (entity->ToDelete())
+		{
+			entity->OnDestroy();
+		}
+	}
+
 	for (auto it = entities.begin(); it != entities.end();)
 	{
 		if ((*it)->ToDelete())

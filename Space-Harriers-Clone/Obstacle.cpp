@@ -49,7 +49,7 @@ void Obstacle::Update()
 	GetTransform().Move(GetMovement());
 	
 	if (GetTransform().GetDepth() <= 0) {
-		OnObstacleDied();
+		MarkAsDeleted();
 	}
 }
 
@@ -57,7 +57,7 @@ void Obstacle::OnCollision(const Collider& own, const Collider& other)
 {
 	assert(&own == collider);
 	if (other.colliderType == ColliderType::PlayerParticle) {
-		OnObstacleDied();
+		MarkAsDeleted();
 	}
 }
 
@@ -78,10 +78,10 @@ Vector3 Obstacle::GetMovement() const
 	return Vector3(App->floor->GetCurrentFloorMovement(), 0, 0);
 }
 
-void Obstacle::OnObstacleDied()
+void Obstacle::OnDestroy()
 {
-	MarkAsDeleted();
-
-	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
-	explosion->GetTransform().SetPosition(GetTransform());
+	if (GetTransform().GetDepth() > 0) {
+		Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
+		explosion->GetTransform().SetPosition(GetTransform());
+	}
 }

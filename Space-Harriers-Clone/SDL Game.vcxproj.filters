@@ -47,6 +47,9 @@
     <Filter Include="Game Modules\Player">
       <UniqueIdentifier>{64992f5a-e151-416c-9e08-96ab50dbebc1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core Modules\Entity">
+      <UniqueIdentifier>{f8c58ef6-1af1-4e69-aba0-b1cdd16086ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -212,7 +215,7 @@
       <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleEntity.h">
-      <Filter>Core Modules</Filter>
+      <Filter>Core Modules\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -285,9 +288,6 @@
     <ClCompile Include="FloorBasedTransform.cpp">
       <Filter>Utils\Transforms</Filter>
     </ClCompile>
-    <ClCompile Include="GameEntity.h">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleAudio.cpp">
       <Filter>Core Modules\Audio</Filter>
     </ClCompile>
@@ -343,7 +343,10 @@
       <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleEntity.cpp">
-      <Filter>Core Modules</Filter>
+      <Filter>Core Modules\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEntity.h">
+      <Filter>Core Modules\Entity</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

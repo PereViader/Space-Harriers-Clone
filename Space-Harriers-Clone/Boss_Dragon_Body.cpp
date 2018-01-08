@@ -52,18 +52,10 @@ void Boss_Dragon_Body::OnCollision(const Collider & own, const Collider & other)
 
 void Boss_Dragon_Body::DragonDied()
 {
-	OnBossDragonBodyDied();
+	MarkAsDeleted();
 
 	if (previousPart)
 		previousPart->DragonDied();
-}
-
-void Boss_Dragon_Body::OnBossDragonBodyDied()
-{
-	MarkAsDeleted();
-
-	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
-	explosion->GetTransform().SetPosition(GetTransform());
 }
 
 void Boss_Dragon_Body::Init(const json & parameters)
@@ -105,6 +97,12 @@ void Boss_Dragon_Body::Update()
 	GetTransform().Move(deltaNewPosition*smoothingFactor);
 
 	oldNextPartPosition = currentNextPartPosition;
+}
+
+void Boss_Dragon_Body::OnDestroy()
+{
+	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
+	explosion->GetTransform().SetPosition(GetTransform());
 }
 
 void Boss_Dragon_Body::Render()

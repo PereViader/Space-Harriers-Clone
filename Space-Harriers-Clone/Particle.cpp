@@ -46,7 +46,7 @@ void Particle::Update()
 	MoveParticle();
 
 	if (!IsInsideGameBounds())
-		OnParticleDied();
+		MarkAsDeleted();
 }
 
 bool Particle::IsInsideGameBounds()
@@ -60,11 +60,6 @@ void Particle::MoveParticle()
 	float deltaTime = App->time->GetDeltaTime();
 
 	GetTransform().Move(velocity * deltaTime);
-}
-
-void Particle::OnParticleDied()
-{
-	MarkAsDeleted();
 }
 
 Particle* Particle::Clone() const
@@ -92,5 +87,5 @@ void Particle::SetVelocity(const Vector3 & velocity)
 
 void Particle::OnCollision(const Collider& own, const Collider& other)
 {
-	OnParticleDied();
+	MarkAsDeleted();
 }

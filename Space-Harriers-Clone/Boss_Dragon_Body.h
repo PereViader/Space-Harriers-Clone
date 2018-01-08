@@ -26,6 +26,7 @@ public:
 
 	virtual void Init(const json & parameters) override;
 	virtual void Update() override;
+	virtual void OnDestroy() override;
 
 	virtual void Render() override;
 
@@ -48,9 +49,6 @@ private:
 	Enemy *nextPart;
 	Boss_Dragon_Body *previousPart;
 	Boss_Dragon_Head *head;
-
-private:
-	void OnBossDragonBodyDied();
 
 };
 

@@ -28,6 +28,10 @@ public:
 
 	}
 
+	virtual void OnDestroy() {
+
+	}
+
 	virtual Transform & GetTransform() const { return *transform; }
 
 protected:

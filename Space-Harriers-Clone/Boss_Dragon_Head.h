@@ -30,6 +30,7 @@ public:
 
 	virtual void Init(const json & parameters) override;
 	virtual void Update() override;
+	virtual void OnDestroy() override;
 
 
 	virtual void Render() override;
@@ -82,7 +83,6 @@ private:
 	static const int MAX_WIDTH;
 	static const int MIN_DEPTH;
 	static const int MAX_DEPTH;
-
 
 };
 

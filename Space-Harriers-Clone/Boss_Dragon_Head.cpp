@@ -127,12 +127,6 @@ void Boss_Dragon_Head::ShootFireballToPlayer()
 void Boss_Dragon_Head::OnBossDragonHeadDied()
 {
 	MarkAsDeleted();
-
-	App->moduleStage->OnStageBossDied();
-
-	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
-	explosion->GetTransform().SetPosition(GetTransform());
-
 	assert(previousPart);
 	previousPart->DragonDied();
 }
@@ -151,6 +145,14 @@ void Boss_Dragon_Head::Update()
 {
 	UpdatePosition();
 	ShootPlayer();
+}
+
+void Boss_Dragon_Head::OnDestroy()
+{
+	App->moduleStage->OnStageBossDied();
+
+	Explosion * explosion = static_cast<Explosion*>(App->enemies->InstantiateEnemyByName("explosion", json()));
+	explosion->GetTransform().SetPosition(GetTransform());
 }
 
 void Boss_Dragon_Head::UpdatePosition()

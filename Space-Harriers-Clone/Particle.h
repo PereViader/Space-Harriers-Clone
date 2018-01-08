@@ -21,13 +21,14 @@ public:
 	Particle(const ColliderType& particleType, const Animation& animation, const Size2D & size, const SFX& sfx, const Texture& texture);
 	Particle(const Particle& p);
 	~Particle();
+	virtual Particle* Clone() const override;
+
 
 	virtual void Start() override;
 	virtual void Update() override;
+	virtual void Render() override;
 
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
-	virtual Particle* Clone() const override;
-	virtual void Render() override;
 	virtual ScreenBoundFloorProjectedTransform& GetTransform() const override { return GetTransformTypped<ScreenBoundFloorProjectedTransform>(); }
 
 	void SetVelocity(const Vector3& velocity);
@@ -46,7 +47,6 @@ private:
 	bool IsInsideGameBounds();
 
 	void MoveParticle();
-	void OnParticleDied();
 };
 
 #endif // !_PARTICLE_H_

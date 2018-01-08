@@ -18,14 +18,14 @@ public:
 	Obstacle(const Texture& graphics, const Animation& animation, bool hasShadow, const Size2D& size, float scalingFactor, bool isNonDamaging);
 	Obstacle(const Obstacle&);
 	~Obstacle();
-
 	virtual Obstacle* Clone() const override;
-	virtual void Update() override;
-
+	
 	virtual void Init(const json& parameters) override;
+	virtual void Update() override;
+	virtual void OnDestroy() override;
+	virtual void Render() override;
 
 	virtual void OnCollision(const Collider& own, const Collider& other) override;
-	virtual void Render() override;
 	virtual FloorAnchoredTransform& GetTransform() { return GetTransformTypped<FloorAnchoredTransform>(); }
 
 private:
@@ -36,7 +36,6 @@ private:
 
 private:
 	Vector3 GetMovement() const;
-	void OnObstacleDied();
 
 };
 

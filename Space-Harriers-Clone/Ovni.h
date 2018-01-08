@@ -52,7 +52,7 @@ private:
 	SFX sfx;
 
 private:
-	void OnOvniDied();
+	void OnOvniKilled();
 	void FollowPath();
 
 };
