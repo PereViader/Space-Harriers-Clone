@@ -285,8 +285,5 @@ void Player::Update()
 		ShootLaser();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		healthPoints = 0;
-
 	Render();
 }
